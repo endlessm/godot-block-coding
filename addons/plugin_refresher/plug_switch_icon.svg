@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="28"
+   height="16"
+   viewBox="0 0 7.4083331 4.2333333"
+   version="1.1"
+   id="svg309"
+   sodipodi:docname="plug_switch_icon.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview15"
+     pagecolor="#606060"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#454545"
+     showgrid="true"
+     inkscape:zoom="21.607143"
+     inkscape:cx="27.467769"
+     inkscape:cy="7.4975207"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid1015"
+       spacingx="0.13229166"
+       spacingy="0.13229166" />
+  </sodipodi:namedview>
+  <defs
+     id="defs306" />
+  <g
+     id="layer1">
+    <path
+       id="path596"
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-linejoin:round"
+       d="M 2.6458332,0.52916655 1.9843749,1.1906249 1.7146239,0.9208739 A 1.190625,1.190625 0 0 0 1.0583333,1.9843749 1.190625,1.190625 0 0 0 1.2857096,2.6830403 L 0.66145828,3.3072916 0.92604162,3.5718749 1.5502929,2.9476236 A 1.190625,1.190625 0 0 0 2.2489582,3.1749999 1.190625,1.190625 0 0 0 3.3124592,2.5187092 L 3.0427082,2.2489582 3.7041666,1.5874999 3.4395832,1.3229166 2.7781249,1.9843749 2.2489582,1.4552082 2.9104166,0.79374988 Z" />
+    <path
+       id="path1013"
+       style="fill:#ffffff;stroke-width:0.264583;stroke-linejoin:round"
+       d="m 3.7041666,2.6458333 c -1e-7,0.3968749 0.3968749,0.79375 0.79375,0.79375 h 1.5874999 c 0.3968748,0 0.7937498,-0.3968751 0.79375,-0.79375 2e-7,-0.3968751 -0.3968752,-0.79375 -0.79375,-0.79375 H 4.4979166 c -0.3968751,-1e-7 -0.7937501,0.3968749 -0.79375,0.79375 z M 4.4979172,2.1166666 h 1.5874999 c 0.2645826,0 0.5291673,0.2645833 0.5291666,0.5291667 -7e-7,0.2645832 -0.264584,0.5291666 -0.5291666,0.5291666 H 4.4979172 c -0.2645841,0 -0.5291674,-0.2645834 -0.5291667,-0.5291666 -7e-7,-0.2645834 0.2645826,-0.5291667 0.5291667,-0.5291667 z"
+       sodipodi:nodetypes="csssscccsssscc" />
+    <ellipse
+       style="fill:#fefefe;fill-opacity:1;stroke-width:0.264583;stroke-linejoin:round"
+       id="path1179"
+       cx="4.4979162"
+       cy="2.6458333"
+       rx="0.39687514"
+       ry="0.39687502" />
+    <ellipse
+       style="fill:#fefefe;fill-opacity:1;stroke-width:0.264583;stroke-linejoin:round"
+       id="ellipse2259"
+       cx="6.0854163"
+       cy="2.6458333"
+       rx="0.39687514"
+       ry="0.39687502" />
+  </g>
+  <metadata
+     id="metadata241">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>István FARKAS</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:date>2023.05.23</dc:date>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

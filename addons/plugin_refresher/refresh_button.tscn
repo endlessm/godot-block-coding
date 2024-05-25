@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu24kkwsr1gej"]
+
+[ext_resource type="Script" path="res://addons/plugin_refresher/refresh_button.gd" id="1_air57"]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+offset_right = 91.0
+offset_bottom = 24.0
+script = ExtResource("1_air57")
+
+[node name="enable_menu" type="MenuButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Enable/disable plugins"
+
+[node name="switch_options" type="OptionButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Select plugin to refresh"
+focus_mode = 0
+item_count = 1
+fit_to_longest_item = false
+popup/item_0/text = "Unknown"
+popup/item_0/id = 0
+
+[node name="btn_toggle" type="CheckButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "No plugin selected
+(Select plugin on the left)"
+focus_mode = 0
+disabled = true
+
+[node name="reset_button" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2

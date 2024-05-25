@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="28"
+   height="16"
+   viewBox="0 0 7.4083331 4.2333333"
+   version="1.1"
+   id="svg309"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs306" />
+  <g
+     id="layer1">
+    <path
+       id="path596"
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-linejoin:round"
+       d="M 2.6458332,0.52916655 1.9843749,1.1906249 1.7146239,0.9208739 A 1.190625,1.190625 0 0 0 1.0583333,1.9843749 1.190625,1.190625 0 0 0 1.2857096,2.6830403 L 0.66145828,3.3072916 0.92604162,3.5718749 1.5502929,2.9476236 A 1.190625,1.190625 0 0 0 2.2489582,3.1749999 1.190625,1.190625 0 0 0 3.3124592,2.5187092 L 3.0427082,2.2489582 3.7041666,1.5874999 3.4395832,1.3229166 2.7781249,1.9843749 2.2489582,1.4552082 2.9104166,0.79374988 Z" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583;stroke-linejoin:round"
+       d="M 3.9687499,0.52916666 V 1.0583333 H 4.4979166 V 0.52916666 Z"
+       id="path1645" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.247495;stroke-linejoin:round"
+       d="M 4.7624999,0.52916666 V 1.0583333 H 6.6145832 V 0.52916666 Z"
+       id="path1971" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583;stroke-linejoin:round"
+       d="M 3.9687499,1.3229166 V 1.8520832 H 4.4979166 V 1.3229166 Z"
+       id="path1645-9" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.247495;stroke-linejoin:round"
+       d="M 4.7624999,1.3229166 V 1.8520832 H 6.6145832 V 1.3229166 Z"
+       id="path1971-8" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583;stroke-linejoin:round"
+       d="M 3.9687499,2.1166667 V 2.6458333 H 4.4979166 V 2.1166667 Z"
+       id="path1645-2" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.247495;stroke-linejoin:round"
+       d="M 4.7624999,2.1166667 V 2.6458333 H 6.6145832 V 2.1166667 Z"
+       id="path1971-1" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583;stroke-linejoin:round"
+       d="M 3.9687499,2.9104167 V 3.4395833 H 4.4979166 V 2.9104167 Z"
+       id="path1645-27" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.247495;stroke-linejoin:round"
+       d="M 4.7624999,2.9104167 V 3.4395833 H 6.6145832 V 2.9104167 Z"
+       id="path1971-16" />
+  </g>
+  <metadata
+     id="metadata241">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>István FARKAS</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:date>2023.05.23</dc:date>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
