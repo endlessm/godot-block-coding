@@ -25,6 +25,10 @@ func _process(delta):
 		
 		var dragging_global_pos: Vector2 = dragging.get_global_rect().position
 		
+		# TODO: check if dropped snap point is occupied
+		# if so, replace with this node and attach the previous one
+		# to this node's bottom snap
+		
 		# Find closest snap point not child of current node
 		var closest_snap_point: SnapPoint = null
 		var closest_dist: float = INF

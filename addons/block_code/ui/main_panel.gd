@@ -26,3 +26,13 @@ func _input(event):
 		var mouse_event: InputEventMouseButton = event as InputEventMouseButton
 		if mouse_event.button_index == MOUSE_BUTTON_LEFT and not mouse_event.pressed:
 			_drag_manager.drag_ended()
+	
+	# HACK: play the topmost block
+	if event is InputEventKey:
+		if event.keycode == KEY_F and event.pressed:
+			var topmost: Block = _block_canvas.get_node("WindowScroll/Window").get_child(0)
+			var tree: InstructionTree.TreeNode = topmost.get_instruction_node()
+			
+			var generator: InstructionTree = InstructionTree.new()
+			var script: String = generator.generate_text(tree)
+			print(script)

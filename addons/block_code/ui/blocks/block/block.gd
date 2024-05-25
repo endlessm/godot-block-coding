@@ -25,4 +25,22 @@ func disconnect_drag():
 	for c in connections:
 		drag_started.disconnect(c.callable)
 
-# Custom nodes will have a get_instruction() -> InstructionTreeNode
+func get_instruction_node() -> InstructionTree.TreeNode:
+	# Call child function? where's my abstract methods :(
+	var main_instruction: String = call("get_instruction") as String
+	
+	var node: InstructionTree.TreeNode = InstructionTree.TreeNode.new(main_instruction)
+	
+	for snap in snaps:
+		var snapped_block: Block = snap.get_snapped_block()
+		if snapped_block:
+			node.add_child(snapped_block.get_instruction_node())
+		
+	if bottom_snap:
+		var snapped_block: Block = bottom_snap.get_snapped_block()
+		if snapped_block:
+			node.next = snapped_block.get_instruction_node()
+		
+	return node
+
+# Custom nodes will have a get_instruction() -> String
