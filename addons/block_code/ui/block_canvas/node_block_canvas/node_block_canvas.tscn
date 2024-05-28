@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://layefpj12yp2"]
+
+[ext_resource type="PackedScene" uid="uid://c6vumewgnfquy" path="res://addons/block_code/ui/block_canvas/block_canvas.tscn" id="1_dykhs"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/node_block_canvas/node_block_canvas.gd" id="2_qt35f"]
+
+[node name="NodeBlockCanvas" instance=ExtResource("1_dykhs")]
+script = ExtResource("2_qt35f")

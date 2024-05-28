@@ -5,7 +5,7 @@ extends Control
 var eia: EditorInterfaceAccess
 
 @onready var _picker: Picker = %Picker
-@onready var _block_canvas: BlockCanvas = %BlockCanvas
+@onready var _block_canvas: BlockCanvas = %NodeBlockCanvas
 @onready var _drag_manager: DragManager = %DragManager
 
 
