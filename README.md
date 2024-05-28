@@ -15,3 +15,16 @@ At the moment there are only two nodes, a for loop and basic print block, but it
 
 Support should be added for blocks that have two inner blocks (e.g. if/else statements), and blocks should also be able to be inserted, not just appended.
 
+## pre-commit
+
+Please use [pre-commit](https://pre-commit.com/) to check for correct formatting and other issues before creating commits. To do this automatically, you can add it as a git hook:
+
+```
+# If you don't have pre-commit already:
+pip install pre-commit
+
+# Setup git hook:
+pre-commit install
+```
+
+Now `pre-commit` will run automatically on `git commit`!
