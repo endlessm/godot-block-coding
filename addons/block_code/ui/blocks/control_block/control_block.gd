@@ -5,6 +5,9 @@ extends Block
 @export var color: Color = Color(1., 1., 1.):
 	set = _set_color
 
+@export var label: String = "":
+	set = _set_label
+
 @export var snap_paths: Array[NodePath]
 
 var snaps: Array[SnapPoint]
@@ -12,6 +15,16 @@ var snaps: Array[SnapPoint]
 @onready var _top_bar := %TopBar
 @onready var _middle_bar := %MiddleBar
 @onready var _bottom_bar := %BottomBar
+@onready var _label := %Label
+
+
+func _set_label(new_label: String) -> void:
+	label = new_label
+
+	if not is_node_ready():
+		return
+
+	_label.text = label
 
 
 func _set_color(new_color: Color) -> void:
@@ -32,6 +45,7 @@ func _ready():
 		snaps.append(get_node(path))
 
 	_set_color(color)
+	_set_label(label)
 
 
 func _on_drag_drop_area_mouse_down():

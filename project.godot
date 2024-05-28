@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="block-programming-plugin"
+run/main_scene="res://test_game/test_game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 

@@ -24,7 +24,9 @@ func generate_script_from_current_window():
 
 	var script: String = ""
 
-	for section in [["_ready():", ready_nodes], ["_process():", process_nodes]]:
+	script += "extends Node2D\n\n"
+
+	for section in [["func _ready():", ready_nodes], ["func _process(_delta):", process_nodes]]:
 		script += section[0] + "\n"
 
 		var should_pass: bool = true

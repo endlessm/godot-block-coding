@@ -29,4 +29,11 @@ func _input(event):
 	if event is InputEventKey:
 		if event.keycode == KEY_F and event.pressed:
 			var script: String = _block_canvas.generate_script_from_current_window()
+
+			var path: String = "user://test_script.gd"
+			var test_script := FileAccess.open(path, FileAccess.WRITE)
+			test_script.store_string(script)
+			test_script.close()
+
 			print(script)
+			print("Saved to " + path + "\n")

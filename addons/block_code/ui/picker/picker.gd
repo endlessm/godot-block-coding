@@ -13,22 +13,8 @@ const BLOCKS: Dictionary = {
 
 
 func _ready():
-	var block_node: Block = BLOCKS["control_block"].instantiate()
-	block_node.drag_started.connect(_block_picked)
-	%BlockList.add_child(block_node)
-
-	block_node = BLOCKS["basic_block"].instantiate()
-	block_node.drag_started.connect(_block_picked)
-	%BlockList.add_child(block_node)
-
-	block_node = BLOCKS["simple_text_block"].instantiate()
-	block_node.text = 'print("hi")'
-	block_node.label = 'print "hi"'
-	block_node.drag_started.connect(_block_picked)
-	%BlockList.add_child(block_node)
-
 	# entry
-	block_node = BLOCKS["basic_block"].instantiate()
+	var block_node: Block = BLOCKS["basic_block"].instantiate()
 	block_node.block_name = "ready_block"
 	block_node.label = "On Ready"
 	block_node.color = Color("fa5956")
@@ -41,6 +27,17 @@ func _ready():
 	block_node.label = "On Process"
 	block_node.color = Color("fa5956")
 	block_node.snappable = false
+	block_node.drag_started.connect(_block_picked)
+	%BlockList.add_child(block_node)
+
+	block_node = BLOCKS["simple_text_block"].instantiate()
+	block_node.text = 'print("hi")'
+	block_node.label = 'print "hi"'
+	block_node.drag_started.connect(_block_picked)
+	%BlockList.add_child(block_node)
+
+	block_node = BLOCKS["control_block"].instantiate()
+	block_node.label = "repeat 10 times"
 	block_node.drag_started.connect(_block_picked)
 	%BlockList.add_child(block_node)
 

@@ -7,6 +7,7 @@
 [node name="ControlBlock" type="MarginContainer"]
 script = ExtResource("1_2hbir")
 color = Color(0.59979, 0.536348, 0.876215, 1)
+label = null
 snap_paths = Array[NodePath]([NodePath("VBoxContainer/MiddleMarginContainer/MarginContainer/SnapPoint")])
 block_name = "control_block"
 bottom_snap_path = NodePath("VBoxContainer/SnapPoint")
@@ -41,6 +42,7 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Test Block"
