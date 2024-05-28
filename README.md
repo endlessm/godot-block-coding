@@ -13,7 +13,9 @@ At the moment there are only two nodes, a for loop and basic print block, but it
 
 ## WIP
 
-Support should be added for blocks that have two inner blocks (e.g. if/else statements), and blocks should also be able to be inserted, not just appended.
+- [x] Support should be added for blocks that have two inner blocks (e.g. if/else statements)
+
+- [ ] Blocks should also be able to be inserted, not just appended.
 
 ## pre-commit
 
