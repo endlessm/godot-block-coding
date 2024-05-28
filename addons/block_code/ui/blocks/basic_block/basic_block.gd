@@ -18,6 +18,8 @@ func _set_color(new_color: Color) -> void:
 
 
 func _ready():
+	super()
+
 	if Engine.is_editor_hint():
 		_set_color(color)
 

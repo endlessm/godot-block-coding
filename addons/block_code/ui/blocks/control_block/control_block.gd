@@ -26,6 +26,8 @@ func _set_color(new_color: Color) -> void:
 
 
 func _ready():
+	super()
+
 	for path in snap_paths:
 		snaps.append(get_node(path))
 
