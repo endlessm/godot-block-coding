@@ -41,6 +41,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Test Block"
 
 [node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("2_ejaei")]

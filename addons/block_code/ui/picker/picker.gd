@@ -18,6 +18,15 @@ func _ready():
 	block_node.drag_started.connect(_block_picked)
 	%BlockList.add_child(block_node)
 
+	block_node = (
+		preload("res://addons/block_code/ui/blocks/simple_text_block/simple_text_block.tscn")
+		. instantiate()
+	)
+	block_node.text = 'print("hi")'
+	block_node.label = 'print "hi"'
+	block_node.drag_started.connect(_block_picked)
+	%BlockList.add_child(block_node)
+
 
 func _block_picked(block: Block):
 	block_picked.emit(block)

@@ -5,7 +5,20 @@ extends Block
 @export var color: Color = Color(1., 1., 1.):
 	set = _set_color
 
+@export var label: String = "":
+	set = _set_label
+
 @onready var _top_bar := %TopBar
+@onready var _label := %Label
+
+
+func _set_label(new_label: String) -> void:
+	label = new_label
+
+	if not is_node_ready():
+		return
+
+	_label.text = label
 
 
 func _set_color(new_color: Color) -> void:
@@ -20,8 +33,8 @@ func _set_color(new_color: Color) -> void:
 func _ready():
 	super()
 
-	if Engine.is_editor_hint():
-		_set_color(color)
+	_set_color(color)
+	_set_label(label)
 
 
 func _on_drag_drop_area_mouse_down():

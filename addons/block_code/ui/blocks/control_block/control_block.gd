@@ -31,8 +31,7 @@ func _ready():
 	for path in snap_paths:
 		snaps.append(get_node(path))
 
-	if Engine.is_editor_hint():
-		_set_color(color)
+	_set_color(color)
 
 
 func _on_drag_drop_area_mouse_down():

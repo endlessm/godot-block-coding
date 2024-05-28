@@ -12,7 +12,7 @@ var bottom_snap: SnapPoint
 
 
 func _ready():
-	bottom_snap = get_node(bottom_snap_path)
+	bottom_snap = get_node_or_null(bottom_snap_path)
 
 
 func _drag_started():

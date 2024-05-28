@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cw1qsik4we2hi"]
+
+[ext_resource type="PackedScene" uid="uid://cu2p2om52kvp0" path="res://addons/block_code/ui/blocks/basic_block/basic_block.tscn" id="1_kfyqi"]
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/simple_text_block/simple_text_block.gd" id="2_lopnl"]
+
+[node name="SimpleTextBlock" instance=ExtResource("1_kfyqi")]
+script = ExtResource("2_lopnl")
+text = ""
+color = Color(0.420233, 0.742465, 0.397364, 1)
+label = "Simple Text Block"
+
+[node name="TopBar" parent="VBoxContainer/TopMarginContainer" index="0"]
+color = Color(0.420233, 0.742465, 0.397364, 1)
+
+[node name="Label" parent="VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer" index="0"]
+text = "Simple Text Block"
