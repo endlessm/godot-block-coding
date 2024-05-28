@@ -5,6 +5,10 @@ extends Block
 @export var color: Color = Color(1., 1., 1.):
 	set = _set_color
 
+@export var snap_paths: Array[NodePath]
+
+var snaps: Array[SnapPoint]
+
 @onready var _top_bar := %TopBar
 @onready var _middle_bar := %MiddleBar
 @onready var _bottom_bar := %BottomBar
@@ -22,6 +26,9 @@ func _set_color(new_color: Color) -> void:
 
 
 func _ready():
+	for path in snap_paths:
+		snaps.append(get_node(path))
+
 	if Engine.is_editor_hint():
 		_set_color(color)
 
@@ -30,6 +37,20 @@ func _on_drag_drop_area_mouse_down():
 	_drag_started()
 
 
-# TODO: move this out of the control_block script and make a child of the control block maybe
-func get_instruction() -> String:
-	return "for i in range(10):"
+# Override this method to create custom block functionality
+func get_instruction_node() -> InstructionTree.TreeNode:
+	var main_instruction: String = "for i in range(10):"
+
+	var node: InstructionTree.TreeNode = InstructionTree.TreeNode.new(main_instruction)
+
+	for snap in snaps:
+		var snapped_block: Block = snap.get_snapped_block()
+		if snapped_block:
+			node.add_child(snapped_block.get_instruction_node())
+
+	if bottom_snap:
+		var snapped_block: Block = bottom_snap.get_snapped_block()
+		if snapped_block:
+			node.next = snapped_block.get_instruction_node()
+
+	return node

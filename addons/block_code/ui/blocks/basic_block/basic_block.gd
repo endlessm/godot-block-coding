@@ -26,6 +26,15 @@ func _on_drag_drop_area_mouse_down():
 	_drag_started()
 
 
-# TODO: move this out of the control_block script and make a child of the control block maybe
-func get_instruction() -> String:
-	return 'print("Hello World")'
+# Override this method to create custom block functionality
+func get_instruction_node() -> InstructionTree.TreeNode:
+	var main_instruction: String = 'print("Hello World")'
+
+	var node: InstructionTree.TreeNode = InstructionTree.TreeNode.new(main_instruction)
+
+	if bottom_snap:
+		var snapped_block: Block = bottom_snap.get_snapped_block()
+		if snapped_block:
+			node.next = snapped_block.get_instruction_node()
+
+	return node
