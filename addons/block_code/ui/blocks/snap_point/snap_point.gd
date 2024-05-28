@@ -6,11 +6,13 @@ extends MarginContainer
 
 var block: Block
 
+
 func _ready():
 	block = get_node(block_path)
+
 
 func get_snapped_block() -> Block:
 	if get_child_count() == 0:
 		return null
-	else:
-		return get_child(0) as Block
+
+	return get_child(0) as Block

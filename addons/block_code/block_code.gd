@@ -1,9 +1,9 @@
 @tool
 extends EditorPlugin
 
-
 const MainPanel := preload("res://addons/block_code/ui/main_panel.tscn")
 var main_panel_instance
+
 
 func _enter_tree():
 	main_panel_instance = MainPanel.instantiate()
