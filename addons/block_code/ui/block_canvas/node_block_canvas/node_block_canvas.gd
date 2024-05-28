@@ -44,4 +44,4 @@ func generate_script_from_current_window():
 
 		script += "\n"
 
-	print(script)
+	return script

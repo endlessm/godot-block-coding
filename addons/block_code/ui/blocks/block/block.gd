@@ -6,6 +6,8 @@ signal drag_started(block: Block)
 
 @export var block_name: String = ""
 
+@export var snappable: bool = true
+
 @export var bottom_snap_path: NodePath
 
 var on_canvas: bool = false

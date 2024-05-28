@@ -32,6 +32,7 @@ func _ready():
 	block_node.block_name = "ready_block"
 	block_node.label = "On Ready"
 	block_node.color = Color("fa5956")
+	block_node.snappable = false
 	block_node.drag_started.connect(_block_picked)
 	%BlockList.add_child(block_node)
 
@@ -39,6 +40,7 @@ func _ready():
 	block_node.block_name = "process_block"
 	block_node.label = "On Process"
 	block_node.color = Color("fa5956")
+	block_node.snappable = false
 	block_node.drag_started.connect(_block_picked)
 	%BlockList.add_child(block_node)
 

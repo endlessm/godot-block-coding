@@ -27,41 +27,42 @@ func _process(_delta):
 
 		var dragging_global_pos: Vector2 = dragging.get_global_rect().position
 
-		# TODO: check if dropped snap point is occupied
-		# if so, replace with this node and attach the previous one
-		# to this node's bottom snap
+		if dragging.snappable:
+			# TODO: check if dropped snap point is occupied
+			# if so, replace with this node and attach the previous one
+			# to this node's bottom snap
 
-		# Find closest snap point not child of current node
-		var closest_snap_point: SnapPoint = null
-		var closest_dist: float = INF
-		var snap_points: Array[Node] = get_tree().get_nodes_in_group("snap_point")
-		for n in snap_points:
-			if n is SnapPoint:
-				var snap_point: SnapPoint = n as SnapPoint
+			# Find closest snap point not child of current node
+			var closest_snap_point: SnapPoint = null
+			var closest_dist: float = INF
+			var snap_points: Array[Node] = get_tree().get_nodes_in_group("snap_point")
+			for n in snap_points:
+				if n is SnapPoint:
+					var snap_point: SnapPoint = n as SnapPoint
 
-				if snap_point.block.on_canvas:
-					var snap_global_pos: Vector2 = snap_point.get_global_rect().position
-					var temp_dist: float = dragging_global_pos.distance_to(snap_global_pos)
-					if temp_dist < closest_dist:
-						# Check if any parent node is this node
-						var is_child: bool = false
-						var parent = snap_point
-						while parent is SnapPoint:
-							if parent.block == dragging:
-								is_child = true
-								break
+					if snap_point.block.on_canvas:
+						var snap_global_pos: Vector2 = snap_point.get_global_rect().position
+						var temp_dist: float = dragging_global_pos.distance_to(snap_global_pos)
+						if temp_dist < closest_dist:
+							# Check if any parent node is this node
+							var is_child: bool = false
+							var parent = snap_point
+							while parent is SnapPoint:
+								if parent.block == dragging:
+									is_child = true
+									break
 
-							parent = parent.block.get_parent()
+								parent = parent.block.get_parent()
 
-						if not is_child:
-							closest_dist = temp_dist
-							closest_snap_point = snap_point
+							if not is_child:
+								closest_dist = temp_dist
+								closest_snap_point = snap_point
 
-		if closest_dist > 80.0:
-			closest_snap_point = null
+			if closest_dist > 80.0:
+				closest_snap_point = null
 
-		if closest_snap_point != previewing_snap_point:
-			_update_preview(closest_snap_point)
+			if closest_snap_point != previewing_snap_point:
+				_update_preview(closest_snap_point)
 
 
 func _update_preview(snap_point: SnapPoint):
@@ -121,7 +122,7 @@ func drag_ended():
 			remove_child(dragging)
 			dragging.on_canvas = true
 
-			if previewing_snap_point:
+			if preview_block:
 				# Can snap block
 				preview_block.queue_free()
 				preview_block = null
