@@ -8,6 +8,7 @@
 script = ExtResource("1_2hbir")
 color = Color(0.59979, 0.536348, 0.876215, 1)
 snap_paths = Array[NodePath]([NodePath("VBoxContainer/MiddleMarginContainer/MarginContainer/SnapPoint")])
+block_name = "control_block"
 bottom_snap_path = NodePath("VBoxContainer/SnapPoint")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]

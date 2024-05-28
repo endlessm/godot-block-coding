@@ -28,9 +28,5 @@ func _input(event):
 	# HACK: play the topmost block
 	if event is InputEventKey:
 		if event.keycode == KEY_F and event.pressed:
-			var topmost: Block = _block_canvas.get_node("WindowScroll/Window").get_child(0)
-			var tree: InstructionTree.TreeNode = topmost.get_instruction_node()
-
-			var generator: InstructionTree = InstructionTree.new()
-			var script: String = generator.generate_text(tree)
+			var script: String = _block_canvas.generate_script_from_current_window()
 			print(script)

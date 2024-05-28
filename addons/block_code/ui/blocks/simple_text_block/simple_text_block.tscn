@@ -8,6 +8,7 @@ script = ExtResource("2_lopnl")
 text = ""
 color = Color(0.420233, 0.742465, 0.397364, 1)
 label = "Simple Text Block"
+block_name = "simple_text_block"
 
 [node name="TopBar" parent="VBoxContainer/TopMarginContainer" index="0"]
 color = Color(0.420233, 0.742465, 0.397364, 1)

@@ -4,6 +4,8 @@ extends MarginContainer
 
 signal drag_started(block: Block)
 
+@export var block_name: String = ""
+
 @export var bottom_snap_path: NodePath
 
 var on_canvas: bool = false
@@ -24,4 +26,14 @@ func disconnect_drag():
 	for c in connections:
 		drag_started.disconnect(c.callable)
 
-# Custom nodes will have a get_instruction_node() -> InstructionTree.TreeNode
+
+# Override this method to create custom block functionality
+func get_instruction_node() -> InstructionTree.TreeNode:
+	var node: InstructionTree.TreeNode = InstructionTree.TreeNode.new("")
+
+	if bottom_snap:
+		var snapped_block: Block = bottom_snap.get_snapped_block()
+		if snapped_block:
+			node.next = snapped_block.get_instruction_node()
+
+	return node

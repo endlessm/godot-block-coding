@@ -21,17 +21,18 @@ func generate_tree(root_block: Block) -> TreeNode:
 	return root_block.get_instruction()
 
 
-func generate_text(root_node: TreeNode) -> String:
+func generate_text(root_node: TreeNode, start_depth: int = 0) -> String:
 	out = ""
-	depth = 0
+	depth = start_depth
 	generate_text_recursive(root_node)
 	return out
 
 
 func generate_text_recursive(root_node: TreeNode):
-	for i in depth:
-		out += "\t"
-	out += root_node.data + "\n"
+	if root_node.data != "":
+		for i in depth:
+			out += "\t"
+		out += root_node.data + "\n"
 
 	depth += 1
 
