@@ -31,6 +31,8 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 	
 	var node: InstructionTree.TreeNode = InstructionTree.TreeNode.new(main_instruction)
 	
+	# TODO: blocks should be able to have multiple "main_instruction"s for each inner snap block
+	# for example, if/else statements have two inner blocks
 	for snap in snaps:
 		var snapped_block: Block = snap.get_snapped_block()
 		if snapped_block:
