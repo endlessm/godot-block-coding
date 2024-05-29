@@ -17,6 +17,8 @@ At the moment there are only two nodes, a for loop and basic print block, but it
 
 - [ ] Blocks should also be able to be inserted, not just appended.
 
+- [ ] Make `block_type` properties have a class-like hierarchy (not just enum).
+
 ## pre-commit
 
 Please use [pre-commit](https://pre-commit.com/) to check for correct formatting and other issues before creating commits. To do this automatically, you can add it as a git hook:

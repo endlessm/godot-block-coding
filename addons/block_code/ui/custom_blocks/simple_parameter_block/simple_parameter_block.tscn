@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dek4j8dre76oa"]
+
+[ext_resource type="PackedScene" uid="uid://c4cjt0oi4me43" path="res://addons/block_code/ui/blocks/basic_block/basic_block.tscn" id="1_uhi1g"]
+[ext_resource type="Script" path="res://addons/block_code/ui/custom_blocks/simple_parameter_block/simple_parameter_block.gd" id="2_f155n"]
+[ext_resource type="PackedScene" uid="uid://cjvxs6euc6xbm" path="res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn" id="3_0m84r"]
+
+[node name="SimpleParameterBlock" instance=ExtResource("1_uhi1g")]
+script = ExtResource("2_f155n")
+text = ""
+color = Color(0.420233, 0.742465, 0.397364, 1)
+label = "print"
+block_name = "simple_parameter_block"
+
+[node name="TopBar" parent="VBoxContainer/TopMarginContainer" index="0"]
+color = Color(0.420233, 0.742465, 0.397364, 1)
+
+[node name="Label" parent="VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer" index="0"]
+text = "print"
+
+[node name="ParameterInput" parent="VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer" index="1" instance=ExtResource("3_0m84r")]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder = "text"
+block_path = NodePath("../../../../..")

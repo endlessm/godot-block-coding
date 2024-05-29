@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c7puyxpqcq6xo"]
 
-[ext_resource type="Script" path="res://addons/block_code/ui/blocks/drag_drop_area/drag_drop_area.gd" id="1_5vdxp"]
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.gd" id="1_5vdxp"]
 
 [node name="DragDropArea" type="MarginContainer"]
 anchors_preset = 15

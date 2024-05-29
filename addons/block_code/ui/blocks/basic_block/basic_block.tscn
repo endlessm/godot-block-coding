@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cu2p2om52kvp0"]
+[gd_scene load_steps=4 format=3 uid="uid://c4cjt0oi4me43"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/basic_block/basic_block.gd" id="1_ph7wu"]
-[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/drag_drop_area/drag_drop_area.tscn" id="2_r14pb"]
-[ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/snap_point/snap_point.tscn" id="3_15ikp"]
+[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_r14pb"]
+[ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="3_15ikp"]
 
 [node name="BasicBlock" type="MarginContainer"]
 script = ExtResource("1_ph7wu")
@@ -29,8 +29,12 @@ layout_mode = 2
 mouse_filter = 1
 color = Color(0.530082, 0.933559, 0.726557, 1)
 
+[node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("2_r14pb")]
+layout_mode = 2
+
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TopMarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
@@ -39,15 +43,13 @@ theme_override_constants/margin_bottom = 4
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopMarginContainer/MarginContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Basic Block"
-
-[node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("2_r14pb")]
-layout_mode = 2
 
 [node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("3_15ikp")]
 layout_mode = 2

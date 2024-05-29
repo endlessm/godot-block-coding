@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bk2argmujy0kk"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/control_block/control_block.gd" id="1_2hbir"]
-[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/drag_drop_area/drag_drop_area.tscn" id="2_ejaei"]
-[ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/snap_point/snap_point.tscn" id="3_65h43"]
+[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_w0te0"]
+[ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="3_nhryi"]
 
 [node name="ControlBlock" type="MarginContainer"]
 script = ExtResource("1_2hbir")
@@ -47,7 +47,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Control Block"
 
-[node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("2_ejaei")]
+[node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("2_w0te0")]
 layout_mode = 2
 
 [node name="MiddleMarginContainer" type="MarginContainer" parent="VBoxContainer"]
@@ -63,7 +63,7 @@ color = Color(0.479832, 0.429078, 0.700972, 1)
 layout_mode = 2
 theme_override_constants/margin_left = 20
 
-[node name="SnapPoint" parent="VBoxContainer/MiddleMarginContainer/MarginContainer" instance=ExtResource("3_65h43")]
+[node name="SnapPoint" parent="VBoxContainer/MiddleMarginContainer/MarginContainer" instance=ExtResource("3_nhryi")]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 block_path = NodePath("../../../..")
@@ -79,7 +79,7 @@ size_flags_vertical = 3
 mouse_filter = 1
 color = Color(0.59979, 0.536348, 0.876215, 1)
 
-[node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("3_65h43")]
+[node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("3_nhryi")]
 layout_mode = 2
 block_path = NodePath("../..")
 

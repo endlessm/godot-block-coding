@@ -5,4 +5,5 @@ enum BlockType {
 	NONE,
 	EXECUTE,
 	ENTRY,
+	PARAMETER,
 }

@@ -9,6 +9,12 @@ const BLOCKS: Dictionary = {
 	"basic_block": preload("res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"),
 	"simple_text_block":
 	preload("res://addons/block_code/ui/blocks/simple_text_block/simple_text_block.tscn"),
+	"parameter_block":
+	preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn"),
+	"simple_parameter_block":
+	preload(
+		"res://addons/block_code/ui/custom_blocks/simple_parameter_block/simple_parameter_block.tscn"
+	)
 }
 
 
@@ -38,6 +44,14 @@ func _ready():
 
 	block_node = BLOCKS["control_block"].instantiate()
 	block_node.label = "repeat 10 times"
+	block_node.drag_started.connect(_block_picked)
+	%BlockList.add_child(block_node)
+
+	block_node = BLOCKS["parameter_block"].instantiate()
+	block_node.drag_started.connect(_block_picked)
+	%BlockList.add_child(block_node)
+
+	block_node = BLOCKS["simple_parameter_block"].instantiate()
 	block_node.drag_started.connect(_block_picked)
 	%BlockList.add_child(block_node)
 
