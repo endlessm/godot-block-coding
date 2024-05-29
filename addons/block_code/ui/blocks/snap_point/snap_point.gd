@@ -4,6 +4,8 @@ extends MarginContainer
 
 @export var block_path: NodePath
 
+@export var block_type: Types.BlockType = Types.BlockType.EXECUTE
+
 var block: Block
 
 

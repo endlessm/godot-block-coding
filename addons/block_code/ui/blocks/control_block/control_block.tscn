@@ -7,7 +7,7 @@
 [node name="ControlBlock" type="MarginContainer"]
 script = ExtResource("1_2hbir")
 color = Color(0.59979, 0.536348, 0.876215, 1)
-label = null
+label = "Control Block"
 snap_paths = Array[NodePath]([NodePath("VBoxContainer/MiddleMarginContainer/MarginContainer/SnapPoint")])
 block_name = "control_block"
 bottom_snap_path = NodePath("VBoxContainer/SnapPoint")
@@ -45,7 +45,7 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "Test Block"
+text = "Control Block"
 
 [node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("2_ejaei")]
 layout_mode = 2
