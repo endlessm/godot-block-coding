@@ -22,8 +22,14 @@ func _on_button_pressed():
 func _input(event):
 	if event is InputEventMouseButton:
 		var mouse_event: InputEventMouseButton = event as InputEventMouseButton
-		if mouse_event.button_index == MOUSE_BUTTON_LEFT and not mouse_event.pressed:
-			_drag_manager.drag_ended()
+		if mouse_event.button_index == MOUSE_BUTTON_LEFT:
+			if mouse_event.pressed:
+				# Release focus
+				var focused_node := get_viewport().gui_get_focus_owner()
+				if focused_node:
+					focused_node.release_focus()
+			else:
+				_drag_manager.drag_ended()
 
 	# HACK: play the topmost block
 	if event is InputEventKey:
