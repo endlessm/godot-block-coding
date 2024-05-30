@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="NodeClassList" load_steps=6 format=3 uid="uid://n32n5afl1m2o"]
+
+[ext_resource type="PackedScene" uid="uid://ddx1cd5q6t61o" path="res://addons/block_code/simple_nodes/simple_character/simple_character.tscn" id="1_auvp7"]
+[ext_resource type="Script" path="res://addons/block_code/ui/node_list/node_class_list/node_class_list.gd" id="1_rrqs6"]
+[ext_resource type="Texture2D" uid="uid://dr8e0tvfxjy1f" path="res://icon.svg" id="1_w5d0e"]
+[ext_resource type="Script" path="res://addons/block_code/ui/node_list/node_class_list/node_class/node_class.gd" id="3_nor5m"]
+
+[sub_resource type="Resource" id="Resource_viq8c"]
+script = ExtResource("3_nor5m")
+node_class_name = "SimpleCharacter"
+scene_ref = ExtResource("1_auvp7")
+preview_icon = ExtResource("1_w5d0e")
+
+[resource]
+script = ExtResource("1_rrqs6")
+node_class_list = Array[ExtResource("3_nor5m")]([SubResource("Resource_viq8c"), SubResource("Resource_viq8c")])

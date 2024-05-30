@@ -13,7 +13,6 @@ repos:
   # <https://github.com/Scony/godot-gdscript-toolkit/commit/e3c37fa54fb32ad99b0bceb2f17e7bc1ffd99806>
   rev: f836958a4487e31e3c5ab35c57c7a2128b7e2303
   hooks:
-  - id: gdlint
   - id: gdformat
     args: [--line-length=200]
 files:

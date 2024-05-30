@@ -7,12 +7,16 @@ var eia: EditorInterfaceAccess
 @onready var _picker: Picker = %Picker
 @onready var _block_canvas: BlockCanvas = %NodeBlockCanvas
 @onready var _drag_manager: DragManager = %DragManager
+@onready var _node_canvas := %NodeCanvas
+@onready var _node_list: NodeList = %NodeList
+@onready var _title_bar: TitleBar = %TitleBar
 
 
 func _ready():
 	eia = EditorInterfaceAccess.new()
 
 	_picker.block_picked.connect(_drag_manager.copy_picked_block_and_drag)
+	_node_list.node_selected.connect(_title_bar.node_selected)
 
 
 func _on_button_pressed():

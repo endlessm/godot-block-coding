@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://bm1183pm05p6a"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/title_bar/title_bar.gd" id="1_hpvmt"]
+
+[node name="TitleBar" type="MarginContainer"]
+custom_minimum_size = Vector2(0, 40)
+offset_right = 1000.0
+offset_bottom = 40.0
+script = ExtResource("1_hpvmt")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="NodeName" type="LineEdit" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
