@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://5wi1lr7413kx"]
+[gd_scene load_steps=3 format=3 uid="uid://5wi1lr7413kx"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/node_list/node_preview/node_preview.gd" id="1_50x03"]
-[ext_resource type="Texture2D" uid="uid://dr8e0tvfxjy1f" path="res://icon.svg" id="2_r780x"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1s3f0"]
 
@@ -18,7 +17,6 @@ layout_mode = 2
 [node name="Icon" type="TextureRect" parent="HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-texture = ExtResource("2_r780x")
 expand_mode = 3
 stretch_mode = 4
 

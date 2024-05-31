@@ -7,9 +7,9 @@
 [node name="SimpleParameterBlock" instance=ExtResource("1_uhi1g")]
 script = ExtResource("2_f155n")
 text = ""
-color = Color(0.420233, 0.742465, 0.397364, 1)
 label = "print"
 block_name = "simple_parameter_block"
+color = Color(0.420233, 0.742465, 0.397364, 1)
 
 [node name="TopBar" parent="VBoxContainer/TopMarginContainer" index="0"]
 color = Color(0.420233, 0.742465, 0.397364, 1)

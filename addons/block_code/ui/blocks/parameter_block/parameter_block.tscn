@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_gy5co"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1cywi"]
-bg_color = Color(0.0196078, 0.419608, 0.654902, 1)
+bg_color = Color(0.6, 0.537255, 0.87451, 1)
 corner_radius_top_left = 40
 corner_radius_top_right = 40
 corner_radius_bottom_right = 40
@@ -14,8 +14,8 @@ corner_radius_bottom_left = 40
 offset_right = 99.0
 offset_bottom = 39.0
 script = ExtResource("1_0hajy")
-color = Color(0.0196078, 0.419608, 0.654902, 1)
 block_name = "parameter_block"
+color = Color(0.0196078, 0.419608, 0.654902, 1)
 block_type = 3
 
 [node name="Panel" type="Panel" parent="."]

@@ -6,6 +6,8 @@ signal drag_started(block: Block)
 
 @export var block_name: String = ""
 
+@export var color: Color = Color(1., 1., 1.)
+
 @export var block_type: Types.BlockType = Types.BlockType.EXECUTE
 
 @export var bottom_snap_path: NodePath
