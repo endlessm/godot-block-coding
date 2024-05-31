@@ -3,6 +3,47 @@ class_name NodeBlockCanvas
 extends BlockCanvas
 
 
+func _ready():
+	load_canvas()
+
+
+func clear_canvas():
+	# TODO: implement multiple windows
+	var current_window := _window
+	for child in current_window.get_children().filter(func (c): return c is Block):
+		child.queue_free()
+
+
+func load_canvas():
+	# TODO: implement multiple windows
+	var current_window := _window
+
+	var scene: PackedScene = ResourceLoader.load("user://test_canvas.tscn")
+	var root = scene.instantiate()
+	for node in root.get_children():
+		var block = node.duplicate()
+		current_window.add_child(block)
+
+
+func save_canvas():
+	# TODO: implement multiple windows
+	var current_window := _window
+	var root = Node2D.new()
+	var scene = PackedScene.new()
+	for child in current_window.get_children().filter(func (c): return c is Block):
+		# TODO: Do this recursively
+		var node = child.duplicate()
+		root.add_child(node)
+		node.owner = root
+	var pack_result = scene.pack(root)
+	if pack_result != OK:
+		push_error("An error occurred while saving the canvas to disk.")
+		return
+	var error = ResourceSaver.save(scene, "user://test_canvas.tscn")
+	if error != OK:
+		push_error("An error occurred while saving the scene to disk.")
+
+
 func generate_script_from_current_window():
 	# TODO: implement multiple windows
 	var current_window := _window

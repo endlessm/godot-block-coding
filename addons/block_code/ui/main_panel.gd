@@ -48,3 +48,10 @@ func _input(event):
 
 			print(script)
 			print("Saved to " + path + "\n")
+
+		elif event.keycode == KEY_A and event.pressed:
+			_block_canvas.load_canvas()
+		elif event.keycode == KEY_S and event.pressed:
+			_block_canvas.save_canvas()
+		elif event.keycode == KEY_C and event.pressed:
+			_block_canvas.clear_canvas()
