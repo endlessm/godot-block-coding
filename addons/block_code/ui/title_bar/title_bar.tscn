@@ -18,3 +18,10 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
+
+[node name="ClassName" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.501407, 0.501406, 0.501406, 1)
+
+[connection signal="text_changed" from="HBoxContainer/NodeName" to="." method="_on_node_name_text_changed"]

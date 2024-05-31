@@ -17,6 +17,7 @@ func _ready():
 
 	_picker.block_picked.connect(_drag_manager.copy_picked_block_and_drag)
 	_node_list.node_selected.connect(_title_bar.node_selected)
+	_title_bar.node_name_changed.connect(_node_list.on_node_name_changed)
 
 
 func _on_button_pressed():
