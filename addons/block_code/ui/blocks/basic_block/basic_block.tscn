@@ -6,9 +6,9 @@
 
 [node name="BasicBlock" type="MarginContainer"]
 script = ExtResource("1_ph7wu")
-color = Color(0.530082, 0.933559, 0.726557, 1)
 label = "Basic Block"
 block_name = "basic_block"
+color = Color(0.530082, 0.933559, 0.726557, 1)
 bottom_snap_path = NodePath("VBoxContainer/SnapPoint")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]

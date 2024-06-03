@@ -44,6 +44,6 @@ func generate_script_from_current_window():
 				var to_append := generator.generate_text(instruction_node, 1)
 				script += to_append
 
-		script += "\n"
+		script += "\n\tsuper()\n\n"
 
 	return script

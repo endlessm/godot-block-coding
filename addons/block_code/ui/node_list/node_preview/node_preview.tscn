@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://5wi1lr7413kx"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/node_list/node_preview/node_preview.gd" id="1_50x03"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1s3f0"]
+
+[node name="NodePreview" type="MarginContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+script = ExtResource("1_50x03")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1s3f0")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

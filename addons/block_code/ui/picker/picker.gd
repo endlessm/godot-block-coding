@@ -4,56 +4,21 @@ extends MarginContainer
 
 signal block_picked(block: Block)
 
-const BLOCKS: Dictionary = {
-	"control_block": preload("res://addons/block_code/ui/blocks/control_block/control_block.tscn"),
-	"basic_block": preload("res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"),
-	"simple_text_block":
-	preload("res://addons/block_code/ui/blocks/simple_text_block/simple_text_block.tscn"),
-	"parameter_block":
-	preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn"),
-	"simple_parameter_block":
-	preload(
-		"res://addons/block_code/ui/custom_blocks/simple_parameter_block/simple_parameter_block.tscn"
-	)
-}
-
 
 func _ready():
-	# entry
-	var block_node: Block = BLOCKS["basic_block"].instantiate()
-	block_node.block_name = "ready_block"
-	block_node.label = "On Ready"
-	block_node.color = Color("fa5956")
-	block_node.block_type = Types.BlockType.ENTRY
-	block_node.drag_started.connect(_block_picked)
-	%BlockList.add_child(block_node)
+	var block_categories := CategoryFactory.get_general_categories()
 
-	block_node = BLOCKS["basic_block"].instantiate()
-	block_node.block_name = "process_block"
-	block_node.label = "On Process"
-	block_node.color = Color("fa5956")
-	block_node.block_type = Types.BlockType.ENTRY
-	block_node.drag_started.connect(_block_picked)
-	%BlockList.add_child(block_node)
+	for _category in block_categories:
+		var category: BlockCategory = _category as BlockCategory
 
-	block_node = BLOCKS["simple_text_block"].instantiate()
-	block_node.text = 'print("hi")'
-	block_node.label = 'print "hi"'
-	block_node.drag_started.connect(_block_picked)
-	%BlockList.add_child(block_node)
+		var block_category_display := preload("res://addons/block_code/ui/picker/categories/block_category_display.tscn").instantiate()
+		block_category_display.category = category
 
-	block_node = BLOCKS["control_block"].instantiate()
-	block_node.label = "repeat 10 times"
-	block_node.drag_started.connect(_block_picked)
-	%BlockList.add_child(block_node)
+		%BlockList.add_child(block_category_display)
 
-	block_node = BLOCKS["parameter_block"].instantiate()
-	block_node.drag_started.connect(_block_picked)
-	%BlockList.add_child(block_node)
-
-	block_node = BLOCKS["simple_parameter_block"].instantiate()
-	block_node.drag_started.connect(_block_picked)
-	%BlockList.add_child(block_node)
+		for _block in category.block_list:
+			var block: Block = _block as Block
+			block.drag_started.connect(_block_picked)
 
 
 func _block_picked(block: Block):

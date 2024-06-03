@@ -2,9 +2,6 @@
 class_name ControlBlock
 extends Block
 
-@export var color: Color = Color(1., 1., 1.):
-	set = _set_color
-
 @export var label: String = "":
 	set = _set_label
 
@@ -27,24 +24,16 @@ func _set_label(new_label: String) -> void:
 	_label.text = label
 
 
-func _set_color(new_color: Color) -> void:
-	color = new_color
-
-	if not is_node_ready():
-		return
-
-	_top_bar.color = color
-	_middle_bar.color = color.darkened(0.2)
-	_bottom_bar.color = color
-
-
 func _ready():
 	super()
 
 	for path in snap_paths:
 		snaps.append(get_node(path))
 
-	_set_color(color)
+	_top_bar.color = color
+	_middle_bar.color = color.darkened(0.2)
+	_bottom_bar.color = color
+
 	_set_label(label)
 
 

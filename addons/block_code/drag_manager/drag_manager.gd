@@ -10,6 +10,7 @@ var dragging: Block = null
 
 var previewing_snap_point: SnapPoint = null
 var preview_block: Control = null
+var preview_owner: Block = null
 
 var _picker: Picker
 var _block_canvas: BlockCanvas
@@ -49,7 +50,6 @@ func _process(_delta):
 						while parent is SnapPoint:
 							if parent.block == dragging:
 								is_child = true
-								break
 
 							parent = parent.block.get_parent()
 
@@ -129,11 +129,10 @@ func drag_ended():
 				preview_block.queue_free()
 				preview_block = null
 				previewing_snap_point.add_child(dragging)
+				dragging.set_owner(_block_canvas._window)  # Doesn't work?
 			else:
 				# Block goes on screen somewhere
-				dragging.position = (
-					get_global_mouse_position() - block_canvas_rect.position - drag_offset
-				)
+				dragging.position = (get_global_mouse_position() - block_canvas_rect.position - drag_offset)
 				_block_canvas.add_block(dragging)
 		else:
 			dragging.queue_free()

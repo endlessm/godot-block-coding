@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://fu6r626trsix"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/node_canvas/node_canvas.gd" id="1_0iab1"]
+
+[node name="NodeCanvas" type="MarginContainer"]
+script = ExtResource("1_0iab1")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2

@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://cf6dqqs064xmh"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/node_list/node_data/node_data.gd" id="1_c1em0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1tm21"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wyo85"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uhfnf"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.144379, 0.67633, 0.825651, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="NodeData" type="MarginContainer" groups=["node_data"]]
+script = ExtResource("1_c1em0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="VBoxContainer/CenterContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Select" type="Button" parent="."]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1tm21")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wyo85")
+
+[node name="Outline" type="Panel" parent="."]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_uhfnf")
+
+[connection signal="pressed" from="Select" to="." method="_on_select_pressed"]

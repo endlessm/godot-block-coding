@@ -7,12 +7,17 @@ var eia: EditorInterfaceAccess
 @onready var _picker: Picker = %Picker
 @onready var _block_canvas: BlockCanvas = %NodeBlockCanvas
 @onready var _drag_manager: DragManager = %DragManager
+#@onready var _node_canvas := %NodeCanvas
+#@onready var _node_list: NodeList = %NodeList
+@onready var _title_bar: TitleBar = %TitleBar
 
 
 func _ready():
 	eia = EditorInterfaceAccess.new()
 
 	_picker.block_picked.connect(_drag_manager.copy_picked_block_and_drag)
+	#_node_list.node_selected.connect(_title_bar.node_selected)
+	#_title_bar.node_name_changed.connect(_node_list.on_node_name_changed)
 
 
 func _on_button_pressed():
@@ -43,3 +48,10 @@ func _input(event):
 
 			print(script)
 			print("Saved to " + path + "\n")
+
+		elif event.keycode == KEY_A and event.pressed:
+			_block_canvas.load_canvas()
+		elif event.keycode == KEY_S and event.pressed:
+			_block_canvas.save_canvas()
+		elif event.keycode == KEY_C and event.pressed:
+			_block_canvas.clear_canvas()
