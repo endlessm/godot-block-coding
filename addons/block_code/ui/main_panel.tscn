@@ -1,12 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bq37yla8ya707"]
+[gd_scene load_steps=6 format=3 uid="uid://bq37yla8ya707"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/main_panel.gd" id="1_u0xju"]
 [ext_resource type="PackedScene" uid="uid://dlabt3bgmpna2" path="res://addons/block_code/ui/picker/picker.tscn" id="2_hv5f3"]
 [ext_resource type="PackedScene" uid="uid://bm1183pm05p6a" path="res://addons/block_code/ui/title_bar/title_bar.tscn" id="2_k54yf"]
 [ext_resource type="PackedScene" uid="uid://layefpj12yp2" path="res://addons/block_code/ui/block_canvas/node_block_canvas/node_block_canvas.tscn" id="3_ml5y3"]
-[ext_resource type="PackedScene" uid="uid://fu6r626trsix" path="res://addons/block_code/ui/node_canvas/node_canvas.tscn" id="4_pvwcd"]
 [ext_resource type="PackedScene" uid="uid://cph1k5cfximbf" path="res://addons/block_code/drag_manager/drag_manager.tscn" id="4_yijtu"]
-[ext_resource type="PackedScene" uid="uid://dctdq5611t3yl" path="res://addons/block_code/ui/node_list/node_list.tscn" id="5_xl2dt"]
 
 [node name="MainPanel" type="MarginContainer"]
 anchors_preset = 15
@@ -65,19 +63,5 @@ layout_mode = 2
 mouse_filter = 2
 picker_path = NodePath("../HBoxContainer/Picker")
 block_canvas_path = NodePath("../HBoxContainer/NodeBlockCanvas")
-
-[node name="NodesVBox" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="NodeCanvas" parent="VBoxContainer/MarginContainer/HBoxContainer/NodesVBox" instance=ExtResource("4_pvwcd")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="NodeList" parent="VBoxContainer/MarginContainer/HBoxContainer/NodesVBox" instance=ExtResource("5_xl2dt")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
 
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
