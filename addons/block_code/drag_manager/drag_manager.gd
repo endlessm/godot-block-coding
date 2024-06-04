@@ -129,11 +129,11 @@ func drag_ended():
 				preview_block.queue_free()
 				preview_block = null
 				previewing_snap_point.add_child(dragging)
-				dragging.set_owner(_block_canvas._window)  # Doesn't work?
 			else:
 				# Block goes on screen somewhere
 				dragging.position = (get_global_mouse_position() - block_canvas_rect.position - drag_offset)
 				_block_canvas.add_block(dragging)
+				#dragging.set_owner(_block_canvas._window)
 		else:
 			dragging.queue_free()
 
