@@ -18,6 +18,7 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
+editable = false
 
 [node name="ClassName" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true

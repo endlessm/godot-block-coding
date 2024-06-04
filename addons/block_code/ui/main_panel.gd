@@ -11,17 +11,44 @@ var eia: EditorInterfaceAccess
 #@onready var _node_list: NodeList = %NodeList
 @onready var _title_bar: TitleBar = %TitleBar
 
+var _current_path: String
+
 
 func _ready():
-	eia = EditorInterfaceAccess.new()
-
 	_picker.block_picked.connect(_drag_manager.copy_picked_block_and_drag)
 	#_node_list.node_selected.connect(_title_bar.node_selected)
 	#_title_bar.node_name_changed.connect(_node_list.on_node_name_changed)
 
 
 func _on_button_pressed():
-	eia.context_switcher_3d_button.visible = false
+	pass
+
+
+func switch_script(path: String, bsd: BlockScriptData = null):
+	if bsd == null:
+		var bsd_path: String = path.replace(".gd", "_bsd.tres")
+		bsd = ResourceLoader.load(bsd_path, "BlockScriptData")
+
+	_current_path = path
+	_title_bar.bsd_selected(bsd)
+
+
+func create_and_switch_script(path: String, bsd: BlockScriptData):
+	switch_script(path, bsd)
+	save_script()
+
+
+func save_script():
+	var script_text: String = _block_canvas.generate_script_from_current_window()
+	var script := FileAccess.open(_current_path, FileAccess.WRITE)
+
+	if script != null:
+		script.store_string(script_text)
+		script.close()
+
+		print("Saved generated script to " + _current_path)
+	else:
+		print("Failed to save generated script.")
 
 
 func _input(event):
