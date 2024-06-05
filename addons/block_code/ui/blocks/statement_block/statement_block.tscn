@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://c84vmg3odrtxt"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/statement_block/statement_block.gd" id="1_6wvlf"]
+[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_owgdx"]
+[ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="3_5vaov"]
+
+[node name="StatementBlock" type="MarginContainer"]
+script = ExtResource("1_6wvlf")
+block_name = "statement_block"
+label = "StatementBlock"
+bottom_snap_path = NodePath("VBoxContainer/SnapPoint")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TopMarginContainer" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="TopBar" type="ColorRect" parent="VBoxContainer/TopMarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+
+[node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("2_owgdx")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TopMarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopMarginContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("3_5vaov")]
+layout_mode = 2
+block_path = NodePath("../..")
+
+[connection signal="mouse_down" from="VBoxContainer/TopMarginContainer/DragDropArea" to="." method="_on_drag_drop_area_mouse_down"]

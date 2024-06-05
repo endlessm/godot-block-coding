@@ -6,9 +6,9 @@
 
 [node name="ControlBlock" type="MarginContainer"]
 script = ExtResource("1_2hbir")
-label = "Control Block"
 snap_paths = Array[NodePath]([NodePath("VBoxContainer/MiddleMarginContainer/MarginContainer/SnapPoint")])
 block_name = "control_block"
+label = "Control Block"
 color = Color(0.59979, 0.536348, 0.876215, 1)
 bottom_snap_path = NodePath("VBoxContainer/SnapPoint")
 

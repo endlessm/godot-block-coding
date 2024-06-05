@@ -3,6 +3,7 @@ class_name Block
 extends MarginContainer
 
 signal drag_started(block: Block)
+signal modified
 
 ## Name of the block to be referenced by others in search
 @export var block_name: String = ""
@@ -36,7 +37,7 @@ func _drag_started():
 	drag_started.emit(self)
 
 
-func disconnect_drag():
+func disconnect_signals():
 	var connections: Array = drag_started.get_connections()
 	for c in connections:
 		drag_started.disconnect(c.callable)

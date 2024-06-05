@@ -3,6 +3,7 @@ class_name DragManager
 extends Control
 
 signal block_dropped
+signal block_modified
 
 @export var picker_path: NodePath
 @export var block_canvas_path: NodePath
@@ -41,7 +42,9 @@ func _process(_delta):
 		for n in snap_points:
 			if n is SnapPoint:
 				var snap_point: SnapPoint = n as SnapPoint
-
+				if snap_point.block == null:
+					push_error("Warning: a snap point does not reference it's parent block.")
+					continue
 				if snap_point.block.on_canvas and snap_point.block_type == dragging.block_type:
 					var snap_global_pos: Vector2 = snap_point.get_global_rect().position
 					var temp_dist: float = dragging_global_pos.distance_to(snap_global_pos)
@@ -105,7 +108,7 @@ func drag_block(block: Block, copied_from: Block = null):
 
 
 func copy_block(block: Block) -> Block:
-	return block.duplicate(8)  # use instantiation
+	return block.duplicate(DUPLICATE_USE_INSTANTIATION)  # use instantiation
 
 
 func copy_picked_block_and_drag(block: Block):
@@ -121,8 +124,8 @@ func drag_ended():
 		# Check if in BlockCanvas
 		var block_canvas_rect: Rect2 = _block_canvas.get_global_rect()
 		if block_canvas_rect.encloses(block_rect):
-			dragging.disconnect_drag()  # disconnect previous drag signal connections
-			dragging.drag_started.connect(drag_block)
+			dragging.disconnect_signals()  # disconnect previous on canvas signal connections
+			connect_block_canvas_signals(dragging)
 			remove_child(dragging)
 			dragging.on_canvas = true
 
@@ -135,7 +138,6 @@ func drag_ended():
 				# Block goes on screen somewhere
 				dragging.position = (get_global_mouse_position() - block_canvas_rect.position - drag_offset)
 				_block_canvas.add_block(dragging)
-				#dragging.set_owner(_block_canvas._window)
 		else:
 			dragging.queue_free()
 
@@ -143,5 +145,6 @@ func drag_ended():
 		block_dropped.emit()
 
 
-func reconnect_block(block: Block):
+func connect_block_canvas_signals(block: Block):
 	block.drag_started.connect(drag_block)
+	block.modified.connect(func(): block_modified.emit())

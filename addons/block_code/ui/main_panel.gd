@@ -17,8 +17,9 @@ var _current_bsd: BlockScriptData
 
 func _ready():
 	_picker.block_picked.connect(_drag_manager.copy_picked_block_and_drag)
-	_block_canvas.reconnect_block.connect(_drag_manager.reconnect_block)
+	_block_canvas.reconnect_block.connect(_drag_manager.connect_block_canvas_signals)
 	_drag_manager.block_dropped.connect(save_script)
+	_drag_manager.block_modified.connect(save_script)
 	#_node_list.node_selected.connect(_title_bar.node_selected)
 	#_title_bar.node_name_changed.connect(_node_list.on_node_name_changed)
 

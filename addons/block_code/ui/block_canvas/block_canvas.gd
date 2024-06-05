@@ -44,10 +44,13 @@ func load_tree(parent: Node, node: SerializedBlockTreeNode):
 	var scene: Block = load(node.serialized_block.block_path).instantiate()
 	for prop_pair in node.serialized_block.serialized_props:
 		scene.set(prop_pair[0], prop_pair[1])
+
 	scene.on_canvas = true
 	parent.add_child(scene)
+
 	var scene_block: Block = scene as Block
 	reconnect_block.emit(scene_block)
+
 	for c in node.path_child_pairs:
 		load_tree(scene.get_node(c[0]), c[1])
 
