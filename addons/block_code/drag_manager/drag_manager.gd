@@ -2,6 +2,8 @@
 class_name DragManager
 extends Control
 
+signal block_dropped
+
 @export var picker_path: NodePath
 @export var block_canvas_path: NodePath
 
@@ -129,12 +131,17 @@ func drag_ended():
 				preview_block.queue_free()
 				preview_block = null
 				previewing_snap_point.add_child(dragging)
-				dragging.set_owner(_block_canvas._window)  # Doesn't work?
 			else:
 				# Block goes on screen somewhere
 				dragging.position = (get_global_mouse_position() - block_canvas_rect.position - drag_offset)
 				_block_canvas.add_block(dragging)
+				#dragging.set_owner(_block_canvas._window)
 		else:
 			dragging.queue_free()
 
 		dragging = null
+		block_dropped.emit()
+
+
+func reconnect_block(block: Block):
+	block.drag_started.connect(drag_block)

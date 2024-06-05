@@ -53,7 +53,25 @@ static func find_child_by_type(from: Node, type: String, is_recursive := true, p
 	if not result.is_empty() and predicate != Helper.noop:
 		result = result.filter(predicate)
 	return null if result.is_empty() else result[0]
+	
+	
+static func find_children_by_type(from: Node, type: String, is_recursive := true, predicate := Helper.noop):
+	if from == null:
+		return null
+	var result := from.find_children("", type, is_recursive, false)
+	if not result.is_empty() and predicate != Helper.noop:
+		result = result.filter(predicate)
+	return null if result.is_empty() else result
 
+
+static func find_child_by_name(from: Node, name: String, is_recursive := true, predicate := Helper.noop) -> Node:
+	if from == null:
+		return null
+	var result := from.find_children(name, "", is_recursive, false)
+	if not result.is_empty() and predicate != Helper.noop:
+		result = result.filter(predicate)
+	return null if result.is_empty() else result[0]
+	
 
 static func get_tree_item_path(item: TreeItem, column: int = 0) -> String:
 	var partial_result: Array[String] = [item.get_text(column)]

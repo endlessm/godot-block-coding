@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="BlockScriptData" load_steps=10 format=3 uid="uid://dgqu3vp2sjbi7"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="1_5hs1j"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block.gd" id="2_6n1nj"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="3_0kgfv"]
+[ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="4_i84j4"]
+
+[sub_resource type="Resource" id="Resource_pvmgx"]
+script = ExtResource("2_6n1nj")
+block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+serialized_props = [["block_name", "process_block"], ["label", "On Process"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(465, 84)]]
+
+[sub_resource type="Resource" id="Resource_4einx"]
+script = ExtResource("1_5hs1j")
+serialized_block = SubResource("Resource_pvmgx")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_k6p0l"]
+script = ExtResource("2_6n1nj")
+block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+serialized_props = [["block_name", "ready_block"], ["label", "On Ready"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(142, 122)]]
+
+[sub_resource type="Resource" id="Resource_bs2a5"]
+script = ExtResource("1_5hs1j")
+serialized_block = SubResource("Resource_k6p0l")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_w106g"]
+script = ExtResource("3_0kgfv")
+array = Array[ExtResource("1_5hs1j")]([SubResource("Resource_4einx"), SubResource("Resource_bs2a5")])
+
+[resource]
+script = ExtResource("4_i84j4")
+script_class_name = "TestNode"
+script_inherits = "Node2D"
+block_trees = SubResource("Resource_w106g")

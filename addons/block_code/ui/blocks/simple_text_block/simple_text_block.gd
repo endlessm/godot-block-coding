@@ -16,3 +16,7 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 			node.next = snapped_block.get_instruction_node()
 
 	return node
+
+
+func get_scene_path():
+	return "res://addons/block_code/ui/blocks/simple_text_block/simple_text_block.tscn"

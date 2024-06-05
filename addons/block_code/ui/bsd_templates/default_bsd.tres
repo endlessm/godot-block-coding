@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="SerializedBlockTreeNodeArray" load_steps=8 format=3 uid="uid://djn5nejdsfu2a"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="1_xu478"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block.gd" id="2_p8age"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="3_tn1p8"]
+
+[sub_resource type="Resource" id="Resource_00uhr"]
+script = ExtResource("2_p8age")
+block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+serialized_props = [["block_name", "ready_block"], ["label", "On Ready"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(51, 51)]]
+
+[sub_resource type="Resource" id="Resource_u1sqr"]
+script = ExtResource("1_xu478")
+serialized_block = SubResource("Resource_00uhr")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_6d7jb"]
+script = ExtResource("2_p8age")
+block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+serialized_props = [["block_name", "process_block"], ["label", "On Process"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(666, 52)]]
+
+[sub_resource type="Resource" id="Resource_h3qcs"]
+script = ExtResource("1_xu478")
+serialized_block = SubResource("Resource_6d7jb")
+path_child_pairs = []
+
+[resource]
+script = ExtResource("3_tn1p8")
+array = Array[ExtResource("1_xu478")]([SubResource("Resource_u1sqr"), SubResource("Resource_h3qcs")])

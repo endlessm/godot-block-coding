@@ -13,6 +13,14 @@ extends MarginContainer
 @onready var _snap_point := %SnapPoint
 
 
+func set_plain_text(new_text):
+	%LineEdit.text = new_text
+
+
+func get_plain_text():
+	return %LineEdit.text
+
+
 func _set_placeholder(new_placeholder: String) -> void:
 	placeholder = new_placeholder
 

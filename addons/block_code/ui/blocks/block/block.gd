@@ -4,12 +4,19 @@ extends MarginContainer
 
 signal drag_started(block: Block)
 
+## Name of the block to be referenced by others in search
 @export var block_name: String = ""
 
+## Label of block (optionally used to draw block labels)
+@export var label: String = ""
+
+## Color of block (optionally used to draw block color)
 @export var color: Color = Color(1., 1., 1.)
 
+## Type of block to check if can be attached to snap point
 @export var block_type: Types.BlockType = Types.BlockType.EXECUTE
 
+## The next block in the line of execution (can be null if end)
 @export var bottom_snap_path: NodePath
 
 var on_canvas: bool = false
@@ -19,6 +26,10 @@ var bottom_snap: SnapPoint
 
 func _ready():
 	bottom_snap = get_node_or_null(bottom_snap_path)
+
+
+func get_scene_path():
+	return ""
 
 
 func _drag_started():
@@ -41,3 +52,15 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 			node.next = snapped_block.get_instruction_node()
 
 	return node
+
+
+# Override this method to add more serialized properties
+func get_serialized_props() -> Array:
+	return serialize_props(["block_name", "label", "color", "block_type", "position"])
+
+
+func serialize_props(prop_names: Array) -> Array:
+	var pairs := []
+	for p in prop_names:
+		pairs.append([p, self.get(p)])
+	return pairs

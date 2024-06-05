@@ -4,9 +4,28 @@ extends MarginContainer
 
 signal block_picked(block: Block)
 
+@onready var _block_list := %BlockList
 
-func _ready():
+
+func bsd_selected(bsd: BlockScriptData):
+	for class_dict in ProjectSettings.get_global_class_list():
+		if class_dict.class == bsd.script_inherits:
+			var script = load(class_dict.path)
+			if script.has_method("get_custom_blocks"):
+				init_picker(script.get_custom_blocks())
+				return
+
+	init_picker()
+
+
+func init_picker(extra_blocks: Array[BlockCategory] = []):
+	for c in _block_list.get_children():
+		c.queue_free()
+
 	var block_categories := CategoryFactory.get_general_categories()
+
+	if extra_blocks.size() > 0:
+		CategoryFactory.add_to_categories(block_categories, extra_blocks)
 
 	for _category in block_categories:
 		var category: BlockCategory = _category as BlockCategory
@@ -14,7 +33,7 @@ func _ready():
 		var block_category_display := preload("res://addons/block_code/ui/picker/categories/block_category_display.tscn").instantiate()
 		block_category_display.category = category
 
-		%BlockList.add_child(block_category_display)
+		_block_list.add_child(block_category_display)
 
 		for _block in category.block_list:
 			var block: Block = _block as Block

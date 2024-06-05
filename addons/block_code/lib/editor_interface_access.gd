@@ -119,6 +119,7 @@ var import_dock: VBoxContainer = null
 var select_node_window: ConfirmationDialog = null
 
 var node_create_window: ConfirmationDialog = null
+var script_create_window: ConfirmationDialog = null
 var node_create_panel: HSplitContainer = null
 var node_create_dialog_node_tree: Tree = null
 var node_create_dialog_search_bar: LineEdit = null
@@ -334,6 +335,7 @@ func _init() -> void:
 	scene_dock = Utils.find_child_by_type(base_control, "SceneTreeDock")
 	scene_dock_button_add = scene_dock.get_child(0).get_child(0)
 	node_create_window = Utils.find_child_by_type(scene_dock, "CreateDialog")
+	script_create_window = Utils.find_child_by_type(scene_dock, "ScriptCreateDialog")
 	node_create_panel = Utils.find_child_by_type(node_create_window, "HSplitContainer")
 	var node_create_dialog_vboxcontainer: VBoxContainer = Utils.find_child_by_type(
 		node_create_panel, "VBoxContainer", false

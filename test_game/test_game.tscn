@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://bbwmxee7ukgul"]
+[gd_scene load_steps=4 format=3 uid="uid://bbwmxee7ukgul"]
 
-[ext_resource type="Script" path="res://test_game/test_game.gd" id="1_08to8"]
+[ext_resource type="PackedScene" uid="uid://ddx1cd5q6t61o" path="res://addons/block_code/simple_nodes/simple_character/simple_character.tscn" id="1_gedmj"]
+[ext_resource type="Script" path="res://test_game/TestNode.gd" id="1_itb65"]
+[ext_resource type="Script" path="res://test_game/my_character.gd" id="2_fb3ug"]
 
 [node name="TestGame" type="Node2D"]
-script = ExtResource("1_08to8")
 
 [node name="TestNode" type="Node2D" parent="."]
-unique_name_in_owner = true
+script = ExtResource("1_itb65")
+
+[node name="MyCharacter" parent="." instance=ExtResource("1_gedmj")]
+script = ExtResource("2_fb3ug")
