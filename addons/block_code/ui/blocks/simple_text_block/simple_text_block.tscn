@@ -6,9 +6,9 @@
 [node name="SimpleTextBlock" instance=ExtResource("1_nvc1o")]
 script = ExtResource("2_piii2")
 text = ""
-color = Color(0.420233, 0.742465, 0.397364, 1)
-label = "Simple Text Block"
 block_name = "simple_text_block"
+label = "Simple Text Block"
+color = Color(0.420233, 0.742465, 0.397364, 1)
 
 [node name="TopBar" parent="VBoxContainer/TopMarginContainer" index="0"]
 color = Color(0.420233, 0.742465, 0.397364, 1)

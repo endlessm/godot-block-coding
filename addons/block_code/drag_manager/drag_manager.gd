@@ -2,6 +2,8 @@
 class_name DragManager
 extends Control
 
+signal block_dropped
+
 @export var picker_path: NodePath
 @export var block_canvas_path: NodePath
 
@@ -138,3 +140,8 @@ func drag_ended():
 			dragging.queue_free()
 
 		dragging = null
+		block_dropped.emit()
+
+
+func reconnect_block(block: Block):
+	block.drag_started.connect(drag_block)

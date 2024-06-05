@@ -8,6 +8,7 @@ var eia: EditorInterfaceAccess
 
 var script_ok_button: Button
 var script_ok_prev_connection: Dictionary
+var prev_opened_script_idx: int
 
 var block_code_tab: Button
 
@@ -29,29 +30,83 @@ func _enter_tree():
 	script_ok_button.pressed.disconnect(script_ok_prev_connection.callable)
 	script_ok_button.pressed.connect(_create_block_script)
 
+	# Handle scene tree buttons to intercept block script open
+	eia.scene_tree.button_clicked.connect(_handle_scene_tree_button)
+
+
+func _load_block_script_data(bsd_path: String) -> BlockScriptData:
+	var bsd: BlockScriptData = ResourceLoader.load(bsd_path, "BlockScriptData", ResourceLoader.CACHE_MODE_IGNORE)
+	if bsd:
+		print("Loaded block script from " + bsd_path)
+		return bsd
+
+	print("Failed to load block script from " + bsd_path)
+	return null
+
 
 func _create_block_script():
-	block_code_tab.pressed.emit()
-	eia.script_create_window.get_cancel_button().pressed.emit()
+	#prev_opened_script_idx = eia.script_editor_items.get_selected_items()[0]
+
+	# Create actual script but close script editor window (Doesn't work atm, need to remove popup)
+	script_ok_prev_connection.callable.call()
+	#var new_script_idx = eia.script_editor_items.get_selected_items()[0]
+	#print(eia.script_editor_items.get_item_text(new_script_idx))
+	#eia.script_editor_items.remove_item(new_script_idx)
+	#eia.script_editor_items.select(prev_opened_script_idx)
+	#eia.script_editor_items.item_selected.emit(prev_opened_script_idx)
+
+	# Find create script menu
 	var create_menus = eia.Utils.find_child_by_type(eia.script_create_window, "VBoxContainer")
+
+	var create_new := true
 
 	# Create files
 	var path: String = create_menus.get_children()[0].get_children()[9].get_children()[0].text
 	var inherits: String = create_menus.get_children()[0].get_children()[3].get_children()[0].text
 
 	var bsd_path: String = path.replace(".gd", "_bsd.tres")
-	var default_packed_scene = PackedScene.new()
-	var split_path := path.split("/")
-	var file_name := split_path[split_path.size() - 1].replace(".gd", "")
-	var bsd: BlockScriptData = BlockScriptData.new(file_name, inherits, default_packed_scene)
-	var error: Error = ResourceSaver.save(bsd, bsd_path)
+	if FileAccess.file_exists(bsd_path):
+		create_new = false
 
-	if error == OK:
-		print("Saved to " + bsd_path)
+	if create_new:
+		var default_block_trees = preload("res://addons/block_code/ui/bsd_templates/default_bsd.tres")
+		var split_path := path.split("/")
+		var file_name := split_path[split_path.size() - 1].replace(".gd", "")
+		var bsd: BlockScriptData = BlockScriptData.new(file_name, inherits, default_block_trees)
+
+		main_panel.create_and_switch_script(path, bsd)
 	else:
-		print("Failed to create block script: " + str(error))
+		var bsd := _load_block_script_data(bsd_path)
 
-	main_panel.create_and_switch_script(path, bsd)
+		main_panel.switch_script(path, bsd)
+
+	block_code_tab.pressed.emit()
+
+
+func _open_block_script(path: String, bsd_path: String):
+	var bsd := _load_block_script_data(bsd_path)
+	main_panel.switch_script(path, bsd)
+	block_code_tab.pressed.emit()
+
+
+func _handle_scene_tree_button(tree_item, column, id, mouse_button_index):
+	if not is_instance_valid(tree_item):
+		return
+
+	var button_index = tree_item.get_button_by_id(column, id)
+
+	# Get path from tooltip
+	var tooltip: String = tree_item.get_button_tooltip_text(column, button_index)
+	if tooltip.begins_with("Open Script"):
+		var path: String = tooltip.replace("Open Script: ", "")
+		var bsd_path := path.replace(".gd", "_bsd.tres")
+		_open_block_script(path, bsd_path)
+
+
+#func recurse_tree(tree_item: TreeItem, method: Callable):
+#method.call(tree_item)
+#for c in tree_item.get_children():
+#recurse_tree(c, method)
 
 
 func _exit_tree():
@@ -61,6 +116,8 @@ func _exit_tree():
 	# Exit block scripting environment
 	script_ok_button.pressed.disconnect(_create_block_script)
 	_reconnect_signal(script_ok_button.pressed, script_ok_prev_connection)
+
+	eia.scene_tree.button_clicked.disconnect(_handle_scene_tree_button)
 
 
 func _reconnect_signal(_signal: Signal, _data: Dictionary):

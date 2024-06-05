@@ -2,9 +2,6 @@
 class_name ControlBlock
 extends Block
 
-@export var label: String = "":
-	set = _set_label
-
 @export var snap_paths: Array[NodePath]
 
 var snaps: Array[SnapPoint]
@@ -13,15 +10,6 @@ var snaps: Array[SnapPoint]
 @onready var _middle_bar := %MiddleBar
 @onready var _bottom_bar := %BottomBar
 @onready var _label := %Label
-
-
-func _set_label(new_label: String) -> void:
-	label = new_label
-
-	if not is_node_ready():
-		return
-
-	_label.text = label
 
 
 func _ready():
@@ -34,7 +22,7 @@ func _ready():
 	_middle_bar.color = color.darkened(0.2)
 	_bottom_bar.color = color
 
-	_set_label(label)
+	_label.text = label
 
 
 func _on_drag_drop_area_mouse_down():
@@ -58,3 +46,7 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 			node.next = snapped_block.get_instruction_node()
 
 	return node
+
+
+func get_scene_path():
+	return "res://addons/block_code/ui/blocks/control_block/control_block.tscn"

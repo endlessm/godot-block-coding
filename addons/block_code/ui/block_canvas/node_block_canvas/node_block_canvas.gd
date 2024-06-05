@@ -3,7 +3,7 @@ class_name NodeBlockCanvas
 extends BlockCanvas
 
 
-func generate_script_from_current_window():
+func generate_script_from_current_window(script_class_name: String = "", script_inherits: String = ""):
 	# TODO: implement multiple windows
 	var current_window := _window
 
@@ -24,7 +24,9 @@ func generate_script_from_current_window():
 
 	var script: String = ""
 
-	script += "extends Node2D\n\n"
+	if script_class_name != "":
+		script += "class_name %s\n" % script_class_name
+	script += "extends %s\n\n" % script_inherits
 
 	for section in [["func _ready():", ready_nodes], ["func _process(_delta):", process_nodes]]:
 		script += section[0] + "\n"
@@ -44,6 +46,7 @@ func generate_script_from_current_window():
 				var to_append := generator.generate_text(instruction_node, 1)
 				script += to_append
 
-		script += "\n\tsuper()\n\n"
+		#script += "\n\tsuper()\n\n"
+		script += "\n"
 
 	return script

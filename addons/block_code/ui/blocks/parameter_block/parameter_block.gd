@@ -2,20 +2,8 @@
 class_name ParameterBlock
 extends Block
 
-@export var label: String = "Parameter":
-	set = _set_label
-
 @onready var _panel := $Panel
 @onready var _label := %Label
-
-
-func _set_label(new_label: String) -> void:
-	label = new_label
-
-	if not is_node_ready():
-		return
-
-	_label.text = label
 
 
 func _ready():
@@ -23,7 +11,7 @@ func _ready():
 
 	_panel.get_theme_stylebox("panel").bg_color = color
 
-	_set_label(label)
+	_label.text = label
 
 
 func _on_drag_drop_area_mouse_down():
@@ -37,3 +25,7 @@ func get_parameter_string() -> String:
 	# Nested stuff
 
 	return str
+
+
+func get_scene_path():
+	return "res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn"

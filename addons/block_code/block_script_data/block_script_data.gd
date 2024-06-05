@@ -3,10 +3,10 @@ extends Resource
 
 @export var script_class_name: String
 @export var script_inherits: String
-@export var packed_scene: PackedScene
+@export var block_trees: SerializedBlockTreeNodeArray
 
 
-func _init(p_script_class_name: String = "", p_script_inherits: String = "", p_packed_scene: PackedScene = PackedScene.new()):
+func _init(p_script_class_name: String = "", p_script_inherits: String = "", p_block_trees: SerializedBlockTreeNodeArray = null):
 	script_class_name = p_script_class_name
 	script_inherits = p_script_inherits
-	packed_scene = p_packed_scene
+	block_trees = p_block_trees

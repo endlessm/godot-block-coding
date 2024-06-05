@@ -7,6 +7,8 @@ const EXTEND_MARGIN: float = 800
 @onready var _window: Control = %Window
 @onready var _window_scroll: ScrollContainer = %WindowScroll
 
+signal reconnect_block(block: Block)
+
 
 func add_block(block: Block) -> void:
 	block.position.y += _window_scroll.scroll_vertical
@@ -20,46 +22,52 @@ func set_child(n: Node):
 		set_child(c)
 
 
+func bsd_selected(bsd: BlockScriptData):
+	clear_canvas()
+
+	for tree in bsd.block_trees.array:
+		load_tree(_window, tree)
+
+
 func clear_canvas():
 	for child in _window.get_children():
 		child.queue_free()
 
 
-func load_canvas():
-	var save: PackedSceneTreeNodeArray = ResourceLoader.load("user://test_canvas.tres")
-	for tree in save.array:
-		load_tree(_window, tree)
+#func load_canvas():
+#var save: SerializedBlockTreeNodeArray = ResourceLoader.load("user://test_canvas.tres")
+#for tree in save.array:
+#load_tree(_window, tree)
 
 
-func load_tree(parent: Node, node: PackedSceneTreeNode):
-	var scene = node.scene.instantiate()
+func load_tree(parent: Node, node: SerializedBlockTreeNode):
+	var scene: Block = load(node.serialized_block.block_path).instantiate()
+	for prop_pair in node.serialized_block.serialized_props:
+		scene.set(prop_pair[0], prop_pair[1])
+	scene.on_canvas = true
 	parent.add_child(scene)
-	for c in node.children:
+	var scene_block: Block = scene as Block
+	reconnect_block.emit(scene_block)
+	for c in node.path_child_pairs:
 		load_tree(scene.get_node(c[0]), c[1])
 
 
-func save_canvas():
-	var save = PackedSceneTreeNodeArray.new()
+func get_canvas_block_trees() -> SerializedBlockTreeNodeArray:
+	var block_trees := SerializedBlockTreeNodeArray.new()
 	for c in _window.get_children():
-		save.array.append(build_tree(c))
+		block_trees.array.append(build_tree(c))
 
-	var save_error := ResourceSaver.save(save, "user://test_canvas.tres")
-
-	if save_error != OK:
-		push_error("An error occurred while saving the scene to disk.")
+	return block_trees
 
 
-func build_tree(node: Node) -> PackedSceneTreeNode:
-	var n = PackedSceneTreeNode.new()
+func build_tree(block: Block) -> SerializedBlockTreeNode:
+	var n = SerializedBlockTreeNode.new()
+	n.serialized_block = SerializedBlock.new(block.get_scene_path(), block.get_serialized_props())
 
-	var scene := PackedScene.new()
-	scene.pack(node)
-
-	n.scene = scene
-
-	for snap in find_snaps(node):
+	for snap in find_snaps(block):
 		for c in snap.get_children():
-			n.children.append([node.get_path_to(snap), build_tree(c)])
+			if c is Block:  # Make sure to not include preview
+				n.path_child_pairs.append([block.get_path_to(snap), build_tree(c)])
 
 	return n
 
