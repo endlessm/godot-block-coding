@@ -2,8 +2,9 @@ class_name my_character
 extends SimpleCharacter
 
 func _ready():
-	print("Hello")
+	pass
 
 func _process(_delta):
-	pass
+	velocity = Input.get_vector("Left", "Right", "Up", "Down")*500
+	move_and_slide()
 

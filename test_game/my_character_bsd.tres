@@ -1,46 +1,60 @@
-[gd_resource type="Resource" script_class="BlockScriptData" load_steps=12 format=3 uid="uid://bq7dtkskpg3o7"]
+[gd_resource type="Resource" script_class="BlockScriptData" load_steps=14 format=3 uid="uid://ck5nvoachf6rf"]
 
-[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="1_k57ta"]
-[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block.gd" id="2_y21hf"]
-[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="3_dtf32"]
-[ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="4_bixc6"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="1_w7tnt"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block.gd" id="2_7jhtg"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="3_7xt81"]
+[ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="4_2nqti"]
 
-[sub_resource type="Resource" id="Resource_fkakv"]
-script = ExtResource("2_y21hf")
-block_path = "res://addons/block_code/ui/custom_blocks/simple_parameter_block/simple_parameter_block.tscn"
-serialized_props = [["block_name", "simple_parameter_block"], ["label", "print"], ["color", Color(0.6, 0.537255, 0.87451, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["_input1text", "\"Hello\""]]
+[sub_resource type="Resource" id="Resource_6gbvc"]
+script = ExtResource("2_7jhtg")
+block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+serialized_props = [["block_name", "ready_block"], ["label", "On Ready"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(63, 65)]]
 
-[sub_resource type="Resource" id="Resource_to3ri"]
-script = ExtResource("1_k57ta")
-serialized_block = SubResource("Resource_fkakv")
+[sub_resource type="Resource" id="Resource_rghek"]
+script = ExtResource("1_w7tnt")
+serialized_block = SubResource("Resource_6gbvc")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_aoeda"]
-script = ExtResource("2_y21hf")
-block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
-serialized_props = [["block_name", "ready_block"], ["label", "On Ready"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(137, 88)]]
+[sub_resource type="Resource" id="Resource_2xl53"]
+script = ExtResource("2_7jhtg")
+block_path = "res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn"
+serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.352941, 0.368627, 0.447059, 1)], ["block_type", 5], ["position", Vector2(0, 0)], ["block_format", "Get WASD Input Vector"], ["statement", "Input.get_vector(\"Left\", \"Right\", \"Up\", \"Down\")"], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_jsuhc"]
-script = ExtResource("1_k57ta")
-serialized_block = SubResource("Resource_aoeda")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_to3ri")]]
-
-[sub_resource type="Resource" id="Resource_yqtr1"]
-script = ExtResource("2_y21hf")
-block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
-serialized_props = [["block_name", "process_block"], ["label", "On Process"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(504, 100)]]
-
-[sub_resource type="Resource" id="Resource_2yc6h"]
-script = ExtResource("1_k57ta")
-serialized_block = SubResource("Resource_yqtr1")
+[sub_resource type="Resource" id="Resource_nia1t"]
+script = ExtResource("1_w7tnt")
+serialized_block = SubResource("Resource_2xl53")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_ralbc"]
-script = ExtResource("3_dtf32")
-array = Array[ExtResource("1_k57ta")]([SubResource("Resource_jsuhc"), SubResource("Resource_2yc6h")])
+[sub_resource type="Resource" id="Resource_yb3p7"]
+script = ExtResource("2_7jhtg")
+block_path = "res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.290196, 0.52549, 0.835294, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Add movement input {input: VECTOR2} with speed {speed: INT}"], ["statement", "velocity = {input}*{speed}
+move_and_slide()"], ["param_input_strings", {
+"input": "",
+"speed": "500"
+}]]
+
+[sub_resource type="Resource" id="Resource_8ygn3"]
+script = ExtResource("1_w7tnt")
+serialized_block = SubResource("Resource_yb3p7")
+path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_nia1t")]]
+
+[sub_resource type="Resource" id="Resource_r8vlu"]
+script = ExtResource("2_7jhtg")
+block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+serialized_props = [["block_name", "process_block"], ["label", "On Process"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(380, 65)]]
+
+[sub_resource type="Resource" id="Resource_ybt1l"]
+script = ExtResource("1_w7tnt")
+serialized_block = SubResource("Resource_r8vlu")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_8ygn3")]]
+
+[sub_resource type="Resource" id="Resource_qev4n"]
+script = ExtResource("3_7xt81")
+array = Array[ExtResource("1_w7tnt")]([SubResource("Resource_rghek"), SubResource("Resource_ybt1l")])
 
 [resource]
-script = ExtResource("4_bixc6")
+script = ExtResource("4_2nqti")
 script_class_name = "my_character"
 script_inherits = "SimpleCharacter"
-block_trees = SubResource("Resource_ralbc")
+block_trees = SubResource("Resource_qev4n")
