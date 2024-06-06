@@ -63,7 +63,6 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 	if bottom_snap:
 		var snapped_block: Block = bottom_snap.get_snapped_block()
 		if snapped_block:
-			print("snapped_block")
 			node.next = snapped_block.get_instruction_node()
 
 	return root
