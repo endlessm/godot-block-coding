@@ -25,7 +25,12 @@ func _ready():
 
 
 func _on_button_pressed():
-	pass
+	# FIXME: hardcoded, get the blocks from selected node in tree?
+	var path = "res://test_game/my_character_bsd.tres"
+	var bsd = load(path)
+	# var bsd = preload("res://test_game/my_character_bsd.tres")
+	# var bsd: BlockScriptData = ResourceLoader.load(bsd_path, "BlockScriptData", ResourceLoader.CACHE_MODE_IGNORE)
+	switch_script(path, bsd)
 
 
 func switch_script(path: String, bsd: BlockScriptData):
@@ -49,23 +54,12 @@ func save_script():
 	var block_trees := _block_canvas.get_canvas_block_trees()
 	var script_text: String = _block_canvas.generate_script_from_current_window(_current_bsd.script_class_name, _current_bsd.script_inherits)
 	var bsd := BlockScriptData.new(_current_bsd.script_class_name, _current_bsd.script_inherits, block_trees, script_text)
-	var bsd_path := _current_path.replace(".gd", "_bsd.tres")
-	var error: Error = ResourceSaver.save(bsd, bsd_path)
+	var error: Error = ResourceSaver.save(bsd, _current_path)
 
 	if error == OK:
-		print("Saved block script to " + bsd_path)
+		print("Saved block script to " + _current_path)
 	else:
 		print("Failed to create block script: " + str(error))
-
-	var script := FileAccess.open(_current_path, FileAccess.WRITE)
-
-	if script != null:
-		script.store_string(script_text)
-		script.close()
-
-		print("Saved generated script to " + _current_path)
-	else:
-		print("Failed to save generated script.")
 
 
 func _input(event):

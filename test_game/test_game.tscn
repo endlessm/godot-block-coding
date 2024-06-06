@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bbwmxee7ukgul"]
 
 [ext_resource type="PackedScene" uid="uid://ddx1cd5q6t61o" path="res://addons/block_code/simple_nodes/simple_character/simple_character.tscn" id="1_gedmj"]
-[ext_resource type="Script" path="res://test_game/my_character.gd" id="2_36aao"]
+[ext_resource type="Resource" uid="uid://ck5nvoachf6rf" path="res://test_game/my_character_bsd.tres" id="2_ip56f"]
 
 [node name="TestGame" type="Node2D"]
 
@@ -10,4 +10,4 @@
 [node name="TestNode" type="Node2D" parent="."]
 
 [node name="MyCharacter" parent="." instance=ExtResource("1_gedmj")]
-script = ExtResource("2_36aao")
+metadata/block_script_data = ExtResource("2_ip56f")

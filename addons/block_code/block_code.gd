@@ -1,6 +1,9 @@
 @tool
 extends EditorPlugin
 
+const BLOCKS_MANAGER_NAME = "BlocksManager"
+const BLOCKS_MANAGER_SCRIPT = "res://addons/block_code/blocks_manager.gd"
+
 const MainPanel := preload("res://addons/block_code/ui/main_panel.tscn")
 var main_panel
 
@@ -11,9 +14,21 @@ var script_ok_prev_connection: Dictionary
 var prev_opened_script_idx: int
 
 var block_code_tab: Button
+var _blocks_manager
+
+
+func _ready():
+	await get_tree().process_frame
+	_blocks_manager = get_tree().root.find_child(BLOCKS_MANAGER_NAME, true, false)
+	_attach_resources()
 
 
 func _enter_tree():
+	add_autoload_singleton(BLOCKS_MANAGER_NAME, BLOCKS_MANAGER_SCRIPT)
+
+	if not Engine.is_editor_hint():
+		return
+
 	main_panel = MainPanel.instantiate()
 	# Add the main panel to the editor's main viewport.
 	EditorInterface.get_editor_main_screen().add_child(main_panel)
@@ -31,7 +46,7 @@ func _enter_tree():
 	script_ok_button.pressed.connect(_create_block_script)
 
 	# Handle scene tree buttons to intercept block script open
-	eia.scene_tree.button_clicked.connect(_handle_scene_tree_button)
+	# eia.scene_tree.button_clicked.connect(_handle_scene_tree_button)
 
 
 func _load_block_script_data(bsd_path: String) -> BlockScriptData:
@@ -73,19 +88,25 @@ func _create_block_script():
 		var split_path := path.split("/")
 		var file_name := split_path[split_path.size() - 1].replace(".gd", "")
 		var bsd: BlockScriptData = BlockScriptData.new(file_name, inherits, default_block_trees)
+		bsd.source_code_dirty.connect(_on_bsd_source_code_dirty)
 
-		main_panel.create_and_switch_script(path, bsd)
+		main_panel.create_and_switch_script(bsd_path, bsd)
 	else:
 		var bsd := _load_block_script_data(bsd_path)
+		bsd.source_code_dirty.connect(_on_bsd_source_code_dirty)
 
-		main_panel.switch_script(path, bsd)
+		main_panel.switch_script(bsd_path, bsd)
 
 	block_code_tab.pressed.emit()
 
 
+func _on_bsd_source_code_dirty():
+	print("dirty!")
+
+
 func _open_block_script(path: String, bsd_path: String):
 	var bsd := _load_block_script_data(bsd_path)
-	main_panel.switch_script(path, bsd)
+	main_panel.switch_script(bsd_path, bsd)
 	block_code_tab.pressed.emit()
 
 
@@ -110,6 +131,8 @@ func _handle_scene_tree_button(tree_item, column, id, mouse_button_index):
 
 
 func _exit_tree():
+	remove_autoload_singleton(BLOCKS_MANAGER_NAME)
+
 	if main_panel:
 		main_panel.queue_free()
 
@@ -117,7 +140,7 @@ func _exit_tree():
 	script_ok_button.pressed.disconnect(_create_block_script)
 	_reconnect_signal(script_ok_button.pressed, script_ok_prev_connection)
 
-	eia.scene_tree.button_clicked.disconnect(_handle_scene_tree_button)
+	# eia.scene_tree.button_clicked.disconnect(_handle_scene_tree_button)
 
 
 func _reconnect_signal(_signal: Signal, _data: Dictionary):
@@ -139,3 +162,10 @@ func _get_plugin_name():
 
 func _get_plugin_icon():
 	return EditorInterface.get_editor_theme().get_icon("Node", "EditorIcons")
+
+
+func _attach_resources():
+	if not _blocks_manager:
+		print("no blocks manager")
+		return
+	_blocks_manager.attach_resources()
