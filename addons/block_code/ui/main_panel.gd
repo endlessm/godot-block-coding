@@ -47,7 +47,8 @@ func save_script():
 		return
 
 	var block_trees := _block_canvas.get_canvas_block_trees()
-	var bsd := BlockScriptData.new(_current_bsd.script_class_name, _current_bsd.script_inherits, block_trees)
+	var script_text: String = _block_canvas.generate_script_from_current_window(_current_bsd.script_class_name, _current_bsd.script_inherits)
+	var bsd := BlockScriptData.new(_current_bsd.script_class_name, _current_bsd.script_inherits, block_trees, script_text)
 	var bsd_path := _current_path.replace(".gd", "_bsd.tres")
 	var error: Error = ResourceSaver.save(bsd, bsd_path)
 
@@ -56,7 +57,6 @@ func save_script():
 	else:
 		print("Failed to create block script: " + str(error))
 
-	var script_text: String = _block_canvas.generate_script_from_current_window(_current_bsd.script_class_name, _current_bsd.script_inherits)
 	var script := FileAccess.open(_current_path, FileAccess.WRITE)
 
 	if script != null:
