@@ -10,7 +10,8 @@ var block: Block
 
 
 func _ready():
-	block = get_node_or_null(block_path)
+	if block == null:
+		block = get_node_or_null(block_path)
 
 
 func get_snapped_block() -> Block:

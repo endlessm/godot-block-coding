@@ -2,23 +2,27 @@
 class_name ParameterInput
 extends MarginContainer
 
+signal text_modified
+
 @export var placeholder: String = "Parameter":
 	set = _set_placeholder
 
 @export var block_path: NodePath
 
-@export var block_type: Types.BlockType = Types.BlockType.PARAMETER
+@export var block_type: Types.BlockType = Types.BlockType.STRING
+
+var block: Block
 
 @onready var _line_edit := %LineEdit
 @onready var _snap_point := %SnapPoint
 
 
 func set_plain_text(new_text):
-	%LineEdit.text = new_text
+	_line_edit.text = new_text
 
 
 func get_plain_text():
-	return %LineEdit.text
+	return _line_edit.text
 
 
 func _set_placeholder(new_placeholder: String) -> void:
@@ -33,8 +37,12 @@ func _set_placeholder(new_placeholder: String) -> void:
 func _ready():
 	_set_placeholder(placeholder)
 
-	_snap_point.block = get_node_or_null(block_path)
+	if block == null:
+		block = get_node_or_null(block_path)
+	_snap_point.block = block
 	_snap_point.block_type = block_type
+
+	# Do something with block_type to restrict input
 
 
 func get_snapped_block() -> Block:
@@ -47,3 +55,7 @@ func get_string() -> String:
 		return snapped_block.get_parameter_string()
 
 	return _line_edit.text
+
+
+func _on_line_edit_text_changed(new_text):
+	text_modified.emit()

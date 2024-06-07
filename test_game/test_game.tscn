@@ -1,13 +1,81 @@
-[gd_scene load_steps=4 format=3 uid="uid://bbwmxee7ukgul"]
+[gd_scene load_steps=17 format=3 uid="uid://bbwmxee7ukgul"]
 
-[ext_resource type="PackedScene" uid="uid://ddx1cd5q6t61o" path="res://addons/block_code/simple_nodes/simple_character/simple_character.tscn" id="1_gedmj"]
-[ext_resource type="Script" path="res://test_game/TestNode.gd" id="1_itb65"]
-[ext_resource type="Script" path="res://test_game/my_character.gd" id="2_fb3ug"]
+[ext_resource type="PackedScene" uid="uid://ddx1cd5q6t61o" path="res://addons/block_code/simple_nodes/simple_character/simple_character.tscn" id="1_hrpwq"]
+[ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="2_ewral"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="2_pqvcj"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block.gd" id="3_dpt5n"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="4_xt862"]
+[ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="5_q37d3"]
+
+[sub_resource type="Resource" id="Resource_w0teo"]
+script = ExtResource("3_dpt5n")
+block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+serialized_props = [["block_name", "ready_block"], ["label", "On Ready"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(51, 51)]]
+
+[sub_resource type="Resource" id="Resource_gk3tx"]
+script = ExtResource("2_pqvcj")
+serialized_block = SubResource("Resource_w0teo")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_3ly3u"]
+script = ExtResource("3_dpt5n")
+block_path = "res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn"
+serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.352941, 0.368627, 0.447059, 1)], ["block_type", 5], ["position", Vector2(0, 0)], ["block_format", "Get WASD Input Vector"], ["statement", "Input.get_vector(\"Left\", \"Right\", \"Up\", \"Down\")"], ["param_input_strings", {}]]
+
+[sub_resource type="Resource" id="Resource_s5t3k"]
+script = ExtResource("2_pqvcj")
+serialized_block = SubResource("Resource_3ly3u")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_hwnov"]
+script = ExtResource("3_dpt5n")
+block_path = "res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.290196, 0.52549, 0.835294, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Add movement input {input: VECTOR2} with speed {speed: INT}"], ["statement", "velocity = {input}*{speed}
+move_and_slide()"], ["param_input_strings", {
+"input": "",
+"speed": "500"
+}]]
+
+[sub_resource type="Resource" id="Resource_q3r6u"]
+script = ExtResource("2_pqvcj")
+serialized_block = SubResource("Resource_hwnov")
+path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_s5t3k")]]
+
+[sub_resource type="Resource" id="Resource_m776u"]
+script = ExtResource("3_dpt5n")
+block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+serialized_props = [["block_name", "process_block"], ["label", "On Process"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(418, 50)]]
+
+[sub_resource type="Resource" id="Resource_c3le1"]
+script = ExtResource("2_pqvcj")
+serialized_block = SubResource("Resource_m776u")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_q3r6u")]]
+
+[sub_resource type="Resource" id="Resource_w12is"]
+script = ExtResource("4_xt862")
+array = Array[ExtResource("2_pqvcj")]([SubResource("Resource_gk3tx"), SubResource("Resource_c3le1")])
+
+[sub_resource type="Resource" id="Resource_l007i"]
+script = ExtResource("5_q37d3")
+script_inherits = "SimpleCharacter"
+block_trees = SubResource("Resource_w12is")
+generated_script = "extends SimpleCharacter
+
+func _ready():
+	pass
+
+func _process(_delta):
+	velocity = Input.get_vector(\"Left\", \"Right\", \"Up\", \"Down\")*500
+	move_and_slide()
+
+"
 
 [node name="TestGame" type="Node2D"]
 
-[node name="TestNode" type="Node2D" parent="."]
-script = ExtResource("1_itb65")
+[node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="MyCharacter" parent="." instance=ExtResource("1_gedmj")]
-script = ExtResource("2_fb3ug")
+[node name="SimpleCharacter" parent="." instance=ExtResource("1_hrpwq")]
+
+[node name="BlockCode" type="Node" parent="SimpleCharacter"]
+script = ExtResource("2_ewral")
+bsd = SubResource("Resource_l007i")
