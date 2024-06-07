@@ -5,59 +5,59 @@
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="3_7xt81"]
 [ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="4_2nqti"]
 
-[sub_resource type="Resource" id="Resource_6sprm"]
+[sub_resource type="Resource" id="Resource_og4sw"]
 script = ExtResource("2_7jhtg")
 block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
 serialized_props = [["block_name", "ready_block"], ["label", "On Ready"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(102, 32)]]
 
-[sub_resource type="Resource" id="Resource_oj6u6"]
+[sub_resource type="Resource" id="Resource_fraj1"]
 script = ExtResource("1_w7tnt")
-serialized_block = SubResource("Resource_6sprm")
+serialized_block = SubResource("Resource_og4sw")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_o86gh"]
+[sub_resource type="Resource" id="Resource_nfsa5"]
 script = ExtResource("2_7jhtg")
 block_path = "res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn"
 serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.352941, 0.368627, 0.447059, 1)], ["block_type", 5], ["position", Vector2(0, 0)], ["block_format", "Get WASD Input Vector"], ["statement", "Input.get_vector(\"Left\", \"Right\", \"Up\", \"Down\")"], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_ct6eg"]
+[sub_resource type="Resource" id="Resource_7v4d5"]
 script = ExtResource("1_w7tnt")
-serialized_block = SubResource("Resource_o86gh")
+serialized_block = SubResource("Resource_nfsa5")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_lh48s"]
+[sub_resource type="Resource" id="Resource_gaqiw"]
 script = ExtResource("2_7jhtg")
 block_path = "res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"
 serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.290196, 0.52549, 0.835294, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Add movement input {input: VECTOR2} with speed {speed: INT}"], ["statement", "velocity = {input}*{speed}
 move_and_slide()"], ["param_input_strings", {
 "input": "",
-"speed": "1001"
+"speed": "220"
 }]]
 
-[sub_resource type="Resource" id="Resource_1f0as"]
+[sub_resource type="Resource" id="Resource_4u0s0"]
 script = ExtResource("1_w7tnt")
-serialized_block = SubResource("Resource_lh48s")
-path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_ct6eg")]]
+serialized_block = SubResource("Resource_gaqiw")
+path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_7v4d5")]]
 
-[sub_resource type="Resource" id="Resource_ghr4a"]
+[sub_resource type="Resource" id="Resource_mapvm"]
 script = ExtResource("2_7jhtg")
 block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
-serialized_props = [["block_name", "process_block"], ["label", "On Process"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(15, 163)]]
+serialized_props = [["block_name", "process_block"], ["label", "On Process"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(15, 204)]]
 
-[sub_resource type="Resource" id="Resource_mxsfs"]
+[sub_resource type="Resource" id="Resource_stof3"]
 script = ExtResource("1_w7tnt")
-serialized_block = SubResource("Resource_ghr4a")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_1f0as")]]
+serialized_block = SubResource("Resource_mapvm")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_4u0s0")]]
 
-[sub_resource type="Resource" id="Resource_h5bd5"]
+[sub_resource type="Resource" id="Resource_q58yb"]
 script = ExtResource("3_7xt81")
-array = Array[ExtResource("1_w7tnt")]([SubResource("Resource_oj6u6"), SubResource("Resource_mxsfs")])
+array = Array[ExtResource("1_w7tnt")]([SubResource("Resource_fraj1"), SubResource("Resource_stof3")])
 
 [resource]
 script = ExtResource("4_2nqti")
 script_class_name = "my_character"
 script_inherits = "SimpleCharacter"
-block_trees = SubResource("Resource_h5bd5")
+block_trees = SubResource("Resource_q58yb")
 script_source_code = "class_name my_character
 extends SimpleCharacter
 
@@ -65,7 +65,7 @@ func _ready():
 	pass
 
 func _process(_delta):
-	velocity = Input.get_vector(\"Left\", \"Right\", \"Up\", \"Down\")*1001
+	velocity = Input.get_vector(\"Left\", \"Right\", \"Up\", \"Down\")*220
 	move_and_slide()
 
 "

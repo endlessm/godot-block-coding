@@ -33,9 +33,14 @@ func _on_button_pressed():
 	switch_script(path, bsd)
 
 
+func _on_bsd_changed():
+	prints("main panel bsd changed!")
+
+
 func switch_script(path: String, bsd: BlockScriptData):
 	_current_path = path
 	_current_bsd = bsd
+	_current_bsd.changed.connect(_on_bsd_changed)
 	_picker.bsd_selected(bsd)
 	_title_bar.bsd_selected(bsd)
 	_block_canvas.bsd_selected(bsd)
@@ -53,8 +58,9 @@ func save_script():
 
 	var block_trees := _block_canvas.get_canvas_block_trees()
 	var script_text: String = _block_canvas.generate_script_from_current_window(_current_bsd.script_class_name, _current_bsd.script_inherits)
-	var bsd := BlockScriptData.new(_current_bsd.script_class_name, _current_bsd.script_inherits, block_trees, script_text)
-	var error: Error = ResourceSaver.save(bsd, _current_path)
+	_current_bsd.block_trees = block_trees
+	_current_bsd.script_source_code = script_text
+	var error: Error = ResourceSaver.save(_current_bsd, _current_path)
 
 	if error == OK:
 		print("Saved block script to " + _current_path)

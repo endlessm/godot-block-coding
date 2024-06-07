@@ -19,6 +19,13 @@ config/icon="res://icon.svg"
 
 BlocksManager="*res://addons/block_code/blocks_manager.gd"
 
+[display]
+
+window/size/always_on_top=true
+window/size/window_width_override=640
+window/size/window_height_override=480
+window/stretch/mode="canvas_items"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/block_code/plugin.cfg", "res://addons/plugin_refresher/plugin.cfg")

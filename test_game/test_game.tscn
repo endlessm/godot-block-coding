@@ -10,4 +10,5 @@
 [node name="TestNode" type="Node2D" parent="."]
 
 [node name="MyCharacter" parent="." instance=ExtResource("1_gedmj")]
+scale = Vector2(4.89775, 4.89775)
 metadata/block_script_data = ExtResource("2_ip56f")
