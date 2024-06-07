@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://2m0dg6w1r5oi"]
-
-[ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="1_adwor"]
-
-[node name="BlockCode" type="Node"]
-script = ExtResource("1_adwor")
-bsd = null

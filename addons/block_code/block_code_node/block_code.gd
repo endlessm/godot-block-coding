@@ -23,10 +23,6 @@ func _enter_tree():
 	if not Engine.is_editor_hint():
 		return
 
-	# Check if we are in the block_code.tscn
-	if get_tree().edited_scene_root.scene_file_path == "res://addons/block_code/block_code_node/block_code.tscn":
-		return
-
 	# Create script
 	if bsd == null:
 		var old_bsd := bsd
