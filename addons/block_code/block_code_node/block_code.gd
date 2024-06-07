@@ -6,10 +6,7 @@ var bsd: BlockScriptData = null
 static var plugin
 
 
-func _ready():
-	if Engine.is_editor_hint():
-		return
-
+func _attach_script_to_parent():
 	var parent: Node = get_parent()
 	var script := GDScript.new()
 	script.set_source_code(bsd.generated_script)
@@ -17,6 +14,13 @@ func _ready():
 	parent.set_script(script)
 	parent.set_process(true)  # order these two differently
 	parent.request_ready()
+
+
+func _ready():
+	if Engine.is_editor_hint():
+		return
+
+	_attach_script_to_parent()
 
 
 func _enter_tree():
@@ -29,7 +33,6 @@ func _enter_tree():
 
 	# Create script
 	if bsd == null:
-		var old_bsd := bsd
 		var new_bsd: BlockScriptData = load("res://addons/block_code/ui/bsd_templates/default_bsd.tres").duplicate()
 		new_bsd.script_inherits = get_parent().call("get_class")  # For whatever reason this works instead of just .get_class :)
 		new_bsd.generated_script = new_bsd.generated_script.replace("INHERIT_DEFAULT", new_bsd.script_inherits)
