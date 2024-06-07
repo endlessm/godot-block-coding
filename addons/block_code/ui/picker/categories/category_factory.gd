@@ -35,10 +35,10 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.label = "repeat 10 times"
 	test_list.append(b)
 
-	#b = BLOCKS["statement_block"].instantiate()
-	#b.block_format = "Test int {number: INT} test string {text: STRING} test vector2 {vec: VECTOR2}"
-	#b.statement = "print(\"{text}\")"
-	#test_list.append(b)
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_format = "print {text: STRING}"
+	b.statement = 'print("{text}")'
+	test_list.append(b)
 	#
 	#b = BLOCKS["parameter_block"].instantiate()
 	#b.block_format = "Test string {str: STRING}"

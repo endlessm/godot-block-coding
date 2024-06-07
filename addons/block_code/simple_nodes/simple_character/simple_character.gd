@@ -9,7 +9,11 @@ func _ready():
 	$Sprite2D.texture = sprite_texture
 
 
-func get_exposed_properties() -> Array[String]:
+func get_class():
+	return "SimpleCharacter"
+
+
+static func get_exposed_properties() -> Array[String]:
 	return ["position"]
 
 
@@ -36,5 +40,4 @@ static func get_custom_blocks() -> Array[BlockCategory]:
 	var movement_cat: BlockCategory = BlockCategory.new("Movement", movement_list, Color("4a86d5"))
 
 	return [input_cat, movement_cat]
-
 # Make sure this script is detached from the scene so that user can extend it!

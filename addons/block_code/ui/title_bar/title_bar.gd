@@ -9,7 +9,6 @@ signal node_name_changed(node_name: String)
 
 
 func bsd_selected(bsd: BlockScriptData):
-	_node_name.text = bsd.script_class_name
 	_class_name.text = bsd.script_inherits
 
 

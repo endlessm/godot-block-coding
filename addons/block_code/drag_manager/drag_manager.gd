@@ -75,7 +75,7 @@ func _update_preview(snap_point: SnapPoint):
 	previewing_snap_point = snap_point
 
 	if preview_block:
-		preview_block.queue_free()
+		preview_block.free()
 		preview_block = null
 
 	if previewing_snap_point:
@@ -131,7 +131,7 @@ func drag_ended():
 
 			if preview_block:
 				# Can snap block
-				preview_block.queue_free()
+				preview_block.free()
 				preview_block = null
 				previewing_snap_point.add_child(dragging)
 			else:
