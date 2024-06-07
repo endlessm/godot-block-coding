@@ -2,8 +2,23 @@
 class_name BlockCode
 extends Node
 
-var bsd: BlockScriptData = null
+var bsd: BlockScriptData = null:
+	set = _set_block_script_data
 static var plugin
+
+
+func _set_block_script_data(new_bsd):
+	print("set bsd", new_bsd)
+	bsd = new_bsd
+	if Engine.is_editor_hint():
+		return
+	if bsd == null:
+		return
+	if get_parent() == null:
+		return
+	bsd.changed.connect(_on_bsd_changed)
+
+	# _attach_script_to_parent()
 
 
 func _attach_script_to_parent():
@@ -14,6 +29,7 @@ func _attach_script_to_parent():
 	parent.set_script(script)
 	parent.set_process(true)  # order these two differently
 	parent.request_ready()
+	print(bsd.generated_script)
 
 
 func _ready():
@@ -65,3 +81,15 @@ func _get_configuration_warnings():
 	if bsd:
 		if get_parent().call("get_class") != bsd.script_inherits:
 			return ["The parent is not a %s. Create a new BlockCode node and reattach." % bsd.script_inherits]
+
+
+func code_changed():
+	prints("code_changed", Engine.is_editor_hint())
+	if Engine.is_editor_hint():
+		return
+
+	_attach_script_to_parent()
+
+
+func _on_bsd_changed():
+	print("changed!")

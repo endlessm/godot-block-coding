@@ -36,10 +36,15 @@ func _on_button_pressed():
 	pass
 
 
+func _on_bsd_changed():
+	prints("main panel bsd changed", _current_bsd)
+
+
 func switch_script(block_code_node: BlockCode):
 	var bsd = block_code_node.bsd
 	if bsd:
 		_current_bsd = bsd
+		_current_bsd.changed.connect(_on_bsd_changed)
 		_current_block_code_node = block_code_node
 		_picker.bsd_selected(bsd)
 		_title_bar.bsd_selected(bsd)
@@ -54,16 +59,18 @@ func save_script():
 		print("No script loaded to save.")
 		return
 
-	undo_redo.create_action("Modify %s's block code script" % _current_block_code_node.get_parent().name)
-	undo_redo.add_undo_property(_current_block_code_node, "bsd", _current_bsd)
+	# undo_redo.create_action("Modify %s's block code script" % _current_block_code_node.get_parent().name)
+	# undo_redo.add_undo_property(_current_block_code_node, "bsd", _current_bsd)
 
 	var block_trees := _block_canvas.get_canvas_block_trees()
 	var generated_script = _block_canvas.generate_script_from_current_window(_current_bsd.script_inherits)
 	_current_bsd.block_trees = block_trees
 	_current_bsd.generated_script = generated_script
+	_current_bsd.emit_changed()
+	_current_block_code_node.code_changed()
 
-	undo_redo.add_do_property(_current_block_code_node, "bsd", _current_bsd)
-	undo_redo.commit_action()
+	# undo_redo.add_do_property(_current_block_code_node, "bsd", _current_bsd)
+	# undo_redo.commit_action()
 
 
 func _input(event):
