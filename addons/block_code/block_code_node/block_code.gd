@@ -2,7 +2,7 @@
 class_name BlockCode
 extends Node
 
-var bsd: BlockScriptData = null
+@export var bsd: BlockScriptData = null
 static var plugin
 
 
@@ -34,24 +34,6 @@ func _enter_tree():
 	if plugin == null:
 		plugin = ClassDB.instantiate("EditorPlugin")
 		plugin.add_inspector_plugin(load("res://addons/block_code/inspector_plugin/block_script_inspector.gd").new())
-
-
-# Necessary to "export" the block script data without exposing it
-func _get_property_list():
-	var properties = []
-
-	(
-		properties
-		. append(
-			{
-				"name": "bsd",
-				"type": BlockScriptData,
-				"usage": PROPERTY_USAGE_NO_EDITOR,  # Store the property but don't appear in editor
-			}
-		)
-	)
-
-	return properties
 
 
 func _get_configuration_warnings():
