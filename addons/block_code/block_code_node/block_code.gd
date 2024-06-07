@@ -10,13 +10,7 @@ func _ready():
 	if Engine.is_editor_hint():
 		return
 
-	var parent: Node = get_parent()
-	var script := GDScript.new()
-	script.set_source_code(bsd.generated_script)
-	script.reload()
-	parent.set_script(script)
-	parent.set_process(true)  # order these two differently
-	parent.request_ready()
+	_update_parent_script()
 
 
 func _enter_tree():
@@ -34,6 +28,20 @@ func _enter_tree():
 	if plugin == null:
 		plugin = ClassDB.instantiate("EditorPlugin")
 		plugin.add_inspector_plugin(load("res://addons/block_code/inspector_plugin/block_script_inspector.gd").new())
+
+
+func _update_parent_script():
+	if Engine.is_editor_hint():
+		push_error("Updating the parent script must happen in game.")
+		return
+
+	var parent: Node = get_parent()
+	var script := GDScript.new()
+	script.set_source_code(bsd.generated_script)
+	script.reload()
+	parent.set_script(script)
+	parent.set_process(true)  # order these two differently
+	parent.request_ready()
 
 
 func _get_configuration_warnings():
