@@ -13,6 +13,7 @@ corner_radius_bottom_left = 40
 [node name="ParameterBlock" type="MarginContainer"]
 offset_right = 99.0
 offset_bottom = 39.0
+size_flags_horizontal = 0
 script = ExtResource("1_0hajy")
 block_name = "parameter_block"
 label = "Param"
@@ -28,6 +29,7 @@ layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 4

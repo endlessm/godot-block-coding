@@ -15,9 +15,13 @@ run/main_scene="res://test_game/test_game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SignalManager="*res://addons/block_code/block_code_node/utilities/signal_manager.gd"
+
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/plugin_refresher/plugin.cfg")
+enabled=PackedStringArray("res://addons/block_code/plugin.cfg", "res://addons/plugin_refresher/plugin.cfg")
 
 [input]
 

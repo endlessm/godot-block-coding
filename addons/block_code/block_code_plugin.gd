@@ -21,6 +21,9 @@ func _enter_tree():
 	# Hide the main panel. Very much required.
 	_make_visible(false)
 
+	# Add signal manager for block code nodes to access
+	add_autoload_singleton("SignalManager", "res://addons/block_code/block_code_node/utilities/signal_manager.gd")
+
 	# Remove unwanted class nodes from create node
 	var remove_list := [
 		"BlockScriptData",
@@ -77,6 +80,8 @@ func _enter_tree():
 func _exit_tree():
 	if main_panel:
 		main_panel.queue_free()
+
+	remove_autoload_singleton("SignalManager")
 
 	var editor_paths: EditorPaths = EditorInterface.get_editor_paths()
 	if editor_paths:
