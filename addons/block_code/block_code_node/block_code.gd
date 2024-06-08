@@ -2,7 +2,7 @@
 class_name BlockCode
 extends Node
 
-var bsd: BlockScriptData = null
+@export var bsd: BlockScriptData = null
 static var plugin
 
 
@@ -10,13 +10,7 @@ func _ready():
 	if Engine.is_editor_hint():
 		return
 
-	var parent: Node = get_parent()
-	var script := GDScript.new()
-	script.set_source_code(bsd.generated_script)
-	script.reload()
-	parent.set_script(script)
-	parent.set_process(true)  # order these two differently
-	parent.request_ready()
+	_update_parent_script()
 
 
 func _enter_tree():
@@ -25,8 +19,7 @@ func _enter_tree():
 
 	# Create script
 	if bsd == null:
-		var old_bsd := bsd
-		var new_bsd: BlockScriptData = load("res://addons/block_code/ui/bsd_templates/default_bsd.tres").duplicate()
+		var new_bsd: BlockScriptData = load("res://addons/block_code/ui/bsd_templates/default_bsd.tres").duplicate(true)
 		new_bsd.script_inherits = get_parent().call("get_class")  # For whatever reason this works instead of just .get_class :)
 		new_bsd.generated_script = new_bsd.generated_script.replace("INHERIT_DEFAULT", new_bsd.script_inherits)
 		bsd = new_bsd
@@ -36,22 +29,18 @@ func _enter_tree():
 		plugin.add_inspector_plugin(load("res://addons/block_code/inspector_plugin/block_script_inspector.gd").new())
 
 
-# Necessary to "export" the block script data without exposing it
-func _get_property_list():
-	var properties = []
+func _update_parent_script():
+	if Engine.is_editor_hint():
+		push_error("Updating the parent script must happen in game.")
+		return
 
-	(
-		properties
-		. append(
-			{
-				"name": "bsd",
-				"type": BlockScriptData,
-				"usage": PROPERTY_USAGE_NO_EDITOR,  # Store the property but don't appear in editor
-			}
-		)
-	)
-
-	return properties
+	var parent: Node = get_parent()
+	var script := GDScript.new()
+	script.set_source_code(bsd.generated_script)
+	script.reload()
+	parent.set_script(script)
+	parent.set_process(true)  # order these two differently
+	parent.request_ready()
 
 
 func _get_configuration_warnings():
