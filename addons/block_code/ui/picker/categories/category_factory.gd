@@ -96,10 +96,28 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b = BLOCKS["parameter_block"].instantiate()
 	b.block_type = Types.BlockType.INT
 	b.block_format = "{a: INT} + {b: INT}"
-	b.statement = "{a} + {b}"
+	b.statement = "({a} + {b})"
 	math_list.append(b)
 
-	var math_cat: BlockCategory = BlockCategory.new("Math", math_list, Color("384fff"))
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.INT
+	b.block_format = "{a: INT} - {b: INT}"
+	b.statement = "({a} - {b})"
+	math_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.INT
+	b.block_format = "{a: INT} * {b: INT}"
+	b.statement = "({a} * {b})"
+	math_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.INT
+	b.block_format = "{a: INT} / {b: INT}"
+	b.statement = "({a} / {b})"
+	math_list.append(b)
+
+	var math_cat: BlockCategory = BlockCategory.new("Math", math_list, Color("3042c5"))
 
 	return [entry_cat, signal_cat, test_cat, math_cat, variable_cat]
 
