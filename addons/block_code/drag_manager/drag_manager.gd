@@ -81,7 +81,7 @@ func _update_preview(snap_point: SnapPoint):
 	if previewing_snap_point:
 		# Make preview block
 		preview_block = Control.new()
-		preview_block.set_script(preload("res://addons/block_code/ui/blocks/statement_block/background.gd"))
+		preview_block.set_script(preload("res://addons/block_code/ui/blocks/utilities/background/background.gd"))
 
 		preview_block.color = Color(1, 1, 1, 0.5)
 		preview_block.custom_minimum_size = dragging.get_global_rect().size
