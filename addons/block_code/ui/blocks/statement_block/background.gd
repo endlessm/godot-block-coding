@@ -9,9 +9,17 @@ const KNOB_Z = 5.0
 @export var color: Color:
 	set = _set_color
 
+@export var show_top: bool = true:
+	set = _set_show_top
+
 
 func _set_color(new_color):
 	color = new_color
+	queue_redraw()
+
+
+func _set_show_top(new_show_top):
+	show_top = new_show_top
 	queue_redraw()
 
 
@@ -39,5 +47,10 @@ func _draw():
 		[0.0, size.y],
 		[0.0, 0.0],
 	]
+
+	if !show_top:
+		for i in 4:
+			polygon.remove_at(1)
+
 	var packed_polygon = float_array_to_Vector2Array(polygon)
 	draw_colored_polygon(packed_polygon, color)
