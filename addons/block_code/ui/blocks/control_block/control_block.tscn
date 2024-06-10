@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="3_nhryi"]
 
 [node name="ControlBlock" type="MarginContainer"]
+size_flags_horizontal = 0
 script = ExtResource("1_2hbir")
 snap_paths = Array[NodePath]([NodePath("VBoxContainer/MiddleMarginContainer/MarginContainer/SnapPoint")])
 block_name = "control_block"

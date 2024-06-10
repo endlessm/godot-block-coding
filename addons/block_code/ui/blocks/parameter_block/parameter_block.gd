@@ -15,7 +15,9 @@ var param_input_strings: Dictionary  # Only loaded from serialized
 func _ready():
 	super()
 
-	_panel.get_theme_stylebox("panel").bg_color = color
+	var new_panel = _panel.get_theme_stylebox("panel").duplicate()
+	new_panel.bg_color = color
+	_panel.add_theme_stylebox_override("panel", new_panel)
 
 	format()
 

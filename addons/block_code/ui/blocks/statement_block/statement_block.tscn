@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="3_5vaov"]
 
 [node name="StatementBlock" type="MarginContainer"]
+size_flags_horizontal = 0
 script = ExtResource("1_6wvlf")
 block_name = "statement_block"
 label = "StatementBlock"
@@ -18,6 +19,7 @@ theme_override_constants/separation = 0
 [node name="TopMarginContainer" type="MarginContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
+size_flags_horizontal = 0
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
