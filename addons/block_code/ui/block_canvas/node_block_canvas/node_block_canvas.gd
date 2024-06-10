@@ -32,6 +32,8 @@ func generate_script_from_current_window(script_inherits: String = ""):
 
 	script += "extends %s\n\n" % script_inherits
 
+	script += "var VAR_DICT := {}\n\n"
+
 	var node_groups = [["func _ready():", ready_nodes], ["func _process(_delta):", process_nodes], ["func _physics_process(_delta):", physics_process_nodes]]
 
 	# Get signal entries

@@ -43,7 +43,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "print {text: STRING}"
-	b.statement = 'print("{text}")'
+	b.statement = "print({text})"
 	test_list.append(b)
 
 	var test_cat: BlockCategory = BlockCategory.new("Test", test_list, Color("9989df"))
@@ -64,7 +64,44 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	var signal_cat: BlockCategory = BlockCategory.new("Signal", signal_list, Color("f0c300"))
 
-	return [entry_cat, signal_cat, test_cat]
+	# Variable
+	var variable_list: Array[Block] = []
+
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_format = "Set String {var: STRING} {value: STRING}"
+	b.statement = 'VAR_DICT["{var}"] = "{value}"'
+	variable_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_format = "Get String {var: STRING}"
+	b.statement = 'VAR_DICT["{var}"]'
+	variable_list.append(b)
+
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_format = "Set Int {var: STRING} {value: INT}"
+	b.statement = 'VAR_DICT["{var}"] = {value}'
+	variable_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.INT
+	b.block_format = "Get Int {var: INT}"
+	b.statement = 'VAR_DICT["{var}"]'
+	variable_list.append(b)
+
+	var variable_cat: BlockCategory = BlockCategory.new("Variables", variable_list, Color("4f975d"))
+
+	# Math
+	var math_list: Array[Block] = []
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.INT
+	b.block_format = "{a: INT} + {b: INT}"
+	b.statement = "{a} + {b}"
+	math_list.append(b)
+
+	var math_cat: BlockCategory = BlockCategory.new("Math", math_list, Color("384fff"))
+
+	return [entry_cat, signal_cat, test_cat, math_cat, variable_cat]
 
 
 static func add_to_categories(main: Array[BlockCategory], addition: Array[BlockCategory]) -> Array[BlockCategory]:

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_gy5co"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1cywi"]
-bg_color = Color(0.352941, 0.368627, 0.447059, 1)
+bg_color = Color(0.219608, 0.309804, 1, 1)
 corner_radius_top_left = 40
 corner_radius_top_right = 40
 corner_radius_bottom_right = 40
