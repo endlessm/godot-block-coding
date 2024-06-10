@@ -11,13 +11,11 @@ script = ExtResource("1_tkt44")
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+horizontal_scroll_mode = 0
 
-[node name="BlockList" type="VBoxContainer" parent="MarginContainer"]
+[node name="BlockList" type="VBoxContainer" parent="ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/separation = 0
