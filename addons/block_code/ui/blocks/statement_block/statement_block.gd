@@ -81,10 +81,11 @@ static func format_string(parent_block: Block, attach_to: Node, string: String) 
 	var start: int = 0
 	for result in results:
 		var label_text := string.substr(start, result.get_start() - start)
-		var label = Label.new()
-		label.add_theme_color_override("font_color", Color.WHITE)
-		label.text = label_text
-		attach_to.add_child(label)
+		if label_text != "":
+			var label = Label.new()
+			label.add_theme_color_override("font_color", Color.WHITE)
+			label.text = label_text
+			attach_to.add_child(label)
 
 		var param := result.get_string()
 		param = param.substr(1, param.length() - 2)
@@ -105,9 +106,10 @@ static func format_string(parent_block: Block, attach_to: Node, string: String) 
 		start = result.get_end()
 
 	var label_text := string.substr(start)
-	var label = Label.new()
-	label.add_theme_color_override("font_color", Color.WHITE)
-	label.text = label_text
-	attach_to.add_child(label)
+	if label_text != "":
+		var label = Label.new()
+		label.add_theme_color_override("font_color", Color.WHITE)
+		label.text = label_text
+		attach_to.add_child(label)
 
 	return _param_name_input_pairs

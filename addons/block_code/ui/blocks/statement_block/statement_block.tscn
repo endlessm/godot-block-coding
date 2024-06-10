@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c84vmg3odrtxt"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/statement_block/statement_block.gd" id="1_6wvlf"]
-[ext_resource type="Script" path="res://addons/block_code/ui/blocks/statement_block/background.gd" id="2_lctqt"]
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/background.gd" id="2_lctqt"]
 [ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_owgdx"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="3_5vaov"]
 
@@ -48,6 +48,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 mouse_filter = 2
+theme_override_constants/separation = 0
 
 [node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("3_5vaov")]
 layout_mode = 2
