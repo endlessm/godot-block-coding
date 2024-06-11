@@ -1,4 +1,5 @@
 @tool
+@icon("res://addons/block_code/block_code_node/block_code_node.svg")
 class_name BlockCode
 extends Node
 
