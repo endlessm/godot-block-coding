@@ -54,7 +54,12 @@ func get_string() -> String:
 	if snapped_block:
 		return snapped_block.get_parameter_string()
 
-	return _line_edit.text
+	var text: String = get_plain_text()
+
+	if block_type == Types.BlockType.STRING:
+		text = "'%s'" % text
+
+	return text
 
 
 func _on_line_edit_text_changed(new_text):

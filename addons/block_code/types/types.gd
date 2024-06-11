@@ -9,5 +9,6 @@ enum BlockType {
 	STRING,
 	INT,
 	VECTOR2,
-	BOOL
+	BOOL,
+	NODE
 }

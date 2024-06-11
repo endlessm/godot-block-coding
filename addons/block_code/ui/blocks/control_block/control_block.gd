@@ -99,6 +99,7 @@ func format():
 		row.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 
 		var bg := Control.new()
+		bg.name = "Background"
 		bg.set_script(preload("res://addons/block_code/ui/blocks/utilities/background/background.gd"))
 		bg.color = color
 		if i != 0:
@@ -112,6 +113,7 @@ func format():
 			drag_drop.mouse_down.connect(_drag_started)
 
 		var row_hbox_container := MarginContainer.new()
+		row_hbox_container.name = "RowHBoxContainer"
 		row_hbox_container.add_theme_constant_override("margin_left", 4)
 		row_hbox_container.add_theme_constant_override("margin_right", 4)
 		row_hbox_container.add_theme_constant_override("margin_top", 4)
@@ -120,6 +122,7 @@ func format():
 		row.add_child(row_hbox_container)
 
 		var row_hbox := HBoxContainer.new()
+		row_hbox.name = "RowHBox"
 		row_hbox.add_theme_constant_override("separation", 0)
 		row_hbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row_hbox_container.add_child(row_hbox)

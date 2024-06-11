@@ -38,6 +38,11 @@ static func get_general_categories() -> Array[BlockCategory]:
 	var control_list: Array[Block] = []
 
 	b = BLOCKS["control_block"].instantiate()
+	b.block_formats = ["if    {cond: BOOL}"]
+	b.statements = ["if {cond}:"]
+	control_list.append(b)
+
+	b = BLOCKS["control_block"].instantiate()
 	b.block_formats = ["if    {cond: BOOL}", "else"]
 	b.statements = ["if {cond}:", "else:"]
 	control_list.append(b)
@@ -61,7 +66,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.ENTRY
-	b.block_format = "On body enter [body: STRING]"
+	b.block_format = "On body enter [body: NODE]"
 	test_list.append(b)
 
 	var test_cat: BlockCategory = BlockCategory.new("Test", test_list, Color("9989df"))
@@ -76,8 +81,40 @@ static func get_general_categories() -> Array[BlockCategory]:
 	signal_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
-	b.block_format = "Broadcast signal {signal: STRING}"
-	b.statement = 'var signal_manager = get_tree().root.get_node_or_null("SignalManager")\n' + "if signal_manager:\n" + '\tsignal_manager.broadcast_signal("{signal}")'
+	b.block_format = "Send signal {signal: STRING} to group {group: STRING}"
+	b.statement = 'var signal_manager = get_tree().root.get_node_or_null("SignalManager")\n' + "if signal_manager:\n" + "\tsignal_manager.broadcast_signal({group}, {signal})"
+	signal_list.append(b)
+
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_format = "Add to group {group: STRING}"
+	b.statement = "add_to_group({group})"
+	signal_list.append(b)
+
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_format = "Add {node: NODE} to group {group: STRING}"
+	b.statement = "{node}.add_to_group({group})"
+	signal_list.append(b)
+
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_format = "Remove from group {group: STRING}"
+	b.statement = "remove_from_group({group})"
+	signal_list.append(b)
+
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_format = "Remove {node: NODE} from group {group: STRING}"
+	b.statement = "{node}.remove_from_group({group})"
+	signal_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.BOOL
+	b.block_format = "Is in group {group: STRING}"
+	b.statement = "is_in_group({group})"
+	signal_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.BOOL
+	b.block_format = "Is {node: NODE} in group {group: STRING}"
+	b.statement = "{node}.is_in_group({group})"
 	signal_list.append(b)
 
 	var signal_cat: BlockCategory = BlockCategory.new("Signal", signal_list, Color("f0c300"))

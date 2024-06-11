@@ -108,7 +108,7 @@ static func format_string(parent_block: Block, attach_to: Node, string: String) 
 		_param_name_input_pairs.append([param_name, param_input])
 
 		if copy_block:
-			var new_block: Block = CategoryFactory.BLOCKS["parameter_block"].instantiate()
+			var new_block: Block = preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn").instantiate()
 			new_block.block_format = param_name
 			new_block.statement = param_name
 			new_block.block_type = param_type
