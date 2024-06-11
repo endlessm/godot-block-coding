@@ -151,3 +151,13 @@ func drag_ended():
 func connect_block_canvas_signals(block: Block):
 	block.drag_started.connect(drag_block)
 	block.modified.connect(func(): block_modified.emit())
+
+	# HACK: for statement blocks connect copy_blocks to necessary signal
+	if block is StatementBlock:
+		var statement_block := block as StatementBlock
+		for pair in statement_block.param_name_input_pairs:
+			var param_input: ParameterInput = pair[1]
+			var b := param_input.get_snapped_block()
+			if b:
+				if b.drag_started.get_connections().size() == 0:
+					b.drag_started.connect(copy_picked_block_and_drag)

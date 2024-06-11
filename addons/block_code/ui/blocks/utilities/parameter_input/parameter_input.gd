@@ -14,7 +14,7 @@ signal text_modified
 var block: Block
 
 @onready var _line_edit := %LineEdit
-@onready var _snap_point := %SnapPoint
+@onready var snap_point := %SnapPoint
 
 
 func set_plain_text(new_text):
@@ -39,14 +39,14 @@ func _ready():
 
 	if block == null:
 		block = get_node_or_null(block_path)
-	_snap_point.block = block
-	_snap_point.block_type = block_type
+	snap_point.block = block
+	snap_point.block_type = block_type
 
 	# Do something with block_type to restrict input
 
 
 func get_snapped_block() -> Block:
-	return _snap_point.get_snapped_block()
+	return snap_point.get_snapped_block()
 
 
 func get_string() -> String:
