@@ -39,7 +39,6 @@ func _update_parent_script():
 	var script := GDScript.new()
 	script.set_source_code(bsd.generated_script)
 	script.reload()
-	parent.add_to_group("block_code_parent")
 	parent.set_script(script)
 	parent.set_process(true)
 

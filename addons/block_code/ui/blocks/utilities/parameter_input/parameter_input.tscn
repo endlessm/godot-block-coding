@@ -17,12 +17,11 @@ corner_radius_bottom_left = 40
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3r4mt"]
 
 [node name="ParameterInput" type="MarginContainer"]
-custom_minimum_size = Vector2(100, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -944.0
-offset_bottom = -609.0
+offset_right = -1052.0
+offset_bottom = -617.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -48,10 +47,12 @@ mouse_filter = 1
 theme_override_colors/font_color = Color(0.118581, 0.118581, 0.118581, 1)
 theme_override_colors/font_uneditable_color = Color(0.117647, 0.117647, 0.117647, 1)
 theme_override_colors/font_placeholder_color = Color(0.76662, 0.76662, 0.76662, 1)
+theme_override_constants/minimum_character_width = 0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_6oowp")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_afyv2")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_3r4mt")
 placeholder_text = "Parameter"
+expand_to_text_length = true
 
 [node name="SnapPoint" parent="." instance=ExtResource("2_6esp3")]
 unique_name_in_owner = true
