@@ -5,7 +5,7 @@ extends Block
 @export var block_format: String = ""
 @export var statement: String = ""
 
-@onready var _top_bar := %TopBar
+@onready var _background := %Background
 @onready var _hbox := %HBoxContainer
 
 var param_name_input_pairs: Array
@@ -15,7 +15,9 @@ var param_input_strings: Dictionary  # Only loaded from serialized
 func _ready():
 	super()
 
-	_top_bar.color = color
+	if block_type != Types.BlockType.EXECUTE:
+		_background.show_top = false
+	_background.color = color
 
 	format()
 
@@ -75,7 +77,7 @@ func format():
 static func format_string(parent_block: Block, attach_to: Node, string: String) -> Array:
 	var _param_name_input_pairs = []
 	var regex = RegEx.new()
-	regex.compile("\\{([^}]+)\\}")  # Capture things of format {test: INT}
+	regex.compile("\\[([^\\]]+)\\]|\\{([^}]+)\\}")  # Capture things of format {test} or [test]
 	var results := regex.search_all(string)
 
 	var start: int = 0
@@ -88,7 +90,9 @@ static func format_string(parent_block: Block, attach_to: Node, string: String) 
 			attach_to.add_child(label)
 
 		var param := result.get_string()
+		var copy_block: bool = param[0] == "["
 		param = param.substr(1, param.length() - 2)
+
 		var split := param.split(": ")
 		var param_name := split[0]
 		var param_type_str := split[1]
@@ -100,8 +104,18 @@ static func format_string(parent_block: Block, attach_to: Node, string: String) 
 		param_input.block_type = param_type
 		param_input.block = parent_block
 		param_input.text_modified.connect(func(): parent_block.modified.emit())
-		attach_to.add_child(param_input)  # Can't use onready var
+		attach_to.add_child(param_input)
 		_param_name_input_pairs.append([param_name, param_input])
+
+		if copy_block:
+			var new_block: Block = CategoryFactory.BLOCKS["parameter_block"].instantiate()
+			new_block.block_format = param_name
+			new_block.statement = param_name
+			new_block.block_type = param_type
+			new_block.color = parent_block.color
+			param_input.block_type = Types.BlockType.NONE
+			param_input.snap_point.block_type = Types.BlockType.NONE  # Necessary because already called ready
+			param_input.snap_point.add_child(new_block)
 
 		start = result.get_end()
 
