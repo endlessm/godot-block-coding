@@ -34,12 +34,25 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	var entry_cat: BlockCategory = BlockCategory.new("Entry", entry_list, Color("fa5956"))
 
-	# Test
-	var test_list: Array[Block] = []
+	# Control
+	var control_list: Array[Block] = []
 
 	b = BLOCKS["control_block"].instantiate()
-	b.label = "repeat 10 times"
-	test_list.append(b)
+	b.block_formats = ["if    {cond: BOOL}", "else"]
+	b.statements = ["if {cond}:", "else:"]
+	control_list.append(b)
+
+	b = BLOCKS["control_block"].instantiate()
+	b.block_formats = [
+		"repeat {num: INT}",
+	]
+	b.statements = ["for i in {num}:"]
+	control_list.append(b)
+
+	var control_cat: BlockCategory = BlockCategory.new("Control", control_list, Color("ffad76"))
+
+	# Test
+	var test_list: Array[Block] = []
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "print {text: STRING}"
@@ -119,7 +132,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	var math_cat: BlockCategory = BlockCategory.new("Math", math_list, Color("3042c5"))
 
-	return [entry_cat, signal_cat, test_cat, math_cat, variable_cat]
+	return [entry_cat, signal_cat, control_cat, test_cat, math_cat, variable_cat]
 
 
 static func add_to_categories(main: Array[BlockCategory], addition: Array[BlockCategory]) -> Array[BlockCategory]:

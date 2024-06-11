@@ -8,5 +8,6 @@ enum BlockType {
 	# Parameters
 	STRING,
 	INT,
-	VECTOR2
+	VECTOR2,
+	BOOL
 }
