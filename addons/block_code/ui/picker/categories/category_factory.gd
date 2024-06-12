@@ -66,7 +66,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.ENTRY
-	b.block_format = "On body enter [body: NODE]"
+	b.block_format = "On body [body: NODE] entered"
 	test_list.append(b)
 
 	var test_cat: BlockCategory = BlockCategory.new("Test", test_list, Color("9989df"))
