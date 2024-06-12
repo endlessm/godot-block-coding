@@ -6,6 +6,9 @@ const Constants = preload("res://addons/block_code/ui/constants.gd")
 @export var color: Color:
 	set = _set_color
 
+@export var outline_color: Color:
+	set = _set_outline_color
+
 @export var show_top: bool = true:
 	set = _set_show_top
 
@@ -20,6 +23,11 @@ const Constants = preload("res://addons/block_code/ui/constants.gd")
 
 func _set_color(new_color):
 	color = new_color
+	queue_redraw()
+
+
+func _set_outline_color(new_outline_color):
+	outline_color = new_outline_color
 	queue_redraw()
 
 
@@ -47,12 +55,18 @@ func float_array_to_Vector2Array(coords: Array) -> PackedVector2Array:
 
 
 func _draw():
-	var polygon = [
-		[0.0, 0.0],
-		[Constants.KNOB_X + shift_top, 0.0],
-		[Constants.KNOB_X + Constants.KNOB_Z + shift_top, Constants.KNOB_H],
-		[Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_top, Constants.KNOB_H],
-		[Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_top, 0.0],
+	if outline_color == Color.BLACK:
+		outline_color = color.darkened(0.2)
+
+	var fill_polygon = [[0.0, 0.0]]
+	if show_top:
+		fill_polygon += [
+			[Constants.KNOB_X + shift_top, 0.0],
+			[Constants.KNOB_X + Constants.KNOB_Z + shift_top, Constants.KNOB_H],
+			[Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_top, Constants.KNOB_H],
+			[Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_top, 0.0],
+		]
+	fill_polygon += [
 		[size.x, 0.0],
 		[size.x, size.y],
 		[Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_bottom, size.y],
@@ -63,9 +77,44 @@ func _draw():
 		[0.0, 0.0],
 	]
 
-	if !show_top:
-		for i in 4:
-			polygon.remove_at(1)
+	var stroke_polygon = []
+	if shift_top == 0:
+		stroke_polygon += [
+			[0.0, 0.0],
+		]
+	else:
+		stroke_polygon += [
+			[shift_top, 0.0],
+		]
+	if show_top:
+		stroke_polygon += [
+			[Constants.KNOB_X + shift_top, 0.0],
+			[Constants.KNOB_X + Constants.KNOB_Z + shift_top, Constants.KNOB_H],
+			[Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_top, Constants.KNOB_H],
+			[Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_top, 0.0],
+		]
+	stroke_polygon += [
+		[size.x, 0.0],
+		[size.x, size.y],
+		[Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_bottom, size.y],
+		[Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_bottom, size.y + Constants.KNOB_H],
+		[Constants.KNOB_X + Constants.KNOB_Z + shift_bottom, size.y + Constants.KNOB_H],
+		[Constants.KNOB_X + shift_bottom, size.y],
+	]
+	if shift_bottom == 0:
+		stroke_polygon += [
+			[0.0, size.y],
+		]
+	else:
+		stroke_polygon += [
+			[shift_bottom, size.y],
+		]
+	if shift_top + shift_bottom == 0:
+		stroke_polygon += [
+			[0.0, 0.0],
+		]
 
-	var packed_polygon = float_array_to_Vector2Array(polygon)
-	draw_colored_polygon(packed_polygon, color)
+	var packed_fill_polygon = float_array_to_Vector2Array(fill_polygon)
+	var packed_stroke_polygon = float_array_to_Vector2Array(stroke_polygon)
+	draw_colored_polygon(packed_fill_polygon, color)
+	draw_polyline(packed_stroke_polygon, outline_color, Constants.OUTLINE_WIDTH)
