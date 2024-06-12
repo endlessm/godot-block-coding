@@ -2,6 +2,8 @@
 class_name ControlBlock
 extends Block
 
+const Constants = preload("res://addons/block_code/ui/constants.gd")
+
 @export var block_formats: Array = []
 @export var statements: Array = []
 
@@ -16,6 +18,7 @@ func _ready():
 	super()
 
 	_background.color = color
+	_background.custom_minimum_size.x = Constants.CONTROL_MARGIN
 
 	format()
 
@@ -103,8 +106,8 @@ func format():
 		bg.set_script(preload("res://addons/block_code/ui/blocks/utilities/background/background.gd"))
 		bg.color = color
 		if i != 0:
-			bg.shift_top = 20
-		bg.shift_bottom = 20
+			bg.shift_top = Constants.CONTROL_MARGIN
+		bg.shift_bottom = Constants.CONTROL_MARGIN
 		row.add_child(bg)
 
 		if i == 0:
@@ -134,7 +137,7 @@ func format():
 		var snap_container := MarginContainer.new()
 		snap_container.name = "SnapContainer%d" % i
 		snap_container.custom_minimum_size.y = 30
-		snap_container.add_theme_constant_override("margin_left", 20)
+		snap_container.add_theme_constant_override("margin_left", Constants.CONTROL_MARGIN)
 
 		var snap_point: SnapPoint = preload("res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn").instantiate()
 		snap_point.block = self
@@ -150,5 +153,5 @@ func format():
 	bg.custom_minimum_size.y = 30
 	bg.set_script(preload("res://addons/block_code/ui/blocks/utilities/background/background.gd"))
 	bg.color = color
-	bg.shift_top = 20
+	bg.shift_top = Constants.CONTROL_MARGIN
 	%Rows.add_child(bg)
