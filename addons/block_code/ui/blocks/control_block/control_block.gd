@@ -97,7 +97,7 @@ func format():
 	for i in block_formats.size():
 		var row := MarginContainer.new()
 		row.name = "Row%d" % i
-		row.custom_minimum_size.x = 100
+		row.custom_minimum_size.x = 80
 		row.custom_minimum_size.y = 30
 		row.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 
@@ -117,10 +117,10 @@ func format():
 
 		var row_hbox_container := MarginContainer.new()
 		row_hbox_container.name = "RowHBoxContainer"
-		row_hbox_container.add_theme_constant_override("margin_left", 4)
-		row_hbox_container.add_theme_constant_override("margin_right", 4)
-		row_hbox_container.add_theme_constant_override("margin_top", 4)
-		row_hbox_container.add_theme_constant_override("margin_bottom", 4)
+		row_hbox_container.add_theme_constant_override("margin_left", 10)
+		row_hbox_container.add_theme_constant_override("margin_right", 6)
+		row_hbox_container.add_theme_constant_override("margin_top", 12)
+		row_hbox_container.add_theme_constant_override("margin_bottom", 6)
 		row_hbox_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row.add_child(row_hbox_container)
 

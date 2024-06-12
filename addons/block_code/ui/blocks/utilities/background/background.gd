@@ -55,8 +55,7 @@ func float_array_to_Vector2Array(coords: Array) -> PackedVector2Array:
 
 
 func _draw():
-	if outline_color == Color.BLACK:
-		outline_color = color.darkened(0.2)
+	outline_color = color.darkened(0.2)
 
 	var fill_polygon = [[0.0, 0.0]]
 	if show_top:

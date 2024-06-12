@@ -8,6 +8,7 @@ enum BlockType {
 	# Parameters
 	STRING,
 	INT,
+	FLOAT,
 	VECTOR2,
 	BOOL,
 	NODE

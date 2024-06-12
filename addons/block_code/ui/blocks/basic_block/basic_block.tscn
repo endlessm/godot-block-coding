@@ -32,6 +32,7 @@ layout_mode = 2
 mouse_filter = 1
 script = ExtResource("2_iwx12")
 color = Color(0.530082, 0.933559, 0.726557, 1)
+outline_color = Color(0.424066, 0.746847, 0.581246, 1)
 show_top = false
 
 [node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("2_r14pb")]
@@ -40,10 +41,10 @@ layout_mode = 2
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TopMarginContainer"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 6
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopMarginContainer/MarginContainer"]
 custom_minimum_size = Vector2(200, 0)
