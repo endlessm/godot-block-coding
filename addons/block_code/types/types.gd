@@ -3,7 +3,7 @@ extends Node
 
 enum BlockType {
 	NONE,
-	EXECUTE,
+	STATEMENT,
 	ENTRY,
 	# Parameters
 	STRING,

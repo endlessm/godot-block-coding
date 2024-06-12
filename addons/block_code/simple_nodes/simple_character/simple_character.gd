@@ -31,7 +31,7 @@ static func get_custom_blocks() -> Array[BlockCategory]:
 	# Movement
 	var movement_list: Array[Block] = []
 	b = CategoryFactory.BLOCKS["statement_block"].instantiate()
-	b.block_type = Types.BlockType.EXECUTE
+	b.block_type = Types.BlockType.STATEMENT
 	b.block_format = "Add movement input with speed {speed: INT}"
 	b.statement = 'velocity = Input.get_vector("Left", "Right", "Up", "Down")*{speed}\n' + "move_and_slide()"
 	movement_list.append(b)
