@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_00uhr"]
 script = ExtResource("2_pyn0y")
-block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+block_path = "res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"
 serialized_props = [["block_name", "ready_block"], ["label", "On Ready"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(51, 51)]]
 
 [sub_resource type="Resource" id="Resource_u1sqr"]
@@ -16,7 +16,7 @@ path_child_pairs = []
 
 [sub_resource type="Resource" id="Resource_6d7jb"]
 script = ExtResource("2_pyn0y")
-block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+block_path = "res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"
 serialized_props = [["block_name", "process_block"], ["label", "On Process"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(666, 52)]]
 
 [sub_resource type="Resource" id="Resource_h3qcs"]

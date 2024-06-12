@@ -2,7 +2,7 @@ class_name CategoryFactory
 extends Object
 
 const BLOCKS: Dictionary = {
-	"basic_block": preload("res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"),
+	"entry_block": preload("res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"),
 	"control_block": preload("res://addons/block_code/ui/blocks/control_block/control_block.tscn"),
 	"parameter_block": preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn"),
 	"statement_block": preload("res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"),
@@ -14,19 +14,19 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	# Entry
 	var entry_list: Array[Block] = []
-	b = BLOCKS["basic_block"].instantiate()
+	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "ready_block"
 	b.label = "On Ready"
 	b.block_type = Types.BlockType.ENTRY
 	entry_list.append(b)
 
-	b = BLOCKS["basic_block"].instantiate()
+	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "process_block"
 	b.label = "On Process"
 	b.block_type = Types.BlockType.ENTRY
 	entry_list.append(b)
 
-	b = BLOCKS["basic_block"].instantiate()
+	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "physics_process_block"
 	b.label = "On Physics Process"
 	b.block_type = Types.BlockType.ENTRY

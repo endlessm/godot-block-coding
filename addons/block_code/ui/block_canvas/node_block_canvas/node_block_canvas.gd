@@ -9,9 +9,9 @@ func generate_script_from_current_window(script_inherits: String = ""):
 
 	var blocks := current_window.get_children()
 
-	var ready_nodes: Array[BasicBlock] = []
-	var process_nodes: Array[BasicBlock] = []
-	var physics_process_nodes: Array[BasicBlock] = []
+	var ready_nodes: Array[EntryBlock] = []
+	var process_nodes: Array[EntryBlock] = []
+	var physics_process_nodes: Array[EntryBlock] = []
 	var signal_nodes: Array[StatementBlock] = []
 
 	for c in blocks:

@@ -32,7 +32,7 @@ func _enter_tree():
 		"EditorInterfaceAccess",
 		"SimpleCharacter",
 		"Types",
-		"BasicBlock",
+		"EntryBlock",
 		"Block",
 		"ControlBlock",
 		"ParameterBlock",

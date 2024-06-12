@@ -22,7 +22,7 @@ path_child_pairs = []
 
 [sub_resource type="Resource" id="Resource_2hjow"]
 script = ExtResource("3_dpt5n")
-block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+block_path = "res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"
 serialized_props = [["block_name", "physics_process_block"], ["label", "On Physics Process"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(426, 55)]]
 
 [sub_resource type="Resource" id="Resource_et5km"]
@@ -71,7 +71,7 @@ path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_
 
 [sub_resource type="Resource" id="Resource_f62lb"]
 script = ExtResource("3_dpt5n")
-block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+block_path = "res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"
 serialized_props = [["block_name", "ready_block"], ["label", "On Ready"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(43, 113)]]
 
 [sub_resource type="Resource" id="Resource_kbcv3"]
@@ -122,7 +122,7 @@ path_child_pairs = []
 
 [sub_resource type="Resource" id="Resource_oaosl"]
 script = ExtResource("3_dpt5n")
-block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+block_path = "res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"
 serialized_props = [["block_name", "physics_process_block"], ["label", "On Physics Process"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(422, 99)]]
 
 [sub_resource type="Resource" id="Resource_gfq1s"]
@@ -192,7 +192,7 @@ path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_
 
 [sub_resource type="Resource" id="Resource_rxnfq"]
 script = ExtResource("3_dpt5n")
-block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+block_path = "res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"
 serialized_props = [["block_name", "ready_block"], ["label", "On Ready"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(72, 63)]]
 
 [sub_resource type="Resource" id="Resource_vj6il"]

@@ -1,15 +1,15 @@
 [gd_scene load_steps=5 format=3 uid="uid://c4cjt0oi4me43"]
 
-[ext_resource type="Script" path="res://addons/block_code/ui/blocks/basic_block/basic_block.gd" id="1_ph7wu"]
-[ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/background.gd" id="2_iwx12"]
-[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_r14pb"]
-[ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="3_15ikp"]
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/entry_block/entry_block.gd" id="1_lgg8c"]
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/background.gd" id="2_e3t7g"]
+[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="3_05owt"]
+[ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="4_lii20"]
 
-[node name="BasicBlock" type="MarginContainer"]
+[node name="EntryBlock" type="MarginContainer"]
 size_flags_horizontal = 0
-script = ExtResource("1_ph7wu")
-block_name = "basic_block"
-label = "Basic Block"
+script = ExtResource("1_lgg8c")
+block_name = "entry_block"
+label = "Entry Block"
 color = Color(0.530082, 0.933559, 0.726557, 1)
 bottom_snap_path = NodePath("VBoxContainer/SnapPoint")
 
@@ -30,11 +30,11 @@ theme_override_constants/margin_bottom = 0
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 1
-script = ExtResource("2_iwx12")
+script = ExtResource("2_e3t7g")
 color = Color(0.530082, 0.933559, 0.726557, 1)
 show_top = false
 
-[node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("2_r14pb")]
+[node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("3_05owt")]
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TopMarginContainer"]
@@ -54,9 +54,9 @@ mouse_filter = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "Basic Block"
+text = "Entry Block"
 
-[node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("3_15ikp")]
+[node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("4_lii20")]
 layout_mode = 2
 block_path = NodePath("../..")
 

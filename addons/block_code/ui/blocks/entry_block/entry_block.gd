@@ -1,5 +1,5 @@
 @tool
-class_name BasicBlock
+class_name EntryBlock
 extends Block
 
 @onready var _top_bar := %TopBar
@@ -18,4 +18,4 @@ func _on_drag_drop_area_mouse_down():
 
 
 func get_scene_path():
-	return "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
+	return "res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"
