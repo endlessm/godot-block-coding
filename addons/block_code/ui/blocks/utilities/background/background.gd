@@ -9,9 +9,11 @@ const Constants = preload("res://addons/block_code/ui/constants.gd")
 @export var show_top: bool = true:
 	set = _set_show_top
 
+## Horizontally shift the top knob
 @export var shift_top: float = 0.0:
 	set = _set_shift_top
 
+## Horizontally shift the bottom knob
 @export var shift_bottom: float = 0.0:
 	set = _set_shift_bottom
 
