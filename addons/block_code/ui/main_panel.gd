@@ -2,13 +2,19 @@
 class_name MainPanel
 extends Control
 
+const EditorInterfaceAccess = preload("res://addons/block_code/lib/editor_interface_access.gd")
+const Picker = preload("res://addons/block_code/ui/picker/picker.gd")
+const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canvas.gd")
+const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
+const TitleBar = preload("res://addons/block_code/ui/title_bar/title_bar.gd")
+const BlockScriptData = preload("res://addons/block_code/block_script_data/block_script_data.gd")
+const BlockCode = preload("res://addons/block_code/block_code_node/block_code.gd")
+
 var eia: EditorInterfaceAccess
 
 @onready var _picker: Picker = %Picker
 @onready var _block_canvas: BlockCanvas = %NodeBlockCanvas
 @onready var _drag_manager: DragManager = %DragManager
-#@onready var _node_canvas := %NodeCanvas
-#@onready var _node_list: NodeList = %NodeList
 @onready var _title_bar: TitleBar = %TitleBar
 
 var block_code_tab: Button

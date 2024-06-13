@@ -13,6 +13,10 @@ var old_feature_profile: String = ""
 
 
 func _enter_tree():
+	# Hack for `EditorInterface.open_scene_from_path()`, see: https://github.com/godotengine/godot/issues/86869
+	for _frame in range(10):
+		await get_tree().process_frame
+
 	main_panel = MainPanel.instantiate()
 	main_panel.undo_redo = get_undo_redo()
 

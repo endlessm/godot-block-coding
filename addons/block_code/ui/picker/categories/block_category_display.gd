@@ -2,8 +2,10 @@
 class_name BlockCategoryDisplay
 extends MarginContainer
 
-var category: BlockCategory
+const BlockCategory = preload("res://addons/block_code/ui/picker/categories/block_category.gd")
+const Block = preload("res://addons/block_code/ui/blocks/block/block.gd")
 
+var category: BlockCategory
 @onready var _label := %Label
 @onready var _blocks := %Blocks
 @onready var _background := %Background
