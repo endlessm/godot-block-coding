@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://bbwmxee7ukgul"]
+[gd_scene load_steps=72 format=3 uid="uid://bbwmxee7ukgul"]
 
 [ext_resource type="PackedScene" uid="uid://ddx1cd5q6t61o" path="res://addons/block_code/simple_nodes/simple_character/simple_character.tscn" id="1_hrpwq"]
 [ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="2_ewral"]
@@ -345,52 +345,78 @@ func signal_will_hi():
 
 "
 
-[sub_resource type="Resource" id="Resource_5nem0"]
+[sub_resource type="Resource" id="Resource_awu1c"]
 script = ExtResource("3_dpt5n")
 block_path = "res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Set rotation degrees {angle: FLOAT}"], ["statement", "rotation = deg_to_rad({angle})"], ["param_input_strings", {
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Change Position by {value: VECTOR2}"], ["statement", "position += {value}"], ["param_input_strings", {
+"value": "100,10"
+}]]
+
+[sub_resource type="Resource" id="Resource_3alko"]
+script = ExtResource("2_pqvcj")
+serialized_block = SubResource("Resource_awu1c")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_bjnm4"]
+script = ExtResource("3_dpt5n")
+block_path = "res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Set Scale {value: VECTOR2}"], ["statement", "scale = {value}"], ["param_input_strings", {
+"value": "0.5,0.2"
+}]]
+
+[sub_resource type="Resource" id="Resource_xgj0d"]
+script = ExtResource("2_pqvcj")
+serialized_block = SubResource("Resource_bjnm4")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_3alko")]]
+
+[sub_resource type="Resource" id="Resource_vk6p1"]
+script = ExtResource("3_dpt5n")
+block_path = "res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Set Rotation Degrees {angle: FLOAT}"], ["statement", "rotation_degrees = {angle}"], ["param_input_strings", {
 "angle": "45"
 }]]
 
-[sub_resource type="Resource" id="Resource_dsu78"]
+[sub_resource type="Resource" id="Resource_mdc4c"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_5nem0")
-path_child_pairs = []
+serialized_block = SubResource("Resource_vk6p1")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_xgj0d")]]
 
-[sub_resource type="Resource" id="Resource_xx1tt"]
+[sub_resource type="Resource" id="Resource_kngk3"]
 script = ExtResource("3_dpt5n")
 block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
 serialized_props = [["block_name", "ready_block"], ["label", "On Ready"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(147, 91)]]
 
-[sub_resource type="Resource" id="Resource_ys46d"]
+[sub_resource type="Resource" id="Resource_shdae"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_xx1tt")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_dsu78")]]
+serialized_block = SubResource("Resource_kngk3")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_mdc4c")]]
 
-[sub_resource type="Resource" id="Resource_dde8v"]
+[sub_resource type="Resource" id="Resource_ynybm"]
 script = ExtResource("3_dpt5n")
 block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
 serialized_props = [["block_name", "process_block"], ["label", "On Process"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(468, 78)]]
 
-[sub_resource type="Resource" id="Resource_aelty"]
+[sub_resource type="Resource" id="Resource_3sreo"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_dde8v")
+serialized_block = SubResource("Resource_ynybm")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_hyyw1"]
+[sub_resource type="Resource" id="Resource_14e2j"]
 script = ExtResource("4_xt862")
-array = Array[ExtResource("2_pqvcj")]([SubResource("Resource_ys46d"), SubResource("Resource_aelty")])
+array = Array[ExtResource("2_pqvcj")]([SubResource("Resource_shdae"), SubResource("Resource_3sreo")])
 
 [sub_resource type="Resource" id="Resource_iw7o0"]
 script = ExtResource("5_q37d3")
 script_inherits = "Node2D"
-block_trees = SubResource("Resource_hyyw1")
+block_trees = SubResource("Resource_14e2j")
 generated_script = "extends Node2D
 
 var VAR_DICT := {}
 
 func _ready():
-	rotation = deg_to_rad(45)
+	rotation_degrees = 45
+	scale = Vector2(0.5,0.2)
+	position += Vector2(100,10)
 
 func _process(_delta):
 	pass

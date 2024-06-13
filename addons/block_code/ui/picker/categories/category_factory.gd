@@ -219,13 +219,18 @@ static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 		var type_string: String = Types.BlockType.find_key(block_type)
 
 		var b = BLOCKS["statement_block"].instantiate()
-		b.block_format = "Set %s {value: %s}" % [property.name, type_string]
+		b.block_format = "Set %s {value: %s}" % [property.name.capitalize(), type_string]
 		b.statement = "%s = {value}" % property.name
+		block_list.append(b)
+
+		b = BLOCKS["statement_block"].instantiate()
+		b.block_format = "Change %s by {value: %s}" % [property.name.capitalize(), type_string]
+		b.statement = "%s += {value}" % property.name
 		block_list.append(b)
 
 		b = BLOCKS["parameter_block"].instantiate()
 		b.block_type = block_type
-		b.block_format = "%s" % property.name
+		b.block_format = "%s" % property.name.capitalize()
 		b.statement = "%s" % property.name
 		block_list.append(b)
 
@@ -267,11 +272,11 @@ static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]
 	match _class_name:
 		"Node2D":
 			var b = BLOCKS["statement_block"].instantiate()
-			b.block_format = "Set rotation degrees {angle: FLOAT}"
-			b.statement = "rotation = deg_to_rad({angle})"
+			b.block_format = "Set Rotation Degrees {angle: FLOAT}"
+			b.statement = "rotation_degrees = {angle}"
 			block_list.append(b)
 
-			props = ["position", "rotation"]
+			props = ["position", "rotation", "scale"]
 
 	var prop_list = ClassDB.class_get_property_list(_class_name, true)
 

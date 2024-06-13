@@ -58,6 +58,8 @@ func get_string() -> String:
 
 	if block_type == Types.BlockType.STRING:
 		text = "'%s'" % text
+	if block_type == Types.BlockType.VECTOR2:
+		text = "Vector2(%s)" % text
 
 	return text
 
