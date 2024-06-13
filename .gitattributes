@@ -1,2 +1,10 @@
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
+
+# Only include the block coding addon when downloading from the Asset Library.
+# Exclude non-addon files and the plugin_refresher addon used during
+# development.
+/**                    export-ignore
+/addons               !export-ignore
+/addons/block_code    !export-ignore
+/addons/block_code/** !export-ignore
