@@ -20,24 +20,20 @@ static func get_exposed_properties() -> Array[String]:
 static func get_custom_blocks() -> Array[BlockCategory]:
 	var b: Block
 
-	# Input
-	#var input_list: Array[Block] = []
-	#b = CategoryFactory.BLOCKS["parameter_block"].instantiate()
-	#b.block_type = Types.BlockType.VECTOR2
-	#b.block_format = "Get WASD Input Vector"
-	#b.statement = 'Input.get_vector("Left", "Right", "Up", "Down")'
-	#input_list.append(b)
-
 	# Movement
 	var movement_list: Array[Block] = []
 	b = CategoryFactory.BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.EXECUTE
-	b.block_format = "Add movement input with speed {speed: INT}"
-	b.statement = 'velocity = Input.get_vector("Left", "Right", "Up", "Down")*{speed}\n' + "move_and_slide()"
+	b.block_format = "Move with player 1 buttons, speed {speed: INT}"
+	b.statement = 'velocity = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")*{speed}\n' + "move_and_slide()"
 	movement_list.append(b)
 
-	#var input_cat: BlockCategory = BlockCategory.new("Input", input_list, Color("5a5e72"))
+	b = CategoryFactory.BLOCKS["statement_block"].instantiate()
+	b.block_type = Types.BlockType.EXECUTE
+	b.block_format = "Move with player 2 buttons, speed {speed: INT}"
+	b.statement = 'velocity = Input.get_vector("player_2_left", "player_2_right", "player_2_up", "player_2_down")*{speed}\n' + "move_and_slide()"
+	movement_list.append(b)
+
 	var movement_cat: BlockCategory = BlockCategory.new("Movement", movement_list, Color("4a86d5"))
 
 	return [movement_cat]
-# Make sure this script is detached from the scene so that user can extend it!
