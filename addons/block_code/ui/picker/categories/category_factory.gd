@@ -13,27 +13,32 @@ const BLOCKS: Dictionary = {
 static func get_general_categories() -> Array[BlockCategory]:
 	var b: Block
 
-	# Entry
-	var entry_list: Array[Block] = []
+	# Lifecycle
+	var lifecycle_list: Array[Block] = []
 	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "ready_block"
 	b.block_format = "On Ready"
 	b.statement = "func _ready():"
-	entry_list.append(b)
+	lifecycle_list.append(b)
 
 	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "process_block"
 	b.block_format = "On Process"
 	b.statement = "func _process(delta):"
-	entry_list.append(b)
+	lifecycle_list.append(b)
 
 	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "physics_process_block"
 	b.block_format = "On Physics Process"
 	b.statement = "func _physics_process(delta):"
-	entry_list.append(b)
+	lifecycle_list.append(b)
 
-	var entry_cat: BlockCategory = BlockCategory.new("Entry", entry_list, Color("fa5956"))
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_format = "Queue Free"
+	b.statement = "queue_free()"
+	lifecycle_list.append(b)
+
+	var lifecycle_cat: BlockCategory = BlockCategory.new("Lifecycle", lifecycle_list, Color("fa5956"))
 
 	# Control
 	var control_list: Array[Block] = []
@@ -49,10 +54,23 @@ static func get_general_categories() -> Array[BlockCategory]:
 	control_list.append(b)
 
 	b = BLOCKS["control_block"].instantiate()
-	b.block_formats = [
-		"repeat {num: INT}",
-	]
+	b.block_formats = ["repeat {num: INT}"]
 	b.statements = ["for i in {num}:"]
+	control_list.append(b)
+
+	b = BLOCKS["control_block"].instantiate()
+	b.block_formats = ["while {bool: BOOL}"]
+	b.statements = ["while {bool}:"]
+	control_list.append(b)
+
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_format = "Break"
+	b.statement = "break"
+	control_list.append(b)
+
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_format = "Continue"
+	b.statement = "continue"
 	control_list.append(b)
 
 	var control_cat: BlockCategory = BlockCategory.new("Control", control_list, Color("ffad76"))
@@ -126,23 +144,28 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Set String {var: STRING} {value: STRING}"
-	b.statement = 'VAR_DICT["{var}"] = "{value}"'
+	b.statement = "VAR_DICT[{var}] = {value}"
 	variable_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.block_format = "Get String {var: STRING}"
-	b.statement = 'VAR_DICT["{var}"]'
+	b.statement = "VAR_DICT[{var}]"
 	variable_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Set Int {var: STRING} {value: INT}"
-	b.statement = 'VAR_DICT["{var}"] = {value}'
+	b.statement = "VAR_DICT[{var}] = {value}"
 	variable_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.block_type = Types.BlockType.INT
-	b.block_format = "Get Int {var: INT}"
-	b.statement = 'VAR_DICT["{var}"]'
+	b.block_format = "Get Int {var: STRING}"
+	b.statement = "VAR_DICT[{var}]"
+	variable_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_format = "To String {int: INT}"
+	b.statement = "str({int})"
 	variable_list.append(b)
 
 	var variable_cat: BlockCategory = BlockCategory.new("Variables", variable_list, Color("4f975d"))
@@ -174,9 +197,41 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.statement = "({a} / {b})"
 	math_list.append(b)
 
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.INT
+	b.block_format = "{base: INT} ^ {exp: INT}"
+	b.statement = "(pow({base}, {exp}))"
+	math_list.append(b)
+
 	var math_cat: BlockCategory = BlockCategory.new("Math", math_list, Color("3042c5"))
 
-	return [entry_cat, signal_cat, control_cat, test_cat, math_cat, variable_cat]
+	# Logic
+
+	var logic_list: Array[Block] = []
+
+	for op in ["==", ">", "<", ">=", "<=", "!="]:
+		b = BLOCKS["parameter_block"].instantiate()
+		b.block_type = Types.BlockType.BOOL
+		b.block_format = "{int1: INT} %s {int2: INT}" % op
+		b.statement = "({int1} %s {int2})" % op
+		logic_list.append(b)
+
+	for op in ["and", "or"]:
+		b = BLOCKS["parameter_block"].instantiate()
+		b.block_type = Types.BlockType.BOOL
+		b.block_format = "{bool1: BOOL} %s {bool2: BOOL}" % op
+		b.statement = "({bool1} %s {bool2})" % op
+		logic_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.BOOL
+	b.block_format = "Not {bool: BOOL}"
+	b.statement = "(!{bool})"
+	logic_list.append(b)
+
+	var logic_cat: BlockCategory = BlockCategory.new("Logic", logic_list, Color("42b8e3"))
+
+	return [lifecycle_cat, signal_cat, control_cat, test_cat, math_cat, logic_cat, variable_cat]
 
 
 static func add_to_categories(main: Array[BlockCategory], addition: Array[BlockCategory]) -> Array[BlockCategory]:
@@ -208,6 +263,8 @@ static func built_in_type_to_block_type(type: Variant.Type):
 			return Types.BlockType.STRING
 		TYPE_VECTOR2:
 			return Types.BlockType.VECTOR2
+		TYPE_COLOR:
+			return Types.BlockType.COLOR
 
 	return null
 
@@ -221,7 +278,7 @@ static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 		var type_string: String = Types.BlockType.find_key(block_type)
 
 		var b = BLOCKS["statement_block"].instantiate()
-		b.block_format = "Set %s {value: %s}" % [property.name.capitalize(), type_string]
+		b.block_format = "Set %s to {value: %s}" % [property.name.capitalize(), type_string]
 		b.statement = "%s = {value}" % property.name
 		block_list.append(b)
 
@@ -279,6 +336,14 @@ static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]
 			block_list.append(b)
 
 			props = ["position", "rotation", "scale"]
+
+		"CanvasItem":
+			props = ["modulate"]
+
+		"RigidBody2D":
+			# On body entered
+
+			props = ["mass", "linear_velocity", "angular_velocity"]
 
 	var prop_list = ClassDB.class_get_property_list(_class_name, true)
 
