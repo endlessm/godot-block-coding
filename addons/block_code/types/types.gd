@@ -11,5 +11,6 @@ enum BlockType {
 	FLOAT,
 	VECTOR2,
 	BOOL,
+	COLOR,
 	NODE
 }

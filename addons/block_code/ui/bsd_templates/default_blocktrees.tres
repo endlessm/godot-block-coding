@@ -1,29 +1,29 @@
 [gd_resource type="Resource" script_class="SerializedBlockTreeNodeArray" load_steps=8 format=3 uid="uid://djn5nejdsfu2a"]
 
-[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="1_sy3q2"]
-[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block.gd" id="2_pyn0y"]
-[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="3_bdpy2"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="1_mfn7y"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block.gd" id="2_qtg7h"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="3_jo5dc"]
 
-[sub_resource type="Resource" id="Resource_00uhr"]
-script = ExtResource("2_pyn0y")
-block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
-serialized_props = [["block_name", "ready_block"], ["label", "On Ready"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(51, 51)]]
+[sub_resource type="Resource" id="Resource_lonji"]
+script = ExtResource("2_qtg7h")
+block_path = "res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"
+serialized_props = [["block_name", "ready_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(54, 47)], ["block_format", "On Ready"], ["statement", "func _ready():"], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_u1sqr"]
-script = ExtResource("1_sy3q2")
-serialized_block = SubResource("Resource_00uhr")
+[sub_resource type="Resource" id="Resource_uxduk"]
+script = ExtResource("1_mfn7y")
+serialized_block = SubResource("Resource_lonji")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_6d7jb"]
-script = ExtResource("2_pyn0y")
-block_path = "res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"
-serialized_props = [["block_name", "process_block"], ["label", "On Process"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(666, 52)]]
+[sub_resource type="Resource" id="Resource_8uoy7"]
+script = ExtResource("2_qtg7h")
+block_path = "res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"
+serialized_props = [["block_name", "process_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(525, 48)], ["block_format", "On Process"], ["statement", "func _process(delta):"], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_h3qcs"]
-script = ExtResource("1_sy3q2")
-serialized_block = SubResource("Resource_6d7jb")
+[sub_resource type="Resource" id="Resource_qsjc2"]
+script = ExtResource("1_mfn7y")
+serialized_block = SubResource("Resource_8uoy7")
 path_child_pairs = []
 
 [resource]
-script = ExtResource("3_bdpy2")
-array = Array[ExtResource("1_sy3q2")]([SubResource("Resource_u1sqr"), SubResource("Resource_h3qcs")])
+script = ExtResource("3_jo5dc")
+array = Array[ExtResource("1_mfn7y")]([SubResource("Resource_uxduk"), SubResource("Resource_qsjc2")])
