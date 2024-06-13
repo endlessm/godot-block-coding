@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2fibflv3ojys"]
+
+[ext_resource type="PackedScene" uid="uid://c84vmg3odrtxt" path="res://addons/block_code/ui/blocks/statement_block/statement_block.tscn" id="1_byjbb"]
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/entry_block/entry_block.gd" id="2_3ik8h"]
+
+[node name="EntryBlock" instance=ExtResource("1_byjbb")]
+script = ExtResource("2_3ik8h")
+block_name = "entry_block"
+label = "EntryBlock"
+block_type = 2
