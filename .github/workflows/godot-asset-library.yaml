@@ -1,0 +1,21 @@
+on:
+  release:
+    types:
+      - published
+
+name: Push to Godot Asset Library
+
+jobs:
+  publish:
+    if: github.event.action == 'released'
+    runs-on: ubuntu-latest
+    name: Push new release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Push to Godot Asset Library
+        uses: deep-entertainment/godot-asset-lib-action@v0.4.0
+        with:
+          username: ${{ secrets.GODOT_ASSET_LIBRARY_USERNAME }}
+          password: ${{ secrets.GODOT_ASSET_LIBRARY_PASSWORD }}
+          assetId: 12617
