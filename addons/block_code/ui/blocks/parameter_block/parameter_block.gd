@@ -17,6 +17,7 @@ func _ready():
 
 	var new_panel = _panel.get_theme_stylebox("panel").duplicate()
 	new_panel.bg_color = color
+	new_panel.border_color = color.darkened(0.2)
 	_panel.add_theme_stylebox_override("panel", new_panel)
 
 	format()

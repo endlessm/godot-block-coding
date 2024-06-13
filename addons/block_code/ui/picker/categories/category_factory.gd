@@ -192,3 +192,98 @@ static func add_to_categories(main: Array[BlockCategory], addition: Array[BlockC
 			main.append(add_category)
 
 	return main
+
+
+static func built_in_type_to_block_type(type: Variant.Type):
+	match type:
+		TYPE_BOOL:
+			return Types.BlockType.BOOL
+		TYPE_INT:
+			return Types.BlockType.INT
+		TYPE_FLOAT:
+			return Types.BlockType.FLOAT
+		TYPE_STRING:
+			return Types.BlockType.STRING
+		TYPE_VECTOR2:
+			return Types.BlockType.VECTOR2
+
+	return null
+
+
+static func property_to_blocklist(property: Dictionary) -> Array[Block]:
+	var block_list: Array[Block] = []
+
+	var block_type = built_in_type_to_block_type(property.type)
+
+	if block_type:
+		var type_string: String = Types.BlockType.find_key(block_type)
+
+		var b = BLOCKS["statement_block"].instantiate()
+		b.block_format = "Set %s {value: %s}" % [property.name.capitalize(), type_string]
+		b.statement = "%s = {value}" % property.name
+		block_list.append(b)
+
+		b = BLOCKS["statement_block"].instantiate()
+		b.block_format = "Change %s by {value: %s}" % [property.name.capitalize(), type_string]
+		b.statement = "%s += {value}" % property.name
+		block_list.append(b)
+
+		b = BLOCKS["parameter_block"].instantiate()
+		b.block_type = block_type
+		b.block_format = "%s" % property.name.capitalize()
+		b.statement = "%s" % property.name
+		block_list.append(b)
+
+	return block_list
+
+
+static func category_from_property_list(property_list: Array, selected_props: Array, p_name: String, p_color: Color) -> BlockCategory:
+	var block_list: Array[Block]
+
+	for selected_property in selected_props:
+		var found_prop
+		for prop in property_list:
+			if selected_property == prop.name:
+				found_prop = prop
+				break
+		block_list.append_array(property_to_blocklist(found_prop))
+
+	return BlockCategory.new(p_name, block_list, p_color)
+
+
+static func get_inherited_categories(_class_name: String) -> Array[BlockCategory]:
+	var cats: Array[BlockCategory] = []
+
+	var current: String = _class_name
+
+	while current != "":
+		add_to_categories(cats, get_built_in_categories(current))
+		current = ClassDB.get_parent_class(current)
+
+	return cats
+
+
+static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]:
+	var cats: Array[BlockCategory] = []
+
+	var props: Array = []
+	var block_list: Array[Block] = []
+
+	match _class_name:
+		"Node2D":
+			var b = BLOCKS["statement_block"].instantiate()
+			b.block_format = "Set Rotation Degrees {angle: FLOAT}"
+			b.statement = "rotation_degrees = {angle}"
+			block_list.append(b)
+
+			props = ["position", "rotation", "scale"]
+
+	var prop_list = ClassDB.class_get_property_list(_class_name, true)
+
+	var class_cat: BlockCategory = category_from_property_list(prop_list, props, _class_name, Color.SLATE_GRAY)
+	block_list.append_array(class_cat.block_list)
+	class_cat.block_list = block_list
+	if props.size() > 0:
+		cats.append(class_cat)
+
+	return cats

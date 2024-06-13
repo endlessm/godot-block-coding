@@ -15,7 +15,8 @@ func bsd_selected(bsd: BlockScriptData):
 				init_picker(script.get_custom_blocks())
 				return
 
-	init_picker()
+	# Should be built-in class
+	init_picker(CategoryFactory.get_inherited_categories(bsd.script_inherits))
 
 
 func init_picker(extra_blocks: Array[BlockCategory] = []):
