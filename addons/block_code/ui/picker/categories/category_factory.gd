@@ -6,6 +6,7 @@ const BLOCKS: Dictionary = {
 	"control_block": preload("res://addons/block_code/ui/blocks/control_block/control_block.tscn"),
 	"parameter_block": preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn"),
 	"statement_block": preload("res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"),
+	"entry_block": preload("res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"),
 }
 
 
@@ -14,22 +15,22 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	# Entry
 	var entry_list: Array[Block] = []
-	b = BLOCKS["basic_block"].instantiate()
+	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "ready_block"
-	b.label = "On Ready"
-	b.block_type = Types.BlockType.ENTRY
+	b.block_format = "On Ready"
+	b.statement = "func _ready():"
 	entry_list.append(b)
 
-	b = BLOCKS["basic_block"].instantiate()
+	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "process_block"
-	b.label = "On Process"
-	b.block_type = Types.BlockType.ENTRY
+	b.block_format = "On Process"
+	b.statement = "func _process(delta):"
 	entry_list.append(b)
 
-	b = BLOCKS["basic_block"].instantiate()
+	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "physics_process_block"
-	b.label = "On Physics Process"
-	b.block_type = Types.BlockType.ENTRY
+	b.block_format = "On Physics Process"
+	b.statement = "func _physics_process(delta):"
 	entry_list.append(b)
 
 	var entry_cat: BlockCategory = BlockCategory.new("Entry", entry_list, Color("fa5956"))
@@ -64,9 +65,9 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.statement = "print({text})"
 	test_list.append(b)
 
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_type = Types.BlockType.ENTRY
+	b = BLOCKS["entry_block"].instantiate()
 	b.block_format = "On body enter [body: NODE]"
+	b.statement = "func _on_body_enter(body):"
 	test_list.append(b)
 
 	var test_cat: BlockCategory = BlockCategory.new("Test", test_list, Color("9989df"))
@@ -74,10 +75,11 @@ static func get_general_categories() -> Array[BlockCategory]:
 	# Signal
 	var signal_list: Array[Block] = []
 
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "signal_block"
-	b.block_type = Types.BlockType.ENTRY
-	b.block_format = "On signal {signal: STRING}"
+	b = BLOCKS["entry_block"].instantiate()
+	# HACK: make signals work with new entry nodes. NONE instead of STRING type allows
+	# plain text input for function name. Should revamp signals later
+	b.block_format = "On signal {signal: NONE}"
+	b.statement = "func signal_{signal}():"
 	signal_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
