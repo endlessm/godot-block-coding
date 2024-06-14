@@ -83,7 +83,11 @@ func get_serialized_props() -> Array:
 	return props
 
 
-func get_scene_path():
+static func get_block_class():
+	return "ControlBlock"
+
+
+static func get_scene_path():
 	return "res://addons/block_code/ui/blocks/control_block/control_block.tscn"
 
 

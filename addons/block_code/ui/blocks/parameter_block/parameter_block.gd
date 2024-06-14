@@ -54,7 +54,11 @@ func get_parameter_string() -> String:
 	return formatted_statement
 
 
-func get_scene_path():
+static func get_block_class():
+	return "ParameterBlock"
+
+
+static func get_scene_path():
 	return "res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn"
 
 

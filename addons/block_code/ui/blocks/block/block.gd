@@ -29,8 +29,12 @@ func _ready():
 	bottom_snap = get_node_or_null(bottom_snap_path)
 
 
-func get_scene_path():
-	return ""
+static func get_block_class():
+	push_error("Unimplemented.")
+
+
+static func get_scene_path():
+	push_error("Unimplemented.")
 
 
 func _drag_started():
