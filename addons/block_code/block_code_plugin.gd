@@ -5,11 +5,43 @@ extends EditorPlugin
 const MainPanel := preload("res://addons/block_code/ui/main_panel.tscn")
 static var main_panel
 
-var script_ok_button: Button
-var script_ok_prev_connection: Dictionary
-var prev_opened_script_idx: int
-
 var old_feature_profile: String = ""
+
+const DISABLED_CLASSES := [
+	"BlockScriptData",
+	"DragManager",
+	"InstructionTree",
+	"EditorInterfaceAccess",
+	"SimpleCharacter",
+	"Types",
+	"BasicBlock",
+	"Block",
+	"ControlBlock",
+	"ParameterBlock",
+	"StatementBlock",
+	"DragDropArea",
+	"SnapPoint",
+	"NodeBlockCanvas",
+	"SerializedBlockTreeNodeArray",
+	"SerializedBlockTreeNode",
+	"SerializedBlock",
+	"PackedSceneTreeNodeArray",
+	"PackedSceneTreeNode",
+	"BlockCanvas",
+	"NodeCanvas",
+	"NodeClass",
+	"NodeClassList",
+	"NodeData",
+	"NodePreview",
+	"NodeList",
+	"CategoryFactory",
+	"BlockCategoryDisplay",
+	"BlockCategory",
+	"Picker",
+	"TitleBar",
+	"MainPanel",
+	"BlockCodePlugin"
+]
 
 
 func _enter_tree():
@@ -25,42 +57,6 @@ func _enter_tree():
 	add_autoload_singleton("SignalManager", "res://addons/block_code/block_code_node/utilities/signal_manager.gd")
 
 	# Remove unwanted class nodes from create node
-	var remove_list := [
-		"BlockScriptData",
-		"DragManager",
-		"InstructionTree",
-		"EditorInterfaceAccess",
-		"SimpleCharacter",
-		"Types",
-		"BasicBlock",
-		"Block",
-		"ControlBlock",
-		"ParameterBlock",
-		"StatementBlock",
-		"DragDropArea",
-		"SnapPoint",
-		"NodeBlockCanvas",
-		"SerializedBlockTreeNodeArray",
-		"SerializedBlockTreeNode",
-		"SerializedBlock",
-		"PackedSceneTreeNodeArray",
-		"PackedSceneTreeNode",
-		"BlockCanvas",
-		"NodeCanvas",
-		"NodeClass",
-		"NodeClassList",
-		"NodeData",
-		"NodePreview",
-		"NodeList",
-		"CategoryFactory",
-		"BlockCategoryDisplay",
-		"BlockCategory",
-		"Picker",
-		"TitleBar",
-		"MainPanel",
-		"BlockCodePlugin"
-	]
-
 	old_feature_profile = EditorInterface.get_current_feature_profile()
 
 	var editor_paths: EditorPaths = EditorInterface.get_editor_paths()
@@ -68,7 +64,7 @@ func _enter_tree():
 		var config_dir := editor_paths.get_config_dir()
 		var new_profile := EditorFeatureProfile.new()
 		new_profile.load_from_file(config_dir + "/feature_profiles/" + old_feature_profile + ".profile")
-		for _class_name in remove_list:
+		for _class_name in DISABLED_CLASSES:
 			new_profile.set_disable_class(_class_name, true)
 
 		var dir = config_dir + "/feature_profiles/block_code.profile"
@@ -91,10 +87,6 @@ func _exit_tree():
 		else:
 			print("Old feature profile was removed and cannot be reverted to. Reverting to default.")
 			EditorInterface.set_current_feature_profile("")
-
-
-func _reconnect_signal(_signal: Signal, _data: Dictionary):
-	_signal.connect(_data.callable, _data.flags)
 
 
 func _has_main_screen():
