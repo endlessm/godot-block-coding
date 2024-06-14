@@ -7,7 +7,11 @@ func _ready():
 	super()
 
 
-func get_scene_path():
+static func get_block_class():
+	return "EntryBlock"
+
+
+static func get_scene_path():
 	return "res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"
 
 

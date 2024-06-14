@@ -1,10 +1,10 @@
 class_name SerializedBlock
 extends Resource
 
-@export var block_path: String
+@export var block_class: StringName
 @export var serialized_props: Array
 
 
-func _init(p_block_path: String = "", p_serialized_props: Array = []):
-	block_path = p_block_path
+func _init(p_block_class: StringName = "", p_serialized_props: Array = []):
+	block_class = p_block_class
 	serialized_props = p_serialized_props

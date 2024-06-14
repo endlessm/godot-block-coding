@@ -7,7 +7,23 @@ const EXTEND_MARGIN: float = 800
 @onready var _window: Control = %Window
 @onready var _window_scroll: ScrollContainer = %WindowScroll
 
+var _block_scenes_by_class = {}
+
 signal reconnect_block(block: Block)
+
+
+func _ready():
+	_populate_block_scenes_by_class()
+
+
+func _populate_block_scenes_by_class():
+	for _class in ProjectSettings.get_global_class_list():
+		if not _class.base.ends_with("Block"):
+			continue
+		var _script = load(_class.path)
+		if not _script.has_method("get_scene_path"):
+			continue
+		_block_scenes_by_class[_class.class] = _script.get_scene_path()
 
 
 func add_block(block: Block) -> void:
@@ -34,14 +50,9 @@ func clear_canvas():
 		child.queue_free()
 
 
-#func load_canvas():
-#var save: SerializedBlockTreeNodeArray = ResourceLoader.load("user://test_canvas.tres")
-#for tree in save.array:
-#load_tree(_window, tree)
-
-
 func load_tree(parent: Node, node: SerializedBlockTreeNode):
-	var scene: Block = load(node.serialized_block.block_path).instantiate()
+	var _block_scene_path = _block_scenes_by_class[node.serialized_block.block_class]
+	var scene: Block = load(_block_scene_path).instantiate()
 	for prop_pair in node.serialized_block.serialized_props:
 		scene.set(prop_pair[0], prop_pair[1])
 
@@ -65,7 +76,7 @@ func get_canvas_block_trees() -> SerializedBlockTreeNodeArray:
 
 func build_tree(block: Block) -> SerializedBlockTreeNode:
 	var n = SerializedBlockTreeNode.new()
-	n.serialized_block = SerializedBlock.new(block.get_scene_path(), block.get_serialized_props())
+	n.serialized_block = SerializedBlock.new(block.get_block_class(), block.get_serialized_props())
 
 	for snap in find_snaps(block):
 		for c in snap.get_children():
