@@ -93,10 +93,6 @@ func _exit_tree():
 			EditorInterface.set_current_feature_profile("")
 
 
-func _reconnect_signal(_signal: Signal, _data: Dictionary):
-	_signal.connect(_data.callable, _data.flags)
-
-
 func _has_main_screen():
 	return true
 
