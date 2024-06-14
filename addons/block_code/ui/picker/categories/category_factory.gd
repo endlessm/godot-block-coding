@@ -231,6 +231,10 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	var logic_category: BlockCategory = BlockCategory.new("Logic", logic_list, Color("42b8e3"))
 
+	# Input
+	var input_list: Array[Block] = _get_input_blocks()
+	var input_category: BlockCategory = BlockCategory.new("Input", input_list, Color.SLATE_GRAY)
+
 	return [
 		lifecycle_category,
 		signal_category,
@@ -239,6 +243,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 		math_category,
 		logic_category,
 		variable_category,
+		input_category,
 	]
 
 
@@ -362,3 +367,30 @@ static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]
 		cats.append(class_cat)
 
 	return cats
+
+
+static func _get_input_blocks() -> Array[Block]:
+	var block_list: Array[Block]
+
+	InputMap.load_from_project_settings()
+
+	for action: StringName in InputMap.get_actions():
+		var block: Block = BLOCKS["parameter_block"].instantiate()
+		block.block_type = Types.BlockType.BOOL
+		block.block_format = "Is action %s pressed" % action
+		block.statement = 'Input.is_action_pressed("%s")' % action
+		block_list.append(block)
+
+		block = BLOCKS["parameter_block"].instantiate()
+		block.block_type = Types.BlockType.BOOL
+		block.block_format = "Is action %s just pressed" % action
+		block.statement = 'Input.is_action_just_pressed("%s")' % action
+		block_list.append(block)
+
+		block = BLOCKS["parameter_block"].instantiate()
+		block.block_type = Types.BlockType.BOOL
+		block.block_format = "Is action %s just released" % action
+		block.statement = 'Input.is_action_just_released("%s")' % action
+		block_list.append(block)
+
+	return block_list
