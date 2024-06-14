@@ -16,52 +16,53 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_u0xju")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScriptVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ScriptVBox"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="TitleBar" parent="MarginContainer/HBoxContainer/ScriptVBox/HBoxContainer" instance=ExtResource("2_k54yf")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="MarginContainer/HBoxContainer/ScriptVBox/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Test"
+text = "Print Generated Script"
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/ScriptVBox"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ScriptVBox" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="TitleBar" parent="VBoxContainer/MarginContainer/HBoxContainer/ScriptVBox" instance=ExtResource("2_k54yf")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/ScriptVBox"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/ScriptVBox/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Picker" parent="VBoxContainer/MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/HBoxContainer" instance=ExtResource("2_hv5f3")]
+[node name="Picker" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/HBoxContainer" instance=ExtResource("2_hv5f3")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="NodeBlockCanvas" parent="VBoxContainer/MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/HBoxContainer" instance=ExtResource("3_ml5y3")]
+[node name="NodeBlockCanvas" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/HBoxContainer" instance=ExtResource("3_ml5y3")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="DragManager" parent="VBoxContainer/MarginContainer/HBoxContainer/ScriptVBox/MarginContainer" instance=ExtResource("4_yijtu")]
+[node name="DragManager" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer" instance=ExtResource("4_yijtu")]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 picker_path = NodePath("../HBoxContainer/Picker")
 block_canvas_path = NodePath("../HBoxContainer/NodeBlockCanvas")
 
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ScriptVBox/HBoxContainer/Button" to="." method="_on_button_pressed"]
