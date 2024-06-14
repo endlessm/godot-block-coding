@@ -29,7 +29,7 @@ func _ready():
 
 
 func _on_button_pressed():
-	pass
+	_print_generated_script()
 
 
 func switch_script(block_code_node: BlockCode):
@@ -74,11 +74,10 @@ func _input(event):
 			else:
 				_drag_manager.drag_ended()
 
-	# HACK: play the topmost block
-	if event is InputEventKey:
-		if event.keycode == KEY_F and event.pressed:
-			if _current_bsd:
-				var script: String = _block_canvas.generate_script_from_current_window(_current_bsd.script_inherits)
 
-				print(script)
-				print("Debug script! (not saved)")
+func _print_generated_script():
+	if _current_bsd == null:
+		return
+	var script: String = _block_canvas.generate_script_from_current_window(_current_bsd.script_inherits)
+	print(script)
+	print("Debug script! (not saved)")
