@@ -23,7 +23,7 @@ func _ready():
 
 	if param_input_strings:
 		for pair in param_name_input_pairs:
-			pair[1].set_plain_text(param_input_strings[pair[0]])
+			pair[1].set_raw_input(param_input_strings[pair[0]])
 
 
 func _on_drag_drop_area_mouse_down():
@@ -36,7 +36,7 @@ func get_serialized_props() -> Array:
 
 	var _param_input_strings: Dictionary = {}
 	for pair in param_name_input_pairs:
-		_param_input_strings[pair[0]] = pair[1].get_plain_text()
+		_param_input_strings[pair[0]] = pair[1].get_raw_input()
 
 	props.append(["param_input_strings", _param_input_strings])
 	return props
@@ -107,7 +107,7 @@ static func format_string(parent_block: Block, attach_to: Node, string: String) 
 		param_input.placeholder = param_name
 		param_input.variant_type = param_type
 		param_input.block = parent_block
-		param_input.text_modified.connect(func(): parent_block.modified.emit())
+		param_input.modified.connect(func(): parent_block.modified.emit())
 		attach_to.add_child(param_input)
 		_param_name_input_pairs.append([param_name, param_input])
 

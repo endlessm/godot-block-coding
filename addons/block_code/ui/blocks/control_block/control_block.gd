@@ -25,7 +25,7 @@ func _ready():
 	if param_input_strings_array:
 		for i in param_name_input_pairs_array.size():
 			for pair in param_name_input_pairs_array[i]:
-				pair[1].set_plain_text(param_input_strings_array[i][pair[0]])
+				pair[1].set_raw_input(param_input_strings_array[i][pair[0]])
 
 
 func _on_drag_drop_area_mouse_down():
@@ -75,7 +75,7 @@ func get_serialized_props() -> Array:
 		var _param_input_strings: Dictionary = {}
 
 		for pair in param_name_input_pairs:
-			_param_input_strings[pair[0]] = pair[1].get_plain_text()
+			_param_input_strings[pair[0]] = pair[1].get_raw_input()
 
 		_param_input_strings_array.append(_param_input_strings)
 

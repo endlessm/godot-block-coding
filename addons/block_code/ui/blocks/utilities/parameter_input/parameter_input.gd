@@ -2,7 +2,7 @@
 class_name ParameterInput
 extends MarginContainer
 
-signal text_modified
+signal modified
 
 @export var placeholder: String = "Parameter":
 	set = _set_placeholder
@@ -14,16 +14,30 @@ signal text_modified
 
 var block: Block
 
+@onready var _panel := %Panel
 @onready var _line_edit := %LineEdit
 @onready var snap_point := %SnapPoint
+@onready var _input_switcher := %InputSwitcher
+# Inputs
+@onready var _text_input := %TextInput
+@onready var _color_input := %ColorInput
 
 
-func set_plain_text(new_text):
-	_line_edit.text = new_text
+func set_raw_input(raw_input):
+	match block_type:
+		Types.BlockType.COLOR:
+			_color_input.color = raw_input
+			_update_panel_bg_color(raw_input)
+		_:
+			_line_edit.text = raw_input
 
 
-func get_plain_text():
-	return _line_edit.text
+func get_raw_input():
+	match block_type:
+		Types.BlockType.COLOR:
+			return _color_input.color
+		_:
+			return _line_edit.text
 
 
 func _set_placeholder(new_placeholder: String) -> void:
@@ -36,6 +50,9 @@ func _set_placeholder(new_placeholder: String) -> void:
 
 
 func _ready():
+	var stylebox = _panel.get_theme_stylebox("panel")
+	stylebox.bg_color = Color.WHITE
+
 	_set_placeholder(placeholder)
 
 	if block == null:
@@ -43,6 +60,12 @@ func _ready():
 	snap_point.block = block
 	snap_point.block_type = block_type
 	snap_point.variant_type = variant_type
+
+	match block_type:
+		Types.BlockType.COLOR:
+			switch_input(_color_input)
+		_:
+			switch_input(_text_input)
 
 	# Do something with block_type to restrict input
 
@@ -61,15 +84,37 @@ func get_string() -> String:
 			push_warning("No cast from %s to %s; using '%s' verbatim" % [snapped_block, variant_type, generated_string])
 			return generated_string
 
-	var text: String = get_plain_text()
+	var input = get_raw_input()
 
-	if variant_type == TYPE_STRING:
-		text = "'%s'" % text.replace("\\", "\\\\").replace("'", "\\'")
-	elif variant_type == TYPE_VECTOR2:
-		text = "Vector2(%s)" % text
-
-	return text
+	match block_type:
+		Types.BlockType.STRING:
+			return "'%s'" % input.replace("\\", "\\\\").replace("'", "\\'")
+		Types.BlockType.VECTOR2:
+			return "Vector2(%s)" % input
+		Types.BlockType.COLOR:
+			return "Color%s" % str(input)
+		_:
+			return "%s" % input
 
 
 func _on_line_edit_text_changed(new_text):
-	text_modified.emit()
+	modified.emit()
+
+
+func switch_input(node: Node):
+	for c in _input_switcher.get_children():
+		c.visible = false
+
+	node.visible = true
+
+
+func _on_color_input_color_changed(color):
+	_update_panel_bg_color(color)
+
+	modified.emit()
+
+
+func _update_panel_bg_color(new_color):
+	var stylebox = _panel.get_theme_stylebox("panel").duplicate()
+	stylebox.bg_color = new_color
+	_panel.add_theme_stylebox_override("panel", stylebox)

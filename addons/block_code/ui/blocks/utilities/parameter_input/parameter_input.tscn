@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cjvxs6euc6xbm"]
+[gd_scene load_steps=8 format=3 uid="uid://cjvxs6euc6xbm"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.gd" id="1_rgmxn"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="2_6esp3"]
@@ -16,6 +16,8 @@ corner_radius_bottom_left = 40
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3r4mt"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5hq7f"]
+
 [node name="ParameterInput" type="MarginContainer"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,19 +30,29 @@ mouse_filter = 2
 script = ExtResource("1_rgmxn")
 
 [node name="Panel" type="Panel" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_tn6h4")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="InputSwitcher" type="MarginContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="TextInput" type="MarginContainer" parent="InputSwitcher"]
+unique_name_in_owner = true
+layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 4
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer"]
+[node name="LineEdit" type="LineEdit" parent="InputSwitcher/TextInput"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 1
@@ -54,10 +66,20 @@ theme_override_styles/read_only = SubResource("StyleBoxEmpty_3r4mt")
 placeholder_text = "Parameter"
 expand_to_text_length = true
 
+[node name="ColorInput" type="ColorPickerButton" parent="InputSwitcher"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5hq7f")
+
 [node name="SnapPoint" parent="." instance=ExtResource("2_6esp3")]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 block_type = 3
 
-[connection signal="text_changed" from="MarginContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_changed" from="InputSwitcher/TextInput/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="color_changed" from="InputSwitcher/ColorInput" to="." method="_on_color_input_color_changed"]

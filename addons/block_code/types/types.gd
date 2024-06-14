@@ -35,6 +35,7 @@ const cast_relationships = [
 	[TYPE_FLOAT, TYPE_INT, "int(%s)"],
 	[TYPE_INT, TYPE_STRING, "str(%s)"],
 	[TYPE_FLOAT, TYPE_STRING, "str(%s)"],
+	[TYPE_COLOR, TYPE_STRING, "str(%s)"],
 ]
 
 # Directed graph, edges are CastGraphEdge
