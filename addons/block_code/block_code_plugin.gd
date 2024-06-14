@@ -5,10 +5,6 @@ extends EditorPlugin
 const MainPanel := preload("res://addons/block_code/ui/main_panel.tscn")
 static var main_panel
 
-var script_ok_button: Button
-var script_ok_prev_connection: Dictionary
-var prev_opened_script_idx: int
-
 var old_feature_profile: String = ""
 
 
