@@ -7,8 +7,6 @@ var eia: EditorInterfaceAccess
 @onready var _picker: Picker = %Picker
 @onready var _block_canvas: BlockCanvas = %NodeBlockCanvas
 @onready var _drag_manager: DragManager = %DragManager
-#@onready var _node_canvas := %NodeCanvas
-#@onready var _node_list: NodeList = %NodeList
 @onready var _title_bar: TitleBar = %TitleBar
 
 var block_code_tab: Button
@@ -23,8 +21,6 @@ func _ready():
 	_block_canvas.reconnect_block.connect(_drag_manager.connect_block_canvas_signals)
 	_drag_manager.block_dropped.connect(save_script)
 	_drag_manager.block_modified.connect(save_script)
-	#_node_list.node_selected.connect(_title_bar.node_selected)
-	#_title_bar.node_name_changed.connect(_node_list.on_node_name_changed)
 
 	eia = EditorInterfaceAccess.new()
 
