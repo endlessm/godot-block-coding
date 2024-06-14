@@ -45,22 +45,23 @@ func _process(_delta):
 				if snap_point.block == null:
 					push_error("Warning: a snap point does not reference it's parent block.")
 					continue
-				if snap_point.block.on_canvas and snap_point.block_type == dragging.block_type:
-					var snap_global_pos: Vector2 = snap_point.get_global_rect().position
-					var temp_dist: float = dragging_global_pos.distance_to(snap_global_pos)
-					if temp_dist < closest_dist:
-						# Check if any parent node is this node
-						var is_child: bool = false
-						var parent = snap_point
-						while parent is SnapPoint:
-							if parent.block == dragging:
-								is_child = true
+				if snap_point.block.on_canvas:
+					if Types.can_cast(dragging.block_type, snap_point.block_type):
+						var snap_global_pos: Vector2 = snap_point.get_global_rect().position
+						var temp_dist: float = dragging_global_pos.distance_to(snap_global_pos)
+						if temp_dist < closest_dist:
+							# Check if any parent node is this node
+							var is_child: bool = false
+							var parent = snap_point
+							while parent is SnapPoint:
+								if parent.block == dragging:
+									is_child = true
 
-							parent = parent.block.get_parent()
+								parent = parent.block.get_parent()
 
-						if not is_child:
-							closest_dist = temp_dist
-							closest_snap_point = snap_point
+							if not is_child:
+								closest_dist = temp_dist
+								closest_snap_point = snap_point
 
 		if closest_dist > 80.0:
 			closest_snap_point = null

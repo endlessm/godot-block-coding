@@ -52,7 +52,8 @@ func get_snapped_block() -> Block:
 func get_string() -> String:
 	var snapped_block: Block = get_snapped_block()
 	if snapped_block:
-		return snapped_block.get_parameter_string()
+		var generated_string = snapped_block.get_parameter_string()
+		return Types.cast(generated_string, snapped_block.block_type, block_type)
 
 	var text: String = get_plain_text()
 
