@@ -166,6 +166,35 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	var variable_category: BlockCategory = BlockCategory.new("Variables", variable_list, Color("4f975d"))
 
+	# Objects & Types
+	var type_list: Array[Block] = []
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.STRING
+	b.block_format = "As String {value}"
+	b.statement = "String({value})"
+	type_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.INT
+	b.block_format = "As int {value}"
+	b.statement = "int({value})"
+	type_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.FLOAT
+	b.block_format = "As float {value}"
+	b.statement = "float({value})"
+	type_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.BOOL
+	b.block_format = "As boolean {value}"
+	b.statement = "bool({value})"
+	type_list.append(b)
+
+	var type_category: BlockCategory = BlockCategory.new("Objects & Types", type_list, Color("c12f8e"))
+
 	# Math
 	var math_list: Array[Block] = []
 
@@ -256,6 +285,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 		math_category,
 		logic_category,
 		variable_category,
+		type_category,
 		input_category,
 		sound_category,
 	]
