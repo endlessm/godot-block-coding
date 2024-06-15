@@ -144,8 +144,15 @@ static func get_general_categories() -> Array[BlockCategory]:
 	variable_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.STRING
 	b.block_format = "Get String {var: STRING}"
 	b.statement = "VAR_DICT[{var}]"
+	variable_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.STRING
+	b.block_format = "Get String {var: STRING} from {object: NODE}"
+	b.statement = "{object}.VAR_DICT[{var}]"
 	variable_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
