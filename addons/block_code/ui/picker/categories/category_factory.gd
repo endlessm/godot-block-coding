@@ -38,7 +38,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.statement = "queue_free()"
 	lifecycle_list.append(b)
 
-	var lifecycle_cat: BlockCategory = BlockCategory.new("Lifecycle", lifecycle_list, Color("fa5956"))
+	var lifecycle_category: BlockCategory = BlockCategory.new("Lifecycle", lifecycle_list, Color("fa5956"))
 
 	# Control
 	var control_list: Array[Block] = []
@@ -73,7 +73,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.statement = "continue"
 	control_list.append(b)
 
-	var control_cat: BlockCategory = BlockCategory.new("Control", control_list, Color("ffad76"))
+	var control_category: BlockCategory = BlockCategory.new("Control", control_list, Color("ffad76"))
 
 	# Test
 	var test_list: Array[Block] = []
@@ -88,7 +88,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.statement = "func _on_body_enter(body):"
 	test_list.append(b)
 
-	var test_cat: BlockCategory = BlockCategory.new("Test", test_list, Color("9989df"))
+	var test_category: BlockCategory = BlockCategory.new("Test", test_list, Color("9989df"))
 
 	# Signal
 	var signal_list: Array[Block] = []
@@ -137,7 +137,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.statement = "{node}.is_in_group({group})"
 	signal_list.append(b)
 
-	var signal_cat: BlockCategory = BlockCategory.new("Signal", signal_list, Color("f0c300"))
+	var signal_category: BlockCategory = BlockCategory.new("Signal", signal_list, Color("f0c300"))
 
 	# Variable
 	var variable_list: Array[Block] = []
@@ -168,7 +168,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.statement = "str({int})"
 	variable_list.append(b)
 
-	var variable_cat: BlockCategory = BlockCategory.new("Variables", variable_list, Color("4f975d"))
+	var variable_category: BlockCategory = BlockCategory.new("Variables", variable_list, Color("4f975d"))
 
 	# Math
 	var math_list: Array[Block] = []
@@ -203,7 +203,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.statement = "(pow({base}, {exp}))"
 	math_list.append(b)
 
-	var math_cat: BlockCategory = BlockCategory.new("Math", math_list, Color("3042c5"))
+	var math_category: BlockCategory = BlockCategory.new("Math", math_list, Color("3042c5"))
 
 	# Logic
 
@@ -229,9 +229,22 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.statement = "(!{bool})"
 	logic_list.append(b)
 
-	var logic_cat: BlockCategory = BlockCategory.new("Logic", logic_list, Color("42b8e3"))
+	var logic_category: BlockCategory = BlockCategory.new("Logic", logic_list, Color("42b8e3"))
 
-	return [lifecycle_cat, signal_cat, control_cat, test_cat, math_cat, logic_cat, variable_cat]
+	# Input
+	var input_list: Array[Block] = _get_input_blocks()
+	var input_category: BlockCategory = BlockCategory.new("Input", input_list, Color.SLATE_GRAY)
+
+	return [
+		lifecycle_category,
+		signal_category,
+		control_category,
+		test_category,
+		math_category,
+		logic_category,
+		variable_category,
+		input_category,
+	]
 
 
 static func add_to_categories(main: Array[BlockCategory], addition: Array[BlockCategory]) -> Array[BlockCategory]:
@@ -354,3 +367,30 @@ static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]
 		cats.append(class_cat)
 
 	return cats
+
+
+static func _get_input_blocks() -> Array[Block]:
+	var block_list: Array[Block]
+
+	InputMap.load_from_project_settings()
+
+	for action: StringName in InputMap.get_actions():
+		var block: Block = BLOCKS["parameter_block"].instantiate()
+		block.block_type = Types.BlockType.BOOL
+		block.block_format = "Is action %s pressed" % action
+		block.statement = 'Input.is_action_pressed("%s")' % action
+		block_list.append(block)
+
+		block = BLOCKS["parameter_block"].instantiate()
+		block.block_type = Types.BlockType.BOOL
+		block.block_format = "Is action %s just pressed" % action
+		block.statement = 'Input.is_action_just_pressed("%s")' % action
+		block_list.append(block)
+
+		block = BLOCKS["parameter_block"].instantiate()
+		block.block_type = Types.BlockType.BOOL
+		block.block_format = "Is action %s just released" % action
+		block.statement = 'Input.is_action_just_released("%s")' % action
+		block_list.append(block)
+
+	return block_list
