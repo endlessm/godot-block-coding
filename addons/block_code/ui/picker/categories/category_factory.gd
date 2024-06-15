@@ -170,6 +170,18 @@ static func get_general_categories() -> Array[BlockCategory]:
 	var type_list: Array[Block] = []
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.NODE
+	b.block_format = "This object"
+	b.statement = "self"
+	type_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.NODE
+	b.block_format = "%{name: STRING}"
+	b.statement = "%{name}"
+	type_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
 	b.block_type = Types.BlockType.STRING
 	b.block_format = "As String {value}"
 	b.statement = "String({value})"
