@@ -164,6 +164,12 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.statement = "str({int})"
 	variable_list.append(b)
 
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.INT
+	b.block_format = "Get Int {var: INT} from {object: NODE}"
+	b.statement = "{object}.VAR_DICT[{var}]"
+	variable_list.append(b)
+
 	var variable_category: BlockCategory = BlockCategory.new("Variables", variable_list, Color("4f975d"))
 
 	# Objects & Types
@@ -203,6 +209,17 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.block_type = Types.BlockType.BOOL
 	b.block_format = "As boolean {value}"
 	b.statement = "bool({value})"
+	type_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.VARIANT
+	b.block_format = "Get property {key: STRING} from {object: NODE}"
+	b.statement = "{object}.get({key})"
+	type_list.append(b)
+
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_format = "Set property {key: STRING} in {object: NODE} to {value: VARIANT}"
+	b.statement = "{object}.set({key}, {value})"
 	type_list.append(b)
 
 	var type_category: BlockCategory = BlockCategory.new("Objects & Types", type_list, Color("c12f8e"))
