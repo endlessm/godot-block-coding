@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgotfw10etdhe"]
+
+[ext_resource type="Script" path="res://addons/block_code/simple_nodes/math/plus.gd" id="1_a75e7"]
+
+[node name="Plus" type="Node"]
+script = ExtResource("1_a75e7")
