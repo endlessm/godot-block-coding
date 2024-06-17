@@ -83,11 +83,6 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.statement = "print({text})"
 	test_list.append(b)
 
-	b = BLOCKS["entry_block"].instantiate()
-	b.block_format = "On body enter [body: NODE_PATH]"
-	b.statement = "func _on_body_enter(body):"
-	test_list.append(b)
-
 	var test_category: BlockCategory = BlockCategory.new("Test", test_list, Color("9989df"))
 
 	# Signal
@@ -339,9 +334,26 @@ static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]
 			props = ["modulate"]
 
 		"RigidBody2D":
-			# On body entered
+			for verb in ["entered", "exited"]:
+				var b = BLOCKS["entry_block"].instantiate()
+				b.block_format = "On [body: NODE_PATH] %s" % [verb]
+				# HACK: Blocks refer to nodes by path but the callback receives the node itself;
+				# convert to path
+				b.statement = "func _on_body_%s(_body: Node):\n\tvar body: NodePath = _body.get_path()" % [verb]
+				b.signal_name = "body_%s" % [verb]
+				block_list.append(b)
 
 			props = ["mass", "linear_velocity", "angular_velocity"]
+
+		"Area2D":
+			for verb in ["entered", "exited"]:
+				var b = BLOCKS["entry_block"].instantiate()
+				b.block_format = "On [body: NODE_PATH] %s" % [verb]
+				# HACK: Blocks refer to nodes by path but the callback receives the node itself;
+				# convert to path
+				b.statement = "func _on_body_%s(_body: Node2D):\n\tvar body: NodePath = _body.get_path()" % [verb]
+				b.signal_name = "body_%s" % [verb]
+				block_list.append(b)
 
 	var prop_list = ClassDB.class_get_property_list(_class_name, true)
 
