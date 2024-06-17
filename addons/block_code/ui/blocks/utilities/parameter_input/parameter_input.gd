@@ -9,8 +9,8 @@ signal text_modified
 
 @export var block_path: NodePath
 
-@export var variant_type: Variant.Type = TYPE_STRING
 @export var block_type: Types.BlockType = Types.BlockType.VALUE
+@export var variant_type: String = "String"
 
 var block: Block
 
@@ -42,6 +42,7 @@ func _ready():
 		block = get_node_or_null(block_path)
 	snap_point.block = block
 	snap_point.block_type = block_type
+	snap_point.variant_type = variant_type
 
 	# Do something with block_type to restrict input
 
@@ -58,9 +59,9 @@ func get_string() -> String:
 
 	var text: String = get_plain_text()
 
-	if variant_type == TYPE_STRING:
+	if variant_type == "String":
 		text = "'%s'" % text
-	if variant_type == TYPE_VECTOR2:
+	if variant_type == "Vector2":
 		text = "Vector2(%s)" % text
 
 	return text

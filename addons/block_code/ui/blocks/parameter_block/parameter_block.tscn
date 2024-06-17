@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/parameter_block/parameter_block.gd" id="1_0hajy"]
 [ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_gy5co"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0afbg"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7xfk"]
 bg_color = Color(1, 1, 1, 1)
 border_width_left = 3
 border_width_top = 3
@@ -26,7 +26,7 @@ block_type = 3
 [node name="Panel" type="Panel" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_0afbg")
+theme_override_styles/panel = SubResource("StyleBoxFlat_d7xfk")
 
 [node name="DragDropArea" parent="." instance=ExtResource("2_gy5co")]
 layout_mode = 2

@@ -99,8 +99,7 @@ static func format_string(parent_block: Block, attach_to: Node, string: String) 
 
 		var split := param.split(": ")
 		var param_name := split[0]
-		var param_type_str := split[1]
-		var param_type: Variant.Type = Types.STRING_TO_VARIANT_TYPE[param_type_str]
+		var param_type := split[1]
 
 		var param_input: ParameterInput = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn").instantiate()
 		param_input.name = "ParameterInput%d" % start  # Unique path

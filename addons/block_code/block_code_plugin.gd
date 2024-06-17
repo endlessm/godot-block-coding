@@ -45,7 +45,7 @@ const DISABLED_CLASSES := [
 
 
 func _enter_tree():
-	Types.init_cast_graph()
+	Types.init_types()
 
 	main_panel = MainPanel.instantiate()
 	main_panel.undo_redo = get_undo_redo()

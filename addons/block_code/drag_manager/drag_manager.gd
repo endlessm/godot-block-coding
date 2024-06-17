@@ -46,7 +46,12 @@ func _process(_delta):
 					push_error("Warning: a snap point does not reference it's parent block.")
 					continue
 				if snap_point.block.on_canvas:
-					if Types.can_cast(dragging.block_type, snap_point.block_type):
+					if dragging.block_type == snap_point.block_type:
+						# Don't snap uncastable value blocks
+						if dragging.block_type == Types.BlockType.VALUE:
+							if !Types.can_cast(dragging.variant_type, snap_point.variant_type):
+								continue
+
 						var snap_global_pos: Vector2 = snap_point.get_global_rect().position
 						var temp_dist: float = dragging_global_pos.distance_to(snap_global_pos)
 						if temp_dist < closest_dist:

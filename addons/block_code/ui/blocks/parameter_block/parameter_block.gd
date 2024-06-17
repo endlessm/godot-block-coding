@@ -4,7 +4,7 @@ extends Block
 
 @export var block_format: String = ""
 @export var statement: String = ""
-@export var variant_type: Variant.Type
+@export var variant_type: String
 
 @onready var _panel := $Panel
 @onready var _hbox := %HBoxContainer
@@ -16,7 +16,6 @@ var param_input_strings: Dictionary  # Only loaded from serialized
 func _ready():
 	super()
 
-	block_type = Types.BlockType.VALUE
 	var new_panel = _panel.get_theme_stylebox("panel").duplicate()
 	new_panel.bg_color = color
 	new_panel.border_color = color.darkened(0.2)
@@ -35,7 +34,7 @@ func _on_drag_drop_area_mouse_down():
 
 func get_serialized_props() -> Array:
 	var props := super()
-	props.append_array(serialize_props(["block_format", "statement"]))
+	props.append_array(serialize_props(["variant_type", "block_format", "statement"]))
 
 	var _param_input_strings: Dictionary = {}
 	for pair in param_name_input_pairs:
