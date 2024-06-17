@@ -84,7 +84,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	test_list.append(b)
 
 	b = BLOCKS["entry_block"].instantiate()
-	b.block_format = "On body enter [body: NODE]"
+	b.block_format = "On body enter [body: NODE_PATH]"
 	b.statement = "func _on_body_enter(body):"
 	test_list.append(b)
 
@@ -96,7 +96,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b = BLOCKS["entry_block"].instantiate()
 	# HACK: make signals work with new entry nodes. NONE instead of STRING type allows
 	# plain text input for function name. Should revamp signals later
-	b.block_format = "On signal {signal: NONE}"
+	b.block_format = "On signal {signal: NIL}"
 	b.statement = "func signal_{signal}():"
 	signal_list.append(b)
 
@@ -111,8 +111,8 @@ static func get_general_categories() -> Array[BlockCategory]:
 	signal_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
-	b.block_format = "Add {node: NODE} to group {group: STRING}"
-	b.statement = "{node}.add_to_group({group})"
+	b.block_format = "Add {node: NODE_PATH} to group {group: STRING}"
+	b.statement = "get_node({node}).add_to_group({group})"
 	signal_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
@@ -121,8 +121,8 @@ static func get_general_categories() -> Array[BlockCategory]:
 	signal_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
-	b.block_format = "Remove {node: NODE} from group {group: STRING}"
-	b.statement = "{node}.remove_from_group({group})"
+	b.block_format = "Remove {node: NODE_PATH} from group {group: STRING}"
+	b.statement = "get_node({node}).remove_from_group({group})"
 	signal_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
@@ -133,8 +133,8 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_BOOL
-	b.block_format = "Is {node: NODE} in group {group: STRING}"
-	b.statement = "{node}.is_in_group({group})"
+	b.block_format = "Is {node: NODE_PATH} in group {group: STRING}"
+	b.statement = "get_node({node}).is_in_group({group})"
 	signal_list.append(b)
 
 	var signal_category: BlockCategory = BlockCategory.new("Signal", signal_list, Color("f0c300"))

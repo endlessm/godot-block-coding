@@ -15,6 +15,8 @@ const VARIANT_TYPE_TO_STRING: Dictionary = {
 	TYPE_BOOL: "BOOL",
 	TYPE_VECTOR2: "VECTOR2",
 	TYPE_COLOR: "COLOR",
+	TYPE_NODE_PATH: "NODE_PATH",
+	TYPE_NIL: "NIL",
 }
 
 const STRING_TO_VARIANT_TYPE: Dictionary = {
@@ -24,6 +26,8 @@ const STRING_TO_VARIANT_TYPE: Dictionary = {
 	"BOOL": TYPE_BOOL,
 	"VECTOR2": TYPE_VECTOR2,
 	"COLOR": TYPE_COLOR,
+	"NODE_PATH": TYPE_NODE_PATH,
+	"NIL": TYPE_NIL,
 }
 
 const cast_relationships = [

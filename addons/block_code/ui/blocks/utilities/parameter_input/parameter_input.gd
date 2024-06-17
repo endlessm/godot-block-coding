@@ -42,6 +42,7 @@ func _ready():
 		block = get_node_or_null(block_path)
 	snap_point.block = block
 	snap_point.block_type = block_type
+	snap_point.variant_type = variant_type
 
 	# Do something with block_type to restrict input
 
@@ -60,7 +61,7 @@ func get_string() -> String:
 
 	if variant_type == TYPE_STRING:
 		text = "'%s'" % text
-	if variant_type == TYPE_VECTOR2:
+	elif variant_type == TYPE_VECTOR2:
 		text = "Vector2(%s)" % text
 
 	return text
