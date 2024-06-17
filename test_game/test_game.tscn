@@ -241,7 +241,7 @@ path_child_pairs = []
 [sub_resource type="Resource" id="Resource_7f05b"]
 script = ExtResource("3_dpt5n")
 block_class = &"ParameterBlock"
-serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.941176, 0.764706, 0, 1)], ["block_type", 6], ["position", Vector2(0, 0)], ["block_format", "Is {node: NODE} in group {group: STRING}"], ["statement", "{node}.is_in_group({group})"], ["param_input_strings", {
+serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.941176, 0.764706, 0, 1)], ["block_type", 6], ["position", Vector2(0, 0)], ["block_format", "Is {node: NODE_PATH} in group {group: STRING}"], ["statement", "get_node({node}).is_in_group({group})"], ["param_input_strings", {
 "group": "Enemy",
 "node": ""
 }]]
@@ -278,7 +278,7 @@ path_child_pairs = [[NodePath("VBoxContainer/MarginContainer/Rows/Row0/RowHBoxCo
 [sub_resource type="Resource" id="Resource_um7l6"]
 script = ExtResource("3_dpt5n")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "entry_block"], ["label", "EntryBlock"], ["color", Color(0.6, 0.537255, 0.87451, 1)], ["block_type", 2], ["position", Vector2(472, 469)], ["block_format", "On body enter [body: NODE]"], ["statement", "func _on_body_enter(body):"], ["param_input_strings", {
+serialized_props = [["block_name", "entry_block"], ["label", "EntryBlock"], ["color", Color(0.6, 0.537255, 0.87451, 1)], ["block_type", 2], ["position", Vector2(472, 469)], ["block_format", "On body enter [body: NODE_PATH]"], ["statement", "func _on_body_enter(body):"], ["param_input_strings", {
 "body": ""
 }]]
 
@@ -302,7 +302,7 @@ path_child_pairs = []
 [sub_resource type="Resource" id="Resource_g4l32"]
 script = ExtResource("3_dpt5n")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "entry_block"], ["label", "EntryBlock"], ["color", Color(0.941176, 0.764706, 0, 1)], ["block_type", 2], ["position", Vector2(537, 268)], ["block_format", "On signal {signal: NONE}"], ["statement", "func signal_{signal}():"], ["param_input_strings", {
+serialized_props = [["block_name", "entry_block"], ["label", "EntryBlock"], ["color", Color(0.941176, 0.764706, 0, 1)], ["block_type", 2], ["position", Vector2(537, 268)], ["block_format", "On signal {signal: NIL}"], ["statement", "func signal_{signal}():"], ["param_input_strings", {
 "signal": "will_hi"
 }]]
 

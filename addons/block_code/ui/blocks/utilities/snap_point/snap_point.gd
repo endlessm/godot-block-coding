@@ -6,6 +6,9 @@ extends MarginContainer
 
 @export var block_type: Types.BlockType = Types.BlockType.EXECUTE
 
+## When block_type is [enum Types.BlockType.VALUE], the type of the value that can be used at this snap point.
+@export var variant_type: Variant.Type
+
 var block: Block
 
 

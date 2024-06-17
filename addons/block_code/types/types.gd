@@ -3,23 +3,38 @@ extends Node
 
 enum BlockType {
 	NONE,
-	EXECUTE,
 	ENTRY,
-	# Parameters
-	STRING,
-	INT,
-	FLOAT,
-	VECTOR2,
-	BOOL,
-	COLOR,
-	NODE
+	EXECUTE,
+	VALUE,
+}
+
+const VARIANT_TYPE_TO_STRING: Dictionary = {
+	TYPE_STRING: "STRING",
+	TYPE_INT: "INT",
+	TYPE_FLOAT: "FLOAT",
+	TYPE_BOOL: "BOOL",
+	TYPE_VECTOR2: "VECTOR2",
+	TYPE_COLOR: "COLOR",
+	TYPE_NODE_PATH: "NODE_PATH",
+	TYPE_NIL: "NIL",
+}
+
+const STRING_TO_VARIANT_TYPE: Dictionary = {
+	"STRING": TYPE_STRING,
+	"INT": TYPE_INT,
+	"FLOAT": TYPE_FLOAT,
+	"BOOL": TYPE_BOOL,
+	"VECTOR2": TYPE_VECTOR2,
+	"COLOR": TYPE_COLOR,
+	"NODE_PATH": TYPE_NODE_PATH,
+	"NIL": TYPE_NIL,
 }
 
 const cast_relationships = [
-	[BlockType.INT, BlockType.FLOAT, "float(%s)"],
-	[BlockType.FLOAT, BlockType.INT, "int(%s)"],
-	[BlockType.INT, BlockType.STRING, "str(%s)"],
-	[BlockType.FLOAT, BlockType.STRING, "str(%s)"],
+	[TYPE_INT, TYPE_FLOAT, "float(%s)"],
+	[TYPE_FLOAT, TYPE_INT, "int(%s)"],
+	[TYPE_INT, TYPE_STRING, "str(%s)"],
+	[TYPE_FLOAT, TYPE_STRING, "str(%s)"],
 ]
 
 # Directed graph, edges are CastGraphEdge
@@ -27,10 +42,10 @@ static var cast_graph: Dictionary
 
 
 class CastGraphEdge:
-	var to: BlockType
+	var to: Variant.Type
 	var cast_format: String
 
-	func _init(p_to: BlockType, p_cast_format: String):
+	func _init(p_to: Variant.Type, p_cast_format: String):
 		to = p_to
 		cast_format = p_cast_format
 
@@ -56,7 +71,7 @@ static var dist: Dictionary
 const INT_MAX: int = 1000000000
 
 
-static func dijkstra(source: BlockType):
+static func dijkstra(source: Variant.Type):
 	prev = {}
 	dist = {}
 
@@ -86,7 +101,7 @@ static func dijkstra(source: BlockType):
 				queue.update_priority(v, alt)
 
 
-static func can_cast(type: BlockType, parent_type: BlockType) -> bool:
+static func can_cast(type: Variant.Type, parent_type: Variant.Type) -> bool:
 	if type == parent_type:
 		return true
 
@@ -96,7 +111,7 @@ static func can_cast(type: BlockType, parent_type: BlockType) -> bool:
 	return false
 
 
-static func cast(val: String, type: BlockType, parent_type: BlockType):
+static func cast(val: String, type: Variant.Type, parent_type: Variant.Type):
 	if type == parent_type:
 		return val
 
