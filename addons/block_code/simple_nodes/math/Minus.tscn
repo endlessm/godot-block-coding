@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://hnctfjcdeyrc"]
+
+[ext_resource type="Script" path="res://addons/block_code/simple_nodes/math/minus.gd" id="1_djrfi"]
+
+[node name="Minus" type="Node"]
+script = ExtResource("1_djrfi")
