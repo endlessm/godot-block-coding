@@ -300,7 +300,10 @@ static func category_from_property_list(property_list: Array, selected_props: Ar
 			if selected_property == prop.name:
 				found_prop = prop
 				break
-		block_list.append_array(property_to_blocklist(found_prop))
+		if found_prop:
+			block_list.append_array(property_to_blocklist(found_prop))
+		else:
+			push_warning("No property matching %s found in %s" % [selected_property, property_list])
 
 	return BlockCategory.new(p_name, block_list, p_color)
 
