@@ -55,7 +55,11 @@ func get_string() -> String:
 	var snapped_block: ParameterBlock = get_snapped_block() as ParameterBlock
 	if snapped_block:
 		var generated_string = snapped_block.get_parameter_string()
-		return Types.cast(generated_string, snapped_block.variant_type, variant_type)
+		if Types.can_cast(snapped_block.variant_type, variant_type):
+			return Types.cast(generated_string, snapped_block.variant_type, variant_type)
+		else:
+			push_warning("No cast from %s to %s; using '%s' verbatim" % [snapped_block, variant_type, generated_string])
+			return generated_string
 
 	var text: String = get_plain_text()
 
