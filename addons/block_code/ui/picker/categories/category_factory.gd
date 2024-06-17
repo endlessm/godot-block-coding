@@ -205,12 +205,12 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	var logic_list: Array[Block] = []
 
-	for op in ["==", ">", "<", ">=", "<=", "!="]:
-		b = BLOCKS["parameter_block"].instantiate()
-		b.variant_type = TYPE_BOOL
-		b.block_format = "{int1: INT} %s {int2: INT}" % op
-		b.statement = "({int1} %s {int2})" % op
-		logic_list.append(b)
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_type = Types.BlockType.BOOL
+	b.block_format = "{int1: INT} {op: OPTION} {int2: INT}"
+	b.statement = "({int1} {op} {int2})"
+	b.defaults = {"op": Types.OptionData.new(["==", ">", "<", ">=", "<=", "!="])}
+	logic_list.append(b)
 
 	for op in ["and", "or"]:
 		b = BLOCKS["parameter_block"].instantiate()

@@ -21,6 +21,7 @@ var block: Block
 # Inputs
 @onready var _text_input := %TextInput
 @onready var _color_input := %ColorInput
+@onready var _option_input := %OptionInput
 
 
 func set_raw_input(raw_input):
@@ -28,6 +29,15 @@ func set_raw_input(raw_input):
 		Types.BlockType.COLOR:
 			_color_input.color = raw_input
 			_update_panel_bg_color(raw_input)
+
+		Types.BlockType.OPTION:
+			_panel.visible = false
+			_option_input.clear()
+			var option_data: Types.OptionData = raw_input as Types.OptionData
+			for item in option_data.items:
+				_option_input.add_item(item)
+			_option_input.select(option_data.selected)
+
 		_:
 			_line_edit.text = raw_input
 
@@ -36,6 +46,13 @@ func get_raw_input():
 	match block_type:
 		Types.BlockType.COLOR:
 			return _color_input.color
+
+		Types.BlockType.OPTION:
+			var options: Array = []
+			for i in _option_input.item_count:
+				options.append(_option_input.get_item_text(i))
+			return Types.OptionData.new(options, _option_input.selected)
+
 		_:
 			return _line_edit.text
 
@@ -64,6 +81,8 @@ func _ready():
 	match block_type:
 		Types.BlockType.COLOR:
 			switch_input(_color_input)
+		Types.BlockType.OPTION:
+			switch_input(_option_input)
 		_:
 			switch_input(_text_input)
 
@@ -93,6 +112,8 @@ func get_string() -> String:
 			return "Vector2(%s)" % input
 		Types.BlockType.COLOR:
 			return "Color%s" % str(input)
+		Types.BlockType.OPTION:
+			return _option_input.get_item_text(_option_input.selected)
 		_:
 			return "%s" % input
 
@@ -118,3 +139,7 @@ func _update_panel_bg_color(new_color):
 	var stylebox = _panel.get_theme_stylebox("panel").duplicate()
 	stylebox.bg_color = new_color
 	_panel.add_theme_stylebox_override("panel", stylebox)
+
+
+func _on_option_input_item_selected(index):
+	modified.emit()

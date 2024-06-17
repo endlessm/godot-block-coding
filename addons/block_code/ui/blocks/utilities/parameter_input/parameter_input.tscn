@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cjvxs6euc6xbm"]
+[gd_scene load_steps=9 format=3 uid="uid://cjvxs6euc6xbm"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.gd" id="1_rgmxn"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="2_6esp3"]
@@ -17,6 +17,8 @@ corner_radius_bottom_left = 40
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3r4mt"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5hq7f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fjquj"]
 
 [node name="ParameterInput" type="MarginContainer"]
 anchors_preset = 15
@@ -75,6 +77,12 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_5hq7f")
 
+[node name="OptionInput" type="OptionButton" parent="InputSwitcher"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fjquj")
+
 [node name="SnapPoint" parent="." instance=ExtResource("2_6esp3")]
 unique_name_in_owner = true
 layout_mode = 2
@@ -83,3 +91,4 @@ block_type = 3
 
 [connection signal="text_changed" from="InputSwitcher/TextInput/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="color_changed" from="InputSwitcher/ColorInput" to="." method="_on_color_input_color_changed"]
+[connection signal="item_selected" from="InputSwitcher/OptionInput" to="." method="_on_option_input_item_selected"]
