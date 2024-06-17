@@ -17,10 +17,6 @@ class TreeNode:
 		children.append(node)
 
 
-func generate_tree(root_block: Block) -> TreeNode:
-	return root_block.get_instruction()
-
-
 func generate_text(root_node: TreeNode, start_depth: int = 0) -> String:
 	out = ""
 	depth = start_depth
