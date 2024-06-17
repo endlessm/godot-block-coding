@@ -9,7 +9,8 @@ signal text_modified
 
 @export var block_path: NodePath
 
-@export var block_type: Types.BlockType = Types.BlockType.STRING
+@export var variant_type: Variant.Type = TYPE_STRING
+@export var block_type: Types.BlockType = Types.BlockType.VALUE
 
 var block: Block
 
@@ -50,16 +51,16 @@ func get_snapped_block() -> Block:
 
 
 func get_string() -> String:
-	var snapped_block: Block = get_snapped_block()
+	var snapped_block: ParameterBlock = get_snapped_block() as ParameterBlock
 	if snapped_block:
 		var generated_string = snapped_block.get_parameter_string()
-		return Types.cast(generated_string, snapped_block.block_type, block_type)
+		return Types.cast(generated_string, snapped_block.variant_type, variant_type)
 
 	var text: String = get_plain_text()
 
-	if block_type == Types.BlockType.STRING:
+	if variant_type == TYPE_STRING:
 		text = "'%s'" % text
-	if block_type == Types.BlockType.VECTOR2:
+	if variant_type == TYPE_VECTOR2:
 		text = "Vector2(%s)" % text
 
 	return text

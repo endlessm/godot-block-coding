@@ -126,13 +126,13 @@ static func get_general_categories() -> Array[BlockCategory]:
 	signal_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
-	b.block_type = Types.BlockType.BOOL
+	b.variant_type = TYPE_BOOL
 	b.block_format = "Is in group {group: STRING}"
 	b.statement = "is_in_group({group})"
 	signal_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
-	b.block_type = Types.BlockType.BOOL
+	b.variant_type = TYPE_BOOL
 	b.block_format = "Is {node: NODE} in group {group: STRING}"
 	b.statement = "{node}.is_in_group({group})"
 	signal_list.append(b)
@@ -158,7 +158,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	variable_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
-	b.block_type = Types.BlockType.INT
+	b.variant_type = TYPE_INT
 	b.block_format = "Get Int {var: STRING}"
 	b.statement = "VAR_DICT[{var}]"
 	variable_list.append(b)
@@ -174,31 +174,31 @@ static func get_general_categories() -> Array[BlockCategory]:
 	var math_list: Array[Block] = []
 
 	b = BLOCKS["parameter_block"].instantiate()
-	b.block_type = Types.BlockType.INT
+	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} + {b: INT}"
 	b.statement = "({a} + {b})"
 	math_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
-	b.block_type = Types.BlockType.INT
+	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} - {b: INT}"
 	b.statement = "({a} - {b})"
 	math_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
-	b.block_type = Types.BlockType.INT
+	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} * {b: INT}"
 	b.statement = "({a} * {b})"
 	math_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
-	b.block_type = Types.BlockType.INT
+	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} / {b: INT}"
 	b.statement = "({a} / {b})"
 	math_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
-	b.block_type = Types.BlockType.INT
+	b.variant_type = TYPE_INT
 	b.block_format = "{base: INT} ^ {exp: INT}"
 	b.statement = "(pow({base}, {exp}))"
 	math_list.append(b)
@@ -211,20 +211,20 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	for op in ["==", ">", "<", ">=", "<=", "!="]:
 		b = BLOCKS["parameter_block"].instantiate()
-		b.block_type = Types.BlockType.BOOL
+		b.variant_type = TYPE_BOOL
 		b.block_format = "{int1: INT} %s {int2: INT}" % op
 		b.statement = "({int1} %s {int2})" % op
 		logic_list.append(b)
 
 	for op in ["and", "or"]:
 		b = BLOCKS["parameter_block"].instantiate()
-		b.block_type = Types.BlockType.BOOL
+		b.variant_type = TYPE_BOOL
 		b.block_format = "{bool1: BOOL} %s {bool2: BOOL}" % op
 		b.statement = "({bool1} %s {bool2})" % op
 		logic_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
-	b.block_type = Types.BlockType.BOOL
+	b.variant_type = TYPE_BOOL
 	b.block_format = "Not {bool: BOOL}"
 	b.statement = "(!{bool})"
 	logic_list.append(b)
@@ -264,31 +264,13 @@ static func add_to_categories(main: Array[BlockCategory], addition: Array[BlockC
 	return main
 
 
-static func built_in_type_to_block_type(type: Variant.Type):
-	match type:
-		TYPE_BOOL:
-			return Types.BlockType.BOOL
-		TYPE_INT:
-			return Types.BlockType.INT
-		TYPE_FLOAT:
-			return Types.BlockType.FLOAT
-		TYPE_STRING:
-			return Types.BlockType.STRING
-		TYPE_VECTOR2:
-			return Types.BlockType.VECTOR2
-		TYPE_COLOR:
-			return Types.BlockType.COLOR
-
-	return null
-
-
 static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 	var block_list: Array[Block] = []
 
-	var block_type = built_in_type_to_block_type(property.type)
+	var block_type = property.type
 
 	if block_type:
-		var type_string: String = Types.BlockType.find_key(block_type)
+		var type_string: String = Types.VARIANT_TYPE_TO_STRING[block_type]
 
 		var b = BLOCKS["statement_block"].instantiate()
 		b.block_format = "Set %s to {value: %s}" % [property.name.capitalize(), type_string]
@@ -376,19 +358,19 @@ static func _get_input_blocks() -> Array[Block]:
 
 	for action: StringName in InputMap.get_actions():
 		var block: Block = BLOCKS["parameter_block"].instantiate()
-		block.block_type = Types.BlockType.BOOL
+		block.variant_type = TYPE_BOOL
 		block.block_format = "Is action %s pressed" % action
 		block.statement = 'Input.is_action_pressed("%s")' % action
 		block_list.append(block)
 
 		block = BLOCKS["parameter_block"].instantiate()
-		block.block_type = Types.BlockType.BOOL
+		block.variant_type = TYPE_BOOL
 		block.block_format = "Is action %s just pressed" % action
 		block.statement = 'Input.is_action_just_pressed("%s")' % action
 		block_list.append(block)
 
 		block = BLOCKS["parameter_block"].instantiate()
-		block.block_type = Types.BlockType.BOOL
+		block.variant_type = TYPE_BOOL
 		block.block_format = "Is action %s just released" % action
 		block.statement = 'Input.is_action_just_released("%s")' % action
 		block_list.append(block)

@@ -100,12 +100,12 @@ static func format_string(parent_block: Block, attach_to: Node, string: String) 
 		var split := param.split(": ")
 		var param_name := split[0]
 		var param_type_str := split[1]
-		var param_type := Types.BlockType.get(param_type_str)
+		var param_type: Variant.Type = Types.STRING_TO_VARIANT_TYPE[param_type_str]
 
 		var param_input: ParameterInput = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn").instantiate()
 		param_input.name = "ParameterInput%d" % start  # Unique path
 		param_input.placeholder = param_name
-		param_input.block_type = param_type
+		param_input.variant_type = param_type
 		param_input.block = parent_block
 		param_input.text_modified.connect(func(): parent_block.modified.emit())
 		attach_to.add_child(param_input)
@@ -115,7 +115,7 @@ static func format_string(parent_block: Block, attach_to: Node, string: String) 
 			var new_block: Block = preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn").instantiate()
 			new_block.block_format = param_name
 			new_block.statement = param_name
-			new_block.block_type = param_type
+			new_block.variant_type = param_type
 			new_block.color = parent_block.color
 			param_input.block_type = Types.BlockType.NONE
 			param_input.snap_point.block_type = Types.BlockType.NONE  # Necessary because already called ready
