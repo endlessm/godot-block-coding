@@ -4,6 +4,7 @@ extends Block
 
 @export var block_format: String = ""
 @export var statement: String = ""
+@export var defaults: Dictionary = {}
 
 @onready var _background := %Background
 @onready var _hbox := %HBoxContainer
@@ -32,7 +33,7 @@ func _on_drag_drop_area_mouse_down():
 
 func get_serialized_props() -> Array:
 	var props := super()
-	props.append_array(serialize_props(["block_format", "statement"]))
+	props.append_array(serialize_props(["block_format", "statement", "defaults"]))
 
 	var _param_input_strings: Dictionary = {}
 	for pair in param_name_input_pairs:
@@ -75,10 +76,10 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 
 
 func format():
-	param_name_input_pairs = format_string(self, %HBoxContainer, block_format)
+	param_name_input_pairs = format_string(self, %HBoxContainer, block_format, defaults)
 
 
-static func format_string(parent_block: Block, attach_to: Node, string: String) -> Array:
+static func format_string(parent_block: Block, attach_to: Node, string: String, _defaults: Dictionary) -> Array:
 	var _param_name_input_pairs = []
 	var regex = RegEx.new()
 	regex.compile("\\[([^\\]]+)\\]|\\{([^}]+)\\}")  # Capture things of format {test} or [test]
@@ -101,6 +102,9 @@ static func format_string(parent_block: Block, attach_to: Node, string: String) 
 		var param_name := split[0]
 		var param_type_str := split[1]
 		var param_type: Variant.Type = Types.STRING_TO_VARIANT_TYPE[param_type_str]
+		var param_default = null
+		if _defaults.has(param_name):
+			param_default = _defaults[param_name]
 
 		var param_input: ParameterInput = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn").instantiate()
 		param_input.name = "ParameterInput%d" % start  # Unique path
@@ -108,7 +112,11 @@ static func format_string(parent_block: Block, attach_to: Node, string: String) 
 		param_input.variant_type = param_type
 		param_input.block = parent_block
 		param_input.modified.connect(func(): parent_block.modified.emit())
+
 		attach_to.add_child(param_input)
+		if param_default:
+			param_input.set_raw_input(param_default)
+
 		_param_name_input_pairs.append([param_name, param_input])
 
 		if copy_block:

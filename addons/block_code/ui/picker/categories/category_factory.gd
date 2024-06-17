@@ -81,6 +81,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "print {text: STRING}"
 	b.statement = "print({text})"
+	b.defaults = {"text": "Hello"}
 	test_list.append(b)
 
 	var test_category: BlockCategory = BlockCategory.new("Test", test_list, Color("9989df"))
