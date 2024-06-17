@@ -348,7 +348,7 @@ static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]
 	var class_cat: BlockCategory = category_from_property_list(prop_list, props, _class_name, Color.SLATE_GRAY)
 	block_list.append_array(class_cat.block_list)
 	class_cat.block_list = block_list
-	if props.size() > 0:
+	if block_list:
 		cats.append(class_cat)
 
 	return cats
