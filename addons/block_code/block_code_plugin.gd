@@ -5,6 +5,8 @@ extends EditorPlugin
 const MainPanel := preload("res://addons/block_code/ui/main_panel.tscn")
 static var main_panel
 
+var editor_inspector: EditorInspector
+
 var old_feature_profile: String = ""
 
 const DISABLED_CLASSES := [
@@ -46,6 +48,8 @@ const DISABLED_CLASSES := [
 
 func _enter_tree():
 	Types.init_cast_graph()
+
+	editor_inspector = EditorInterface.get_inspector()
 
 	main_panel = MainPanel.instantiate()
 	main_panel.undo_redo = get_undo_redo()
@@ -89,6 +93,16 @@ func _exit_tree():
 		else:
 			print("Old feature profile was removed and cannot be reverted to. Reverting to default.")
 			EditorInterface.set_current_feature_profile("")
+
+
+func _ready():
+	editor_inspector.connect("edited_object_changed", _on_editor_inspector_edited_object_changed)
+
+
+func _on_editor_inspector_edited_object_changed():
+	var block_code: BlockCode = editor_inspector.get_edited_object() as BlockCode
+	if block_code:
+		BlockCodePlugin.main_panel.switch_script(block_code)
 
 
 func _has_main_screen():
