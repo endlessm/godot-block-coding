@@ -65,3 +65,7 @@ func test_tree_node_text():
 
 	var text: String = tree.generate_text(root, 0)
 	assert_eq(text, "root\n\tchild1\n\t\tgrandchild\n\tchild2\nsibling\n\tnephew\n")
+
+
+func test_error():
+	assert_eq("a", "b")
