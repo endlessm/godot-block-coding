@@ -8,10 +8,13 @@ var eia: EditorInterfaceAccess
 @onready var _block_canvas: BlockCanvas = %NodeBlockCanvas
 @onready var _drag_manager: DragManager = %DragManager
 @onready var _title_bar: TitleBar = %TitleBar
+@onready var _editor_inspector: EditorInspector = EditorInterface.get_inspector()
 
 var block_code_tab: Button
 var _current_bsd: BlockScriptData
 var _current_block_code_node: BlockCode
+var _scene_root: Node
+var _block_code_nodes: Array
 
 var undo_redo: EditorUndoRedoManager
 
@@ -32,17 +35,18 @@ func _on_button_pressed():
 	_print_generated_script()
 
 
+func switch_scene(scene_root: Node):
+	_title_bar.scene_selected(scene_root)
+
+
 func switch_script(block_code_node: BlockCode):
-	var bsd = block_code_node.bsd
-	if bsd:
-		_current_bsd = bsd
-		_current_block_code_node = block_code_node
-		_picker.bsd_selected(bsd)
-		_title_bar.bsd_selected(bsd)
-		_block_canvas.bsd_selected(bsd)
-		block_code_tab.pressed.emit()
-	else:
-		print("No block script attached.")
+	var bsd = block_code_node.bsd if block_code_node else null
+	_current_bsd = bsd
+	_current_block_code_node = block_code_node
+	_picker.bsd_selected(bsd)
+	_title_bar.bsd_selected(bsd)
+	_block_canvas.bsd_selected(bsd)
+	block_code_tab.pressed.emit()
 
 
 func save_script():
