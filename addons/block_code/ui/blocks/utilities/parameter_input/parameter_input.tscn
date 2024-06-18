@@ -84,6 +84,74 @@ custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fjquj")
 
+[node name="Vector2Input" type="MarginContainer" parent="InputSwitcher"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InputSwitcher/Vector2Input"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="InputSwitcher/Vector2Input/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="XLineEdit" type="LineEdit" parent="InputSwitcher/Vector2Input/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.118581, 0.118581, 0.118581, 1)
+theme_override_colors/font_uneditable_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_colors/font_placeholder_color = Color(0.76662, 0.76662, 0.76662, 1)
+theme_override_constants/minimum_character_width = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6oowp")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_afyv2")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_3r4mt")
+placeholder_text = "x"
+alignment = 1
+expand_to_text_length = true
+
+[node name="Control3" type="Control" parent="InputSwitcher/Vector2Input/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CenterContainer" type="MarginContainer" parent="InputSwitcher/Vector2Input/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect" type="ColorRect" parent="InputSwitcher/Vector2Input/HBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.804743, 0.804743, 0.804743, 1)
+
+[node name="Control4" type="Control" parent="InputSwitcher/Vector2Input/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="YLineEdit" type="LineEdit" parent="InputSwitcher/Vector2Input/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.118581, 0.118581, 0.118581, 1)
+theme_override_colors/font_uneditable_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_colors/font_placeholder_color = Color(0.76662, 0.76662, 0.76662, 1)
+theme_override_constants/minimum_character_width = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6oowp")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_afyv2")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_3r4mt")
+placeholder_text = "y"
+alignment = 1
+expand_to_text_length = true
+
+[node name="Control2" type="Control" parent="InputSwitcher/Vector2Input/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="SnapPoint" parent="." instance=ExtResource("2_6esp3")]
 unique_name_in_owner = true
 layout_mode = 2
@@ -94,3 +162,5 @@ variant_type = 4
 [connection signal="text_changed" from="InputSwitcher/TextInput/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="color_changed" from="InputSwitcher/ColorInput" to="." method="_on_color_input_color_changed"]
 [connection signal="item_selected" from="InputSwitcher/OptionInput" to="." method="_on_option_input_item_selected"]
+[connection signal="text_changed" from="InputSwitcher/Vector2Input/HBoxContainer/XLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_changed" from="InputSwitcher/Vector2Input/HBoxContainer/YLineEdit" to="." method="_on_line_edit_text_changed"]

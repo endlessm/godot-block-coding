@@ -16,13 +16,21 @@ var option: bool = false
 var block: Block
 
 @onready var _panel := %Panel
-@onready var _line_edit := %LineEdit
 @onready var snap_point := %SnapPoint
 @onready var _input_switcher := %InputSwitcher
-# Inputs
+
+## Inputs
+# Text
 @onready var _text_input := %TextInput
+@onready var _line_edit := %LineEdit
+# Color
 @onready var _color_input := %ColorInput
+# Option Dropdown
 @onready var _option_input := %OptionInput
+# Vector2
+@onready var _vector2_input := %Vector2Input
+@onready var _x_line_edit := %XLineEdit
+@onready var _y_line_edit := %YLineEdit
 
 
 func set_raw_input(raw_input):
@@ -40,7 +48,10 @@ func set_raw_input(raw_input):
 		TYPE_COLOR:
 			_color_input.color = raw_input
 			_update_panel_bg_color(raw_input)
-
+		TYPE_VECTOR2:
+			var split = raw_input.split(",")
+			_x_line_edit.text = split[0]
+			_y_line_edit.text = split[1]
 		_:
 			_line_edit.text = raw_input
 
@@ -55,7 +66,8 @@ func get_raw_input():
 	match variant_type:
 		TYPE_COLOR:
 			return _color_input.color
-
+		TYPE_VECTOR2:
+			return _x_line_edit.text + "," + _y_line_edit.text
 		_:
 			return _line_edit.text
 
@@ -84,7 +96,8 @@ func _ready():
 	match variant_type:
 		TYPE_COLOR:
 			switch_input(_color_input)
-
+		TYPE_VECTOR2:
+			switch_input(_vector2_input)
 		_:
 			switch_input(_text_input)
 
