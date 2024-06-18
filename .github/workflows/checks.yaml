@@ -24,6 +24,9 @@ jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -37,4 +40,11 @@ jobs:
         godot --path . --headless --import
     - name: Run tests
       run: |
-        godot --path . --headless --script addons/gut/gut_cmdln.gd -gexit
+        godot --path . --headless --script addons/gut/gut_cmdln.gd -gjunit_xml_file=test-report.xml -gexit
+    - name: Publish test results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: test-report.xml
+        comment_mode: failures
+        test_file_prefix: "-res://"
