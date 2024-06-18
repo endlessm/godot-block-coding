@@ -1,9 +1,6 @@
 class_name InstructionTree
 extends Object
 
-var depth: int
-var out: String
-
 
 class TreeNode:
 	var data: String
@@ -18,24 +15,17 @@ class TreeNode:
 
 
 func generate_text(root_node: TreeNode, start_depth: int = 0) -> String:
-	out = ""
-	depth = start_depth
-	generate_text_recursive(root_node)
-	return out
+	var out = PackedStringArray()
+	generate_text_recursive(root_node, start_depth, out)
+	return "".join(out)
 
 
-func generate_text_recursive(root_node: TreeNode):
-	if root_node.data != "":
-		for i in depth:
-			out += "\t"
-		out += root_node.data + "\n"
+func generate_text_recursive(node: TreeNode, depth: int, out: PackedStringArray):
+	if node.data != "":
+		out.append("\t".repeat(depth) + node.data + "\n")
 
-	depth += 1
+	for c in node.children:
+		generate_text_recursive(c, depth + 1, out)
 
-	for c in root_node.children:
-		generate_text_recursive(c)
-
-	depth -= 1
-
-	if root_node.next:
-		generate_text_recursive(root_node.next)
+	if node.next:
+		generate_text_recursive(node.next, depth, out)
