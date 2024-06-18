@@ -58,7 +58,7 @@ func get_string() -> String:
 	var text: String = get_plain_text()
 
 	if block_type == Types.BlockType.STRING:
-		text = "'%s'" % text
+		text = "'%s'" % text.replace("\\", "\\\\").replace("'", "\\'")
 	if block_type == Types.BlockType.VECTOR2:
 		text = "Vector2(%s)" % text
 
