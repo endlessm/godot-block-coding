@@ -24,18 +24,18 @@ func generate_text(root_node: TreeNode, start_depth: int = 0) -> String:
 	return out
 
 
-func generate_text_recursive(root_node: TreeNode):
-	if root_node.data != "":
+func generate_text_recursive(node: TreeNode):
+	if node.data != "":
 		for i in depth:
 			out += "\t"
-		out += root_node.data + "\n"
+		out += node.data + "\n"
 
 	depth += 1
 
-	for c in root_node.children:
+	for c in node.children:
 		generate_text_recursive(c)
 
 	depth -= 1
 
-	if root_node.next:
-		generate_text_recursive(root_node.next)
+	if node.next:
+		generate_text_recursive(node.next)
