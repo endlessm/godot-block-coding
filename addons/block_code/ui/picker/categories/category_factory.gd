@@ -390,23 +390,11 @@ static func _get_input_blocks() -> Array[Block]:
 
 	InputMap.load_from_project_settings()
 
-	for action: StringName in InputMap.get_actions():
-		var block: Block = BLOCKS["parameter_block"].instantiate()
-		block.variant_type = TYPE_BOOL
-		block.block_format = "Is action %s pressed" % action
-		block.statement = 'Input.is_action_pressed("%s")' % action
-		block_list.append(block)
-
-		block = BLOCKS["parameter_block"].instantiate()
-		block.variant_type = TYPE_BOOL
-		block.block_format = "Is action %s just pressed" % action
-		block.statement = 'Input.is_action_just_pressed("%s")' % action
-		block_list.append(block)
-
-		block = BLOCKS["parameter_block"].instantiate()
-		block.variant_type = TYPE_BOOL
-		block.block_format = "Is action %s just released" % action
-		block.statement = 'Input.is_action_just_released("%s")' % action
-		block_list.append(block)
+	var block: Block = BLOCKS["parameter_block"].instantiate()
+	block.variant_type = TYPE_BOOL
+	block.block_format = "Is action {action_name: OPTION} {action: OPTION}"
+	block.statement = 'Input.is_action_{action}("{action_name}")'
+	block.defaults = {"action_name": Types.OptionData.new(InputMap.get_actions()), "action": Types.OptionData.new(["pressed", "just_pressed", "just_released"])}
+	block_list.append(block)
 
 	return block_list

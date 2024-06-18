@@ -101,7 +101,14 @@ static func format_string(parent_block: Block, attach_to: Node, string: String, 
 		var split := param.split(": ")
 		var param_name := split[0]
 		var param_type_str := split[1]
-		var param_type: Variant.Type = Types.STRING_TO_VARIANT_TYPE[param_type_str]
+
+		var param_type = null
+		var option := false
+		if param_type_str == "OPTION":  # Easy way to specify dropdown option
+			option = true
+		else:
+			param_type = Types.STRING_TO_VARIANT_TYPE[param_type_str]
+
 		var param_default = null
 		if _defaults.has(param_name):
 			param_default = _defaults[param_name]
@@ -109,7 +116,10 @@ static func format_string(parent_block: Block, attach_to: Node, string: String, 
 		var param_input: ParameterInput = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn").instantiate()
 		param_input.name = "ParameterInput%d" % start  # Unique path
 		param_input.placeholder = param_name
-		param_input.variant_type = param_type
+		if param_type:
+			param_input.variant_type = param_type
+		elif option:
+			param_input.option = true
 		param_input.block = parent_block
 		param_input.modified.connect(func(): parent_block.modified.emit())
 

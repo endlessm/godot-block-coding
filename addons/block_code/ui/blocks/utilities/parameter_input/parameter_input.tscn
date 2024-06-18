@@ -79,6 +79,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_5hq7f")
 
 [node name="OptionInput" type="OptionButton" parent="InputSwitcher"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fjquj")
@@ -88,6 +89,7 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 block_type = 3
+variant_type = 4
 
 [connection signal="text_changed" from="InputSwitcher/TextInput/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="color_changed" from="InputSwitcher/ColorInput" to="." method="_on_color_input_color_changed"]
