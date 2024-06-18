@@ -38,3 +38,9 @@ pre-commit install
 ```
 
 Now `pre-commit` will run automatically on `git commit`!
+
+## Testing
+
+This plugin uses the [Godot Unit Test](https://gut.readthedocs.io/en/latest/)
+(GUT) plugin for testing. In the editor, click on the GUT tab in the bottom
+panel to open the test panel. Then click Run All to run the tests.

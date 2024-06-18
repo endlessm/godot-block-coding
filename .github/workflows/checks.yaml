@@ -1,0 +1,40 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  pre-commit:
+    name: Linting and Formatting
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+    - name: set PY
+      run: echo "PY=$(python -VV | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
+    - uses: actions/cache@v4
+      with:
+        path: ~/.cache/pre-commit
+        key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
+    - uses: pre-commit/action@v3.0.1
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup Godot
+      uses: chickensoft-games/setup-godot@v2.0.1
+      with:
+        version: 4.2.2
+        use-dotnet: false
+    - name: Initialize Godot
+      run: |
+        godot --path . --headless --import
+    - name: Run tests
+      run: |
+        godot --path . --headless --script addons/gut/gut_cmdln.gd -gexit
