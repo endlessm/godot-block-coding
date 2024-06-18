@@ -31,6 +31,9 @@ var block: Block
 @onready var _vector2_input := %Vector2Input
 @onready var _x_line_edit := %XLineEdit
 @onready var _y_line_edit := %YLineEdit
+# Bool
+@onready var _bool_input := %BoolInput
+@onready var _bool_input_option := %BoolInputOption
 
 
 func set_raw_input(raw_input):
@@ -52,6 +55,8 @@ func set_raw_input(raw_input):
 			var split = raw_input.split(",")
 			_x_line_edit.text = split[0]
 			_y_line_edit.text = split[1]
+		TYPE_BOOL:
+			_bool_input_option.select(raw_input)
 		_:
 			_line_edit.text = raw_input
 
@@ -68,6 +73,8 @@ func get_raw_input():
 			return _color_input.color
 		TYPE_VECTOR2:
 			return _x_line_edit.text + "," + _y_line_edit.text
+		TYPE_BOOL:
+			return bool(_bool_input_option.selected)
 		_:
 			return _line_edit.text
 
@@ -98,6 +105,8 @@ func _ready():
 			switch_input(_color_input)
 		TYPE_VECTOR2:
 			switch_input(_vector2_input)
+		TYPE_BOOL:
+			switch_input(_bool_input)
 		_:
 			switch_input(_text_input)
 

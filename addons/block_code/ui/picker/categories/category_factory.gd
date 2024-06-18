@@ -350,7 +350,7 @@ static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]
 			props = ["position", "rotation", "scale"]
 
 		"CanvasItem":
-			props = ["modulate"]
+			props = ["modulate", "visible"]
 
 		"RigidBody2D":
 			for verb in ["entered", "exited"]:

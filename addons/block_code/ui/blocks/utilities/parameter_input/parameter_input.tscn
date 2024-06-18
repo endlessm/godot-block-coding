@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cjvxs6euc6xbm"]
+[gd_scene load_steps=10 format=3 uid="uid://cjvxs6euc6xbm"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.gd" id="1_rgmxn"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="2_6esp3"]
@@ -19,6 +19,8 @@ corner_radius_bottom_left = 40
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5hq7f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fjquj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e7f0k"]
 
 [node name="ParameterInput" type="MarginContainer"]
 anchors_preset = 15
@@ -152,6 +154,26 @@ expand_to_text_length = true
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="BoolInput" type="MarginContainer" parent="InputSwitcher"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 8
+
+[node name="BoolInputOption" type="OptionButton" parent="InputSwitcher/BoolInput"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e7f0k")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fjquj")
+item_count = 2
+selected = 0
+popup/item_0/text = "False"
+popup/item_0/id = 0
+popup/item_1/text = "True"
+popup/item_1/id = 1
+
 [node name="SnapPoint" parent="." instance=ExtResource("2_6esp3")]
 unique_name_in_owner = true
 layout_mode = 2
@@ -164,3 +186,4 @@ variant_type = 4
 [connection signal="item_selected" from="InputSwitcher/OptionInput" to="." method="_on_option_input_item_selected"]
 [connection signal="text_changed" from="InputSwitcher/Vector2Input/HBoxContainer/XLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="text_changed" from="InputSwitcher/Vector2Input/HBoxContainer/YLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="item_selected" from="InputSwitcher/BoolInput/BoolInputOption" to="." method="_on_option_input_item_selected"]
