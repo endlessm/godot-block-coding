@@ -25,33 +25,33 @@ var block: Block
 
 
 func set_raw_input(raw_input):
-	match block_type:
-		Types.BlockType.COLOR:
+	match variant_type:
+		TYPE_COLOR:
 			_color_input.color = raw_input
 			_update_panel_bg_color(raw_input)
 
-		Types.BlockType.OPTION:
-			_panel.visible = false
-			_option_input.clear()
-			var option_data: Types.OptionData = raw_input as Types.OptionData
-			for item in option_data.items:
-				_option_input.add_item(item)
-			_option_input.select(option_data.selected)
+		#Types.BlockType.OPTION:
+		#_panel.visible = false
+		#_option_input.clear()
+		#var option_data: Types.OptionData = raw_input as Types.OptionData
+		#for item in option_data.items:
+		#_option_input.add_item(item)
+		#_option_input.select(option_data.selected)
 
 		_:
 			_line_edit.text = raw_input
 
 
 func get_raw_input():
-	match block_type:
-		Types.BlockType.COLOR:
+	match variant_type:
+		TYPE_COLOR:
 			return _color_input.color
 
-		Types.BlockType.OPTION:
-			var options: Array = []
-			for i in _option_input.item_count:
-				options.append(_option_input.get_item_text(i))
-			return Types.OptionData.new(options, _option_input.selected)
+		#Types.BlockType.OPTION:
+		#var options: Array = []
+		#for i in _option_input.item_count:
+		#options.append(_option_input.get_item_text(i))
+		#return Types.OptionData.new(options, _option_input.selected)
 
 		_:
 			return _line_edit.text
@@ -78,11 +78,11 @@ func _ready():
 	snap_point.block_type = block_type
 	snap_point.variant_type = variant_type
 
-	match block_type:
-		Types.BlockType.COLOR:
+	match variant_type:
+		TYPE_COLOR:
 			switch_input(_color_input)
-		Types.BlockType.OPTION:
-			switch_input(_option_input)
+		#Types.BlockType.OPTION:
+		#switch_input(_option_input)
 		_:
 			switch_input(_text_input)
 
@@ -105,15 +105,15 @@ func get_string() -> String:
 
 	var input = get_raw_input()
 
-	match block_type:
-		Types.BlockType.STRING:
+	match variant_type:
+		TYPE_STRING:
 			return "'%s'" % input.replace("\\", "\\\\").replace("'", "\\'")
-		Types.BlockType.VECTOR2:
+		TYPE_VECTOR2:
 			return "Vector2(%s)" % input
-		Types.BlockType.COLOR:
+		TYPE_COLOR:
 			return "Color%s" % str(input)
-		Types.BlockType.OPTION:
-			return _option_input.get_item_text(_option_input.selected)
+		#Types.BlockType.OPTION:
+		#return _option_input.get_item_text(_option_input.selected)
 		_:
 			return "%s" % input
 
