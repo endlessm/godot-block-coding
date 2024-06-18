@@ -151,8 +151,8 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.block_type = Types.BlockType.STRING
-	b.block_format = "Get String {var: STRING} from {object: NODE}"
-	b.statement = "{object}.VAR_DICT[{var}]"
+	b.block_format = "Get String {var: STRING} from {node: NODE}"
+	b.statement = "{node}.VAR_DICT[{var}]"
 	variable_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
@@ -173,18 +173,18 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.block_type = Types.BlockType.INT
-	b.block_format = "Get Int {var: INT} from {object: NODE}"
-	b.statement = "{object}.VAR_DICT[{var}]"
+	b.block_format = "Get Int {var: INT} from {node: NODE}"
+	b.statement = "{node}.VAR_DICT[{var}]"
 	variable_list.append(b)
 
 	var variable_category: BlockCategory = BlockCategory.new("Variables", variable_list, Color("4f975d"))
 
-	# Objects & Types
+	# Nodes & Types
 	var type_list: Array[Block] = []
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.block_type = Types.BlockType.NODE
-	b.block_format = "This object"
+	b.block_format = "This node"
 	b.statement = "self"
 	type_list.append(b)
 
@@ -220,16 +220,16 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.block_type = Types.BlockType.VARIANT
-	b.block_format = "Get property {key: STRING} from {object: NODE}"
-	b.statement = "{object}.get({key})"
+	b.block_format = "Get property {key: STRING} from {node: NODE}"
+	b.statement = "{node}.get({key})"
 	type_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
-	b.block_format = "Set property {key: STRING} in {object: NODE} to {value: VARIANT}"
-	b.statement = "{object}.set({key}, {value})"
+	b.block_format = "Set property {key: STRING} in {node: NODE} to {value: VARIANT}"
+	b.statement = "{node}.set({key}, {value})"
 	type_list.append(b)
 
-	var type_category: BlockCategory = BlockCategory.new("Objects & Types", type_list, Color("c12f8e"))
+	var type_category: BlockCategory = BlockCategory.new("Nodes & Types", type_list, Color("c12f8e"))
 
 	# Math
 	var math_list: Array[Block] = []
