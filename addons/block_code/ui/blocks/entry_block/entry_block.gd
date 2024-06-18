@@ -4,6 +4,7 @@ extends StatementBlock
 
 
 func _ready():
+	block_type = Types.BlockType.ENTRY
 	super()
 
 
