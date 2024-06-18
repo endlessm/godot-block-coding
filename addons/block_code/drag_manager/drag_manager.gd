@@ -8,6 +8,8 @@ signal block_modified
 @export var picker_path: NodePath
 @export var block_canvas_path: NodePath
 
+const Constants = preload("res://addons/block_code/ui/constants.gd")
+
 var drag_offset: Vector2
 var dragging: Block = null
 
@@ -39,54 +41,40 @@ func _process(_delta):
 		var closest_snap_point: SnapPoint = null
 		var closest_dist: float = INF
 		var snap_points: Array[Node] = get_tree().get_nodes_in_group("snap_point")
-		for n in snap_points:
-			if n is SnapPoint:
-				var snap_point: SnapPoint = n as SnapPoint
-				if snap_point.block == null:
-					push_error("Warning: a snap point does not reference it's parent block.")
-					continue
-				if snap_point.block.on_canvas:
-					if dragging.block_type == Types.BlockType.EXECUTE and snap_point.block_type == Types.BlockType.EXECUTE:
-						var snap_global_pos: Vector2 = snap_point.get_global_rect().position
-						var temp_dist: float = dragging_global_pos.distance_to(snap_global_pos)
-						if temp_dist < closest_dist:
-							# Check if any parent node is this node
-							var is_child: bool = false
-							var parent = snap_point
-							while parent is SnapPoint:
-								if parent.block == dragging:
-									is_child = true
+		for snap_point in snap_points:
+			if not snap_point is SnapPoint:
+				push_error('Warning: a node in group "snap_point"snap is not of class SnapPoint.')
+				continue
+			if snap_point.block == null:
+				push_error("Warning: a snap point does not reference it's parent block.")
+				continue
+			if not snap_point.block.on_canvas:
+				# We only snap to blocks on the canvas:
+				continue
+			if dragging.block_type != snap_point.block_type:
+				# We only snap to the same block type:
+				continue
+			if dragging.block_type == Types.BlockType.VALUE and not Types.can_cast(dragging.variant_type, snap_point.variant_type):
+				# We only snap Value blocks to snaps that can cast to same variant:
+				continue
+			var snap_global_pos: Vector2 = snap_point.get_global_rect().position
+			var temp_dist: float = dragging_global_pos.distance_to(snap_global_pos)
+			if temp_dist <= Constants.MINIMUM_SNAP_DISTANCE and temp_dist < closest_dist:
+				# Check if any parent node is this node
+				var is_child: bool = false
+				var parent = snap_point
+				while parent is SnapPoint:
+					if parent.block == dragging:
+						is_child = true
 
-								parent = parent.block.get_parent()
+					parent = parent.block.get_parent()
 
-							if not is_child:
-								closest_dist = temp_dist
-								closest_snap_point = snap_point
-
-					elif dragging.block_type == Types.BlockType.VALUE and Types.can_cast(dragging.variant_type, snap_point.variant_type):
-						var snap_global_pos: Vector2 = snap_point.get_global_rect().position
-						var temp_dist: float = dragging_global_pos.distance_to(snap_global_pos)
-						if temp_dist < closest_dist:
-							# Check if any parent node is this node
-							var is_child: bool = false
-							var parent = snap_point
-							while parent is SnapPoint:
-								if parent.block == dragging:
-									is_child = true
-
-								parent = parent.block.get_parent()
-
-							if not is_child:
-								closest_dist = temp_dist
-								closest_snap_point = snap_point
-
-		if closest_dist > 80.0:
-			closest_snap_point = null
+				if not is_child:
+					closest_dist = temp_dist
+					closest_snap_point = snap_point
 
 		if closest_snap_point != previewing_snap_point:
 			_update_preview(closest_snap_point)
-
-		# TODO: make sure dragging.block_type is the same as snap_point type
 
 
 func _update_preview(snap_point: SnapPoint):
