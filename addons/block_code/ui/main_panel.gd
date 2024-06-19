@@ -46,7 +46,8 @@ func switch_script(block_code_node: BlockCode):
 	_picker.bsd_selected(bsd)
 	_title_bar.bsd_selected(bsd)
 	_block_canvas.bsd_selected(bsd)
-	block_code_tab.pressed.emit()
+	if block_code_node:
+		block_code_tab.pressed.emit()
 
 
 func save_script():
