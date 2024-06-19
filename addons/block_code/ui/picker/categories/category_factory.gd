@@ -235,6 +235,23 @@ static func get_general_categories() -> Array[BlockCategory]:
 	var input_list: Array[Block] = _get_input_blocks()
 	var input_category: BlockCategory = BlockCategory.new("Input", input_list, Color.SLATE_GRAY)
 
+	# Sound
+	var sound_list: Array[Block] = []
+
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_type = Types.BlockType.EXECUTE
+	b.block_format = "Load file {file_path: STRING} as sound {name: STRING}"
+	b.statement = "var sound = AudioStreamPlayer.new()\nsound.name = {name}\nsound.set_stream(load({file_path}))\nadd_child(sound)\nsound.set_owner(self)"
+	sound_list.append(b)
+
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_type = Types.BlockType.EXECUTE
+	b.block_format = "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"
+	b.statement = "var sound = find_child({name})\nsound.volume_db = {db}\nsound.pitch_scale = {pitch}\nsound.play()"
+	sound_list.append(b)
+
+	var sound_category: BlockCategory = BlockCategory.new("Sound", sound_list, Color("e30fc0"))
+
 	return [
 		lifecycle_category,
 		signal_category,
@@ -244,6 +261,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 		logic_category,
 		variable_category,
 		input_category,
+		sound_category,
 	]
 
 
