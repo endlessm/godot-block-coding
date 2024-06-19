@@ -20,6 +20,8 @@ continuous_cd = 1
 max_contacts_reported = 1
 contact_monitor = true
 linear_velocity = Vector2(353.553, 353.553)
+linear_damp_mode = 1
+angular_damp_mode = 1
 script = ExtResource("1_vdrab")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
