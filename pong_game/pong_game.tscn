@@ -158,7 +158,7 @@ position = Vector2(64, 544)
 
 [node name="BlockCode" type="Node" parent="PaddleLeft"]
 script = ExtResource("3_6jaq8")
-bsd = SubResource("Resource_t7nl4")
+block_script = SubResource("Resource_t7nl4")
 
 [node name="PaddleRight" parent="." instance=ExtResource("1_1k5k2")]
 modulate = Color(0.511, 0.362, 0.972, 1)
@@ -166,7 +166,7 @@ position = Vector2(1856, 544)
 
 [node name="BlockCode" type="Node" parent="PaddleRight"]
 script = ExtResource("3_6jaq8")
-bsd = SubResource("Resource_52r02")
+block_script = SubResource("Resource_52r02")
 
 [node name="Ball" parent="." instance=ExtResource("9_xrqll")]
 modulate = Color(0.511, 0.362, 0.972, 1)
@@ -186,4 +186,4 @@ position = Vector2(1984, 544)
 
 [node name="BlockCode" type="Node" parent="."]
 script = ExtResource("3_6jaq8")
-bsd = SubResource("Resource_f070g")
+block_script = SubResource("Resource_f070g")

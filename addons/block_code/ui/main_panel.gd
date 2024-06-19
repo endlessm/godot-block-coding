@@ -40,7 +40,7 @@ func switch_scene(scene_root: Node):
 
 
 func switch_script(block_code_node: BlockCode):
-	var bsd = block_code_node.bsd if block_code_node else null
+	var bsd = block_code_node.block_script if block_code_node else null
 	_current_bsd = bsd
 	_current_block_code_node = block_code_node
 	_picker.bsd_selected(bsd)

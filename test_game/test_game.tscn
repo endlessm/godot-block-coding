@@ -1114,14 +1114,14 @@ position = Vector2(-71, -18)
 
 [node name="BlockCode" type="Node" parent="Will"]
 script = ExtResource("2_ewral")
-bsd = SubResource("Resource_l007i")
+block_script = SubResource("Resource_l007i")
 
 [node name="Manuel" parent="." instance=ExtResource("1_hrpwq")]
 position = Vector2(64, 6)
 
 [node name="BlockCode" type="Node" parent="Manuel"]
 script = ExtResource("2_ewral")
-bsd = SubResource("Resource_qakr4")
+block_script = SubResource("Resource_qakr4")
 
 [node name="Node2D" type="Node2D" parent="."]
 position = Vector2(-34, 39)
@@ -1132,7 +1132,7 @@ texture = ExtResource("7_a27o8")
 
 [node name="BlockCode" type="Node" parent="Node2D"]
 script = ExtResource("2_ewral")
-bsd = SubResource("Resource_iw7o0")
+block_script = SubResource("Resource_iw7o0")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
 
@@ -1141,10 +1141,10 @@ shape = SubResource("CircleShape2D_wymn4")
 
 [node name="BlockCode" type="Node" parent="RigidBody2D"]
 script = ExtResource("2_ewral")
-bsd = SubResource("Resource_37its")
+block_script = SubResource("Resource_37its")
 
 [node name="Counter" type="Node2D" parent="."]
 
 [node name="BlockCode" type="Node" parent="Counter"]
 script = ExtResource("2_ewral")
-bsd = SubResource("Resource_bw4t7")
+block_script = SubResource("Resource_bw4t7")
