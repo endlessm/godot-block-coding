@@ -363,6 +363,11 @@ static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]
 				b.signal_name = "body_%s" % [verb]
 				block_list.append(b)
 
+			var b = BLOCKS["statement_block"].instantiate()
+			b.block_format = "Set Physics Position {position: VECTOR2}"
+			b.statement = "PhysicsServer2D.body_set_state(get_rid(),PhysicsServer2D.BODY_STATE_TRANSFORM,Transform2D.IDENTITY.translated({position}))"
+			block_list.append(b)
+
 			props = ["mass", "linear_velocity", "angular_velocity"]
 
 		"Area2D":

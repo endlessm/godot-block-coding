@@ -116,7 +116,7 @@ static func format_string(parent_block: Block, attach_to: Node, string: String, 
 		var param_input: ParameterInput = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn").instantiate()
 		param_input.name = "ParameterInput%d" % start  # Unique path
 		param_input.placeholder = param_name
-		if param_type:
+		if param_type != null:
 			param_input.variant_type = param_type
 		elif option:
 			param_input.option = true
