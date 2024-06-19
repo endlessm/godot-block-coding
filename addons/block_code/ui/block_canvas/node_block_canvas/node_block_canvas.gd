@@ -24,6 +24,8 @@ func generate_script_from_current_window(script_inherits: String = ""):
 
 	script += "var VAR_DICT := {}\n\n"
 
+	var init_func = InstructionTree.TreeNode.new("func _init():")
+
 	for entry_block in entry_blocks:
 		script += entry_block.get_entry_statement() + "\n"
 
@@ -38,5 +40,11 @@ func generate_script_from_current_window(script_inherits: String = ""):
 			script += to_append
 
 		script += "\n"
+
+		if entry_block.signal_name:
+			init_func.add_child(InstructionTree.TreeNode.new("{0}.connect(_on_{0})".format([entry_block.signal_name])))
+
+	if init_func.children:
+		script += InstructionTree.new().generate_text(init_func)
 
 	return script

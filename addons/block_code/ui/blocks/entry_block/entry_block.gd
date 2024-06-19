@@ -2,6 +2,9 @@
 class_name EntryBlock
 extends StatementBlock
 
+## if non-empty, this block defines a callback that will be connected to the signal with this name
+@export var signal_name: String
+
 
 func _ready():
 	block_type = Types.BlockType.ENTRY
@@ -22,8 +25,10 @@ func get_entry_statement() -> String:
 	for pair in param_name_input_pairs:
 		formatted_statement = formatted_statement.replace("{%s}" % pair[0], pair[1].get_string())
 
-	# One line, should not have \n
-	if formatted_statement.find("\n") != -1:
-		push_error("Entry block has multiline statement.")
-
 	return formatted_statement
+
+
+func get_serialized_props() -> Array:
+	var props := super()
+	props.append_array(serialize_props(["signal_name"]))
+	return props
