@@ -5,6 +5,7 @@ extends Block
 @export var block_format: String = ""
 @export var statement: String = ""
 @export var variant_type: Variant.Type
+@export var defaults: Dictionary = {}
 
 @onready var _panel := $Panel
 @onready var _hbox := %HBoxContainer
@@ -26,7 +27,7 @@ func _ready():
 
 	if param_input_strings:
 		for pair in param_name_input_pairs:
-			pair[1].set_plain_text(param_input_strings[pair[0]])
+			pair[1].set_raw_input(param_input_strings[pair[0]])
 
 
 func _on_drag_drop_area_mouse_down():
@@ -35,11 +36,11 @@ func _on_drag_drop_area_mouse_down():
 
 func get_serialized_props() -> Array:
 	var props := super()
-	props.append_array(serialize_props(["block_format", "statement", "variant_type"]))
+	props.append_array(serialize_props(["block_format", "statement", "defaults", "variant_type"]))
 
 	var _param_input_strings: Dictionary = {}
 	for pair in param_name_input_pairs:
-		_param_input_strings[pair[0]] = pair[1].get_plain_text()
+		_param_input_strings[pair[0]] = pair[1].get_raw_input()
 
 	props.append(["param_input_strings", _param_input_strings])
 
@@ -65,4 +66,4 @@ static func get_scene_path():
 
 
 func format():
-	param_name_input_pairs = StatementBlock.format_string(self, %HBoxContainer, block_format)
+	param_name_input_pairs = StatementBlock.format_string(self, %HBoxContainer, block_format, defaults)

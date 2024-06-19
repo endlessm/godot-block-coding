@@ -81,6 +81,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "print {text: STRING}"
 	b.statement = "print({text})"
+	b.defaults = {"text": "Hello"}
 	test_list.append(b)
 
 	var test_category: BlockCategory = BlockCategory.new("Test", test_list, Color("9989df"))
@@ -204,12 +205,12 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	var logic_list: Array[Block] = []
 
-	for op in ["==", ">", "<", ">=", "<=", "!="]:
-		b = BLOCKS["parameter_block"].instantiate()
-		b.variant_type = TYPE_BOOL
-		b.block_format = "{int1: INT} %s {int2: INT}" % op
-		b.statement = "({int1} %s {int2})" % op
-		logic_list.append(b)
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_BOOL
+	b.block_format = "{int1: INT} {op: OPTION} {int2: INT}"
+	b.statement = "({int1} {op} {int2})"
+	b.defaults = {"op": Types.OptionData.new(["==", ">", "<", ">=", "<=", "!="])}
+	logic_list.append(b)
 
 	for op in ["and", "or"]:
 		b = BLOCKS["parameter_block"].instantiate()
@@ -349,7 +350,7 @@ static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]
 			props = ["position", "rotation", "scale"]
 
 		"CanvasItem":
-			props = ["modulate"]
+			props = ["modulate", "visible"]
 
 		"RigidBody2D":
 			for verb in ["entered", "exited"]:
@@ -389,23 +390,11 @@ static func _get_input_blocks() -> Array[Block]:
 
 	InputMap.load_from_project_settings()
 
-	for action: StringName in InputMap.get_actions():
-		var block: Block = BLOCKS["parameter_block"].instantiate()
-		block.variant_type = TYPE_BOOL
-		block.block_format = "Is action %s pressed" % action
-		block.statement = 'Input.is_action_pressed("%s")' % action
-		block_list.append(block)
-
-		block = BLOCKS["parameter_block"].instantiate()
-		block.variant_type = TYPE_BOOL
-		block.block_format = "Is action %s just pressed" % action
-		block.statement = 'Input.is_action_just_pressed("%s")' % action
-		block_list.append(block)
-
-		block = BLOCKS["parameter_block"].instantiate()
-		block.variant_type = TYPE_BOOL
-		block.block_format = "Is action %s just released" % action
-		block.statement = 'Input.is_action_just_released("%s")' % action
-		block_list.append(block)
+	var block: Block = BLOCKS["parameter_block"].instantiate()
+	block.variant_type = TYPE_BOOL
+	block.block_format = "Is action {action_name: OPTION} {action: OPTION}"
+	block.statement = 'Input.is_action_{action}("{action_name}")'
+	block.defaults = {"action_name": Types.OptionData.new(InputMap.get_actions()), "action": Types.OptionData.new(["pressed", "just_pressed", "just_released"])}
+	block_list.append(block)
 
 	return block_list

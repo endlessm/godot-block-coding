@@ -6,6 +6,7 @@ const Constants = preload("res://addons/block_code/ui/constants.gd")
 
 @export var block_formats: Array = []
 @export var statements: Array = []
+@export var defaults: Dictionary = {}
 
 var snaps: Array
 var param_name_input_pairs_array: Array
@@ -25,7 +26,7 @@ func _ready():
 	if param_input_strings_array:
 		for i in param_name_input_pairs_array.size():
 			for pair in param_name_input_pairs_array[i]:
-				pair[1].set_plain_text(param_input_strings_array[i][pair[0]])
+				pair[1].set_raw_input(param_input_strings_array[i][pair[0]])
 
 
 func _on_drag_drop_area_mouse_down():
@@ -68,14 +69,14 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 
 func get_serialized_props() -> Array:
 	var props := super()
-	props.append_array(serialize_props(["block_formats", "statements"]))
+	props.append_array(serialize_props(["block_formats", "statements", "defaults"]))
 
 	var _param_input_strings_array = []
 	for param_name_input_pairs in param_name_input_pairs_array:
 		var _param_input_strings: Dictionary = {}
 
 		for pair in param_name_input_pairs:
-			_param_input_strings[pair[0]] = pair[1].get_plain_text()
+			_param_input_strings[pair[0]] = pair[1].get_raw_input()
 
 		_param_input_strings_array.append(_param_input_strings)
 
@@ -134,7 +135,7 @@ func format():
 		row_hbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row_hbox_container.add_child(row_hbox)
 
-		param_name_input_pairs_array.append(StatementBlock.format_string(self, row_hbox, block_formats[i]))
+		param_name_input_pairs_array.append(StatementBlock.format_string(self, row_hbox, block_formats[i], defaults))
 
 		%Rows.add_child(row)
 

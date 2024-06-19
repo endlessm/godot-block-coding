@@ -35,6 +35,7 @@ const cast_relationships = [
 	[TYPE_FLOAT, TYPE_INT, "int(%s)"],
 	[TYPE_INT, TYPE_STRING, "str(%s)"],
 	[TYPE_FLOAT, TYPE_STRING, "str(%s)"],
+	[TYPE_COLOR, TYPE_STRING, "str(%s)"],
 ]
 
 # Directed graph, edges are CastGraphEdge
@@ -169,3 +170,13 @@ class PriorityQueue:
 		if found_pair:
 			found_pair[1] = priority
 			_sort()
+
+
+# Global classes
+class OptionData:
+	var selected: int
+	var items: Array
+
+	func _init(p_items: Array = [], p_selected: int = 0):
+		items = p_items
+		selected = p_selected

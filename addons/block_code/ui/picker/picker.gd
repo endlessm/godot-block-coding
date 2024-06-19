@@ -12,15 +12,26 @@ func bsd_selected(bsd: BlockScriptData):
 		reset_picker()
 		return
 
+	var categories_to_add: Array[BlockCategory] = []
+
+	var found_simple_class_script = null
 	for class_dict in ProjectSettings.get_global_class_list():
 		if class_dict.class == bsd.script_inherits:
 			var script = load(class_dict.path)
 			if script.has_method("get_custom_blocks"):
-				init_picker(script.get_custom_blocks())
-				return
+				categories_to_add = script.get_custom_blocks()
+				found_simple_class_script = script
+				break
 
-	# Should be built-in class
-	init_picker(CategoryFactory.get_inherited_categories(bsd.script_inherits))
+	var parent_class: String
+	if found_simple_class_script:
+		parent_class = found_simple_class_script.get_base_class()
+	else:  # Built in
+		parent_class = bsd.script_inherits
+
+	categories_to_add.append_array(CategoryFactory.get_inherited_categories(parent_class))
+
+	init_picker(categories_to_add)
 
 
 func reset_picker():
