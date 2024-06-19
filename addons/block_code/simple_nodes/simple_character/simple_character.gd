@@ -9,7 +9,7 @@ func _ready():
 	$Sprite2D.texture = sprite_texture
 
 
-func get_class():
+func get_custom_class():
 	return "SimpleCharacter"
 
 
