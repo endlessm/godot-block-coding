@@ -156,6 +156,7 @@ size_flags_horizontal = 3
 
 [node name="BoolInput" type="MarginContainer" parent="InputSwitcher"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 8
 
