@@ -170,13 +170,3 @@ class PriorityQueue:
 		if found_pair:
 			found_pair[1] = priority
 			_sort()
-
-
-# Global classes
-class OptionData:
-	var selected: int
-	var items: Array
-
-	func _init(p_items: Array = [], p_selected: int = 0):
-		items = p_items
-		selected = p_selected

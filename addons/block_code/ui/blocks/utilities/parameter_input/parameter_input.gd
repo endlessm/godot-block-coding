@@ -40,7 +40,7 @@ func set_raw_input(raw_input):
 	if option:
 		_panel.visible = false
 		_option_input.clear()
-		var option_data: Types.OptionData = raw_input as Types.OptionData
+		var option_data: OptionData = raw_input as OptionData
 		for item in option_data.items:
 			_option_input.add_item(item.capitalize())
 		_option_input.select(option_data.selected)
@@ -66,7 +66,7 @@ func get_raw_input():
 		var options: Array = []
 		for i in _option_input.item_count:
 			options.append(_option_input.get_item_text(i).to_snake_case())
-		return Types.OptionData.new(options, _option_input.selected)
+		return OptionData.new(options, _option_input.selected)
 
 	match variant_type:
 		TYPE_COLOR:
