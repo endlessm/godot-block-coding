@@ -29,6 +29,44 @@
 
 6. When you play the scene, each `BlockCode` node will attach a generated script from it's BSD to it's parent node. The `_ready` and `_process` methods will start normally.
 
+## How to create a new block
+
+Blocks are created from a template such as `StatementBlock`, `ParameterBlock`, `EntryBlock`, or `ControlBlock`. Blocks are defined programmatically and generated live, they are not saved permanently in any sort of class.
+* `StatementBlock`: Generates a line of code to be executed. Has notches to snap other statement blocks to. Supports input parameters.
+* `ParameterBlock`: Represents a value, or expression in some code. Can be used as input for any statement blocks, or other parameter blocks that also take input.
+* `EntryBlock`: Generates a method header, entry point to block script. Also supports input parameters.
+* `ControlBlock`: Dictates the flow of instruction, such as a loop or if/else statement. Can have multiple slots for calling different statements based on a conditional input.
+
+You can define a block:
+1. Globally in `CategoryFactory.get_general_categories()`
+2. For a specific built-in class in `CategoryFactory.get_built_in_categories()`
+3. In a custom class by defining a method `static func get_custom_blocks() -> Array[BlockCategory]:`. See `SimpleCharacter` for an example.
+
+Here is an example of generating a `STATEMENT` block:
+```
+# Instantiate the template block. In this case we use a StatementBlock since we want to generate a statement from some parameter inputs.
+var b = BLOCKS["statement_block"].instantiate()
+
+# Define the block format string. This is how the block will be rendered, with some text and two typed inputs.
+# Inputs are specified as {parameter_name: TYPE}
+b.block_format = "Set Int {var: STRING} {value: INT}"
+
+# Define the statement that will be generated from the inputs. Use the parameter name to specify which goes where.
+b.statement = "VAR_DICT[{var}] = {value}"
+```
+You can then add this new block to a `BlockCategory` like so:
+```
+var variable_list: Array[Block] = []
+variable_list.append(b)
+var variable_category: BlockCategory = BlockCategory.new("Variables", variable_list, Color("4f975d"))
+```
+Look in `CategoryFactory` for more examples!
+
+Note: For `EntryBlock`s, you can use the syntax `[param: TYPE]` with square brackets instead of curlies to generate a copyable `ParameterBlock` that can be used in the below method.
+For example, to expose the `delta` argument in `func _on_process(delta):`, you would use the following format string:
+```
+b.block_format = "On Process [delta: FLOAT]"
+```
 
 ## What's inside?
 
