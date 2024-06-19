@@ -3,7 +3,7 @@
 class_name BlockCode
 extends Node
 
-@export var bsd: BlockScriptData = null
+@export var block_script: BlockScriptData = null
 static var plugin
 
 
@@ -25,11 +25,11 @@ func _enter_tree():
 		return
 
 	# Create script
-	if bsd == null:
+	if block_script == null:
 		var new_bsd: BlockScriptData = load("res://addons/block_code/ui/bsd_templates/default_bsd.tres").duplicate(true)
 		new_bsd.script_inherits = _get_custom_or_native_class(get_parent())
 		new_bsd.generated_script = new_bsd.generated_script.replace("INHERIT_DEFAULT", new_bsd.script_inherits)
-		bsd = new_bsd
+		block_script = new_bsd
 
 	if plugin == null:
 		plugin = ClassDB.instantiate("EditorPlugin")
@@ -43,7 +43,7 @@ func _update_parent_script():
 
 	var parent: Node = get_parent()
 	var script := GDScript.new()
-	script.set_source_code(bsd.generated_script)
+	script.set_source_code(block_script.generated_script)
 	script.reload()
 	parent.set_script(script)
 	parent.set_process(true)
@@ -51,7 +51,7 @@ func _update_parent_script():
 
 func _get_configuration_warnings():
 	var warnings = []
-	if bsd and _get_custom_or_native_class(get_parent()) != bsd.script_inherits:
-		var warning = "The parent is not a %s. Create a new BlockCode node and reattach." % bsd.script_inherits
+	if block_script and _get_custom_or_native_class(get_parent()) != block_script.script_inherits:
+		var warning = "The parent is not a %s. Create a new BlockCode node and reattach." % block_script.script_inherits
 		warnings.append(warning)
 	return warnings

@@ -44,7 +44,7 @@ func _update_node_option_button_options():
 
 	for block_code_node in scene_root.find_children("*", "BlockCode"):
 		var node_item_index = _node_option_button.item_count
-		var node_label = "{name} ({type})".format({"name": scene_root.get_path_to(block_code_node).get_concatenated_names(), "type": block_code_node.bsd.script_inherits})
+		var node_label = "{name} ({type})".format({"name": scene_root.get_path_to(block_code_node).get_concatenated_names(), "type": block_code_node.block_script.script_inherits})
 		_node_option_button.add_item(node_label)
 		_node_option_button.set_item_icon(node_item_index, _block_code_icon)
 		_node_option_button.set_item_metadata(node_item_index, block_code_node)
@@ -53,7 +53,7 @@ func _update_node_option_button_options():
 func _get_index_for_bsd(bsd: BlockScriptData) -> int:
 	for index in range(_node_option_button.item_count):
 		var block_code_node = _node_option_button.get_item_metadata(index)
-		if block_code_node.bsd == bsd:
+		if block_code_node.block_script == bsd:
 			return index
 	return -1
 
