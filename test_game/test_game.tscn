@@ -1,4 +1,4 @@
-[gd_scene load_steps=177 format=3 uid="uid://bbwmxee7ukgul"]
+[gd_scene load_steps=183 format=3 uid="uid://bbwmxee7ukgul"]
 
 [ext_resource type="PackedScene" uid="uid://ddx1cd5q6t61o" path="res://addons/block_code/simple_nodes/simple_character/simple_character.tscn" id="1_hrpwq"]
 [ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="2_ewral"]
@@ -7,6 +7,45 @@
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="4_xt862"]
 [ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="5_q37d3"]
 [ext_resource type="Texture2D" uid="uid://dr8e0tvfxjy1f" path="res://icon.svg" id="7_a27o8"]
+
+[sub_resource type="Resource" id="Resource_bkrpj"]
+script = ExtResource("3_dpt5n")
+block_class = &"PrintBlock"
+serialized_props = [["position", Vector2(0, 0)], ["param_input_strings", {
+"text": "test"
+}]]
+
+[sub_resource type="Resource" id="Resource_8i26i"]
+script = ExtResource("2_pqvcj")
+serialized_block = SubResource("Resource_bkrpj")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_l25ts"]
+script = ExtResource("3_dpt5n")
+block_class = &"ReadyBlock"
+serialized_props = [["position", Vector2(156, 133)], ["param_input_strings", {}]]
+
+[sub_resource type="Resource" id="Resource_o5do6"]
+script = ExtResource("2_pqvcj")
+serialized_block = SubResource("Resource_l25ts")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_8i26i")]]
+
+[sub_resource type="Resource" id="Resource_vhdmi"]
+script = ExtResource("4_xt862")
+array = Array[ExtResource("2_pqvcj")]([SubResource("Resource_o5do6")])
+
+[sub_resource type="Resource" id="Resource_t3mtx"]
+script = ExtResource("5_q37d3")
+script_inherits = "Camera2D"
+block_trees = SubResource("Resource_vhdmi")
+generated_script = "extends Camera2D
+
+var VAR_DICT := {}
+
+func _ready():
+	print('test')
+
+"
 
 [sub_resource type="Resource" id="Resource_uwmna"]
 script = ExtResource("3_dpt5n")
@@ -1108,6 +1147,10 @@ func _process(delta):
 [node name="TestGame" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="BlockCode" type="Node" parent="Camera2D"]
+script = ExtResource("2_ewral")
+block_script = SubResource("Resource_t3mtx")
 
 [node name="Will" parent="." instance=ExtResource("1_hrpwq")]
 position = Vector2(-71, -18)
