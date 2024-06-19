@@ -71,7 +71,16 @@ func clear_canvas():
 
 func load_tree(parent: Node, node: SerializedBlockTreeNode):
 	var _block_scene_path = _block_scenes_by_class[node.serialized_block.block_class]
-	var scene: Block = load(_block_scene_path).instantiate()
+	var _block_scene_resource = load(_block_scene_path)
+	var scene: Block
+	if _block_scene_resource is PackedScene:
+		scene = _block_scene_resource.instantiate()
+	elif _block_scene_resource is Script:
+		scene = _block_scene_resource.new()
+	else:
+		push_error("Unable to instantiate block type: ", _block_scene_path)
+		return
+
 	for prop_pair in node.serialized_block.serialized_props:
 		scene.set(prop_pair[0], prop_pair[1])
 

@@ -15,11 +15,8 @@ static func get_general_categories() -> Array[BlockCategory]:
 
 	# Lifecycle
 	var lifecycle_list: Array[Block] = []
-	b = BLOCKS["entry_block"].instantiate()
-	b.block_name = "ready_block"
-	b.block_format = "On Ready"
-	b.statement = "func _ready():"
-	lifecycle_list.append(b)
+
+	lifecycle_list.append(ReadyBlock.new())
 
 	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "process_block"
@@ -78,11 +75,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	# Test
 	var test_list: Array[Block] = []
 
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_format = "print {text: STRING}"
-	b.statement = "print({text})"
-	b.defaults = {"text": "Hello"}
-	test_list.append(b)
+	test_list.append(PrintBlock.new())
 
 	var test_category: BlockCategory = BlockCategory.new("Test", test_list, Color("9989df"))
 

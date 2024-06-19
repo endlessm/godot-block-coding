@@ -117,7 +117,7 @@ func drag_block(block: Block, copied_from: Block = null):
 
 
 func copy_block(block: Block) -> Block:
-	return block.duplicate(DUPLICATE_USE_INSTANTIATION)  # use instantiation
+	return block.copy_block()
 
 
 func copy_picked_block_and_drag(block: Block):
