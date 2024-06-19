@@ -10,11 +10,13 @@ func get_category_names(categories: Array[BlockCategory]) -> Array[String]:
 
 
 func get_class_category_names(_class_name: String) -> Array[String]:
-	return get_category_names(CategoryFactory.get_inherited_categories(_class_name))
+	var blocks: Array[Block] = CategoryFactory.get_inherited_blocks(_class_name)
+	return get_category_names(CategoryFactory.get_categories(blocks))
 
 
 func test_general_category_names():
-	var names: Array[String] = get_category_names(CategoryFactory.get_general_categories())
+	var blocks: Array[Block] = CategoryFactory.get_general_blocks()
+	var names: Array[String] = get_category_names(CategoryFactory.get_categories(blocks))
 	assert_eq(
 		names,
 		[
@@ -32,8 +34,8 @@ func test_general_category_names():
 
 
 const class_category_names = [
-	["Node2D", ["Node2D", "CanvasItem"]],
-	["Sprite2D", ["Node2D", "CanvasItem"]],
+	["Node2D", ["CanvasItem", "Node2D"]],
+	["Sprite2D", ["CanvasItem", "Node2D"]],
 	["Node", []],
 	["Object", []],
 ]

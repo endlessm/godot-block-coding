@@ -12,26 +12,24 @@ func bsd_selected(bsd: BlockScriptData):
 		reset_picker()
 		return
 
+	var blocks_to_add: Array[Block] = []
 	var categories_to_add: Array[BlockCategory] = []
 
-	var found_simple_class_script = null
+	# By default, assume the class is built-in.
+	var parent_class: String = bsd.script_inherits
 	for class_dict in ProjectSettings.get_global_class_list():
 		if class_dict.class == bsd.script_inherits:
 			var script = load(class_dict.path)
+			if script.has_method("get_custom_categories"):
+				categories_to_add = script.get_custom_categories()
 			if script.has_method("get_custom_blocks"):
-				categories_to_add = script.get_custom_blocks()
-				found_simple_class_script = script
+				blocks_to_add = script.get_custom_blocks()
+				parent_class = str(script.get_instance_base_type())
 			break
 
-	var parent_class: String
-	if found_simple_class_script:
-		parent_class = str(found_simple_class_script.get_instance_base_type())
-	else:  # Built in
-		parent_class = bsd.script_inherits
+	blocks_to_add.append_array(CategoryFactory.get_inherited_blocks(parent_class))
 
-	categories_to_add.append_array(CategoryFactory.get_inherited_categories(parent_class))
-
-	init_picker(categories_to_add)
+	init_picker(blocks_to_add, categories_to_add)
 
 
 func reset_picker():
@@ -39,13 +37,11 @@ func reset_picker():
 		c.queue_free()
 
 
-func init_picker(extra_blocks: Array[BlockCategory] = []):
+func init_picker(extra_blocks: Array[Block] = [], extra_categories: Array[BlockCategory] = []):
 	reset_picker()
 
-	var block_categories := CategoryFactory.get_general_categories()
-
-	if extra_blocks.size() > 0:
-		CategoryFactory.add_to_categories(block_categories, extra_blocks)
+	var blocks := CategoryFactory.get_general_blocks() + extra_blocks
+	var block_categories := CategoryFactory.get_categories(blocks, extra_categories)
 
 	for _category in block_categories:
 		var category: BlockCategory = _category as BlockCategory

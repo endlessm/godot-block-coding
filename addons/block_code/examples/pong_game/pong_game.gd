@@ -7,23 +7,27 @@ func get_custom_class():
 	return "Pong"
 
 
-static func get_custom_blocks() -> Array[BlockCategory]:
+static func get_custom_categories() -> Array[BlockCategory]:
+	return [BlockCategory.new("Scoring", Color("4a86d5"))]
+
+
+static func get_custom_blocks() -> Array[Block]:
 	var b: Block
+	var block_list: Array[Block] = []
 
 	# TODO: Only for testing. Move these blocks where they belong.
-	var score_list: Array[Block] = []
 	b = CategoryFactory.BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Set player 1 score to {score: INT}"
 	b.statement = 'get_tree().call_group("hud", "set_player_score", "right", {score})'
-	score_list.append(b)
+	b.category = "Scoring"
+	block_list.append(b)
 
 	b = CategoryFactory.BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Set player 2 score to {score: INT}"
 	b.statement = 'get_tree().call_group("hud", "set_player_score", "left", {score})'
-	score_list.append(b)
+	b.category = "Scoring"
+	block_list.append(b)
 
-	var score_category: BlockCategory = BlockCategory.new("Scoring", score_list, Color("4a86d5"))
-
-	return [score_category]
+	return block_list

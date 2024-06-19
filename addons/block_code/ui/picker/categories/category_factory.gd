@@ -9,274 +9,334 @@ const BLOCKS: Dictionary = {
 	"entry_block": preload("res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"),
 }
 
+## Properties for builtin categories. Order starts at 10 for the first
+## category and then are separated by 10 to allow custom categories to
+## be easily placed between builtin categories.
+const BUILTIN_PROPS: Dictionary = {
+	"Control":
+	{
+		"color": Color("ffad76"),
+		"order": 30,
+	},
+	"Input":
+	{
+		"color": Color.SLATE_GRAY,
+		"order": 70,
+	},
+	"Lifecycle":
+	{
+		"color": Color("fa5956"),
+		"order": 10,
+	},
+	"Logic":
+	{
+		"color": Color("42b8e3"),
+		"order": 60,
+	},
+	"Math":
+	{
+		"color": Color("3042c5"),
+		"order": 50,
+	},
+	"Signal":
+	{
+		"color": Color("f0c300"),
+		"order": 20,
+	},
+	"Sound":
+	{
+		"color": Color("e30fc0"),
+		"order": 80,
+	},
+	"Test":
+	{
+		"color": Color("9989df"),
+		"order": 40,
+	},
+	"Variables":
+	{
+		"color": Color("4f975d"),
+		"order": 60,
+	},
+}
 
-static func get_general_categories() -> Array[BlockCategory]:
+
+## Compare block categories for sorting. Compare by order then name.
+static func _category_cmp(a: BlockCategory, b: BlockCategory) -> bool:
+	if a.order != b.order:
+		return a.order < b.order
+	return a.name.naturalcasecmp_to(b.name) < 0
+
+
+static func get_categories(blocks: Array[Block], extra_categories: Array[BlockCategory] = []) -> Array[BlockCategory]:
+	var cat_map: Dictionary = {}
+	var extra_cat_map: Dictionary = {}
+
+	for cat in extra_categories:
+		extra_cat_map[cat.name] = cat
+
+	for block in blocks:
+		var cat: BlockCategory = cat_map.get(block.category)
+		if cat == null:
+			cat = extra_cat_map.get(block.category)
+			if cat == null:
+				var props: Dictionary = BUILTIN_PROPS.get(block.category, {})
+				var color: Color = props.get("color", Color.SLATE_GRAY)
+				var order: int = props.get("order", 0)
+				cat = BlockCategory.new(block.category, color, order)
+			cat_map[block.category] = cat
+		cat.block_list.append(block)
+
+	# Dictionary.values() returns an untyped Array and there's no way to
+	# convert an array type besides Array.assign().
+	var cats: Array[BlockCategory] = []
+	cats.assign(cat_map.values())
+	cats.sort_custom(_category_cmp)
+	return cats
+
+
+static func get_general_blocks() -> Array[Block]:
 	var b: Block
+	var block_list: Array[Block] = []
 
 	# Lifecycle
-	var lifecycle_list: Array[Block] = []
 	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "ready_block"
 	b.block_format = "On Ready"
 	b.statement = "func _ready():"
-	lifecycle_list.append(b)
+	b.category = "Lifecycle"
+	block_list.append(b)
 
 	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "process_block"
 	b.block_format = "On Process"
 	b.statement = "func _process(delta):"
-	lifecycle_list.append(b)
+	b.category = "Lifecycle"
+	block_list.append(b)
 
 	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "physics_process_block"
 	b.block_format = "On Physics Process"
 	b.statement = "func _physics_process(delta):"
-	lifecycle_list.append(b)
+	b.category = "Lifecycle"
+	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Queue Free"
 	b.statement = "queue_free()"
-	lifecycle_list.append(b)
-
-	var lifecycle_category: BlockCategory = BlockCategory.new("Lifecycle", lifecycle_list, Color("fa5956"))
+	b.category = "Lifecycle"
+	block_list.append(b)
 
 	# Control
-	var control_list: Array[Block] = []
-
 	b = BLOCKS["control_block"].instantiate()
 	b.block_formats = ["if    {condition: BOOL}"]
 	b.statements = ["if {condition}:"]
-	control_list.append(b)
+	b.category = "Control"
+	block_list.append(b)
 
 	b = BLOCKS["control_block"].instantiate()
 	b.block_formats = ["if    {condition: BOOL}", "else"]
 	b.statements = ["if {condition}:", "else:"]
-	control_list.append(b)
+	b.category = "Control"
+	block_list.append(b)
 
 	b = BLOCKS["control_block"].instantiate()
 	b.block_formats = ["repeat {number: INT}"]
 	b.statements = ["for i in {number}:"]
-	control_list.append(b)
+	b.category = "Control"
+	block_list.append(b)
 
 	b = BLOCKS["control_block"].instantiate()
 	b.block_formats = ["while {condition: BOOL}"]
 	b.statements = ["while {condition}:"]
-	control_list.append(b)
+	b.category = "Control"
+	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Break"
 	b.statement = "break"
-	control_list.append(b)
+	b.category = "Control"
+	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Continue"
 	b.statement = "continue"
-	control_list.append(b)
-
-	var control_category: BlockCategory = BlockCategory.new("Control", control_list, Color("ffad76"))
+	b.category = "Control"
+	block_list.append(b)
 
 	# Test
-	var test_list: Array[Block] = []
-
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "print {text: STRING}"
 	b.statement = "print({text})"
 	b.defaults = {"text": "Hello"}
-	test_list.append(b)
-
-	var test_category: BlockCategory = BlockCategory.new("Test", test_list, Color("9989df"))
+	b.category = "Test"
+	block_list.append(b)
 
 	# Signal
-	var signal_list: Array[Block] = []
-
 	b = BLOCKS["entry_block"].instantiate()
 	# HACK: make signals work with new entry nodes. NIL instead of STRING type allows
 	# plain text input for function name. Should revamp signals later
 	b.block_format = "On signal {signal: NIL}"
 	b.statement = "func signal_{signal}():"
-	signal_list.append(b)
+	b.category = "Signal"
+	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Send signal {signal: STRING} to group {group: STRING}"
 	b.statement = 'var signal_manager = get_tree().root.get_node_or_null("SignalManager")\n' + "if signal_manager:\n" + "\tsignal_manager.broadcast_signal({group}, {signal})"
-	signal_list.append(b)
+	b.category = "Signal"
+	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Add to group {group: STRING}"
 	b.statement = "add_to_group({group})"
-	signal_list.append(b)
+	b.category = "Signal"
+	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Add {node: NODE_PATH} to group {group: STRING}"
 	b.statement = "get_node({node}).add_to_group({group})"
-	signal_list.append(b)
+	b.category = "Signal"
+	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Remove from group {group: STRING}"
 	b.statement = "remove_from_group({group})"
-	signal_list.append(b)
+	b.category = "Signal"
+	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Remove {node: NODE_PATH} from group {group: STRING}"
 	b.statement = "get_node({node}).remove_from_group({group})"
-	signal_list.append(b)
+	b.category = "Signal"
+	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Is in group {group: STRING}"
 	b.statement = "is_in_group({group})"
-	signal_list.append(b)
+	b.category = "Signal"
+	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Is {node: NODE_PATH} in group {group: STRING}"
 	b.statement = "get_node({node}).is_in_group({group})"
-	signal_list.append(b)
+	b.category = "Signal"
+	block_list.append(b)
 
-	var signal_category: BlockCategory = BlockCategory.new("Signal", signal_list, Color("f0c300"))
-
-	# Variable
-	var variable_list: Array[Block] = []
-
+	# Variables
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Set String {var: STRING} {value: STRING}"
 	b.statement = "VAR_DICT[{var}] = {value}"
-	variable_list.append(b)
+	b.category = "Variables"
+	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.block_format = "Get String {var: STRING}"
 	b.statement = "VAR_DICT[{var}]"
-	variable_list.append(b)
+	b.category = "Variables"
+	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Set Int {var: STRING} {value: INT}"
 	b.statement = "VAR_DICT[{var}] = {value}"
-	variable_list.append(b)
+	b.category = "Variables"
+	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_INT
 	b.block_format = "Get Int {var: STRING}"
 	b.statement = "VAR_DICT[{var}]"
-	variable_list.append(b)
+	b.category = "Variables"
+	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.block_format = "To String {int: INT}"
 	b.statement = "str({int})"
-	variable_list.append(b)
-
-	var variable_category: BlockCategory = BlockCategory.new("Variables", variable_list, Color("4f975d"))
+	b.category = "Variables"
+	block_list.append(b)
 
 	# Math
-	var math_list: Array[Block] = []
-
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} + {b: INT}"
 	b.statement = "({a} + {b})"
-	math_list.append(b)
+	b.category = "Math"
+	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} - {b: INT}"
 	b.statement = "({a} - {b})"
-	math_list.append(b)
+	b.category = "Math"
+	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} * {b: INT}"
 	b.statement = "({a} * {b})"
-	math_list.append(b)
+	b.category = "Math"
+	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} / {b: INT}"
 	b.statement = "({a} / {b})"
-	math_list.append(b)
+	b.category = "Math"
+	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_INT
 	b.block_format = "{base: INT} ^ {exp: INT}"
 	b.statement = "(pow({base}, {exp}))"
-	math_list.append(b)
-
-	var math_category: BlockCategory = BlockCategory.new("Math", math_list, Color("3042c5"))
+	b.category = "Math"
+	block_list.append(b)
 
 	# Logic
-
-	var logic_list: Array[Block] = []
-
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_BOOL
 	b.block_format = "{int1: INT} {op: OPTION} {int2: INT}"
 	b.statement = "({int1} {op} {int2})"
 	b.defaults = {"op": OptionData.new(["==", ">", "<", ">=", "<=", "!="])}
-	logic_list.append(b)
+	b.category = "Logic"
+	block_list.append(b)
 
 	for op in ["and", "or"]:
 		b = BLOCKS["parameter_block"].instantiate()
 		b.variant_type = TYPE_BOOL
 		b.block_format = "{bool1: BOOL} %s {bool2: BOOL}" % op
 		b.statement = "({bool1} %s {bool2})" % op
-		logic_list.append(b)
+		b.category = "Logic"
+		block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Not {bool: BOOL}"
 	b.statement = "(not {bool})"
-	logic_list.append(b)
-
-	var logic_category: BlockCategory = BlockCategory.new("Logic", logic_list, Color("42b8e3"))
+	b.category = "Logic"
+	block_list.append(b)
 
 	# Input
-	var input_list: Array[Block] = _get_input_blocks()
-	var input_category: BlockCategory = BlockCategory.new("Input", input_list, Color.SLATE_GRAY)
+	block_list.append_array(_get_input_blocks())
 
 	# Sound
-	var sound_list: Array[Block] = []
-
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Load file {file_path: STRING} as sound {name: STRING}"
 	b.statement = "VAR_DICT[{name}] = AudioStreamPlayer.new()\nVAR_DICT[{name}].name = {name}\nVAR_DICT[{name}].set_stream(load({file_path}))\nadd_child(VAR_DICT[{name}])"
-	sound_list.append(b)
+	b.category = "Sound"
+	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"
 	b.statement = "VAR_DICT[{name}].volume_db = {db}\nVAR_DICT[{name}].pitch_scale = {pitch}\nVAR_DICT[{name}].play()"
 	b.defaults = {"db": "0.0", "pitch": "1.0"}
-	sound_list.append(b)
+	b.category = "Sound"
+	block_list.append(b)
 
-	var sound_category: BlockCategory = BlockCategory.new("Sound", sound_list, Color("e30fc0"))
-
-	return [
-		lifecycle_category,
-		signal_category,
-		control_category,
-		test_category,
-		math_category,
-		logic_category,
-		variable_category,
-		input_category,
-		sound_category,
-	]
-
-
-static func add_to_categories(main: Array[BlockCategory], addition: Array[BlockCategory]) -> Array[BlockCategory]:
-	var matching := []
-
-	for category in main:
-		for add_category in addition:
-			if category.name == add_category.name:
-				matching.append(category.name)
-				for block in add_category.block_list:
-					category.block_list.append(block)
-
-	for add_category in addition:
-		if !matching.has(add_category.name):
-			main.append(add_category)
-
-	return main
+	return block_list
 
 
 static func property_to_blocklist(property: Dictionary) -> Array[Block]:
@@ -290,23 +350,26 @@ static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 		var b = BLOCKS["statement_block"].instantiate()
 		b.block_format = "Set %s to {value: %s}" % [property.name.capitalize(), type_string]
 		b.statement = "%s = {value}" % property.name
+		b.category = property.category
 		block_list.append(b)
 
 		b = BLOCKS["statement_block"].instantiate()
 		b.block_format = "Change %s by {value: %s}" % [property.name.capitalize(), type_string]
 		b.statement = "%s += {value}" % property.name
+		b.category = property.category
 		block_list.append(b)
 
 		b = BLOCKS["parameter_block"].instantiate()
 		b.block_type = block_type
 		b.block_format = "%s" % property.name.capitalize()
 		b.statement = "%s" % property.name
+		b.category = property.category
 		block_list.append(b)
 
 	return block_list
 
 
-static func blocks_from_property_list(property_list: Array, selected_props: Array) -> Array[Block]:
+static func blocks_from_property_list(property_list: Array, selected_props: Dictionary) -> Array[Block]:
 	var block_list: Array[Block]
 
 	for selected_property in selected_props:
@@ -314,6 +377,7 @@ static func blocks_from_property_list(property_list: Array, selected_props: Arra
 		for prop in property_list:
 			if selected_property == prop.name:
 				found_prop = prop
+				found_prop.category = selected_props[selected_property]
 				break
 		if found_prop:
 			block_list.append_array(property_to_blocklist(found_prop))
@@ -323,22 +387,20 @@ static func blocks_from_property_list(property_list: Array, selected_props: Arra
 	return block_list
 
 
-static func get_inherited_categories(_class_name: String) -> Array[BlockCategory]:
-	var cats: Array[BlockCategory] = []
+static func get_inherited_blocks(_class_name: String) -> Array[Block]:
+	var blocks: Array[Block] = []
 
 	var current: String = _class_name
 
 	while current != "":
-		add_to_categories(cats, get_built_in_categories(current))
+		blocks.append_array(get_built_in_blocks(current))
 		current = ClassDB.get_parent_class(current)
 
-	return cats
+	return blocks
 
 
-static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]:
-	var cats: Array[BlockCategory] = []
-
-	var props: Array = []
+static func get_built_in_blocks(_class_name: String) -> Array[Block]:
+	var props: Dictionary = {}
 	var block_list: Array[Block] = []
 
 	match _class_name:
@@ -346,12 +408,20 @@ static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]
 			var b = BLOCKS["statement_block"].instantiate()
 			b.block_format = "Set Rotation Degrees {angle: FLOAT}"
 			b.statement = "rotation_degrees = {angle}"
+			b.category = "Node2D"
 			block_list.append(b)
 
-			props = ["position", "rotation", "scale"]
+			props = {
+				"position": "Node2D",
+				"rotation": "Node2D",
+				"scale": "Node2D",
+			}
 
 		"CanvasItem":
-			props = ["modulate", "visible"]
+			props = {
+				"modulate": "CanvasItem",
+				"visible": "CanvasItem",
+			}
 
 		"RigidBody2D":
 			for verb in ["entered", "exited"]:
@@ -361,14 +431,20 @@ static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]
 				# convert to path
 				b.statement = "func _on_body_%s(_body: Node):\n\tvar body: NodePath = _body.get_path()" % [verb]
 				b.signal_name = "body_%s" % [verb]
+				b.category = "RigidBody2D"
 				block_list.append(b)
 
 			var b = BLOCKS["statement_block"].instantiate()
 			b.block_format = "Set Physics Position {position: VECTOR2}"
 			b.statement = "PhysicsServer2D.body_set_state(get_rid(),PhysicsServer2D.BODY_STATE_TRANSFORM,Transform2D.IDENTITY.translated({position}))"
+			b.category = "RigidBody2D"
 			block_list.append(b)
 
-			props = ["mass", "linear_velocity", "angular_velocity"]
+			props = {
+				"mass": "RigidBody2D",
+				"linear_velocity": "RigidBody2D",
+				"angular_velocity": "RigidBody2D",
+			}
 
 		"Area2D":
 			for verb in ["entered", "exited"]:
@@ -378,14 +454,13 @@ static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]
 				# convert to path
 				b.statement = "func _on_body_%s(_body: Node2D):\n\tvar body: NodePath = _body.get_path()" % [verb]
 				b.signal_name = "body_%s" % [verb]
+				b.category = "Area2D"
 				block_list.append(b)
 
 	var prop_list = ClassDB.class_get_property_list(_class_name, true)
 	block_list.append_array(blocks_from_property_list(prop_list, props))
-	if block_list:
-		cats.append(BlockCategory.new(_class_name, block_list, Color.SLATE_GRAY))
 
-	return cats
+	return block_list
 
 
 static func _get_input_blocks() -> Array[Block]:
@@ -398,6 +473,7 @@ static func _get_input_blocks() -> Array[Block]:
 	block.block_format = "Is action {action_name: OPTION} {action: OPTION}"
 	block.statement = 'Input.is_action_{action}("{action_name}")'
 	block.defaults = {"action_name": OptionData.new(InputMap.get_actions()), "action": OptionData.new(["pressed", "just_pressed", "just_released"])}
+	block.category = "Input"
 	block_list.append(block)
 
 	return block_list
