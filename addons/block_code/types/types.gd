@@ -103,7 +103,11 @@ static func dijkstra(source: Variant.Type):
 
 
 static func can_cast(type: Variant.Type, parent_type: Variant.Type) -> bool:
+	print("CAN CAST ", type, " -> ", parent_type)
 	if type == parent_type:
+		return true
+
+	if type == TYPE_NIL or parent_type == TYPE_NIL:
 		return true
 
 	if cast_graph.has(type) and cast_graph.has(parent_type):
@@ -114,6 +118,10 @@ static func can_cast(type: Variant.Type, parent_type: Variant.Type) -> bool:
 
 static func cast(val: String, type: Variant.Type, parent_type: Variant.Type):
 	if type == parent_type:
+		return val
+
+	if type == TYPE_NIL or parent_type == TYPE_NIL:
+		print("CAST NIL", val)
 		return val
 
 	if cast_graph.has(type) and cast_graph.has(parent_type):

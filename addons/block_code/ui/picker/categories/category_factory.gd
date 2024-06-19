@@ -144,8 +144,15 @@ static func get_general_categories() -> Array[BlockCategory]:
 	variable_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_STRING
 	b.block_format = "Get String {var: STRING}"
 	b.statement = "VAR_DICT[{var}]"
+	variable_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_STRING
+	b.block_format = "Get String {var: STRING} from {node: NODE_PATH}"
+	b.statement = "get_node({node}).VAR_DICT[{var}]"
 	variable_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
@@ -160,11 +167,64 @@ static func get_general_categories() -> Array[BlockCategory]:
 	variable_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
-	b.block_format = "To String {int: INT}"
-	b.statement = "str({int})"
+	b.variant_type = TYPE_STRING
+	b.block_format = "To String {value: NIL}"
+	b.statement = "str({value})"
+	variable_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_INT
+	b.block_format = "Get Int {var: INT} from {node: NODE_PATH}"
+	b.statement = "get_node({node}).VAR_DICT[{var}]"
 	variable_list.append(b)
 
 	var variable_category: BlockCategory = BlockCategory.new("Variables", variable_list, Color("4f975d"))
+
+	# Nodes & Types
+	var type_list: Array[Block] = []
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_NODE_PATH
+	b.block_format = "This node"
+	b.statement = "get_path()"
+	type_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_NODE_PATH
+	b.block_format = "%{name: NIL}"
+	b.statement = "%{name}.get_path()"
+	type_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_INT
+	b.block_format = "As int {value: NIL}"
+	b.statement = "int({value})"
+	type_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_FLOAT
+	b.block_format = "As float {value: NIL}"
+	b.statement = "float({value})"
+	type_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_BOOL
+	b.block_format = "As boolean {value: NIL}"
+	b.statement = "bool({value})"
+	type_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_NIL
+	b.block_format = "Get property {key: STRING} from {node: NODE_PATH}"
+	b.statement = "get_node({node}).get({key})"
+	type_list.append(b)
+
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_format = "Set property {key: STRING} in {node: NODE_PATH} to {value: NIL}"
+	b.statement = "get_node({node}).set({key}, {value})"
+	type_list.append(b)
+
+	var type_category: BlockCategory = BlockCategory.new("Nodes & Types", type_list, Color("c12f8e"))
 
 	# Math
 	var math_list: Array[Block] = []
@@ -256,6 +316,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 		math_category,
 		logic_category,
 		variable_category,
+		type_category,
 		input_category,
 		sound_category,
 	]

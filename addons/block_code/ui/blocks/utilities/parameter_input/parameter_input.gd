@@ -132,9 +132,11 @@ func get_string() -> String:
 
 	if option:
 		return _option_input.get_item_text(_option_input.selected).to_snake_case()
+	
+	print("GET STRING ", input, " with ", variant_type)
 
 	match variant_type:
-		TYPE_STRING:
+		TYPE_STRING, TYPE_NODE_PATH:
 			return "'%s'" % input.replace("\\", "\\\\").replace("'", "\\'")
 		TYPE_VECTOR2:
 			return "Vector2(%s)" % input
