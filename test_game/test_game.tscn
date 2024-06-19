@@ -1,4 +1,4 @@
-[gd_scene load_steps=169 format=3 uid="uid://bbwmxee7ukgul"]
+[gd_scene load_steps=177 format=3 uid="uid://bbwmxee7ukgul"]
 
 [ext_resource type="PackedScene" uid="uid://ddx1cd5q6t61o" path="res://addons/block_code/simple_nodes/simple_character/simple_character.tscn" id="1_hrpwq"]
 [ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="2_ewral"]
@@ -8,30 +8,24 @@
 [ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="5_q37d3"]
 [ext_resource type="Texture2D" uid="uid://dr8e0tvfxjy1f" path="res://icon.svg" id="7_a27o8"]
 
-[sub_resource type="Resource" id="Resource_bq364"]
+[sub_resource type="Resource" id="Resource_uwmna"]
 script = ExtResource("3_dpt5n")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.290196, 0.52549, 0.835294, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Move with player 2 buttons, speed {speed: INT}"], ["statement", "velocity = Input.get_vector(\"player_2_left\", \"player_2_right\", \"player_2_up\", \"player_2_down\")*{speed}
-move_and_slide()"], ["param_input_strings", {
-"speed": "600"
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Load file {file_path: STRING} as sound {name: STRING}"], ["statement", "var sound = AudioStreamPlayer.new()
+sound.name = {name}
+sound.set_stream(load({file_path}))
+add_child(sound)
+sound.set_owner(self)"], ["param_input_strings", {
+"file_path": "res://test_game/test_audio.ogg",
+"name": "testsound"
 }]]
 
-[sub_resource type="Resource" id="Resource_y4nnw"]
+[sub_resource type="Resource" id="Resource_5jnoq"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_bq364")
+serialized_block = SubResource("Resource_uwmna")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_a8l73"]
-script = ExtResource("3_dpt5n")
-block_class = &"EntryBlock"
-serialized_props = [["block_name", "physics_process_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(460, 94)], ["block_format", "On Physics Process"], ["statement", "func _physics_process(delta):"], ["param_input_strings", {}]]
-
-[sub_resource type="Resource" id="Resource_cel1g"]
-script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_a8l73")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_y4nnw")]]
-
-[sub_resource type="Resource" id="Resource_xcbw7"]
+[sub_resource type="Resource" id="Resource_2niad"]
 script = ExtResource("3_dpt5n")
 block_class = &"StatementBlock"
 serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.941176, 0.764706, 0, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Send signal {signal: STRING} to group {group: STRING}"], ["statement", "var signal_manager = get_tree().root.get_node_or_null(\"SignalManager\")
@@ -41,60 +35,118 @@ if signal_manager:
 "signal": "will_hi"
 }]]
 
-[sub_resource type="Resource" id="Resource_8fbr0"]
+[sub_resource type="Resource" id="Resource_hb8ii"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_xcbw7")
-path_child_pairs = []
+serialized_block = SubResource("Resource_2niad")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_5jnoq")]]
 
-[sub_resource type="Resource" id="Resource_k0oqj"]
+[sub_resource type="Resource" id="Resource_nfmdk"]
 script = ExtResource("3_dpt5n")
 block_class = &"StatementBlock"
 serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.941176, 0.764706, 0, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Add to group {group: STRING}"], ["statement", "add_to_group({group})"], ["param_input_strings", {
 "group": "Player"
 }]]
 
-[sub_resource type="Resource" id="Resource_itbdf"]
+[sub_resource type="Resource" id="Resource_kiuvv"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_k0oqj")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_8fbr0")]]
+serialized_block = SubResource("Resource_nfmdk")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_hb8ii")]]
 
-[sub_resource type="Resource" id="Resource_mg1oj"]
+[sub_resource type="Resource" id="Resource_4xja7"]
 script = ExtResource("3_dpt5n")
 block_class = &"StatementBlock"
 serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.6, 0.537255, 0.87451, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "print {text: STRING}"], ["statement", "print({text})"], ["param_input_strings", {
 "text": "Hi Manuel!"
 }]]
 
-[sub_resource type="Resource" id="Resource_3b5w0"]
+[sub_resource type="Resource" id="Resource_u6g84"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_mg1oj")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_itbdf")]]
+serialized_block = SubResource("Resource_4xja7")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_kiuvv")]]
 
-[sub_resource type="Resource" id="Resource_hu4fg"]
+[sub_resource type="Resource" id="Resource_6xoyl"]
 script = ExtResource("3_dpt5n")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "ready_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 2], ["position", Vector2(104, 85)], ["block_format", "On Ready"], ["statement", "func _ready():"], ["param_input_strings", {}]]
+serialized_props = [["block_name", "ready_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(84, 33)], ["block_format", "On Ready"], ["statement", "func _ready():"], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_pyh8n"]
+[sub_resource type="Resource" id="Resource_xdg8y"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_hu4fg")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_3b5w0")]]
+serialized_block = SubResource("Resource_6xoyl")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_u6g84")]]
 
-[sub_resource type="Resource" id="Resource_j1v52"]
+[sub_resource type="Resource" id="Resource_7ot84"]
+script = ExtResource("3_dpt5n")
+block_class = &"ParameterBlock"
+serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["block_format", "Is action ui_right pressed"], ["statement", "Input.is_action_pressed(\"ui_right\")"], ["param_input_strings", {}]]
+
+[sub_resource type="Resource" id="Resource_xyinc"]
+script = ExtResource("2_pqvcj")
+serialized_block = SubResource("Resource_7ot84")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_2ykxc"]
+script = ExtResource("3_dpt5n")
+block_class = &"StatementBlock"
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"], ["statement", "var sound = find_child({name})
+sound.volume_db = {db}
+sound.pitch_scale = {pitch}
+sound.play()"], ["param_input_strings", {
+"db": "0.0",
+"name": "testsound",
+"pitch": "1.0"
+}]]
+
+[sub_resource type="Resource" id="Resource_s07iu"]
+script = ExtResource("2_pqvcj")
+serialized_block = SubResource("Resource_2ykxc")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_tu70f"]
+script = ExtResource("3_dpt5n")
+block_class = &"ControlBlock"
+serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(1, 0.678431, 0.462745, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_formats", ["if    {cond: BOOL}"]], ["statements", ["if {cond}:"]], ["param_input_strings_array", [{
+"cond": ""
+}]]]
+
+[sub_resource type="Resource" id="Resource_2hh05"]
+script = ExtResource("2_pqvcj")
+serialized_block = SubResource("Resource_tu70f")
+path_child_pairs = [[NodePath("VBoxContainer/MarginContainer/Rows/Row0/RowHBoxContainer/RowHBox/ParameterInput0/SnapPoint"), SubResource("Resource_xyinc")], [NodePath("VBoxContainer/MarginContainer/Rows/SnapContainer0/SnapPoint"), SubResource("Resource_s07iu")]]
+
+[sub_resource type="Resource" id="Resource_iskmc"]
+script = ExtResource("3_dpt5n")
+block_class = &"StatementBlock"
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.290196, 0.52549, 0.835294, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Move with player 2 buttons, speed {speed: INT}"], ["statement", "velocity = Input.get_vector(\"player_2_left\", \"player_2_right\", \"player_2_up\", \"player_2_down\")*{speed}
+move_and_slide()"], ["param_input_strings", {
+"speed": "600"
+}]]
+
+[sub_resource type="Resource" id="Resource_xmana"]
+script = ExtResource("2_pqvcj")
+serialized_block = SubResource("Resource_iskmc")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_2hh05")]]
+
+[sub_resource type="Resource" id="Resource_1yx4d"]
+script = ExtResource("3_dpt5n")
+block_class = &"EntryBlock"
+serialized_props = [["block_name", "physics_process_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(79, 270)], ["block_format", "On Physics Process"], ["statement", "func _physics_process(delta):"], ["param_input_strings", {}]]
+
+[sub_resource type="Resource" id="Resource_eifs0"]
+script = ExtResource("2_pqvcj")
+serialized_block = SubResource("Resource_1yx4d")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_xmana")]]
+
+[sub_resource type="Resource" id="Resource_2hn5u"]
 script = ExtResource("4_xt862")
-array = Array[ExtResource("2_pqvcj")]([SubResource("Resource_cel1g"), SubResource("Resource_pyh8n")])
+array = Array[ExtResource("2_pqvcj")]([SubResource("Resource_xdg8y"), SubResource("Resource_eifs0")])
 
 [sub_resource type="Resource" id="Resource_l007i"]
 script = ExtResource("5_q37d3")
 script_inherits = "SimpleCharacter"
-block_trees = SubResource("Resource_j1v52")
+block_trees = SubResource("Resource_2hn5u")
 generated_script = "extends SimpleCharacter
 
 var VAR_DICT := {}
-
-func _physics_process(delta):
-	velocity = Input.get_vector(\"player_2_left\", \"player_2_right\", \"player_2_up\", \"player_2_down\")*600
-	move_and_slide()
 
 func _ready():
 	print('Hi Manuel!')
@@ -102,6 +154,20 @@ func _ready():
 	var signal_manager = get_tree().root.get_node_or_null(\"SignalManager\")
 	if signal_manager:
 		signal_manager.broadcast_signal('Player', 'will_hi')
+	var sound = AudioStreamPlayer.new()
+	sound.name = 'testsound'
+	sound.set_stream(load('res://test_game/test_audio.ogg'))
+	add_child(sound)
+	sound.set_owner(self)
+
+func _physics_process(delta):
+	velocity = Input.get_vector(\"player_2_left\", \"player_2_right\", \"player_2_up\", \"player_2_down\")*600
+	move_and_slide()
+	if Input.is_action_pressed(\"ui_right\"):
+		var sound = find_child('testsound')
+		sound.volume_db = 0.0
+		sound.pitch_scale = 1.0
+		sound.play()
 
 "
 
