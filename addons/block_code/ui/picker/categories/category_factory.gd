@@ -209,7 +209,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.variant_type = TYPE_BOOL
 	b.block_format = "{int1: INT} {op: OPTION} {int2: INT}"
 	b.statement = "({int1} {op} {int2})"
-	b.defaults = {"op": Types.OptionData.new(["==", ">", "<", ">=", "<=", "!="])}
+	b.defaults = {"op": OptionData.new(["==", ">", "<", ">=", "<=", "!="])}
 	logic_list.append(b)
 
 	for op in ["and", "or"]:
@@ -394,7 +394,7 @@ static func _get_input_blocks() -> Array[Block]:
 	block.variant_type = TYPE_BOOL
 	block.block_format = "Is action {action_name: OPTION} {action: OPTION}"
 	block.statement = 'Input.is_action_{action}("{action_name}")'
-	block.defaults = {"action_name": Types.OptionData.new(InputMap.get_actions()), "action": Types.OptionData.new(["pressed", "just_pressed", "just_released"])}
+	block.defaults = {"action_name": OptionData.new(InputMap.get_actions()), "action": OptionData.new(["pressed", "just_pressed", "just_released"])}
 	block_list.append(block)
 
 	return block_list
