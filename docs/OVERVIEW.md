@@ -97,7 +97,7 @@ b.block_format = "On Process [delta: FLOAT]"
 		* `/block_canvas/`: Contains the code for the `BlockCanvas` which loads and holds blocks on a canvas. Inherited by `NodeBlockCanvas` which can generate scripts for block scripts made for Godot `Node`s (which is all of the scripts ATM). Also contains resources for serializing blocks.
 		* `/bsd_templates/`: Template block script data files for loading a default script. E.g. `_ready` and `_process` entry blocks already on canvas.
 		* `/node_canvas/`: Deprecated
-		* `/node_lsit/`: Deprecated
+		* `/node_list/`: Deprecated
 		* `/picker/`: Contains the picker scene, and code that generates the blocks that populate the picker.
 			* `/categories/`: Contains `CategoryFactory` which generates the global block list programmatically from template blocks.
 		* `/title_bar/`: Contains the title bar which should display the name of the current script and the node it inherits from.
