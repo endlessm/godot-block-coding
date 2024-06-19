@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://tf7b8c64ecc0"]
+[gd_scene load_steps=33 format=3 uid="uid://tf7b8c64ecc0"]
 
 [ext_resource type="PackedScene" uid="uid://s7enbp56f256" path="res://pong_game/paddle.tscn" id="1_1k5k2"]
 [ext_resource type="Script" path="res://pong_game/pong_game.gd" id="1_bjkc8"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bis7afjjuwypq" path="res://pong_game/hud.tscn" id="8_yg457"]
 [ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://pong_game/ball.tscn" id="9_xrqll"]
 [ext_resource type="PackedScene" uid="uid://1ownc3rikn2k" path="res://pong_game/ball_spawn_area.tscn" id="10_5vs1t"]
+[ext_resource type="PackedScene" uid="uid://vc7u0ljq02eh" path="res://pong_game/goal_area.tscn" id="12_nqmxu"]
 
 [sub_resource type="Resource" id="Resource_535fl"]
 script = ExtResource("5_wr38c")
@@ -174,6 +175,12 @@ linear_velocity = Vector2(353.553, 353.553)
 
 [node name="BallSpawnArea" parent="." groups=["ball_spawn_area"] instance=ExtResource("10_5vs1t")]
 position = Vector2(960, 544)
+
+[node name="GoalAreaLeft" parent="." groups=["goal", "goal_left"] instance=ExtResource("12_nqmxu")]
+position = Vector2(-64, 544)
+
+[node name="GoalAreaRight" parent="." groups=["goal", "goal_right"] instance=ExtResource("12_nqmxu")]
+position = Vector2(1984, 544)
 
 [node name="HUD" parent="." instance=ExtResource("8_yg457")]
 
