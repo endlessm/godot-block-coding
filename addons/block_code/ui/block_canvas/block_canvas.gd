@@ -6,6 +6,8 @@ const EXTEND_MARGIN: float = 800
 
 @onready var _window: Control = %Window
 @onready var _window_scroll: ScrollContainer = %WindowScroll
+@onready var _choose_block_code_label: Label = %ChooseBlockCodeLabel
+@onready var _create_block_code_label: Label = %CreateBlockCodeLabel
 
 var _block_scenes_by_class = {}
 
@@ -41,8 +43,25 @@ func set_child(n: Node):
 func bsd_selected(bsd: BlockScriptData):
 	clear_canvas()
 
+	_choose_block_code_label.visible = false
+	_create_block_code_label.visible = false
+
+	if not bsd and scene_has_bsd_nodes():
+		_choose_block_code_label.visible = true
+		return
+	elif not bsd and not scene_has_bsd_nodes():
+		_create_block_code_label.visible = true
+		return
+
 	for tree in bsd.block_trees.array:
 		load_tree(_window, tree)
+
+
+func scene_has_bsd_nodes() -> bool:
+	var scene_root = EditorInterface.get_edited_scene_root()
+	if not scene_root:
+		return false
+	return scene_root.find_children("*", "BlockCode").size() > 0
 
 
 func clear_canvas():

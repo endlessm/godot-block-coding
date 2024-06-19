@@ -8,6 +8,10 @@ signal block_picked(block: Block)
 
 
 func bsd_selected(bsd: BlockScriptData):
+	if not bsd:
+		reset_picker()
+		return
+
 	for class_dict in ProjectSettings.get_global_class_list():
 		if class_dict.class == bsd.script_inherits:
 			var script = load(class_dict.path)
@@ -19,9 +23,13 @@ func bsd_selected(bsd: BlockScriptData):
 	init_picker(CategoryFactory.get_inherited_categories(bsd.script_inherits))
 
 
-func init_picker(extra_blocks: Array[BlockCategory] = []):
+func reset_picker():
 	for c in _block_list.get_children():
 		c.queue_free()
+
+
+func init_picker(extra_blocks: Array[BlockCategory] = []):
+	reset_picker()
 
 	var block_categories := CategoryFactory.get_general_categories()
 
