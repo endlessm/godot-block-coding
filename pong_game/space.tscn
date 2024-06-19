@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://cg8ibi18um3vg"]
+
+[ext_resource type="Texture2D" uid="uid://ceiq8wmlnnnif" path="res://pong_game/space.png" id="1_un3yo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q267f"]
+size = Vector2(2688, 512)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bqkwh"]
+size = Vector2(64, 1080)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lyev5"]
+size = Vector2(256, 1080)
+
+[node name="Space" type="Node2D"]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+unique_name_in_owner = true
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_un3yo")
+patch_margin_left = 64
+patch_margin_top = 64
+patch_margin_right = 64
+patch_margin_bottom = 64
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Walls" type="RigidBody2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+collision_priority = 10.0
+mass = 9999.0
+lock_rotation = true
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
+position = Vector2(960, -256)
+shape = SubResource("RectangleShape2D_q267f")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
+position = Vector2(960, 1336)
+shape = SubResource("RectangleShape2D_q267f")
+
+[node name="PaddleBounds" type="RigidBody2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+mass = 9999.0
+lock_rotation = true
+freeze = true
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="PaddleBounds"]
+position = Vector2(-32, 540)
+shape = SubResource("RectangleShape2D_bqkwh")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="PaddleBounds"]
+position = Vector2(1952, 540)
+shape = SubResource("RectangleShape2D_bqkwh")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="PaddleBounds"]
+position = Vector2(960, 540)
+shape = SubResource("RectangleShape2D_lyev5")

@@ -14,6 +14,12 @@ func _ready():
 	_update_parent_script()
 
 
+func _get_custom_or_native_class(node: Node):
+	if node.has_method("get_custom_class"):
+		return node.get_custom_class()
+	return node.get_class()
+
+
 func _enter_tree():
 	if not Engine.is_editor_hint():
 		return
@@ -21,7 +27,7 @@ func _enter_tree():
 	# Create script
 	if bsd == null:
 		var new_bsd: BlockScriptData = load("res://addons/block_code/ui/bsd_templates/default_bsd.tres").duplicate(true)
-		new_bsd.script_inherits = get_parent().call("get_class")  # For whatever reason this works instead of just .get_class :)
+		new_bsd.script_inherits = _get_custom_or_native_class(get_parent())
 		new_bsd.generated_script = new_bsd.generated_script.replace("INHERIT_DEFAULT", new_bsd.script_inherits)
 		bsd = new_bsd
 
@@ -44,6 +50,8 @@ func _update_parent_script():
 
 
 func _get_configuration_warnings():
-	if bsd:
-		if get_parent().call("get_class") != bsd.script_inherits:
-			return ["The parent is not a %s. Create a new BlockCode node and reattach." % bsd.script_inherits]
+	var warnings = []
+	if bsd and _get_custom_or_native_class(get_parent()) != bsd.script_inherits:
+		var warning = "The parent is not a %s. Create a new BlockCode node and reattach." % bsd.script_inherits
+		warnings.append(warning)
+	return warnings
