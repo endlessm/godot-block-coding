@@ -1,0 +1,178 @@
+[gd_scene load_steps=31 format=3 uid="uid://tf7b8c64ecc0"]
+
+[ext_resource type="PackedScene" uid="uid://s7enbp56f256" path="res://pong_game/paddle.tscn" id="1_1k5k2"]
+[ext_resource type="Script" path="res://pong_game/pong_game.gd" id="1_bjkc8"]
+[ext_resource type="PackedScene" uid="uid://cg8ibi18um3vg" path="res://pong_game/space.tscn" id="1_y56ac"]
+[ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="3_6jaq8"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="4_qtggh"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block.gd" id="5_wr38c"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="6_ppdc3"]
+[ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="7_uuuue"]
+[ext_resource type="PackedScene" uid="uid://bis7afjjuwypq" path="res://pong_game/hud.tscn" id="8_yg457"]
+[ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://pong_game/ball.tscn" id="9_xrqll"]
+
+[sub_resource type="Resource" id="Resource_535fl"]
+script = ExtResource("5_wr38c")
+block_class = &"StatementBlock"
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.290196, 0.52549, 0.835294, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Move with player 2 buttons, speed {speed: VECTOR2}"], ["statement", "velocity = Input.get_vector(\"player_2_left\", \"player_2_right\", \"player_2_up\", \"player_2_down\")*{speed}
+move_and_slide()"], ["param_input_strings", {
+"speed": "0, 1000"
+}]]
+
+[sub_resource type="Resource" id="Resource_qwdfx"]
+script = ExtResource("4_qtggh")
+serialized_block = SubResource("Resource_535fl")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_ob4a5"]
+script = ExtResource("5_wr38c")
+block_class = &"EntryBlock"
+serialized_props = [["block_name", "process_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(53, 164)], ["block_format", "On Process"], ["statement", "func _process(delta):"], ["param_input_strings", {}]]
+
+[sub_resource type="Resource" id="Resource_53uyg"]
+script = ExtResource("4_qtggh")
+serialized_block = SubResource("Resource_ob4a5")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_qwdfx")]]
+
+[sub_resource type="Resource" id="Resource_85hm7"]
+script = ExtResource("6_ppdc3")
+array = Array[ExtResource("4_qtggh")]([SubResource("Resource_53uyg")])
+
+[sub_resource type="Resource" id="Resource_t7nl4"]
+script = ExtResource("7_uuuue")
+script_inherits = "Paddle"
+block_trees = SubResource("Resource_85hm7")
+generated_script = "extends Paddle
+
+var VAR_DICT := {}
+
+func _process(delta):
+	velocity = Input.get_vector(\"player_2_left\", \"player_2_right\", \"player_2_up\", \"player_2_down\")*Vector2(0, 1000)
+	move_and_slide()
+
+"
+
+[sub_resource type="Resource" id="Resource_jkl87"]
+script = ExtResource("5_wr38c")
+block_class = &"StatementBlock"
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.290196, 0.52549, 0.835294, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Move with player 1 buttons, speed {speed: VECTOR2}"], ["statement", "velocity = Input.get_vector(\"ui_left\", \"ui_right\", \"ui_up\", \"ui_down\")*{speed}
+move_and_slide()"], ["param_input_strings", {
+"speed": "0, 1000"
+}]]
+
+[sub_resource type="Resource" id="Resource_dsoim"]
+script = ExtResource("4_qtggh")
+serialized_block = SubResource("Resource_jkl87")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_1xs00"]
+script = ExtResource("5_wr38c")
+block_class = &"EntryBlock"
+serialized_props = [["block_name", "process_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(90, 95)], ["block_format", "On Process"], ["statement", "func _process(delta):"], ["param_input_strings", {}]]
+
+[sub_resource type="Resource" id="Resource_lgfia"]
+script = ExtResource("4_qtggh")
+serialized_block = SubResource("Resource_1xs00")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_dsoim")]]
+
+[sub_resource type="Resource" id="Resource_w0goe"]
+script = ExtResource("6_ppdc3")
+array = Array[ExtResource("4_qtggh")]([SubResource("Resource_lgfia")])
+
+[sub_resource type="Resource" id="Resource_52r02"]
+script = ExtResource("7_uuuue")
+script_inherits = "Paddle"
+block_trees = SubResource("Resource_w0goe")
+generated_script = "extends Paddle
+
+var VAR_DICT := {}
+
+func _process(delta):
+	velocity = Input.get_vector(\"ui_left\", \"ui_right\", \"ui_up\", \"ui_down\")*Vector2(0, 1000)
+	move_and_slide()
+
+"
+
+[sub_resource type="Resource" id="Resource_ve47i"]
+script = ExtResource("5_wr38c")
+block_class = &"StatementBlock"
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.290196, 0.52549, 0.835294, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Change player 1 score by {score: INT}"], ["statement", "get_tree().call_group(\"hud\", \"set_player_score\", \"right\", {score})"], ["param_input_strings", {
+"score": "2"
+}]]
+
+[sub_resource type="Resource" id="Resource_asygo"]
+script = ExtResource("4_qtggh")
+serialized_block = SubResource("Resource_ve47i")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_xnfno"]
+script = ExtResource("5_wr38c")
+block_class = &"StatementBlock"
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.290196, 0.52549, 0.835294, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Change player 2 score by {score: INT}"], ["statement", "get_tree().call_group(\"hud\", \"set_player_score\", \"left\", {score})"], ["param_input_strings", {
+"score": "4"
+}]]
+
+[sub_resource type="Resource" id="Resource_6ul1j"]
+script = ExtResource("4_qtggh")
+serialized_block = SubResource("Resource_xnfno")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_asygo")]]
+
+[sub_resource type="Resource" id="Resource_6o8ws"]
+script = ExtResource("5_wr38c")
+block_class = &"EntryBlock"
+serialized_props = [["block_name", "ready_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(54, 47)], ["block_format", "On Ready"], ["statement", "func _ready():"], ["param_input_strings", {}]]
+
+[sub_resource type="Resource" id="Resource_tceso"]
+script = ExtResource("4_qtggh")
+serialized_block = SubResource("Resource_6o8ws")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_6ul1j")]]
+
+[sub_resource type="Resource" id="Resource_jvpy2"]
+script = ExtResource("6_ppdc3")
+array = Array[ExtResource("4_qtggh")]([SubResource("Resource_tceso")])
+
+[sub_resource type="Resource" id="Resource_f070g"]
+script = ExtResource("7_uuuue")
+script_inherits = "Pong"
+block_trees = SubResource("Resource_jvpy2")
+generated_script = "extends Pong
+
+var VAR_DICT := {}
+
+func _ready():
+	get_tree().call_group(\"hud\", \"set_player_score\", \"left\", 4)
+	get_tree().call_group(\"hud\", \"set_player_score\", \"right\", 2)
+
+"
+
+[node name="Pong" type="Node2D"]
+script = ExtResource("1_bjkc8")
+
+[node name="Space" parent="." instance=ExtResource("1_y56ac")]
+
+[node name="PaddleLeft" parent="." instance=ExtResource("1_1k5k2")]
+modulate = Color(0.511, 0.362, 0.972, 1)
+position = Vector2(64, 576)
+
+[node name="BlockCode" type="Node" parent="PaddleLeft"]
+script = ExtResource("3_6jaq8")
+bsd = SubResource("Resource_t7nl4")
+
+[node name="PaddleRight" parent="." instance=ExtResource("1_1k5k2")]
+modulate = Color(0.511, 0.362, 0.972, 1)
+position = Vector2(1856, 576)
+
+[node name="BlockCode" type="Node" parent="PaddleRight"]
+script = ExtResource("3_6jaq8")
+bsd = SubResource("Resource_52r02")
+
+[node name="Ball" parent="." instance=ExtResource("9_xrqll")]
+modulate = Color(0.511, 0.362, 0.972, 1)
+position = Vector2(960, 576)
+linear_velocity = Vector2(353.553, 353.553)
+
+[node name="HUD" parent="." instance=ExtResource("8_yg457")]
+
+[node name="BlockCode" type="Node" parent="."]
+script = ExtResource("3_6jaq8")
+bsd = SubResource("Resource_f070g")

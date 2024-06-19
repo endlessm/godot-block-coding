@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://bis7afjjuwypq"]
+
+[ext_resource type="Script" path="res://pong_game/hud.gd" id="1_yyb01"]
+[ext_resource type="Texture2D" uid="uid://dijemw7iilr2m" path="res://pong_game/line.png" id="2_jon51"]
+
+[node name="HUD" type="CanvasLayer" groups=["hud"]]
+script = ExtResource("1_yyb01")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Lines" type="Sprite2D" parent="Control/HBoxContainer"]
+unique_name_in_owner = true
+texture_repeat = 2
+position = Vector2(960, 536)
+texture = ExtResource("2_jon51")
+region_enabled = true
+region_rect = Rect2(0, 0, 20, 1100)
+
+[node name="PlayerLeftScore" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 240.0
+offset_right = 717.0
+offset_bottom = 1080.0
+pivot_offset = Vector2(240, 176)
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 200
+text = "0"
+horizontal_alignment = 1
+
+[node name="PlayerRightScore" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 1200.0
+offset_right = 1677.0
+offset_bottom = 1080.0
+pivot_offset = Vector2(240, 176)
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 200
+text = "0"
+horizontal_alignment = 1
