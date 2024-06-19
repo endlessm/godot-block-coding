@@ -44,23 +44,23 @@ static func get_general_categories() -> Array[BlockCategory]:
 	var control_list: Array[Block] = []
 
 	b = BLOCKS["control_block"].instantiate()
-	b.block_formats = ["if    {cond: BOOL}"]
-	b.statements = ["if {cond}:"]
+	b.block_formats = ["if    {condition: BOOL}"]
+	b.statements = ["if {condition}:"]
 	control_list.append(b)
 
 	b = BLOCKS["control_block"].instantiate()
-	b.block_formats = ["if    {cond: BOOL}", "else"]
-	b.statements = ["if {cond}:", "else:"]
+	b.block_formats = ["if    {condition: BOOL}", "else"]
+	b.statements = ["if {condition}:", "else:"]
 	control_list.append(b)
 
 	b = BLOCKS["control_block"].instantiate()
-	b.block_formats = ["repeat {num: INT}"]
-	b.statements = ["for i in {num}:"]
+	b.block_formats = ["repeat {number: INT}"]
+	b.statements = ["for i in {number}:"]
 	control_list.append(b)
 
 	b = BLOCKS["control_block"].instantiate()
-	b.block_formats = ["while {bool: BOOL}"]
-	b.statements = ["while {bool}:"]
+	b.block_formats = ["while {condition: BOOL}"]
+	b.statements = ["while {condition}:"]
 	control_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
@@ -226,7 +226,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Not {bool: BOOL}"
-	b.statement = "(!{bool})"
+	b.statement = "(not {bool})"
 	logic_list.append(b)
 
 	var logic_category: BlockCategory = BlockCategory.new("Logic", logic_list, Color("42b8e3"))

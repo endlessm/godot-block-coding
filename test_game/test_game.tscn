@@ -104,7 +104,7 @@ path_child_pairs = []
 [sub_resource type="Resource" id="Resource_tu70f"]
 script = ExtResource("3_dpt5n")
 block_class = &"ControlBlock"
-serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(1, 0.678431, 0.462745, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_formats", ["if    {cond: BOOL}"]], ["statements", ["if {cond}:"]], ["param_input_strings_array", [{
+serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(1, 0.678431, 0.462745, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_formats", ["if    {condition: BOOL}"]], ["statements", ["if {cond}:"]], ["param_input_strings_array", [{
 "cond": ""
 }]]]
 
@@ -210,7 +210,7 @@ path_child_pairs = []
 [sub_resource type="Resource" id="Resource_qy43j"]
 script = ExtResource("3_dpt5n")
 block_class = &"ControlBlock"
-serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(1, 0.678431, 0.462745, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_formats", ["if    {cond: BOOL}", "else"]], ["statements", ["if {cond}:", "else:"]], ["param_input_strings_array", [{
+serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(1, 0.678431, 0.462745, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_formats", ["if    {condition: BOOL}", "else"]], ["statements", ["if {cond}:", "else:"]], ["param_input_strings_array", [{
 "cond": ""
 }, {}]]]
 
@@ -332,7 +332,7 @@ path_child_pairs = []
 [sub_resource type="Resource" id="Resource_cta2p"]
 script = ExtResource("3_dpt5n")
 block_class = &"ControlBlock"
-serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(1, 0.678431, 0.462745, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_formats", ["if    {cond: BOOL}"]], ["statements", ["if {cond}:"]], ["param_input_strings_array", [{
+serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(1, 0.678431, 0.462745, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_formats", ["if    {condition: BOOL}"]], ["statements", ["if {cond}:"]], ["param_input_strings_array", [{
 "cond": ""
 }]]]
 
@@ -665,7 +665,7 @@ path_child_pairs = []
 [sub_resource type="Resource" id="Resource_v6sl5"]
 script = ExtResource("3_dpt5n")
 block_class = &"ControlBlock"
-serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(1, 0.678431, 0.462745, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_formats", ["if    {cond: BOOL}", "else"]], ["statements", ["if {cond}:", "else:"]], ["param_input_strings_array", [{
+serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(1, 0.678431, 0.462745, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_formats", ["if    {condition: BOOL}", "else"]], ["statements", ["if {cond}:", "else:"]], ["param_input_strings_array", [{
 "cond": ""
 }, {}]]]
 
@@ -962,7 +962,7 @@ path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/
 [sub_resource type="Resource" id="Resource_kqv2n"]
 script = ExtResource("3_dpt5n")
 block_class = &"ControlBlock"
-serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(1, 0.678431, 0.462745, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_formats", ["if    {cond: BOOL}"]], ["statements", ["if {cond}:"]], ["param_input_strings_array", [{
+serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(1, 0.678431, 0.462745, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_formats", ["if    {condition: BOOL}"]], ["statements", ["if {cond}:"]], ["param_input_strings_array", [{
 "cond": ""
 }]]]
 
