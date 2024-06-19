@@ -306,7 +306,7 @@ static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 	return block_list
 
 
-static func category_from_property_list(property_list: Array, selected_props: Array, p_name: String, p_color: Color) -> BlockCategory:
+static func blocks_from_property_list(property_list: Array, selected_props: Array) -> Array[Block]:
 	var block_list: Array[Block]
 
 	for selected_property in selected_props:
@@ -320,7 +320,7 @@ static func category_from_property_list(property_list: Array, selected_props: Ar
 		else:
 			push_warning("No property matching %s found in %s" % [selected_property, property_list])
 
-	return BlockCategory.new(p_name, block_list, p_color)
+	return block_list
 
 
 static func get_inherited_categories(_class_name: String) -> Array[BlockCategory]:
@@ -381,12 +381,9 @@ static func get_built_in_categories(_class_name: String) -> Array[BlockCategory]
 				block_list.append(b)
 
 	var prop_list = ClassDB.class_get_property_list(_class_name, true)
-
-	var class_cat: BlockCategory = category_from_property_list(prop_list, props, _class_name, Color.SLATE_GRAY)
-	block_list.append_array(class_cat.block_list)
-	class_cat.block_list = block_list
+	block_list.append_array(blocks_from_property_list(prop_list, props))
 	if block_list:
-		cats.append(class_cat)
+		cats.append(BlockCategory.new(_class_name, block_list, Color.SLATE_GRAY))
 
 	return cats
 
