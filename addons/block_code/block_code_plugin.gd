@@ -96,13 +96,19 @@ func _exit_tree():
 
 
 func _ready():
+	connect("scene_changed", _on_scene_changed)
 	editor_inspector.connect("edited_object_changed", _on_editor_inspector_edited_object_changed)
+	_on_scene_changed(EditorInterface.get_edited_scene_root())
+	_on_editor_inspector_edited_object_changed()
+
+
+func _on_scene_changed(scene_root: Node):
+	BlockCodePlugin.main_panel.switch_scene(scene_root)
 
 
 func _on_editor_inspector_edited_object_changed():
 	var block_code: BlockCode = editor_inspector.get_edited_object() as BlockCode
-	if block_code:
-		BlockCodePlugin.main_panel.switch_script(block_code)
+	BlockCodePlugin.main_panel.switch_script(block_code)
 
 
 func _has_main_screen():

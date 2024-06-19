@@ -24,3 +24,17 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
+
+[node name="ChooseBlockCodeLabel" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Choose a BlockCode node in the inspector."
+horizontal_alignment = 1
+
+[node name="CreateBlockCodeLabel" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "First, add a BlockCode node to the scene."
+horizontal_alignment = 1
