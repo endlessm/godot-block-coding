@@ -1,9 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7l70grmkauij"]
+[gd_scene load_steps=5 format=3 uid="uid://c7l70grmkauij"]
 
 [ext_resource type="Script" path="res://pong_game/ball.gd" id="1_vdrab"]
 [ext_resource type="Texture2D" uid="uid://bcgr5amsq3jfl" path="res://pong_game/ball.png" id="2_xkrmm"]
-[ext_resource type="AudioStream" uid="uid://bc7jd3d8m5spt" path="res://pong_game/wall_hit.ogg" id="3_mjbsd"]
-[ext_resource type="AudioStream" uid="uid://jk0oapxjw354" path="res://pong_game/paddle_hit.ogg" id="4_skr8k"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_c3m63"]
 friction = 0.0
@@ -31,11 +29,3 @@ shape = SubResource("CircleShape2D_sntrn")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 texture = ExtResource("2_xkrmm")
-
-[node name="WallAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_mjbsd")
-
-[node name="PaddleAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_skr8k")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
