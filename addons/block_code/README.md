@@ -12,6 +12,19 @@ Expressing an appropriate layer of abstraction is perhaps the most challenging a
 
 That said, we are in no way opposed to having this project grow to be able to create more complex games, as long as it does not negatively affect the experience for learners.
 
+# Getting Started
+
+1. Install the plugin through the Godot AssetLib or clone the repository and drag the `addons/block_code/` directory into your project's `res://addons/` directory.
+
+2. Make sure to enable the plugin in `Project > Project Settings > Plugins`
+
+3. You're ready to get started! Open a scene, and add a `BlockCode` child node to any node in the scene using the `Add Child Node` menu dialog.
+
+4. The Block Code editor will open in a new tab. Drag blocks from the picker and snap them together to create a script. You can switch to other Block Code scripts by clicking the respective `BlockCode` node in the scene tree.
+
+5. Run the scene to see your Block Code scripts in action. Block Code scripts are attached to the `BlockCode` node's parent, and are saved to the scene.
+
+
 # Current status
 
 We are nearing our initial milestone where simple games can be created with blocks. This is a kind of MVP demo which will then let us figure out our next steps.
