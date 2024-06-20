@@ -25,7 +25,7 @@ patch_margin_bottom = 64
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 
-[node name="Walls" type="RigidBody2D" parent="."]
+[node name="Walls" type="RigidBody2D" parent="." groups=["walls"]]
 collision_layer = 4
 collision_mask = 3
 collision_priority = 10.0

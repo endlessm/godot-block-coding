@@ -237,13 +237,14 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Load file {file_path: STRING} as sound {name: STRING}"
-	b.statement = "var sound = AudioStreamPlayer.new()\nsound.name = {name}\nsound.set_stream(load({file_path}))\nadd_child(sound)\nsound.set_owner(self)"
+	b.statement = "VAR_DICT[{name}] = AudioStreamPlayer.new()\nVAR_DICT[{name}].name = {name}\nVAR_DICT[{name}].set_stream(load({file_path}))\nadd_child(VAR_DICT[{name}])"
 	sound_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"
-	b.statement = "var sound = find_child({name})\nsound.volume_db = {db}\nsound.pitch_scale = {pitch}\nsound.play()"
+	b.statement = "VAR_DICT[{name}].volume_db = {db}\nVAR_DICT[{name}].pitch_scale = {pitch}\nVAR_DICT[{name}].play()"
+	b.defaults = {"db": "0.0", "pitch": "1.0"}
 	sound_list.append(b)
 
 	var sound_category: BlockCategory = BlockCategory.new("Sound", sound_list, Color("e30fc0"))
