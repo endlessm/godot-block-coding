@@ -8,142 +8,140 @@
 [ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="5_q37d3"]
 [ext_resource type="Texture2D" uid="uid://dr8e0tvfxjy1f" path="res://icon.svg" id="7_a27o8"]
 
-[sub_resource type="Resource" id="Resource_uwmna"]
+[sub_resource type="Resource" id="Resource_8cj5x"]
 script = ExtResource("3_dpt5n")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Load file {file_path: STRING} as sound {name: STRING}"], ["statement", "var sound = AudioStreamPlayer.new()
-sound.name = {name}
-sound.set_stream(load({file_path}))
-add_child(sound)
-sound.set_owner(self)"], ["param_input_strings", {
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Load file {file_path: STRING} as sound {name: STRING}"], ["statement", "VAR_DICT[{name}] = AudioStreamPlayer.new()
+VAR_DICT[{name}].name = {name}
+VAR_DICT[{name}].set_stream(load({file_path}))
+add_child(VAR_DICT[{name}])"], ["defaults", {}], ["param_input_strings", {
 "file_path": "res://test_game/test_audio.ogg",
 "name": "testsound"
 }]]
 
-[sub_resource type="Resource" id="Resource_5jnoq"]
+[sub_resource type="Resource" id="Resource_cejx6"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_uwmna")
+serialized_block = SubResource("Resource_8cj5x")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_2niad"]
+[sub_resource type="Resource" id="Resource_mwuch"]
 script = ExtResource("3_dpt5n")
 block_class = &"StatementBlock"
 serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.941176, 0.764706, 0, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Send signal {signal: STRING} to group {group: STRING}"], ["statement", "var signal_manager = get_tree().root.get_node_or_null(\"SignalManager\")
 if signal_manager:
-	signal_manager.broadcast_signal({group}, {signal})"], ["param_input_strings", {
+	signal_manager.broadcast_signal({group}, {signal})"], ["defaults", {}], ["param_input_strings", {
 "group": "Player",
 "signal": "will_hi"
 }]]
 
-[sub_resource type="Resource" id="Resource_hb8ii"]
+[sub_resource type="Resource" id="Resource_mc5xr"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_2niad")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_5jnoq")]]
+serialized_block = SubResource("Resource_mwuch")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_cejx6")]]
 
-[sub_resource type="Resource" id="Resource_nfmdk"]
+[sub_resource type="Resource" id="Resource_kxr1w"]
 script = ExtResource("3_dpt5n")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.941176, 0.764706, 0, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Add to group {group: STRING}"], ["statement", "add_to_group({group})"], ["param_input_strings", {
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.941176, 0.764706, 0, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Add to group {group: STRING}"], ["statement", "add_to_group({group})"], ["defaults", {}], ["param_input_strings", {
 "group": "Player"
 }]]
 
-[sub_resource type="Resource" id="Resource_kiuvv"]
+[sub_resource type="Resource" id="Resource_mtxrj"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_nfmdk")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_hb8ii")]]
+serialized_block = SubResource("Resource_kxr1w")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_mc5xr")]]
 
-[sub_resource type="Resource" id="Resource_4xja7"]
+[sub_resource type="Resource" id="Resource_qkcck"]
 script = ExtResource("3_dpt5n")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.6, 0.537255, 0.87451, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "print {text: STRING}"], ["statement", "print({text})"], ["param_input_strings", {
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.6, 0.537255, 0.87451, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "print {text: STRING}"], ["statement", "print({text})"], ["defaults", {}], ["param_input_strings", {
 "text": "Hi Manuel!"
 }]]
 
-[sub_resource type="Resource" id="Resource_u6g84"]
+[sub_resource type="Resource" id="Resource_js726"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_4xja7")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_kiuvv")]]
+serialized_block = SubResource("Resource_qkcck")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_mtxrj")]]
 
-[sub_resource type="Resource" id="Resource_6xoyl"]
+[sub_resource type="Resource" id="Resource_5fs1k"]
 script = ExtResource("3_dpt5n")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "ready_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(84, 33)], ["block_format", "On Ready"], ["statement", "func _ready():"], ["param_input_strings", {}]]
+serialized_props = [["block_name", "ready_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(84, 33)], ["block_format", "On Ready"], ["statement", "func _ready():"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
 
-[sub_resource type="Resource" id="Resource_xdg8y"]
+[sub_resource type="Resource" id="Resource_7blgt"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_6xoyl")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_u6g84")]]
+serialized_block = SubResource("Resource_5fs1k")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_js726")]]
 
-[sub_resource type="Resource" id="Resource_7ot84"]
+[sub_resource type="Resource" id="Resource_8x341"]
 script = ExtResource("3_dpt5n")
 block_class = &"ParameterBlock"
-serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["block_format", "Is action ui_right pressed"], ["statement", "Input.is_action_pressed(\"ui_right\")"], ["param_input_strings", {}]]
+serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["block_format", "Is action ui_right pressed"], ["statement", "Input.is_action_pressed(\"ui_right\")"], ["defaults", {}], ["variant_type", 0], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_xyinc"]
+[sub_resource type="Resource" id="Resource_35mdi"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_7ot84")
+serialized_block = SubResource("Resource_8x341")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_2ykxc"]
+[sub_resource type="Resource" id="Resource_q2jh0"]
 script = ExtResource("3_dpt5n")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"], ["statement", "var sound = find_child({name})
-sound.volume_db = {db}
-sound.pitch_scale = {pitch}
-sound.play()"], ["param_input_strings", {
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"], ["statement", "VAR_DICT[{name}].volume_db = {db}
+VAR_DICT[{name}].pitch_scale = {pitch}
+VAR_DICT[{name}].play()"], ["defaults", {}], ["param_input_strings", {
 "db": "0.0",
 "name": "testsound",
 "pitch": "1.0"
 }]]
 
-[sub_resource type="Resource" id="Resource_s07iu"]
+[sub_resource type="Resource" id="Resource_r0t84"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_2ykxc")
+serialized_block = SubResource("Resource_q2jh0")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_tu70f"]
+[sub_resource type="Resource" id="Resource_was6g"]
 script = ExtResource("3_dpt5n")
 block_class = &"ControlBlock"
-serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(1, 0.678431, 0.462745, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_formats", ["if    {condition: BOOL}"]], ["statements", ["if {condition}:"]], ["param_input_strings_array", [{
-"condition": ""
+serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(1, 0.678431, 0.462745, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_formats", ["if    {condition: BOOL}"]], ["statements", ["if {condition}:"]], ["defaults", {}], ["param_input_strings_array", [{
+"condition": false
 }]]]
 
-[sub_resource type="Resource" id="Resource_2hh05"]
+[sub_resource type="Resource" id="Resource_0blip"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_tu70f")
-path_child_pairs = [[NodePath("VBoxContainer/MarginContainer/Rows/Row0/RowHBoxContainer/RowHBox/ParameterInput0/SnapPoint"), SubResource("Resource_xyinc")], [NodePath("VBoxContainer/MarginContainer/Rows/SnapContainer0/SnapPoint"), SubResource("Resource_s07iu")]]
+serialized_block = SubResource("Resource_was6g")
+path_child_pairs = [[NodePath("VBoxContainer/MarginContainer/Rows/Row0/RowHBoxContainer/RowHBox/ParameterInput0/SnapPoint"), SubResource("Resource_35mdi")], [NodePath("VBoxContainer/MarginContainer/Rows/SnapContainer0/SnapPoint"), SubResource("Resource_r0t84")]]
 
-[sub_resource type="Resource" id="Resource_iskmc"]
+[sub_resource type="Resource" id="Resource_vlirs"]
 script = ExtResource("3_dpt5n")
 block_class = &"StatementBlock"
 serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.290196, 0.52549, 0.835294, 1)], ["block_type", 1], ["position", Vector2(0, 0)], ["block_format", "Move with player 2 buttons, speed {speed: INT}"], ["statement", "velocity = Input.get_vector(\"player_2_left\", \"player_2_right\", \"player_2_up\", \"player_2_down\")*{speed}
-move_and_slide()"], ["param_input_strings", {
+move_and_slide()"], ["defaults", {}], ["param_input_strings", {
 "speed": "600"
 }]]
 
-[sub_resource type="Resource" id="Resource_xmana"]
+[sub_resource type="Resource" id="Resource_kttbf"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_iskmc")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_2hh05")]]
+serialized_block = SubResource("Resource_vlirs")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_0blip")]]
 
-[sub_resource type="Resource" id="Resource_1yx4d"]
+[sub_resource type="Resource" id="Resource_u1q73"]
 script = ExtResource("3_dpt5n")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "physics_process_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(79, 270)], ["block_format", "On Physics Process"], ["statement", "func _physics_process(delta):"], ["param_input_strings", {}]]
+serialized_props = [["block_name", "physics_process_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(79, 270)], ["block_format", "On Physics Process"], ["statement", "func _physics_process(delta):"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
 
-[sub_resource type="Resource" id="Resource_eifs0"]
+[sub_resource type="Resource" id="Resource_l5pgq"]
 script = ExtResource("2_pqvcj")
-serialized_block = SubResource("Resource_1yx4d")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_xmana")]]
+serialized_block = SubResource("Resource_u1q73")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_kttbf")]]
 
-[sub_resource type="Resource" id="Resource_2hn5u"]
+[sub_resource type="Resource" id="Resource_cqtb7"]
 script = ExtResource("4_xt862")
-array = Array[ExtResource("2_pqvcj")]([SubResource("Resource_xdg8y"), SubResource("Resource_eifs0")])
+array = Array[ExtResource("2_pqvcj")]([SubResource("Resource_7blgt"), SubResource("Resource_l5pgq")])
 
 [sub_resource type="Resource" id="Resource_l007i"]
 script = ExtResource("5_q37d3")
 script_inherits = "SimpleCharacter"
-block_trees = SubResource("Resource_2hn5u")
+block_trees = SubResource("Resource_cqtb7")
 generated_script = "extends SimpleCharacter
 
 var VAR_DICT := {}
@@ -154,20 +152,18 @@ func _ready():
 	var signal_manager = get_tree().root.get_node_or_null(\"SignalManager\")
 	if signal_manager:
 		signal_manager.broadcast_signal('Player', 'will_hi')
-	var sound = AudioStreamPlayer.new()
-	sound.name = 'testsound'
-	sound.set_stream(load('res://test_game/test_audio.ogg'))
-	add_child(sound)
-	sound.set_owner(self)
+	VAR_DICT['testsound'] = AudioStreamPlayer.new()
+	VAR_DICT['testsound'].name = 'testsound'
+	VAR_DICT['testsound'].set_stream(load('res://test_game/test_audio.ogg'))
+	add_child(VAR_DICT['testsound'])
 
 func _physics_process(delta):
 	velocity = Input.get_vector(\"player_2_left\", \"player_2_right\", \"player_2_up\", \"player_2_down\")*600
 	move_and_slide()
 	if Input.is_action_pressed(\"ui_right\"):
-		var sound = find_child('testsound')
-		sound.volume_db = 0.0
-		sound.pitch_scale = 1.0
-		sound.play()
+		VAR_DICT['testsound'].volume_db = 0.0
+		VAR_DICT['testsound'].pitch_scale = 1.0
+		VAR_DICT['testsound'].play()
 
 "
 
