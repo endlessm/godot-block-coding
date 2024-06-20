@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="block-programming-plugin"
-run/main_scene="res://pong_game/pong_game.tscn"
+run/main_scene="res://addons/block_code/examples/pong_game/pong_game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 

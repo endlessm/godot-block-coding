@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dijemw7iilr2m"
-path="res://.godot/imported/line.png-452af046907249a8ef12695e48447ab1.ctex"
+path="res://.godot/imported/line.png-83090a08b4f906e6a39a1eefa8ad7e77.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pong_game/line.png"
-dest_files=["res://.godot/imported/line.png-452af046907249a8ef12695e48447ab1.ctex"]
+source_file="res://addons/block_code/examples/pong_game/assets/line.png"
+dest_files=["res://.godot/imported/line.png-83090a08b4f906e6a39a1eefa8ad7e77.ctex"]
 
 [params]
 

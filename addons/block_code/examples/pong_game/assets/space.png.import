@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcgr5amsq3jfl"
-path="res://.godot/imported/ball.png-207b87d36613f4458c4a15d56cdcf75a.ctex"
+uid="uid://ceiq8wmlnnnif"
+path="res://.godot/imported/space.png-8022dfae750dab8949f3a877340ebde9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pong_game/ball.png"
-dest_files=["res://.godot/imported/ball.png-207b87d36613f4458c4a15d56cdcf75a.ctex"]
+source_file="res://addons/block_code/examples/pong_game/assets/space.png"
+dest_files=["res://.godot/imported/space.png-8022dfae750dab8949f3a877340ebde9.ctex"]
 
 [params]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cg8ibi18um3vg"]
 
-[ext_resource type="Texture2D" uid="uid://ceiq8wmlnnnif" path="res://pong_game/space.png" id="1_un3yo"]
+[ext_resource type="Texture2D" uid="uid://ceiq8wmlnnnif" path="res://addons/block_code/examples/pong_game/assets/space.png" id="1_un3yo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q267f"]
 size = Vector2(2688, 512)
