@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bis7afjjuwypq"]
 
-[ext_resource type="Script" path="res://pong_game/hud.gd" id="1_yyb01"]
-[ext_resource type="Texture2D" uid="uid://dijemw7iilr2m" path="res://pong_game/line.png" id="2_jon51"]
+[ext_resource type="Script" path="res://addons/block_code/examples/pong_game/hud.gd" id="1_yyb01"]
+[ext_resource type="Texture2D" uid="uid://dijemw7iilr2m" path="res://addons/block_code/examples/pong_game/assets/line.png" id="2_jon51"]
 
 [node name="HUD" type="CanvasLayer" groups=["hud"]]
 script = ExtResource("1_yyb01")

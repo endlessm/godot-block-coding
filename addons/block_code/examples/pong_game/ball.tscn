@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c7l70grmkauij"]
 
-[ext_resource type="Script" path="res://pong_game/ball.gd" id="1_vdrab"]
-[ext_resource type="Texture2D" uid="uid://bcgr5amsq3jfl" path="res://pong_game/ball.png" id="2_xkrmm"]
+[ext_resource type="Script" path="res://addons/block_code/examples/pong_game/ball.gd" id="1_vdrab"]
+[ext_resource type="Texture2D" uid="uid://bcgr5amsq3jfl" path="res://addons/block_code/examples/pong_game/assets/ball.png" id="2_xkrmm"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_c3m63"]
 friction = 0.0

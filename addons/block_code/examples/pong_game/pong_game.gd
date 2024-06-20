@@ -14,13 +14,13 @@ static func get_custom_blocks() -> Array[BlockCategory]:
 	var score_list: Array[Block] = []
 	b = CategoryFactory.BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.EXECUTE
-	b.block_format = "Change player 1 score by {score: INT}"
+	b.block_format = "Set player 1 score to {score: INT}"
 	b.statement = 'get_tree().call_group("hud", "set_player_score", "right", {score})'
 	score_list.append(b)
 
 	b = CategoryFactory.BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.EXECUTE
-	b.block_format = "Change player 2 score by {score: INT}"
+	b.block_format = "Set player 2 score to {score: INT}"
 	b.statement = 'get_tree().call_group("hud", "set_player_score", "left", {score})'
 	score_list.append(b)
 
