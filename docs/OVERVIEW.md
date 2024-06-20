@@ -38,9 +38,9 @@ Blocks are created from a template such as `StatementBlock`, `ParameterBlock`, `
 * `ControlBlock`: Dictates the flow of instruction, such as a loop or if/else statement. Can have multiple slots for calling different statements based on a conditional input.
 
 You can define a block:
-1. Globally in `CategoryFactory.get_general_categories()`
-2. For a specific built-in class in `CategoryFactory.get_built_in_categories()`
-3. In a custom class by defining a method `static func get_custom_blocks() -> Array[BlockCategory]:`. See `SimpleCharacter` for an example.
+1. Globally in `CategoryFactory.get_general_blocks()`
+2. For a specific built-in class in `CategoryFactory.get_built_in_blocks()`
+3. In a custom class by defining a method `static func get_custom_blocks() -> Array[Block]:`. See `SimpleCharacter` for an example.
 
 Here is an example of generating a `STATEMENT` block:
 ```
@@ -53,14 +53,16 @@ b.block_format = "Set Int {var: STRING} {value: INT}"
 
 # Define the statement that will be generated from the inputs. Use the parameter name to specify which goes where.
 b.statement = "VAR_DICT[{var}] = {value}"
-```
-You can then add this new block to a `BlockCategory` like so:
-```
-var variable_list: Array[Block] = []
-variable_list.append(b)
-var variable_category: BlockCategory = BlockCategory.new("Variables", variable_list, Color("4f975d"))
+
+# Set the category too add the block to.
+b.category = "Variables"
 ```
 Look in `CategoryFactory` for more examples!
+
+Each block gets added to a category in the Block Code editor by setting
+the block's `category` property. If you have a custom class, you can add
+a new category by defining a method `static func get_custom_categories()
+-> Array[BlockCategory]:`. See `Pong` for an example.
 
 Note: For `EntryBlock`s, you can use the syntax `[param: TYPE]` with square brackets instead of curlies to generate a copyable `ParameterBlock` that can be used in the below method.
 For example, to expose the `delta` argument in `func _on_process(delta):`, you would use the following format string:
