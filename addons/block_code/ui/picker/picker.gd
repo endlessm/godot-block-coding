@@ -21,7 +21,7 @@ func bsd_selected(bsd: BlockScriptData):
 			if script.has_method("get_custom_blocks"):
 				categories_to_add = script.get_custom_blocks()
 				found_simple_class_script = script
-				break
+			break
 
 	var parent_class: String
 	if found_simple_class_script:
