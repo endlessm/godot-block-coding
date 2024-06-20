@@ -244,6 +244,7 @@ static func get_general_categories() -> Array[BlockCategory]:
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"
 	b.statement = "VAR_DICT[{name}].volume_db = {db}\nVAR_DICT[{name}].pitch_scale = {pitch}\nVAR_DICT[{name}].play()"
+	b.defaults = {"db": "0.0", "pitch": "1.0"}
 	sound_list.append(b)
 
 	var sound_category: BlockCategory = BlockCategory.new("Sound", sound_list, Color("e30fc0"))
