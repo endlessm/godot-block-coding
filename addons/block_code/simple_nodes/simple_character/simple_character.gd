@@ -13,10 +13,6 @@ func get_custom_class():
 	return "SimpleCharacter"
 
 
-static func get_base_class():
-	return "CharacterBody2D"
-
-
 static func get_exposed_properties() -> Array[String]:
 	return ["position"]
 

@@ -25,7 +25,7 @@ func bsd_selected(bsd: BlockScriptData):
 
 	var parent_class: String
 	if found_simple_class_script:
-		parent_class = found_simple_class_script.get_base_class()
+		parent_class = str(found_simple_class_script.get_instance_base_type())
 	else:  # Built in
 		parent_class = bsd.script_inherits
 
