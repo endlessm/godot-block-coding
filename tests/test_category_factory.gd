@@ -34,8 +34,8 @@ func test_general_category_names():
 
 
 const class_category_names = [
-	["Node2D", ["CanvasItem", "Node2D"]],
-	["Sprite2D", ["CanvasItem", "Node2D"]],
+	["Node2D", ["Movement", "Size", "Graphics"]],
+	["Sprite2D", ["Movement", "Size", "Graphics"]],
 	["Node", []],
 	["Object", []],
 ]

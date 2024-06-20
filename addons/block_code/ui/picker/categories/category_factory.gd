@@ -18,6 +18,11 @@ const BUILTIN_PROPS: Dictionary = {
 		"color": Color("ffad76"),
 		"order": 30,
 	},
+	"Graphics":
+	{
+		"color": Color("9be371"),
+		"order": 110,
+	},
 	"Input":
 	{
 		"color": Color.SLATE_GRAY,
@@ -38,6 +43,11 @@ const BUILTIN_PROPS: Dictionary = {
 		"color": Color("3042c5"),
 		"order": 50,
 	},
+	"Movement":
+	{
+		"color": Color("e2e72b"),
+		"order": 90,
+	},
 	"Signal":
 	{
 		"color": Color("f0c300"),
@@ -47,6 +57,11 @@ const BUILTIN_PROPS: Dictionary = {
 	{
 		"color": Color("e30fc0"),
 		"order": 80,
+	},
+	"Size":
+	{
+		"color": Color("f79511"),
+		"order": 100,
 	},
 	"Test":
 	{
@@ -408,19 +423,19 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			var b = BLOCKS["statement_block"].instantiate()
 			b.block_format = "Set Rotation Degrees {angle: FLOAT}"
 			b.statement = "rotation_degrees = {angle}"
-			b.category = "Node2D"
+			b.category = "Movement"
 			block_list.append(b)
 
 			props = {
-				"position": "Node2D",
-				"rotation": "Node2D",
-				"scale": "Node2D",
+				"position": "Movement",
+				"rotation": "Movement",
+				"scale": "Size",
 			}
 
 		"CanvasItem":
 			props = {
-				"modulate": "CanvasItem",
-				"visible": "CanvasItem",
+				"modulate": "Graphics",
+				"visible": "Graphics",
 			}
 
 		"RigidBody2D":
@@ -431,19 +446,19 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				# convert to path
 				b.statement = "func _on_body_%s(_body: Node):\n\tvar body: NodePath = _body.get_path()" % [verb]
 				b.signal_name = "body_%s" % [verb]
-				b.category = "RigidBody2D"
+				b.category = "Signal"
 				block_list.append(b)
 
 			var b = BLOCKS["statement_block"].instantiate()
 			b.block_format = "Set Physics Position {position: VECTOR2}"
 			b.statement = "PhysicsServer2D.body_set_state(get_rid(),PhysicsServer2D.BODY_STATE_TRANSFORM,Transform2D.IDENTITY.translated({position}))"
-			b.category = "RigidBody2D"
+			b.category = "Movement"
 			block_list.append(b)
 
 			props = {
-				"mass": "RigidBody2D",
-				"linear_velocity": "RigidBody2D",
-				"angular_velocity": "RigidBody2D",
+				"mass": "Size",
+				"linear_velocity": "Movement",
+				"angular_velocity": "Movement",
 			}
 
 		"Area2D":
@@ -454,7 +469,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				# convert to path
 				b.statement = "func _on_body_%s(_body: Node2D):\n\tvar body: NodePath = _body.get_path()" % [verb]
 				b.signal_name = "body_%s" % [verb]
-				b.category = "Area2D"
+				b.category = "Signal"
 				block_list.append(b)
 
 	var prop_list = ClassDB.class_get_property_list(_class_name, true)
