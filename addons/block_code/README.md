@@ -1,31 +1,34 @@
-# Godot Block Programming Plugin
+# Godot Block Coding Plugin
 
-This is an experimental plugin by Endless Foundation aimed at introducing Block Coding capabilities to Godot.
+Experimental plugin by [Endless OS Foundation](https://endlessos.org) to introduce block coding capabilities to Godot
+
+## Background
 
 Our aim is to reduce the learning curve faced by learners who are on the early part of their journey towards becoming game developers. Learners within our target audience understand game concepts, but have never used Godot (or any other game engine) before, and do not have programming experience. Ordinarily, such learners are faced with the challenge of learning their way around Godot's powerful, complex editor UI, while also getting familiar with all kinds of concepts, combined with the additional challenge of learning to code for the first time as they navigate the ins and outs of GDScript.
 
-With this project, we aim to reduce the height of the mountain that such learners have to climb. Specifically, we aim to eliminate the requirement of learners having to simultaneously learn to code while building their first games. Instead of writing GDScript to implement games, this plugin lets learners use block coding. Tools like Scratch and Makecode have demonstrated that block coding can be much more accessible and intuitive to beginners than textual programming.
+With this project, we aim to reduce the height of the mountain that such learners have to climb. Specifically, we aim to eliminate the requirement of learners having to simultaneously learn to code while building their first games. Instead of writing GDScript to implement games, this plugin enables learners use block coding. Tools like [Scratch](https://scratch.mit.edu/), [Blockly](https://developers.google.com/blockly), and [MakeCode](https://www.microsoft.com/en-us/makecode) have demonstrated that block coding can be much more accessible and intuitive to beginners than textual programming—we are bringing those concepts into Godot to help learners become familiar with some aspects of Godot itself while simplifying the creation of their first games.
 
-In order to be learner-friendly, we have to implement blocks at a suitable level of abstraction. For example in GDScript you would typically move a sprite around the screen by examining input events and adjusting a sprite's movement vector accordingly, but we do not wish to express this level of detail in blocks. Instead, we lean much more towards the kinds of blocks you can find in Makecode Arcade, such as having a single block for "move mySprite with buttons".
+### Constraints
+
+In order to be learner-friendly, we have to implement blocks at a suitable level of abstraction. For example, in GDScript you would typically move a sprite around the screen by examining input events and adjusting a sprite's movement vector accordingly—but we do not wish to express this level of detail in blocks. Instead, we lean much more towards the kinds of blocks you can find in MakeCode Arcade, such as having a single block for "move mySprite with buttons".
 
 Expressing an appropriate layer of abstraction is perhaps the most challenging aspect of this project, and will likely place limits upon what can be achieved with this tool. We do not aim to express the full power of Godot & GDScript with this block coding plugin, but rather, our objective is to provide a gentler introduction to Godot for learners, such that they can get familiar with other aspects of the Godot Editor and learn programming concepts while creating basic games. We envision that learners would use block coding as a stepping stone and then later progress onto learning GDScript.
 
 That said, we are in no way opposed to having this project grow to be able to create more complex games, as long as it does not negatively affect the experience for learners.
 
-# Getting Started
+## Getting Started
 
 1. Install the plugin through the Godot AssetLib or clone the repository and drag the `addons/block_code/` directory into your project's `res://addons/` directory.
 
-2. Make sure to enable the plugin in `Project > Project Settings > Plugins`
+2. Make sure to enable the plugin in **Project** → **Project Settings** → **Plugins**.
 
-3. You're ready to get started! Open a scene, and add a `BlockCode` child node to any node in the scene using the `Add Child Node` menu dialog.
+3. You're ready to get started! Open a scene, and add a **BlockCode** child node to any node in the scene using the **Add Child Node** menu dialog.
 
-4. The Block Code editor will open in a new tab. Drag blocks from the picker and snap them together to create a script. You can switch to other Block Code scripts by clicking the respective `BlockCode` node in the scene tree.
+4. The **Block Code** editor will open in a new tab. Drag blocks from the picker and snap them together to create a script. You can switch to other Block Code scripts by selecting the respective BlockCode node in the scene tree.
 
-5. Run the scene to see your Block Code scripts in action. Block Code scripts are attached to the `BlockCode` node's parent, and are saved to the scene.
+5. **Run** the scene to see your Block Code scripts in action. Block Code scripts are attached to the BlockCode node's parent, and are saved to the scene.
 
-
-# Current status
+## Current Status
 
 We are nearing our initial milestone where simple games can be created with blocks. This is a kind of MVP demo which will then let us figure out our next steps.
 
@@ -36,13 +39,13 @@ Despite having an initial implementation we have many questions open for reconsi
 - Should blocks generate GDScript or be dynamically executed?
 - etc.
 
-# Development
+## Development
 
-## pre-commit
+### pre-commit
 
 Please use [pre-commit](https://pre-commit.com/) to check for correct formatting and other issues before creating commits. To do this automatically, you can add it as a git hook:
 
-```
+```shell
 # If you don't have pre-commit already:
 pip install pre-commit
 
@@ -52,8 +55,6 @@ pre-commit install
 
 Now `pre-commit` will run automatically on `git commit`!
 
-## Testing
+### Testing
 
-This plugin uses the [Godot Unit Test](https://gut.readthedocs.io/en/latest/)
-(GUT) plugin for testing. In the editor, click on the GUT tab in the bottom
-panel to open the test panel. Then click Run All to run the tests.
+This plugin uses the [Godot Unit Test](https://gut.readthedocs.io/en/latest/) (GUT) plugin for testing. In the editor, select the **GUT** tab in the bottom panel to open the test panel. Then select **Run All** to run the tests.
