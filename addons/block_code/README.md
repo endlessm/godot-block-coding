@@ -1,10 +1,10 @@
 # Godot Block Coding Plugin
 
-Experimental plugin by [Endless OS Foundation](https://endlessos.org) to introduce block coding capabilities to Godot
+Experimental plugin by [Endless OS Foundation](https://endlessos.org) that introduces a high-level, block-based visual programming language as an educational tool.
 
 ## Background
 
-Our aim is to reduce the learning curve faced by learners who are on the early part of their journey towards becoming game developers. Learners within our target audience understand game concepts, but have never used Godot (or any other game engine) before, and do not have programming experience. Ordinarily, such learners are faced with the challenge of learning their way around Godot's powerful, complex editor UI, while also getting familiar with all kinds of concepts, combined with the additional challenge of learning to code for the first time as they navigate the ins and outs of GDScript.
+Our aim is to reduce the learning curve faced by learners who are on the early part of their journey towards becoming game developers. Learners within our target audience understand game concepts, but have never used Godot (or any other game engine) before, and do not have programming experience. Ordinarily, such learners are faced with the challenge of learning their way around Godot's powerful, complex editor UI, combined with the additional challenge of learning to code for the first time as they navigate the ins and outs of GDScript.
 
 With this project, we aim to reduce the height of the mountain that such learners have to climb. Specifically, we aim to eliminate the requirement of learners having to simultaneously learn to code while building their first games. Instead of writing GDScript to implement games, this plugin enables learners use block coding. Tools like [Scratch](https://scratch.mit.edu/), [Blockly](https://developers.google.com/blockly), and [MakeCode](https://www.microsoft.com/en-us/makecode) have demonstrated that block coding can be much more accessible and intuitive to beginners than textual programming—we are bringing those concepts into Godot to help learners become familiar with some aspects of Godot itself while simplifying the creation of their first games.
 
@@ -14,7 +14,7 @@ In order to be learner-friendly, we have to implement blocks at a suitable level
 
 Expressing an appropriate layer of abstraction is perhaps the most challenging aspect of this project, and will likely place limits upon what can be achieved with this tool. We do not aim to express the full power of Godot & GDScript with this block coding plugin, but rather, our objective is to provide a gentler introduction to Godot for learners, such that they can get familiar with other aspects of the Godot Editor and learn programming concepts while creating basic games. We envision that learners would use block coding as a stepping stone and then later progress onto learning GDScript.
 
-That said, we are in no way opposed to having this project grow to be able to create more complex games, as long as it does not negatively affect the experience for learners.
+That said, we are in no way opposed to having this project grow to be able to create more complex games, as long as it does not negatively affect the experience for early stage learners.
 
 ## Getting Started
 
@@ -28,16 +28,17 @@ That said, we are in no way opposed to having this project grow to be able to cr
 
 5. **Run** the scene to see your Block Code scripts in action. Block Code scripts are attached to the BlockCode node's parent, and are saved to the scene.
 
+If you clone the plugin's git repository and open it in Godot, you will be presented with a block-built Pong game as an example.
+
 ## Current Status
 
-We are nearing our initial milestone where simple games can be created with blocks. This is a kind of MVP demo which will then let us figure out our next steps.
+Basic games can be created with this early prototype, but there is plenty of work ahead.
 
-Despite having an initial implementation we have many questions open for reconsideration including:
+We will now seek feedback from learners, educators and game makers, as well as revisit some of the technical architecture decisions. Open questions include: 
 - Have we created a learner-friendy abstraction that is suitably aligned with Godot concepts?
 - What is the most appropriate way to attach block scripts to a project?
 - Should this be a plugin or an extension?
 - Should blocks generate GDScript or be dynamically executed?
-- etc.
 
 ## Development
 
