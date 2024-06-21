@@ -2,6 +2,9 @@
 
 Experimental plugin by [Endless OS Foundation](https://endlessos.org) that introduces a high-level, block-based visual programming language as an educational tool.
 
+[![Godot asset](https://img.shields.io/badge/Asset_Library-Block_Coding-blue?logo=godot-engine)](https://godotengine.org/asset-library/asset/3095)
+[![Latest release](https://img.shields.io/github/v/release/endlessm/godot-block-coding?label=Release&logo=github)](https://github.com/endlessm/godot-block-coding/releases)
+
 ## Background
 
 Our aim is to reduce the learning curve faced by learners who are on the early part of their journey towards becoming game developers. Learners within our target audience understand game concepts, but have never used Godot (or any other game engine) before, and do not have programming experience. Ordinarily, such learners are faced with the challenge of learning their way around Godot's powerful, complex editor UI, combined with the additional challenge of learning to code for the first time as they navigate the ins and outs of GDScript.
@@ -18,7 +21,12 @@ That said, we are in no way opposed to having this project grow to be able to cr
 
 ## Getting Started
 
-1. Install the plugin through the Godot AssetLib or clone the repository and drag the `addons/block_code/` directory into your project's `res://addons/` directory.
+1. Install the plugin through the Godot AssetLib searching for the name
+   Block Coding. You can also download it from the online [Asset
+   Library](https://godotengine.org/asset-library/asset/3095) and import
+   it through AssetLib. Finally, you can clone the git repository and
+   drag the `addons/block_code/` directory into your project's
+   `res://addons/` directory.
 
 2. Make sure to enable the plugin in **Project** → **Project Settings** → **Plugins**.
 
