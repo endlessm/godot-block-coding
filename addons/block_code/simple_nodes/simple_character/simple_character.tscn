@@ -1,16 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddx1cd5q6t61o"]
+[gd_scene load_steps=3 format=3 uid="uid://ddx1cd5q6t61o"]
 
 [ext_resource type="Script" path="res://addons/block_code/simple_nodes/simple_character/simple_character.gd" id="1_oqwef"]
-[ext_resource type="Texture2D" uid="uid://dr8e0tvfxjy1f" path="res://icon.svg" id="2_vn8k5"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_dfyyg"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_104qs"]
+size = Vector2(16, 16)
 
 [node name="SimpleCharacter" type="CharacterBody2D"]
 script = ExtResource("1_oqwef")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.16, 0.16)
-texture = ExtResource("2_vn8k5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_dfyyg")
+shape = SubResource("RectangleShape2D_104qs")
