@@ -18,4 +18,4 @@ jobs:
         with:
           username: ${{ secrets.GODOT_ASSET_LIBRARY_USERNAME }}
           password: ${{ secrets.GODOT_ASSET_LIBRARY_PASSWORD }}
-          assetId: 12617
+          assetId: 3095
