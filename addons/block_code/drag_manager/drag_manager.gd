@@ -89,6 +89,7 @@ func _update_preview(snap_point: SnapPoint):
 		preview_block.color = Color(1, 1, 1, 0.5)
 		preview_block.custom_minimum_size = dragging.get_global_rect().size
 		preview_block.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		preview_block.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 
 		previewing_snap_point.add_child(preview_block)
 
