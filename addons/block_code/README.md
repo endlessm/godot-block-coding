@@ -28,7 +28,7 @@ That said, we are in no way opposed to having this project grow to be able to cr
 
 5. **Run** the scene to see your Block Code scripts in action. Block Code scripts are attached to the BlockCode node's parent, and are saved to the scene.
 
-## Current status
+## Current Status
 
 We are nearing our initial milestone where simple games can be created with blocks. This is a kind of MVP demo which will then let us figure out our next steps.
 
