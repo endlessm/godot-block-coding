@@ -34,7 +34,7 @@ If you clone the plugin's git repository and open it in Godot, you will be prese
 
 Basic games can be created with this early prototype, but there is plenty of work ahead.
 
-We will now seek feedback from learners, educators and game makers, as well as revisit some of the technical architecture decisions. Open questions include: 
+We will now seek feedback from learners, educators and game makers, as well as revisit some of the technical architecture decisions. Open questions include:
 - Have we created a learner-friendy abstraction that is suitably aligned with Godot concepts?
 - What is the most appropriate way to attach block scripts to a project?
 - Should this be a plugin or an extension?
