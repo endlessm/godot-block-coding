@@ -156,6 +156,7 @@ size_flags_horizontal = 3
 
 [node name="BoolInput" type="MarginContainer" parent="InputSwitcher"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 8
 
@@ -187,3 +188,4 @@ variant_type = 4
 [connection signal="text_changed" from="InputSwitcher/Vector2Input/HBoxContainer/XLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="text_changed" from="InputSwitcher/Vector2Input/HBoxContainer/YLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="item_selected" from="InputSwitcher/BoolInput/BoolInputOption" to="." method="_on_option_input_item_selected"]
+[connection signal="snapped_block_changed" from="SnapPoint" to="." method="_on_snap_point_snapped_block_changed"]
