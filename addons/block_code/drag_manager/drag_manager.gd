@@ -9,6 +9,7 @@ signal block_modified
 @export var block_canvas_path: NodePath
 
 const Constants = preload("res://addons/block_code/ui/constants.gd")
+const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(16, 8)
 
 var drag_offset: Vector2
 var dragging: Block = null
@@ -32,10 +33,6 @@ func _process(_delta):
 		dragging.position = mouse_pos - drag_offset
 
 		var dragging_global_pos: Vector2 = dragging.get_global_rect().position
-
-		# TODO: check if dropped snap point is occupied
-		# if so, replace with this node and attach the previous one
-		# to this node's bottom snap
 
 		# Find closest snap point not child of current node
 		var closest_snap_point: SnapPoint = null
@@ -92,6 +89,7 @@ func _update_preview(snap_point: SnapPoint):
 		preview_block.color = Color(1, 1, 1, 0.5)
 		preview_block.custom_minimum_size = dragging.get_global_rect().size
 		preview_block.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		preview_block.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 
 		previewing_snap_point.add_child(preview_block)
 
@@ -105,7 +103,9 @@ func drag_block(block: Block, copied_from: Block = null):
 		new_pos += block.get_global_rect().position
 
 	var parent = block.get_parent()
-	if parent:
+	if parent is SnapPoint:
+		parent.remove_snapped_block(block)
+	elif parent:
 		parent.remove_child(block)
 
 	block.position = new_pos
@@ -142,7 +142,13 @@ func drag_ended():
 				# Can snap block
 				preview_block.free()
 				preview_block = null
-				previewing_snap_point.add_child(dragging)
+				var orphaned_block = previewing_snap_point.set_snapped_block(dragging)
+				if orphaned_block:
+					# Place the orphan block somewhere outside the snap point
+					orphaned_block.position = (
+						(previewing_snap_point.block.global_position - block_canvas_rect.position) + (previewing_snap_point.block.get_size() * Vector2.RIGHT) + BLOCK_AUTO_PLACE_MARGIN
+					)
+					_block_canvas.add_block(orphaned_block)
 			else:
 				# Block goes on screen somewhere
 				dragging.position = (get_global_mouse_position() - block_canvas_rect.position - drag_offset)

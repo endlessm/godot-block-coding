@@ -100,18 +100,7 @@ func _ready():
 	snap_point.block_type = block_type
 	snap_point.variant_type = variant_type
 
-	match variant_type:
-		TYPE_COLOR:
-			switch_input(_color_input)
-		TYPE_VECTOR2:
-			switch_input(_vector2_input)
-		TYPE_BOOL:
-			switch_input(_bool_input)
-		_:
-			switch_input(_text_input)
-
-	if option:
-		switch_input(_option_input)
+	_update_visible_input()
 
 
 func get_snapped_block() -> Block:
@@ -148,11 +137,29 @@ func _on_line_edit_text_changed(new_text):
 	modified.emit()
 
 
-func switch_input(node: Node):
+func _update_visible_input():
+	if snap_point.has_snapped_block():
+		_switch_input(null)
+	elif option:
+		_switch_input(_option_input)
+	else:
+		match variant_type:
+			TYPE_COLOR:
+				_switch_input(_color_input)
+			TYPE_VECTOR2:
+				_switch_input(_vector2_input)
+			TYPE_BOOL:
+				_switch_input(_bool_input)
+			_:
+				_switch_input(_text_input)
+
+
+func _switch_input(node: Node):
 	for c in _input_switcher.get_children():
 		c.visible = false
 
-	node.visible = true
+	if node:
+		node.visible = true
 
 
 func _on_color_input_color_changed(color):
@@ -169,3 +176,7 @@ func _update_panel_bg_color(new_color):
 
 func _on_option_input_item_selected(index):
 	modified.emit()
+
+
+func _on_snap_point_snapped_block_changed(block):
+	_update_visible_input()
