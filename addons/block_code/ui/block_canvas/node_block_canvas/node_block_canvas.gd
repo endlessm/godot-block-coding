@@ -40,21 +40,27 @@ func generate_script_from_current_window(script_inherits: String = ""):
 
 func _generate_script_from_entry_blocks(entry_statement: String, entry_blocks: Array[EntryBlock], init_func: InstructionTree.TreeNode) -> String:
 	var script = entry_statement + "\n"
+	var signal_node: InstructionTree.TreeNode
+	var is_empty = true
 
 	for entry_block in entry_blocks:
 		var next_block := entry_block.bottom_snap.get_snapped_block()
 
-		if next_block == null:
-			script += "\tpass\n"
-		else:
+		if next_block != null:
 			var generator: InstructionTree = InstructionTree.new()
 			var instruction_node: InstructionTree.TreeNode = next_block.get_instruction_node()
 			var to_append := generator.generate_text(instruction_node, 1)
 			script += to_append
+			script += "\n"
+			is_empty = false
 
-		script += "\n"
+		if signal_node == null and entry_block.signal_name:
+			signal_node = InstructionTree.TreeNode.new("{0}.connect(_on_{0})".format([entry_block.signal_name]))
 
-		if entry_block.signal_name:
-			init_func.add_child(InstructionTree.TreeNode.new("{0}.connect(_on_{0})".format([entry_block.signal_name])))
+	if signal_node:
+		init_func.add_child(signal_node)
+
+	if is_empty:
+		script += "\tpass\n\n"
 
 	return script
