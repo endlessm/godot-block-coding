@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Create Internal Task
+    url: https://phabricator.endlessm.com/tag/baby_godot/
+    about: Endless OS Foundation employees, please use this tag on Phabricator

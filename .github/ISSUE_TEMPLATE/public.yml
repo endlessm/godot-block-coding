@@ -1,0 +1,46 @@
+name: Report Public Issue
+description: Report an issue with using the Godot Block Coding plugin
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to report an issue! If you're an employee of Endless OS Foundation, please track internal tasks [on Phabricator](https://phabricator.endlessm.com/tag/baby_godot/) instead.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What Happened
+      description: Describe the issue you experienced, and what you would have expected to happen instead.
+      placeholder: When I was doing X, I tried to do Y, but then Z happened...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to Reproduce
+      description: Can it be reliably reproduced, and if so, how?
+      placeholder: |
+        1. Add a BlockCode child node
+        2. Drag blocks X, Y, and Z to the editor 
+        3. ...
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: What specific OS and version are you seeing the problem on?
+      placeholder: e.g. Windows 11, Fedora Silverblue 39, Ubuntu 22.04, etc.
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or command-line output
+      description: Any relevant logs or command-line output can help us debug.
+      render: shell
+
+  - type: textarea
+    id: misc
+    attributes:
+      label: Anything else?
+      description: Any other comments or information that would be useful?
