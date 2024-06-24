@@ -16,7 +16,6 @@ var dragging: Block = null
 
 var previewing_snap_point: SnapPoint = null
 var preview_block: Control = null
-var preview_owner: Block = null
 
 var _picker: Picker
 var _block_canvas: BlockCanvas
@@ -132,16 +131,15 @@ func drag_ended():
 
 		# Check if in BlockCanvas
 		var block_canvas_rect: Rect2 = _block_canvas.get_global_rect()
+
 		if block_canvas_rect.encloses(block_rect):
 			dragging.disconnect_signals()  # disconnect previous on canvas signal connections
 			connect_block_canvas_signals(dragging)
 			remove_child(dragging)
 			dragging.on_canvas = true
 
-			if preview_block:
+			if previewing_snap_point:
 				# Can snap block
-				preview_block.free()
-				preview_block = null
 				var orphaned_block = previewing_snap_point.set_snapped_block(dragging)
 				if orphaned_block:
 					# Place the orphan block somewhere outside the snap point
@@ -156,7 +154,13 @@ func drag_ended():
 		else:
 			dragging.queue_free()
 
+		if preview_block:
+			preview_block.queue_free()
+			preview_block = null
+
+		previewing_snap_point = null
 		dragging = null
+
 		block_dropped.emit()
 
 
