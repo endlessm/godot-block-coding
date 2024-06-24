@@ -1063,7 +1063,12 @@ script = ExtResource("3_6jaq8")
 block_script = SubResource("Resource_6drva")
 
 [node name="HUD" parent="." instance=ExtResource("8_yg457")]
+follow_viewport_enabled = true
 
 [node name="BlockCode" type="Node" parent="."]
 script = ExtResource("3_6jaq8")
 block_script = SubResource("Resource_f070g")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+zoom = Vector2(0.6, 0.6)
