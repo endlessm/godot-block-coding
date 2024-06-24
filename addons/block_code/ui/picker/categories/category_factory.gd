@@ -187,63 +187,62 @@ static func get_general_blocks() -> Array[Block]:
 	b.category = "Test"
 	block_list.append(b)
 
-	# Signal
+	# Groups and methods
 	b = BLOCKS["entry_block"].instantiate()
-	# HACK: make signals work with new entry nodes. NIL instead of STRING type allows
-	# plain text input for function name. Should revamp signals later
-	b.block_format = "On signal {signal: NIL}"
-	b.statement = "func signal_{signal}():"
-	b.category = "Signal"
+	# HACK: NIL instead of STRING type allows plain text input for method name.
+	b.block_format = "Define method {method_name: NIL}"
+	b.statement = "func {method_name}():"
+	b.category = "Groups and methods"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
-	b.block_format = "Send signal {signal: STRING} to group {group: STRING}"
-	b.statement = 'if get_tree().root.has_node("SignalManager"):\n' + '\tget_tree().root.get_node_or_null("SignalManager").broadcast_signal({group}, {signal})'
-	b.category = "Signal"
+	b.block_format = "Call method {method_name: STRING} in group {group: STRING}"
+	b.statement = ("if not get_tree().root.is_node_ready():\n" + "\tawait get_tree().root.ready\n" + "get_tree().call_group({group}, {method_name})")
+	b.category = "Groups and methods"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
-	b.block_format = "Send signal {signal: STRING} to node {node: NODE_PATH}"
-	b.statement = 'if get_tree().root.has_node("SignalManager"):\n' + '\tget_tree().root.get_node_or_null("SignalManager").send_signal_to_node({node}, {signal})'
-	b.category = "Signal"
+	b.block_format = "Call method {method_name: STRING} in node with path {node_path: NODE_PATH}"
+	b.statement = ("if not get_tree().root.is_node_ready():\n" + "\tawait get_tree().root.ready\n" + "var node = get_node('{node_path}')\n" + "if node:\n" + "\tnode.call({method_name})")
+	b.category = "Groups and methods"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Add to group {group: STRING}"
 	b.statement = "add_to_group({group})"
-	b.category = "Signal"
+	b.category = "Groups and methods"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Add {node: NODE_PATH} to group {group: STRING}"
 	b.statement = "get_node({node}).add_to_group({group})"
-	b.category = "Signal"
+	b.category = "Groups and methods"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Remove from group {group: STRING}"
 	b.statement = "remove_from_group({group})"
-	b.category = "Signal"
+	b.category = "Groups and methods"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Remove {node: NODE_PATH} from group {group: STRING}"
 	b.statement = "get_node({node}).remove_from_group({group})"
-	b.category = "Signal"
+	b.category = "Groups and methods"
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Is in group {group: STRING}"
 	b.statement = "is_in_group({group})"
-	b.category = "Signal"
+	b.category = "Groups and methods"
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Is {node: NODE_PATH} in group {group: STRING}"
 	b.statement = "get_node({node}).is_in_group({group})"
-	b.category = "Signal"
+	b.category = "Groups and methods"
 	block_list.append(b)
 
 	# Variables
