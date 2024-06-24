@@ -23,6 +23,9 @@ signal modified
 ## The next block in the line of execution (can be null if end)
 @export var bottom_snap_path: NodePath
 
+## The scope of the block (statement of matching entry block)
+@export var scope: String = ""
+
 var bottom_snap: SnapPoint
 
 
@@ -62,7 +65,7 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 
 # Override this method to add more serialized properties
 func get_serialized_props() -> Array:
-	return serialize_props(["block_name", "label", "color", "block_type", "position"])
+	return serialize_props(["block_name", "label", "color", "block_type", "position", "scope"])
 
 
 func serialize_props(prop_names: Array) -> Array:

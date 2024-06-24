@@ -108,12 +108,18 @@ class Drag:
 
 		# Check if any parent node is this node
 		var parent = _snap_point
+		var top_block
 		while parent is SnapPoint:
 			if parent.block == _block:
 				return false
 
+			top_block = parent.block
 			parent = parent.block.get_parent()
-
+			
+		if _block.scope != "":
+			if top_block is EntryBlock and _block.scope != top_block.get_entry_statement():
+				return false
+				
 		return true
 
 	func sort_snap_points_by_distance(a: SnapPoint, b: SnapPoint):
@@ -161,7 +167,6 @@ func _ready():
 
 func _process(_delta):
 	_update_drag_position()
-
 
 func _update_drag_position():
 	if not drag:
@@ -237,7 +242,13 @@ func connect_block_canvas_signals(block: Block):
 		var statement_block := block as StatementBlock
 		for pair in statement_block.param_name_input_pairs:
 			var param_input: ParameterInput = pair[1]
-			var b := param_input.get_snapped_block()
-			if b:
-				if b.drag_started.get_connections().size() == 0:
-					b.drag_started.connect(copy_picked_block_and_drag)
+			var copy_block := param_input.get_snapped_block()
+			if copy_block:
+				if copy_block.drag_started.get_connections().size() == 0:
+					copy_block.drag_started.connect(func(b: Block): drag_copy_parameter(b, block))
+
+
+func drag_copy_parameter(block: Block, parent: Block):
+	if parent is EntryBlock:
+		block.scope = parent.get_entry_statement()
+	copy_picked_block_and_drag(block)
