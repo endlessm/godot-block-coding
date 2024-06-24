@@ -121,3 +121,20 @@ func find_snaps(node: Node) -> Array:
 			snaps.append_array(find_snaps(c))
 
 	return snaps
+
+
+func set_scope(scope: String):
+	for block in _window.get_children():
+		if block is EntryBlock:
+			var entry_block = block as EntryBlock
+
+			if scope != entry_block.get_entry_statement():
+				entry_block.modulate = Color(0.5, 0.5, 0.5, 1)
+
+
+func release_scope():
+	for block in _window.get_children():
+		if block is EntryBlock:
+			var entry_block = block as EntryBlock
+
+			entry_block.modulate = Color.WHITE

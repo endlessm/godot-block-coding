@@ -206,6 +206,9 @@ func drag_block(block: Block, copied_from: Block = null):
 	drag = Drag.new(block, offset, _block_canvas)
 	add_child(drag)
 
+	if block.scope != "":
+		_block_canvas.set_scope(block.scope)
+
 
 func copy_block(block: Block) -> Block:
 	return block.duplicate(DUPLICATE_USE_INSTANTIATION)  # use instantiation
@@ -226,6 +229,8 @@ func drag_ended():
 
 	if block:
 		connect_block_canvas_signals(block)
+
+	_block_canvas.release_scope()
 
 	drag.queue_free()
 	drag = null
