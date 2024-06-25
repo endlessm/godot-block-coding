@@ -59,7 +59,7 @@ class Drag:
 
 	func _remove_block():
 		target_snap_point = null
-		_block.g()
+		_block.queue_free()
 
 	func _place_block():
 		var canvas_rect: Rect2 = _block_canvas.get_global_rect()
