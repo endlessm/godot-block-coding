@@ -22,7 +22,9 @@ class Drag:
 		get:
 			return action
 		set(value):
-			action = value
+			if action != value:
+				action = value
+				_update_action_hint()
 
 	var target_snap_point: SnapPoint:
 		get:
@@ -121,6 +123,13 @@ class Drag:
 	func _get_distance_to_snap_point(snap_point: SnapPoint) -> float:
 		var from_global: Vector2 = _block.global_position
 		return from_global.distance_to(snap_point.global_position)
+
+	func _update_action_hint():
+		match action:
+			DragAction.REMOVE:
+				_block.modulate = Color(1.0, 1.0, 1.0, 0.5)
+			_:
+				_block.modulate = Color.WHITE
 
 	func _update_preview():
 		if _preview_block:
