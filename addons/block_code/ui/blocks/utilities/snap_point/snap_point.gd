@@ -35,7 +35,6 @@ func set_snapped_block(snapped_block: Block) -> Block:
 
 	if snapped_block:
 		add_child(snapped_block)
-		snapped_block.on_canvas = block.on_canvas
 
 	if snapped_block and orphaned_block:
 		var last_snap = _get_last_snap(snapped_block)

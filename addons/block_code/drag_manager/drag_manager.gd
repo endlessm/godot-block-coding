@@ -42,7 +42,6 @@ class Drag:
 		assert(block.get_parent() == null)
 
 		add_child(block)
-		block.on_canvas = false
 		block.position = -offset
 
 		_block = block
@@ -92,7 +91,7 @@ class Drag:
 			push_error("Warning: snap point %s does not reference its parent block." % _snap_point)
 			return false
 
-		if not _snap_point.block.on_canvas:
+		if not _block_canvas.is_ancestor_of(_snap_point):
 			# We only snap to blocks on the canvas:
 			return false
 

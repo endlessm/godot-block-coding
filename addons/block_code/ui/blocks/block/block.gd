@@ -23,8 +23,6 @@ signal modified
 ## The next block in the line of execution (can be null if end)
 @export var bottom_snap_path: NodePath
 
-var on_canvas: bool = false
-
 var bottom_snap: SnapPoint
 
 

@@ -32,7 +32,6 @@ func _populate_block_scenes_by_class():
 func add_block(block: Block, position: Vector2 = Vector2.ZERO) -> void:
 	block.position = position
 	block.position.y += _window_scroll.scroll_vertical
-	block.on_canvas = true
 	_window.add_child(block)
 	_window.custom_minimum_size.y = max(block.position.y + EXTEND_MARGIN, _window.custom_minimum_size.y)
 
@@ -83,7 +82,6 @@ func load_tree(parent: Node, node: SerializedBlockTreeNode):
 	for prop_pair in node.serialized_block.serialized_props:
 		scene.set(prop_pair[0], prop_pair[1])
 
-	scene.on_canvas = true
 	parent.add_child(scene)
 
 	var scene_block: Block = scene as Block
