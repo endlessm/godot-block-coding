@@ -3,6 +3,7 @@ class_name BlockCanvas
 extends MarginContainer
 
 const EXTEND_MARGIN: float = 800
+const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(16, 8)
 
 @onready var _window: Control = %Window
 @onready var _window_scroll: ScrollContainer = %WindowScroll
@@ -28,10 +29,17 @@ func _populate_block_scenes_by_class():
 		_block_scenes_by_class[_class.class] = _script.get_scene_path()
 
 
-func add_block(block: Block) -> void:
+func add_block(block: Block, position: Vector2 = Vector2.ZERO) -> void:
+	block.position = position
 	block.position.y += _window_scroll.scroll_vertical
+	block.on_canvas = true
 	_window.add_child(block)
 	_window.custom_minimum_size.y = max(block.position.y + EXTEND_MARGIN, _window.custom_minimum_size.y)
+
+
+func arrange_block(block: Block, nearby_block: Block) -> void:
+	add_block(block)
+	block.global_position = (nearby_block.global_position + (nearby_block.get_size() * Vector2.RIGHT) + BLOCK_AUTO_PLACE_MARGIN)
 
 
 func set_child(n: Node):
