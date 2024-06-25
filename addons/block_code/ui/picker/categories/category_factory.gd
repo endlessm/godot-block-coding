@@ -48,7 +48,12 @@ const BUILTIN_PROPS: Dictionary = {
 		"color": Color("e2e72b"),
 		"order": 90,
 	},
-	"Signal":
+	"Groups and methods":
+	{
+		"color": Color("f0c300"),
+		"order": 20,
+	},
+	"Physics":
 	{
 		"color": Color("f0c300"),
 		"order": 20,
@@ -197,13 +202,23 @@ static func get_general_blocks() -> Array[Block]:
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Call method {method_name: STRING} in group {group: STRING}"
-	b.statement = ("if not get_tree().root.is_node_ready():\n" + "\tawait get_tree().root.ready\n" + "get_tree().call_group({group}, {method_name})")
+	b.statement = """
+if not get_tree().root.is_node_ready():
+	await get_tree().root.ready
+get_tree().call_group({group}, {method_name})
+"""
 	b.category = "Groups and methods"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Call method {method_name: STRING} in node with path {node_path: NODE_PATH}"
-	b.statement = ("if not get_tree().root.is_node_ready():\n" + "\tawait get_tree().root.ready\n" + "var node = get_node('{node_path}')\n" + "if node:\n" + "\tnode.call({method_name})")
+	b.statement = """
+if not get_tree().root.is_node_ready():
+	await get_tree().root.ready
+var node = get_node('{node_path}')
+if node:
+	node.call({method_name})
+"""
 	b.category = "Groups and methods"
 	block_list.append(b)
 
@@ -344,14 +359,23 @@ static func get_general_blocks() -> Array[Block]:
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Load file {file_path: STRING} as sound {name: STRING}"
-	b.statement = "VAR_DICT[{name}] = AudioStreamPlayer.new()\nVAR_DICT[{name}].name = {name}\nVAR_DICT[{name}].set_stream(load({file_path}))\nadd_child(VAR_DICT[{name}])"
+	b.statement = """
+VAR_DICT[{name}] = AudioStreamPlayer.new()
+VAR_DICT[{name}].name = {name}
+VAR_DICT[{name}].set_stream(load({file_path}))
+add_child(VAR_DICT[{name}])
+"""
 	b.category = "Sound"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"
-	b.statement = "VAR_DICT[{name}].volume_db = {db}\nVAR_DICT[{name}].pitch_scale = {pitch}\nVAR_DICT[{name}].play()"
+	b.statement = """
+VAR_DICT[{name}].volume_db = {db}
+VAR_DICT[{name}].pitch_scale = {pitch}
+VAR_DICT[{name}].play()
+"""
 	b.defaults = {"db": "0.0", "pitch": "1.0"}
 	b.category = "Sound"
 	block_list.append(b)
@@ -456,7 +480,13 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 
 			var b = BLOCKS["statement_block"].instantiate()
 			b.block_format = "Set Physics Position {position: VECTOR2}"
-			b.statement = "PhysicsServer2D.body_set_state(get_rid(),PhysicsServer2D.BODY_STATE_TRANSFORM,Transform2D.IDENTITY.translated({position}))"
+			b.statement = """
+PhysicsServer2D.body_set_state(
+	get_rid(),
+	PhysicsServer2D.BODY_STATE_TRANSFORM,
+	Transform2D.IDENTITY.translated({position})
+)
+"""
 			b.category = "Movement"
 			block_list.append(b)
 
@@ -472,9 +502,12 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				b.block_format = "On [body: NODE_PATH] %s" % [verb]
 				# HACK: Blocks refer to nodes by path but the callback receives the node itself;
 				# convert to path
-				b.statement = "func _on_body_%s(_body: Node2D):\n\tvar body: NodePath = _body.get_path()" % [verb]
+				b.statement = """
+func _on_body_%s(_body: Node2D):
+	var body: NodePath = _body.get_path()" % [verb]
+"""
 				b.signal_name = "body_%s" % [verb]
-				b.category = "Signal"
+				b.category = "Physics"
 				block_list.append(b)
 
 	var prop_list = ClassDB.class_get_property_list(_class_name, true)
