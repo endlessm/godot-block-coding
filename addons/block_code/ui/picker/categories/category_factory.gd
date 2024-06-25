@@ -142,6 +142,18 @@ static func get_general_blocks() -> Array[Block]:
 	b.category = "Lifecycle"
 	block_list.append(b)
 
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_format = "Await scene ready"
+	b.statement = (
+		"""
+		if not get_tree().root.is_node_ready():
+			await get_tree().root.ready
+		"""
+		. dedent()
+	)
+	b.category = "Lifecycle"
+	block_list.append(b)
+
 	# Control
 	b = BLOCKS["control_block"].instantiate()
 	b.block_formats = ["if    {condition: BOOL}"]
@@ -191,29 +203,24 @@ static func get_general_blocks() -> Array[Block]:
 	b = BLOCKS["entry_block"].instantiate()
 	# HACK: make signals work with new entry nodes. NIL instead of STRING type allows
 	# plain text input for function name. Should revamp signals later
-	b.block_format = "On signal {signal: NIL}"
-	b.statement = "func signal_{signal}():"
+	b.block_format = "Define method {method_name: NIL}"
+	b.statement = "func {method_name}():"
 	b.category = "Signal"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
-	b.block_format = "Send signal {signal: STRING} to group {group: STRING}"
-	b.statement = (
-		"""
-		if get_tree().root.has_node("SignalManager"):
-			get_tree().root.get_node_or_null("SignalManager").broadcast_signal({group}, {signal})
-		"""
-		. dedent()
-	)
+	b.block_format = "Call method {method_name: STRING} in group {group: STRING}"
+	b.statement = "get_tree().call_group({group}, {method_name})"
 	b.category = "Signal"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
-	b.block_format = "Send signal {signal: STRING} to node {node: NODE_PATH}"
+	b.block_format = "Call method {method_name: STRING} in node {node_path: NODE_PATH}"
 	b.statement = (
 		"""
-		if get_tree().root.has_node("SignalManager"):
-			get_tree().root.get_node_or_null("SignalManager").send_signal_to_node({node}, {signal})
+		var node = get_node({node_path})
+		if node:
+			node.call({method_name})
 		"""
 		. dedent()
 	)
