@@ -11,7 +11,6 @@ var eia: EditorInterfaceAccess
 @onready var _editor_inspector: EditorInspector = EditorInterface.get_inspector()
 
 var block_code_tab: Button
-var _current_bsd: BlockScriptData
 var _current_block_code_node: BlockCode
 var _scene_root: Node
 var _block_code_nodes: Array
@@ -29,6 +28,17 @@ func _ready():
 
 	# Setup block scripting environment
 	block_code_tab = eia.Utils.find_child_by_name(eia.context_switcher, "Block Code")
+	undo_redo.version_changed.connect(_on_undo_redo_version_changed)
+
+
+func _on_undo_redo_version_changed():
+	if _current_block_code_node == null:
+		return
+
+	var block_script: BlockScriptData = _current_block_code_node.block_script
+	_picker.bsd_selected(block_script)
+	_title_bar.bsd_selected(block_script)
+	_block_canvas.bsd_selected(block_script)
 
 
 func _on_button_pressed():
@@ -40,30 +50,33 @@ func switch_scene(scene_root: Node):
 
 
 func switch_script(block_code_node: BlockCode):
-	var bsd = block_code_node.block_script if block_code_node else null
-	_current_bsd = bsd
+	var block_script: BlockScriptData = block_code_node.block_script if block_code_node else null
 	_current_block_code_node = block_code_node
-	_picker.bsd_selected(bsd)
-	_title_bar.bsd_selected(bsd)
-	_block_canvas.bsd_selected(bsd)
+	_picker.bsd_selected(block_script)
+	_title_bar.bsd_selected(block_script)
+	_block_canvas.bsd_selected(block_script)
 	if block_code_node:
 		block_code_tab.pressed.emit()
 
 
 func save_script():
-	if _current_bsd == null:
+	if _current_block_code_node == null:
 		print("No script loaded to save.")
 		return
 
+	var block_script: BlockScriptData = _current_block_code_node.block_script
+
 	undo_redo.create_action("Modify %s's block code script" % _current_block_code_node.get_parent().name)
-	undo_redo.add_undo_property(_current_block_code_node, "bsd", _current_bsd)
+	undo_redo.add_undo_property(_current_block_code_node.block_script, "block_trees", _current_block_code_node.block_script.block_trees)
+	undo_redo.add_undo_property(_current_block_code_node.block_script, "generated_script", _current_block_code_node.block_script.generated_script)
 
 	var block_trees := _block_canvas.get_canvas_block_trees()
-	var generated_script = _block_canvas.generate_script_from_current_window(_current_bsd.script_inherits)
-	_current_bsd.block_trees = block_trees
-	_current_bsd.generated_script = generated_script
+	var generated_script = _block_canvas.generate_script_from_current_window(block_script.script_inherits)
+	block_script.block_trees = block_trees
+	block_script.generated_script = generated_script
 
-	undo_redo.add_do_property(_current_block_code_node, "bsd", _current_bsd)
+	undo_redo.add_do_property(_current_block_code_node.block_script, "block_trees", block_trees)
+	undo_redo.add_do_property(_current_block_code_node.block_script, "generated_script", generated_script)
 	undo_redo.commit_action()
 
 
@@ -81,8 +94,9 @@ func _input(event):
 
 
 func _print_generated_script():
-	if _current_bsd == null:
+	if _current_block_code_node == null:
 		return
-	var script: String = _block_canvas.generate_script_from_current_window(_current_bsd.script_inherits)
+	var block_script: BlockScriptData = _current_block_code_node.block_script
+	var script: String = _block_canvas.generate_script_from_current_window(block_script.script_inherits)
 	print(script)
 	print("Debug script! (not saved)")
