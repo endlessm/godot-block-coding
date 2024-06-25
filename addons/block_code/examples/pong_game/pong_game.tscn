@@ -1,10 +1,11 @@
-[gd_scene load_steps=165 format=3 uid="uid://tf7b8c64ecc0"]
+[gd_scene load_steps=166 format=3 uid="uid://tf7b8c64ecc0"]
 
-[ext_resource type="PackedScene" uid="uid://s7enbp56f256" path="res://addons/block_code/examples/pong_game/paddle.tscn" id="1_1k5k2"]
 [ext_resource type="Script" path="res://addons/block_code/examples/pong_game/pong_game.gd" id="1_bjkc8"]
 [ext_resource type="PackedScene" uid="uid://cg8ibi18um3vg" path="res://addons/block_code/examples/pong_game/space.tscn" id="1_y56ac"]
 [ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="3_6jaq8"]
+[ext_resource type="PackedScene" uid="uid://ddx1cd5q6t61o" path="res://addons/block_code/simple_nodes/simple_character/simple_character.tscn" id="3_hjpbs"]
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="4_qtggh"]
+[ext_resource type="Texture2D" uid="uid://tplpgtnfeda0" path="res://addons/block_code/examples/pong_game/assets/paddle.png" id="4_ra7bh"]
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block.gd" id="5_wr38c"]
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="6_ppdc3"]
 [ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="7_uuuue"]
@@ -13,84 +14,108 @@
 [ext_resource type="PackedScene" uid="uid://1ownc3rikn2k" path="res://addons/block_code/examples/pong_game/ball_spawn_area.tscn" id="10_5vs1t"]
 [ext_resource type="PackedScene" uid="uid://fhoapg3anjsu" path="res://addons/block_code/examples/pong_game/goal_area.tscn" id="12_nqmxu"]
 
-[sub_resource type="Resource" id="Resource_2ownr"]
+[sub_resource type="Resource" id="Resource_02fc8"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.290196, 0.52549, 0.835294, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Move with player 2 buttons, speed {speed: VECTOR2}"], ["statement", "velocity = Input.get_vector(\"player_2_left\", \"player_2_right\", \"player_2_up\", \"player_2_down\")*{speed}
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Move with player 1 buttons, speed {speed: VECTOR2}"], ["statement", "var dir = Vector2()
+dir.x += float(Input.is_key_pressed(KEY_D))
+dir.x -= float(Input.is_key_pressed(KEY_A))
+dir.y += float(Input.is_key_pressed(KEY_S))
+dir.y -= float(Input.is_key_pressed(KEY_W))
+dir = dir.normalized()
+velocity = dir*{speed}
 move_and_slide()"], ["defaults", {}], ["param_input_strings", {
-"speed": "0, 1000"
+"speed": "0,1000"
 }]]
 
-[sub_resource type="Resource" id="Resource_lt7l7"]
+[sub_resource type="Resource" id="Resource_hofsq"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_2ownr")
+serialized_block = SubResource("Resource_02fc8")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_lp80u"]
+[sub_resource type="Resource" id="Resource_ijy7o"]
 script = ExtResource("5_wr38c")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "process_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(36, 43)], ["block_format", "On Process"], ["statement", "func _process(delta):"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
+serialized_props = [["block_name", "process_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(82, 24)], ["block_format", "On Process"], ["statement", "func _process(delta):"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
 
-[sub_resource type="Resource" id="Resource_0j1nn"]
+[sub_resource type="Resource" id="Resource_wlov0"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_lp80u")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_lt7l7")]]
+serialized_block = SubResource("Resource_ijy7o")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_hofsq")]]
 
-[sub_resource type="Resource" id="Resource_t1ec3"]
+[sub_resource type="Resource" id="Resource_frqvp"]
 script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_0j1nn")])
+array = Array[ExtResource("4_qtggh")]([SubResource("Resource_wlov0")])
 
-[sub_resource type="Resource" id="Resource_t7nl4"]
+[sub_resource type="Resource" id="Resource_qmak3"]
 script = ExtResource("7_uuuue")
-script_inherits = "Paddle"
-block_trees = SubResource("Resource_t1ec3")
-generated_script = "extends Paddle
+script_inherits = "SimpleCharacter"
+block_trees = SubResource("Resource_frqvp")
+generated_script = "extends SimpleCharacter
 
 var VAR_DICT := {}
 
 func _process(delta):
-	velocity = Input.get_vector(\"player_2_left\", \"player_2_right\", \"player_2_up\", \"player_2_down\")*Vector2(0, 1000)
+	var dir = Vector2()
+	dir.x += float(Input.is_key_pressed(KEY_D))
+	dir.x -= float(Input.is_key_pressed(KEY_A))
+	dir.y += float(Input.is_key_pressed(KEY_S))
+	dir.y -= float(Input.is_key_pressed(KEY_W))
+	dir = dir.normalized()
+	velocity = dir*Vector2(0,1000)
 	move_and_slide()
 
 "
 
-[sub_resource type="Resource" id="Resource_lf6va"]
+[sub_resource type="Resource" id="Resource_wvsmi"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.290196, 0.52549, 0.835294, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Move with player 1 buttons, speed {speed: VECTOR2}"], ["statement", "velocity = Input.get_vector(\"ui_left\", \"ui_right\", \"ui_up\", \"ui_down\")*{speed}
+serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Move with player 2 buttons, speed {speed: VECTOR2}"], ["statement", "var dir = Vector2()
+dir.x += float(Input.is_key_pressed(KEY_RIGHT))
+dir.x -= float(Input.is_key_pressed(KEY_LEFT))
+dir.y += float(Input.is_key_pressed(KEY_DOWN))
+dir.y -= float(Input.is_key_pressed(KEY_UP))
+dir = dir.normalized()
+velocity = dir*{speed}
 move_and_slide()"], ["defaults", {}], ["param_input_strings", {
-"speed": "0, 1000"
+"speed": "0,1000"
 }]]
 
-[sub_resource type="Resource" id="Resource_5obqu"]
+[sub_resource type="Resource" id="Resource_v80v0"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_lf6va")
+serialized_block = SubResource("Resource_wvsmi")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_hhevk"]
+[sub_resource type="Resource" id="Resource_3qglq"]
 script = ExtResource("5_wr38c")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "process_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(34, 50)], ["block_format", "On Process"], ["statement", "func _process(delta):"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
+serialized_props = [["block_name", "process_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(57, 27)], ["block_format", "On Process"], ["statement", "func _process(delta):"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
 
-[sub_resource type="Resource" id="Resource_ipx1e"]
+[sub_resource type="Resource" id="Resource_gnrty"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_hhevk")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_5obqu")]]
+serialized_block = SubResource("Resource_3qglq")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_v80v0")]]
 
-[sub_resource type="Resource" id="Resource_iqrk3"]
+[sub_resource type="Resource" id="Resource_2qfet"]
 script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_ipx1e")])
+array = Array[ExtResource("4_qtggh")]([SubResource("Resource_gnrty")])
 
-[sub_resource type="Resource" id="Resource_52r02"]
+[sub_resource type="Resource" id="Resource_lxj2y"]
 script = ExtResource("7_uuuue")
-script_inherits = "Paddle"
-block_trees = SubResource("Resource_iqrk3")
-generated_script = "extends Paddle
+script_inherits = "SimpleCharacter"
+block_trees = SubResource("Resource_2qfet")
+generated_script = "extends SimpleCharacter
 
 var VAR_DICT := {}
 
 func _process(delta):
-	velocity = Input.get_vector(\"ui_left\", \"ui_right\", \"ui_up\", \"ui_down\")*Vector2(0, 1000)
+	var dir = Vector2()
+	dir.x += float(Input.is_key_pressed(KEY_RIGHT))
+	dir.x -= float(Input.is_key_pressed(KEY_LEFT))
+	dir.y += float(Input.is_key_pressed(KEY_DOWN))
+	dir.y -= float(Input.is_key_pressed(KEY_UP))
+	dir = dir.normalized()
+	velocity = dir*Vector2(0,1000)
 	move_and_slide()
 
 "
@@ -1020,21 +1045,25 @@ script = ExtResource("1_bjkc8")
 
 [node name="Space" parent="." instance=ExtResource("1_y56ac")]
 
-[node name="PaddleLeft" parent="." instance=ExtResource("1_1k5k2")]
-modulate = Color(0.511, 0.362, 0.972, 1)
+[node name="PaddleLeft" parent="." instance=ExtResource("3_hjpbs")]
+modulate = Color(0.509804, 0.360784, 0.972549, 1)
 position = Vector2(64, 544)
+collision_mask = 5
+texture = ExtResource("4_ra7bh")
 
 [node name="BlockCode" type="Node" parent="PaddleLeft"]
 script = ExtResource("3_6jaq8")
-block_script = SubResource("Resource_t7nl4")
+block_script = SubResource("Resource_qmak3")
 
-[node name="PaddleRight" parent="." instance=ExtResource("1_1k5k2")]
-modulate = Color(0.511, 0.362, 0.972, 1)
+[node name="PaddleRight" parent="." instance=ExtResource("3_hjpbs")]
+modulate = Color(0.509804, 0.360784, 0.972549, 1)
 position = Vector2(1856, 544)
+collision_mask = 5
+texture = ExtResource("4_ra7bh")
 
 [node name="BlockCode" type="Node" parent="PaddleRight"]
 script = ExtResource("3_6jaq8")
-block_script = SubResource("Resource_52r02")
+block_script = SubResource("Resource_lxj2y")
 
 [node name="Ball" parent="." instance=ExtResource("9_xrqll")]
 modulate = Color(0.511, 0.362, 0.972, 1)

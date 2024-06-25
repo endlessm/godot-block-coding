@@ -45,8 +45,20 @@ func _update_parent_script():
 	var script := GDScript.new()
 	script.set_source_code(block_script.generated_script)
 	script.reload()
+
+	# Persist export script variables (like SimpleCharacter exported texture)
+	var persist_properties = {}
+	var old_property_list = parent.get_property_list()
+	for property in old_property_list:
+		if property.usage & PROPERTY_USAGE_SCRIPT_VARIABLE:
+			persist_properties[property.name] = parent.get(property.name)
+
 	parent.set_script(script)
 	parent.set_process(true)
+
+	# Set persisted script variables in new script
+	for property_name in persist_properties:
+		parent.set(property_name, persist_properties.get(property_name))
 
 
 func _get_configuration_warnings():
