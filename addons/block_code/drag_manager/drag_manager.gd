@@ -9,17 +9,149 @@ signal block_modified
 @export var block_canvas_path: NodePath
 
 const Constants = preload("res://addons/block_code/ui/constants.gd")
-const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(16, 8)
 
-var drag_offset: Vector2
-var dragging: Block = null
+enum DragAction { NONE, PLACE, REMOVE }
 
-var previewing_snap_point: SnapPoint = null
-var preview_block: Control = null
-var preview_owner: Block = null
+
+class Drag:
+	extends Control
+	var _block: Block
+	var _block_canvas: BlockCanvas
+	var _preview_block: Control
+	var action: DragAction:
+		get:
+			return action
+		set(value):
+			if action != value:
+				action = value
+				_update_action_hint()
+
+	var target_snap_point: SnapPoint:
+		get:
+			return target_snap_point
+		set(value):
+			if target_snap_point != value:
+				target_snap_point = value
+				_update_preview()
+
+	var snap_block: Block:
+		get:
+			return target_snap_point.block if target_snap_point else null
+
+	func _init(block: Block, offset: Vector2, block_canvas: BlockCanvas):
+		assert(block.get_parent() == null)
+
+		add_child(block)
+		block.position = -offset
+
+		_block = block
+		_block_canvas = block_canvas
+
+	func apply_drag() -> Block:
+		if action == DragAction.PLACE:
+			_place_block()
+			return _block
+		elif action == DragAction.REMOVE:
+			_remove_block()
+			return null
+		else:
+			return null
+
+	func _remove_block():
+		target_snap_point = null
+		_block.queue_free()
+
+	func _place_block():
+		var canvas_rect: Rect2 = _block_canvas.get_global_rect()
+
+		var position = _block.global_position - canvas_rect.position
+
+		remove_child(_block)
+
+		if target_snap_point:
+			# Snap the block to the point
+			var orphaned_block = target_snap_point.set_snapped_block(_block)
+			if orphaned_block:
+				# Place the orphan block somewhere outside the snap point
+				_block_canvas.arrange_block(orphaned_block, snap_block)
+		else:
+			# Block goes on screen somewhere
+			_block_canvas.add_block(_block, position)
+
+		target_snap_point = null
+
+	func snaps_to(node: Node) -> bool:
+		var _snap_point: SnapPoint = node as SnapPoint
+
+		if not _snap_point:
+			push_error("Warning: node %s is not of class SnapPoint." % node)
+			return false
+
+		if _snap_point.block == null:
+			push_error("Warning: snap point %s does not reference its parent block." % _snap_point)
+			return false
+
+		if not _block_canvas.is_ancestor_of(_snap_point):
+			# We only snap to blocks on the canvas:
+			return false
+
+		if _block.block_type != _snap_point.block_type:
+			# We only snap to the same block type:
+			return false
+
+		if _block.block_type == Types.BlockType.VALUE and not Types.can_cast(_block.variant_type, _snap_point.variant_type):
+			# We only snap Value blocks to snaps that can cast to same variant:
+			return false
+
+		if _get_distance_to_snap_point(_snap_point) > Constants.MINIMUM_SNAP_DISTANCE:
+			return false
+
+		# Check if any parent node is this node
+		var parent = _snap_point
+		while parent is SnapPoint:
+			if parent.block == _block:
+				return false
+
+			parent = parent.block.get_parent()
+
+		return true
+
+	func sort_snap_points_by_distance(a: SnapPoint, b: SnapPoint):
+		return _get_distance_to_snap_point(a) < _get_distance_to_snap_point(b)
+
+	func _get_distance_to_snap_point(snap_point: SnapPoint) -> float:
+		var from_global: Vector2 = _block.global_position
+		return from_global.distance_to(snap_point.global_position)
+
+	func _update_action_hint():
+		match action:
+			DragAction.REMOVE:
+				_block.modulate = Color(1.0, 1.0, 1.0, 0.5)
+			_:
+				_block.modulate = Color.WHITE
+
+	func _update_preview():
+		if _preview_block:
+			_preview_block.queue_free()
+			_preview_block = null
+
+		if target_snap_point:
+			# Make preview block
+			_preview_block = Control.new()
+			_preview_block.set_script(preload("res://addons/block_code/ui/blocks/utilities/background/background.gd"))
+
+			_preview_block.color = Color(1, 1, 1, 0.5)
+			_preview_block.custom_minimum_size = _block.get_global_rect().size
+			_preview_block.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+			_preview_block.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+
+			target_snap_point.add_child(_preview_block)
+
 
 var _picker: Picker
 var _block_canvas: BlockCanvas
+
+var drag: Drag = null
 
 
 func _ready():
@@ -28,92 +160,46 @@ func _ready():
 
 
 func _process(_delta):
-	var mouse_pos: Vector2 = get_local_mouse_position()
-	if dragging:
-		dragging.position = mouse_pos - drag_offset
-
-		var dragging_global_pos: Vector2 = dragging.get_global_rect().position
-
-		# Find closest snap point not child of current node
-		var closest_snap_point: SnapPoint = null
-		var closest_dist: float = INF
-		var snap_points: Array[Node] = get_tree().get_nodes_in_group("snap_point")
-		for snap_point in snap_points:
-			if not snap_point is SnapPoint:
-				push_error('Warning: node %s in group "snap_point" is not of class SnapPoint.' % snap_point)
-				continue
-			if snap_point.block == null:
-				push_error("Warning: snap point %s does not reference it's parent block." % snap_point)
-				continue
-			if not snap_point.block.on_canvas:
-				# We only snap to blocks on the canvas:
-				continue
-			if dragging.block_type != snap_point.block_type:
-				# We only snap to the same block type:
-				continue
-			if dragging.block_type == Types.BlockType.VALUE and not Types.can_cast(dragging.variant_type, snap_point.variant_type):
-				# We only snap Value blocks to snaps that can cast to same variant:
-				continue
-			var snap_global_pos: Vector2 = snap_point.get_global_rect().position
-			var temp_dist: float = dragging_global_pos.distance_to(snap_global_pos)
-			if temp_dist <= Constants.MINIMUM_SNAP_DISTANCE and temp_dist < closest_dist:
-				# Check if any parent node is this node
-				var is_child: bool = false
-				var parent = snap_point
-				while parent is SnapPoint:
-					if parent.block == dragging:
-						is_child = true
-
-					parent = parent.block.get_parent()
-
-				if not is_child:
-					closest_dist = temp_dist
-					closest_snap_point = snap_point
-
-		if closest_snap_point != previewing_snap_point:
-			_update_preview(closest_snap_point)
+	_update_drag_position()
 
 
-func _update_preview(snap_point: SnapPoint):
-	previewing_snap_point = snap_point
+func _update_drag_position():
+	if not drag:
+		return
 
-	if preview_block:
-		preview_block.free()
-		preview_block = null
+	drag.position = get_local_mouse_position()
 
-	if previewing_snap_point:
-		# Make preview block
-		preview_block = Control.new()
-		preview_block.set_script(preload("res://addons/block_code/ui/blocks/utilities/background/background.gd"))
+	if _picker.get_global_rect().has_point(get_global_mouse_position()):
+		drag.action = DragAction.REMOVE
+	else:
+		drag.action = DragAction.PLACE
 
-		preview_block.color = Color(1, 1, 1, 0.5)
-		preview_block.custom_minimum_size = dragging.get_global_rect().size
-		preview_block.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-		preview_block.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	# Find closest snap point not child of current node
+	var snap_points: Array[Node] = get_tree().get_nodes_in_group("snap_point").filter(drag.snaps_to)
+	snap_points.sort_custom(drag.sort_snap_points_by_distance)
 
-		previewing_snap_point.add_child(preview_block)
+	drag.target_snap_point = snap_points[0] if snap_points.size() > 0 else null
 
 
 func drag_block(block: Block, copied_from: Block = null):
-	var new_pos: Vector2 = -get_global_rect().position
+	var offset: Vector2
 
 	if copied_from:
-		new_pos += copied_from.get_global_rect().position
+		offset = get_global_mouse_position() - copied_from.global_position
 	else:
-		new_pos += block.get_global_rect().position
+		offset = get_global_mouse_position() - block.global_position
 
 	var parent = block.get_parent()
+
 	if parent is SnapPoint:
 		parent.remove_snapped_block(block)
 	elif parent:
 		parent.remove_child(block)
 
-	block.position = new_pos
-	block.on_canvas = false
-	add_child(block)
+	block.disconnect_signals()
 
-	drag_offset = get_local_mouse_position() - block.position
-	dragging = block
+	drag = Drag.new(block, offset, _block_canvas)
+	add_child(drag)
 
 
 func copy_block(block: Block) -> Block:
@@ -122,42 +208,24 @@ func copy_block(block: Block) -> Block:
 
 func copy_picked_block_and_drag(block: Block):
 	var new_block: Block = copy_block(block)
-
 	drag_block(new_block, block)
 
 
 func drag_ended():
-	if dragging:
-		var block_rect: Rect2 = dragging.get_global_rect()
+	if not drag:
+		return
 
-		# Check if in BlockCanvas
-		var block_canvas_rect: Rect2 = _block_canvas.get_global_rect()
-		if block_canvas_rect.encloses(block_rect):
-			dragging.disconnect_signals()  # disconnect previous on canvas signal connections
-			connect_block_canvas_signals(dragging)
-			remove_child(dragging)
-			dragging.on_canvas = true
+	_update_drag_position()
 
-			if preview_block:
-				# Can snap block
-				preview_block.free()
-				preview_block = null
-				var orphaned_block = previewing_snap_point.set_snapped_block(dragging)
-				if orphaned_block:
-					# Place the orphan block somewhere outside the snap point
-					orphaned_block.position = (
-						(previewing_snap_point.block.global_position - block_canvas_rect.position) + (previewing_snap_point.block.get_size() * Vector2.RIGHT) + BLOCK_AUTO_PLACE_MARGIN
-					)
-					_block_canvas.add_block(orphaned_block)
-			else:
-				# Block goes on screen somewhere
-				dragging.position = (get_global_mouse_position() - block_canvas_rect.position - drag_offset)
-				_block_canvas.add_block(dragging)
-		else:
-			dragging.queue_free()
+	var block = drag.apply_drag()
 
-		dragging = null
-		block_dropped.emit()
+	if block:
+		connect_block_canvas_signals(block)
+
+	drag.queue_free()
+	drag = null
+
+	block_dropped.emit()
 
 
 func connect_block_canvas_signals(block: Block):

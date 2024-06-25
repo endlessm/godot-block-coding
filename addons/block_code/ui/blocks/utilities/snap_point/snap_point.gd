@@ -44,6 +44,9 @@ func set_snapped_block(snapped_block: Block) -> Block:
 
 	snapped_block_changed.emit(snapped_block)
 
+	reset_size()
+	block.reset_size()
+
 	return orphaned_block
 
 
