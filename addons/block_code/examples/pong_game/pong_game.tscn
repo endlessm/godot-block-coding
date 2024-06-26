@@ -962,7 +962,7 @@ func goal_left():
 
 [node name="Space" parent="." instance=ExtResource("1_y56ac")]
 
-[node name="PaddleLeft" parent="." instance=ExtResource("3_hjpbs")]
+[node name="PaddleLeft" parent="." groups=["paddles"] instance=ExtResource("3_hjpbs")]
 modulate = Color(0.509804, 0.360784, 0.972549, 1)
 position = Vector2(64, 544)
 collision_mask = 5
@@ -972,7 +972,7 @@ texture = ExtResource("4_ra7bh")
 script = ExtResource("3_6jaq8")
 block_script = SubResource("Resource_qmak3")
 
-[node name="PaddleRight" parent="." instance=ExtResource("3_hjpbs")]
+[node name="PaddleRight" parent="." groups=["paddles"] instance=ExtResource("3_hjpbs")]
 modulate = Color(0.509804, 0.360784, 0.972549, 1)
 position = Vector2(1856, 544)
 collision_mask = 5
