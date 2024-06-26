@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cg8ibi18um3vg"]
+[gd_scene load_steps=6 format=3 uid="uid://cg8ibi18um3vg"]
 
 [ext_resource type="Texture2D" uid="uid://ceiq8wmlnnnif" path="res://addons/block_code/examples/pong_game/assets/space.png" id="1_un3yo"]
+[ext_resource type="Texture2D" uid="uid://dijemw7iilr2m" path="res://addons/block_code/examples/pong_game/assets/line.png" id="2_0avsa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q267f"]
 size = Vector2(2688, 512)
@@ -59,3 +60,11 @@ shape = SubResource("RectangleShape2D_bqkwh")
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="PaddleBounds"]
 position = Vector2(960, 540)
 shape = SubResource("RectangleShape2D_lyev5")
+
+[node name="Lines" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture_repeat = 2
+position = Vector2(960, 536)
+texture = ExtResource("2_0avsa")
+region_enabled = true
+region_rect = Rect2(0, 0, 20, 1100)
