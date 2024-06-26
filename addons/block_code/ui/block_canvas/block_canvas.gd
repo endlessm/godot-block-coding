@@ -125,16 +125,20 @@ func find_snaps(node: Node) -> Array:
 
 func set_scope(scope: String):
 	for block in _window.get_children():
-		if block is EntryBlock:
-			var entry_block = block as EntryBlock
+		var valid := false
 
-			if scope != entry_block.get_entry_statement():
-				entry_block.modulate = Color(0.5, 0.5, 0.5, 1)
+		if block is EntryBlock:
+			if scope == block.get_entry_statement():
+				valid = true
+		else:
+			var tree_scope := DragManager.get_tree_scope(block)
+			if tree_scope == "" or scope == tree_scope:
+				valid = true
+
+		if not valid:
+			block.modulate = Color(0.5, 0.5, 0.5, 1)
 
 
 func release_scope():
 	for block in _window.get_children():
-		if block is EntryBlock:
-			var entry_block = block as EntryBlock
-
-			entry_block.modulate = Color.WHITE
+		block.modulate = Color.WHITE
