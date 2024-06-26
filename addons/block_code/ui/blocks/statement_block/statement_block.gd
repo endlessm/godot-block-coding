@@ -113,31 +113,36 @@ static func format_string(parent_block: Block, attach_to: Node, string: String, 
 		if _defaults.has(param_name):
 			param_default = _defaults[param_name]
 
-		var param_input: ParameterInput = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn").instantiate()
-		param_input.name = "ParameterInput%d" % start  # Unique path
-		param_input.placeholder = param_name
-		if param_type != null:
-			param_input.variant_type = param_type
-		elif option:
-			param_input.option = true
-		param_input.block = parent_block
-		param_input.modified.connect(func(): parent_block.modified.emit())
-
-		attach_to.add_child(param_input)
-		if param_default:
-			param_input.set_raw_input(param_default)
-
-		_param_name_input_pairs.append([param_name, param_input])
+		var param_node: Node
 
 		if copy_block:
-			var new_block: Block = preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn").instantiate()
-			new_block.block_format = param_name
-			new_block.statement = param_name
-			new_block.variant_type = param_type
-			new_block.color = parent_block.color
-			param_input.block_type = Types.BlockType.NONE
-			param_input.snap_point.block_type = Types.BlockType.NONE  # Necessary because already called ready
-			param_input.snap_point.add_child(new_block)
+			var parameter_output: ParameterOutput = preload("res://addons/block_code/ui/blocks/utilities/parameter_output/parameter_output.tscn").instantiate()
+			parameter_output.name = "ParameterOutput%d" % start  # Unique path
+			parameter_output.block_params = {
+				"block_format": param_name,
+				"statement": param_name,
+				"variant_type": param_type,
+				"color": parent_block.color,
+				"scope": parent_block.get_entry_statement() if parent_block is EntryBlock else ""
+			}
+			parameter_output.block = parent_block
+			attach_to.add_child(parameter_output)
+		else:
+			var parameter_input: ParameterInput = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn").instantiate()
+			parameter_input.name = "ParameterInput%d" % start  # Unique path
+			parameter_input.placeholder = param_name
+			if param_type != null:
+				parameter_input.variant_type = param_type
+			elif option:
+				parameter_input.option = true
+			parameter_input.block = parent_block
+			parameter_input.modified.connect(func(): parent_block.modified.emit())
+
+			attach_to.add_child(parameter_input)
+			if param_default:
+				parameter_input.set_raw_input(param_default)
+
+			_param_name_input_pairs.append([param_name, parameter_input])
 
 		start = result.get_end()
 
