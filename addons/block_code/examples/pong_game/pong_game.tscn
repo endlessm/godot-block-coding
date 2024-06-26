@@ -986,7 +986,6 @@ block_script = SubResource("Resource_lxj2y")
 modulate = Color(0.511, 0.362, 0.972, 1)
 position = Vector2(960, 544)
 gravity_scale = 0.0
-linear_velocity = Vector2(353.553, 353.553)
 
 [node name="BlockCode" type="Node" parent="Ball"]
 script = ExtResource("3_6jaq8")
