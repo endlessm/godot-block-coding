@@ -121,3 +121,24 @@ func find_snaps(node: Node) -> Array:
 			snaps.append_array(find_snaps(c))
 
 	return snaps
+
+
+func set_scope(scope: String):
+	for block in _window.get_children():
+		var valid := false
+
+		if block is EntryBlock:
+			if scope == block.get_entry_statement():
+				valid = true
+		else:
+			var tree_scope := DragManager.get_tree_scope(block)
+			if tree_scope == "" or scope == tree_scope:
+				valid = true
+
+		if not valid:
+			block.modulate = Color(0.5, 0.5, 0.5, 1)
+
+
+func release_scope():
+	for block in _window.get_children():
+		block.modulate = Color.WHITE

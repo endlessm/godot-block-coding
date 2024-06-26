@@ -16,6 +16,7 @@ enum DragAction { NONE, PLACE, REMOVE }
 class Drag:
 	extends Control
 	var _block: Block
+	var _block_scope: String
 	var _block_canvas: BlockCanvas
 	var _preview_block: Control
 	var action: DragAction:
@@ -38,13 +39,14 @@ class Drag:
 		get:
 			return target_snap_point.block if target_snap_point else null
 
-	func _init(block: Block, offset: Vector2, block_canvas: BlockCanvas):
+	func _init(block: Block, block_scope: String, offset: Vector2, block_canvas: BlockCanvas):
 		assert(block.get_parent() == null)
 
 		add_child(block)
 		block.position = -offset
 
 		_block = block
+		_block_scope = block_scope
 		_block_canvas = block_canvas
 
 	func apply_drag() -> Block:
@@ -108,11 +110,23 @@ class Drag:
 
 		# Check if any parent node is this node
 		var parent = _snap_point
+		var top_block
 		while parent is SnapPoint:
 			if parent.block == _block:
 				return false
 
+			top_block = parent.block
 			parent = parent.block.get_parent()
+
+		# Check if scope is valid
+		if _block_scope != "":
+			if top_block is EntryBlock:
+				if _block_scope != top_block.get_entry_statement():
+					return false
+			else:
+				var tree_scope := DragManager.get_tree_scope(top_block)
+				if tree_scope != "" and _block_scope != tree_scope:
+					return false
 
 		return true
 
@@ -198,7 +212,11 @@ func drag_block(block: Block, copied_from: Block = null):
 
 	block.disconnect_signals()
 
-	drag = Drag.new(block, offset, _block_canvas)
+	var block_scope := get_tree_scope(block)
+	if block_scope != "":
+		_block_canvas.set_scope(block_scope)
+
+	drag = Drag.new(block, block_scope, offset, _block_canvas)
 	add_child(drag)
 
 
@@ -222,6 +240,8 @@ func drag_ended():
 	if block:
 		connect_block_canvas_signals(block)
 
+	_block_canvas.release_scope()
+
 	drag.queue_free()
 	drag = null
 
@@ -237,7 +257,27 @@ func connect_block_canvas_signals(block: Block):
 		var statement_block := block as StatementBlock
 		for pair in statement_block.param_name_input_pairs:
 			var param_input: ParameterInput = pair[1]
-			var b := param_input.get_snapped_block()
-			if b:
-				if b.drag_started.get_connections().size() == 0:
-					b.drag_started.connect(copy_picked_block_and_drag)
+			var copy_block := param_input.get_snapped_block()
+			if copy_block == null:
+				continue
+			if copy_block.drag_started.get_connections().size() == 0:
+				copy_block.drag_started.connect(func(b: Block): drag_copy_parameter(b, block))
+
+
+func drag_copy_parameter(block: Block, parent: Block):
+	if parent is EntryBlock:
+		block.scope = parent.get_entry_statement()
+	copy_picked_block_and_drag(block)
+
+
+## Returns the scope of the first non-empty scope child block
+static func get_tree_scope(node: Node) -> String:
+	if node is Block:
+		if node.scope != "":
+			return node.scope
+
+	for c in node.get_children():
+		var scope := get_tree_scope(c)
+		if scope != "":
+			return scope
+	return ""
