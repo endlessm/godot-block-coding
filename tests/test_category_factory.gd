@@ -21,21 +21,24 @@ func test_general_category_names():
 		names,
 		[
 			"Lifecycle",
-			"Signal",
-			"Control",
-			"Test",
-			"Math",
-			"Logic",
-			"Variables",
+			"Sounds",
 			"Input",
-			"Sound",
+			"Communication | Methods",
+			"Communication | Groups",
+			"Loops",
+			"Logic | Conditionals",
+			"Logic | Comparison",
+			"Logic | Boolean",
+			"Variables",
+			"Math",
+			"Log",
 		]
 	)
 
 
 const class_category_names = [
-	["Node2D", ["Movement", "Size", "Graphics"]],
-	["Sprite2D", ["Movement", "Size", "Graphics"]],
+	["Node2D", ["Transform | Position", "Transform | Rotation", "Transform | Scale", "Graphics | Modulate", "Graphics | Visibility"]],
+	["Sprite2D", ["Transform | Position", "Transform | Rotation", "Transform | Scale", "Graphics | Modulate", "Graphics | Visibility"]],
 	["Node", []],
 	["Object", []],
 ]

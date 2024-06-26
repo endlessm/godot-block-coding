@@ -13,65 +13,105 @@ const BLOCKS: Dictionary = {
 ## category and then are separated by 10 to allow custom categories to
 ## be easily placed between builtin categories.
 const BUILTIN_PROPS: Dictionary = {
-	"Control":
+	"Lifecycle":
 	{
-		"color": Color("ffad76"),
-		"order": 30,
+		"color": Color("ec3b59"),
+		"order": 000,
 	},
-	"Graphics":
+	"Transform | Position":
 	{
-		"color": Color("9be371"),
-		"order": 110,
+		"color": Color("4b6584"),
+		"order": 010,
+	},
+	"Transform | Rotation":
+	{
+		"color": Color("4b6584"),
+		"order": 011,
+	},
+	"Transform | Scale":
+	{
+		"color": Color("4b6584"),
+		"order": 012,
+	},
+	"Graphics | Modulate":
+	{
+		"color": Color("03aa74"),
+		"order": 013,
+	},
+	"Graphics | Visibility":
+	{
+		"color": Color("03aa74"),
+		"order": 014,
+	},
+	"Sounds":
+	{
+		"color": Color("e30fc0"),
+		"order": 020,
+	},
+	"Physics | Mass":
+	{
+		"color": Color("a5b1c2"),
+		"order": 022,
+	},
+	"Physics | Velocity":
+	{
+		"color": Color("a5b1c2"),
+		"order": 023,
 	},
 	"Input":
 	{
-		"color": Color.SLATE_GRAY,
-		"order": 70,
+		"color": Color("d54322"),
+		"order": 024,
 	},
-	"Lifecycle":
+	"Communication | Methods":
 	{
-		"color": Color("fa5956"),
-		"order": 10,
+		"color": Color("4b7bec"),
+		"order": 030,
 	},
-	"Logic":
+	"Communication | Groups":
 	{
-		"color": Color("42b8e3"),
-		"order": 60,
+		"color": Color("4b7bec"),
+		"order": 031,
 	},
-	"Math":
+	"Info | Score":
 	{
-		"color": Color("3042c5"),
-		"order": 50,
+		"color": Color("cf6a87"),
+		"order": 031,
 	},
-	"Movement":
+	"Loops":
 	{
-		"color": Color("e2e72b"),
-		"order": 90,
-	},
-	"Signal":
-	{
-		"color": Color("f0c300"),
-		"order": 20,
-	},
-	"Sound":
-	{
-		"color": Color("e30fc0"),
-		"order": 80,
-	},
-	"Size":
-	{
-		"color": Color("f79511"),
+		"color": Color("20bf6b"),
 		"order": 100,
 	},
-	"Test":
+	"Logic | Conditionals":
 	{
-		"color": Color("9989df"),
-		"order": 40,
+		"color": Color("45aaf2"),
+		"order": 200,
+	},
+	"Logic | Comparison":
+	{
+		"color": Color("45aaf2"),
+		"order": 201,
+	},
+	"Logic | Boolean":
+	{
+		"color": Color("45aaf2"),
+		"order": 202,
 	},
 	"Variables":
 	{
-		"color": Color("4f975d"),
-		"order": 60,
+		"color": Color("ff8f08"),
+		"order": 300,
+	},
+	"Math":
+	{
+		"color": Color("a55eea"),
+		"order": 400,
+	},
+	"Log":
+	{
+		"color": Color("002050"),
+		"order": 99940,
 	},
 }
 
@@ -114,7 +154,8 @@ static func get_general_blocks() -> Array[Block]:
 	var b: Block
 	var block_list: Array[Block] = []
 
-	# Lifecycle
+#region Lifecycle
+
 	b = BLOCKS["entry_block"].instantiate()
 	b.block_name = "ready_block"
 	b.block_format = "On Ready"
@@ -142,6 +183,21 @@ static func get_general_blocks() -> Array[Block]:
 	b.category = "Lifecycle"
 	block_list.append(b)
 
+#endregion
+#region Loops
+
+	b = BLOCKS["control_block"].instantiate()
+	b.block_formats = ["repeat {number: INT}"]
+	b.statements = ["for i in {number}:"]
+	b.category = "Loops"
+	block_list.append(b)
+
+	b = BLOCKS["control_block"].instantiate()
+	b.block_formats = ["while {condition: BOOL}"]
+	b.statements = ["while {condition}:"]
+	b.category = "Loops"
+	block_list.append(b)
+
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Await scene ready"
 	b.statement = (
@@ -151,67 +207,46 @@ static func get_general_blocks() -> Array[Block]:
 		"""
 		. dedent()
 	)
-	b.category = "Lifecycle"
-	block_list.append(b)
-
-	# Control
-	b = BLOCKS["control_block"].instantiate()
-	b.block_formats = ["if    {condition: BOOL}"]
-	b.statements = ["if {condition}:"]
-	b.category = "Control"
-	block_list.append(b)
-
-	b = BLOCKS["control_block"].instantiate()
-	b.block_formats = ["if    {condition: BOOL}", "else"]
-	b.statements = ["if {condition}:", "else:"]
-	b.category = "Control"
-	block_list.append(b)
-
-	b = BLOCKS["control_block"].instantiate()
-	b.block_formats = ["repeat {number: INT}"]
-	b.statements = ["for i in {number}:"]
-	b.category = "Control"
-	block_list.append(b)
-
-	b = BLOCKS["control_block"].instantiate()
-	b.block_formats = ["while {condition: BOOL}"]
-	b.statements = ["while {condition}:"]
-	b.category = "Control"
+	b.category = "Loops"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Break"
 	b.statement = "break"
-	b.category = "Control"
+	b.category = "Loops"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Continue"
 	b.statement = "continue"
-	b.category = "Control"
+	b.category = "Loops"
 	block_list.append(b)
 
-	# Test
+#endregion
+#region Logs
+
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "print {text: STRING}"
 	b.statement = "print({text})"
 	b.defaults = {"text": "Hello"}
-	b.category = "Test"
+	b.category = "Log"
 	block_list.append(b)
 
-	# Signal
+#endregion
+#region Communication
+
 	b = BLOCKS["entry_block"].instantiate()
 	# HACK: make signals work with new entry nodes. NIL instead of STRING type allows
 	# plain text input for function name. Should revamp signals later
 	b.block_format = "Define method {method_name: NIL}"
 	b.statement = "func {method_name}():"
-	b.category = "Signal"
+	b.category = "Communication | Methods"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Call method {method_name: STRING} in group {group: STRING}"
 	b.statement = "get_tree().call_group({group}, {method_name})"
-	b.category = "Signal"
+	b.category = "Communication | Methods"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
@@ -224,48 +259,50 @@ static func get_general_blocks() -> Array[Block]:
 		"""
 		. dedent()
 	)
-	b.category = "Signal"
+	b.category = "Communication | Methods"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Add to group {group: STRING}"
 	b.statement = "add_to_group({group})"
-	b.category = "Signal"
+	b.category = "Communication | Groups"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Add {node: NODE_PATH} to group {group: STRING}"
 	b.statement = "get_node({node}).add_to_group({group})"
-	b.category = "Signal"
+	b.category = "Communication | Groups"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Remove from group {group: STRING}"
 	b.statement = "remove_from_group({group})"
-	b.category = "Signal"
+	b.category = "Communication | Groups"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Remove {node: NODE_PATH} from group {group: STRING}"
 	b.statement = "get_node({node}).remove_from_group({group})"
-	b.category = "Signal"
+	b.category = "Communication | Groups"
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Is in group {group: STRING}"
 	b.statement = "is_in_group({group})"
-	b.category = "Signal"
+	b.category = "Communication | Groups"
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Is {node: NODE_PATH} in group {group: STRING}"
 	b.statement = "get_node({node}).is_in_group({group})"
-	b.category = "Signal"
+	b.category = "Communication | Groups"
 	block_list.append(b)
 
-	# Variables
+#endregion
+#region Variables
+
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Set String {var: STRING} {value: STRING}"
 	b.statement = "VAR_DICT[{var}] = {value}"
@@ -297,7 +334,9 @@ static func get_general_blocks() -> Array[Block]:
 	b.category = "Variables"
 	block_list.append(b)
 
-	# Math
+#endregion
+#region Math
+
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} + {b: INT}"
@@ -333,13 +372,27 @@ static func get_general_blocks() -> Array[Block]:
 	b.category = "Math"
 	block_list.append(b)
 
-	# Logic
+#endregion
+#region Logic
+
+	b = BLOCKS["control_block"].instantiate()
+	b.block_formats = ["if    {condition: BOOL}"]
+	b.statements = ["if {condition}:"]
+	b.category = "Logic | Conditionals"
+	block_list.append(b)
+
+	b = BLOCKS["control_block"].instantiate()
+	b.block_formats = ["if    {condition: BOOL}", "else"]
+	b.statements = ["if {condition}:", "else:"]
+	b.category = "Logic | Conditionals"
+	block_list.append(b)
+
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_BOOL
 	b.block_format = "{int1: INT} {op: OPTION} {int2: INT}"
 	b.statement = "({int1} {op} {int2})"
 	b.defaults = {"op": OptionData.new(["==", ">", "<", ">=", "<=", "!="])}
-	b.category = "Logic"
+	b.category = "Logic | Comparison"
 	block_list.append(b)
 
 	for op in ["and", "or"]:
@@ -347,20 +400,23 @@ static func get_general_blocks() -> Array[Block]:
 		b.variant_type = TYPE_BOOL
 		b.block_format = "{bool1: BOOL} %s {bool2: BOOL}" % op
 		b.statement = "({bool1} %s {bool2})" % op
-		b.category = "Logic"
+		b.category = "Logic | Boolean"
 		block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Not {bool: BOOL}"
 	b.statement = "(not {bool})"
-	b.category = "Logic"
+	b.category = "Logic | Boolean"
 	block_list.append(b)
 
-	# Input
+#endregion
+#region Input
+
 	block_list.append_array(_get_input_blocks())
 
-	# Sound
+#endregion
+#region Sounds
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Load file {file_path: STRING} as sound {name: STRING}"
@@ -373,7 +429,7 @@ static func get_general_blocks() -> Array[Block]:
 		"""
 		. dedent()
 	)
-	b.category = "Sound"
+	b.category = "Sounds"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
@@ -388,8 +444,9 @@ static func get_general_blocks() -> Array[Block]:
 		. dedent()
 	)
 	b.defaults = {"db": "0.0", "pitch": "1.0"}
-	b.category = "Sound"
+	b.category = "Sounds"
 	block_list.append(b)
+#endregion
 
 	return block_list
 
@@ -463,19 +520,19 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			var b = BLOCKS["statement_block"].instantiate()
 			b.block_format = "Set Rotation Degrees {angle: FLOAT}"
 			b.statement = "rotation_degrees = {angle}"
-			b.category = "Movement"
+			b.category = "Transform | Rotation"
 			block_list.append(b)
 
 			props = {
-				"position": "Movement",
-				"rotation": "Movement",
-				"scale": "Size",
+				"position": "Transform | Position",
+				"rotation": "Transform | Rotation",
+				"scale": "Transform | Scale",
 			}
 
 		"CanvasItem":
 			props = {
-				"modulate": "Graphics",
-				"visible": "Graphics",
+				"modulate": "Graphics | Modulate",
+				"visible": "Graphics | Visibility",
 			}
 
 		"RigidBody2D":
@@ -495,7 +552,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 					% [verb]
 				)
 				b.signal_name = "body_%s" % [verb]
-				b.category = "Signal"
+				b.category = "Communication | Methods"
 				block_list.append(b)
 
 			var b = BLOCKS["statement_block"].instantiate()
@@ -510,13 +567,13 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				"""
 				. dedent()
 			)
-			b.category = "Movement"
+			b.category = "Transform | Position"
 			block_list.append(b)
 
 			props = {
-				"mass": "Size",
-				"linear_velocity": "Movement",
-				"angular_velocity": "Movement",
+				"mass": "Physics | Mass",
+				"linear_velocity": "Physics | Velocity",
+				"angular_velocity": "Physics | Velocity",
 			}
 
 		"Area2D":
@@ -536,7 +593,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 					% [verb]
 				)
 				b.signal_name = "body_%s" % [verb]
-				b.category = "Signal"
+				b.category = "Communication | Methods"
 				block_list.append(b)
 
 		"CharacterBody2D":

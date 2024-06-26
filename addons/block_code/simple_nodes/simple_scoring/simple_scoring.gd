@@ -59,14 +59,14 @@ static func get_custom_blocks() -> Array[Block]:
 		b.block_type = Types.BlockType.EXECUTE
 		b.block_format = "Set player %s score to {score: INT}" % player
 		b.statement = "score_%s = {score}" % _POSITIONS_FOR_PLAYER[player]
-		b.category = "Scoring"
+		b.category = "Info | Score"
 		block_list.append(b)
 
 		b = CategoryFactory.BLOCKS["statement_block"].instantiate()
 		b.block_type = Types.BlockType.EXECUTE
 		b.block_format = "Change player %s score by {score: INT}" % player
 		b.statement = "score_%s += {score}" % _POSITIONS_FOR_PLAYER[player]
-		b.category = "Scoring"
+		b.category = "Info | Score"
 		block_list.append(b)
 
 	return block_list
