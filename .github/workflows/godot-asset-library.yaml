@@ -7,7 +7,6 @@ name: Push to Godot Asset Library
 
 jobs:
   publish:
-    if: github.event.action == 'released'
     runs-on: ubuntu-latest
     name: Push new release
     steps:
