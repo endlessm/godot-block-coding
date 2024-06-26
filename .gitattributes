@@ -8,3 +8,5 @@
 /addons               !export-ignore
 /addons/block_code    !export-ignore
 /addons/block_code/** !export-ignore
+
+/addons/block_code/plugin.cfg export-subst
