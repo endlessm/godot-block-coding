@@ -14,7 +14,6 @@ const DISABLED_CLASSES := [
 	"DragManager",
 	"InstructionTree",
 	"EditorInterfaceAccess",
-	"SimpleCharacter",
 	"Types",
 	"BasicBlock",
 	"Block",
