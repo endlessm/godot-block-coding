@@ -1,4 +1,4 @@
-[gd_scene load_steps=157 format=3 uid="uid://tf7b8c64ecc0"]
+[gd_scene load_steps=156 format=3 uid="uid://tf7b8c64ecc0"]
 
 [ext_resource type="PackedScene" uid="uid://cg8ibi18um3vg" path="res://addons/block_code/examples/pong_game/space.tscn" id="1_y56ac"]
 [ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="3_6jaq8"]
@@ -10,7 +10,6 @@
 [ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="7_uuuue"]
 [ext_resource type="PackedScene" uid="uid://bis7afjjuwypq" path="res://addons/block_code/simple_nodes/simple_scoring/simple_scoring.tscn" id="8_yg457"]
 [ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://addons/block_code/examples/pong_game/ball.tscn" id="9_xrqll"]
-[ext_resource type="PackedScene" uid="uid://1ownc3rikn2k" path="res://addons/block_code/examples/pong_game/ball_spawn_area.tscn" id="10_5vs1t"]
 [ext_resource type="PackedScene" uid="uid://fhoapg3anjsu" path="res://addons/block_code/examples/pong_game/goal_area.tscn" id="12_nqmxu"]
 
 [sub_resource type="Resource" id="Resource_02fc8"]
@@ -992,9 +991,6 @@ linear_velocity = Vector2(353.553, 353.553)
 [node name="BlockCode" type="Node" parent="Ball"]
 script = ExtResource("3_6jaq8")
 block_script = SubResource("Resource_hnwk2")
-
-[node name="BallSpawnArea" parent="." groups=["ball_spawn_area"] instance=ExtResource("10_5vs1t")]
-position = Vector2(960, 544)
 
 [node name="GoalAreaLeft" parent="." groups=["goal", "goal_left"] instance=ExtResource("12_nqmxu")]
 position = Vector2(-64, 544)
