@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://bis7afjjuwypq"]
+
+[ext_resource type="Script" path="res://addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd" id="1_yyb01"]
+
+[node name="SimpleScoring" type="CanvasLayer" groups=["hud"]]
+script = ExtResource("1_yyb01")
+
+[node name="PlayerLeftScore" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 240.0
+offset_right = 717.0
+offset_bottom = 1080.0
+pivot_offset = Vector2(240, 176)
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 200
+text = "0"
+horizontal_alignment = 1
+
+[node name="PlayerRightScore" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 1200.0
+offset_right = 1677.0
+offset_bottom = 1080.0
+pivot_offset = Vector2(240, 176)
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 200
+text = "0"
+horizontal_alignment = 1

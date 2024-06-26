@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block.gd" id="5_wr38c"]
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="6_ppdc3"]
 [ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="7_uuuue"]
-[ext_resource type="PackedScene" uid="uid://bis7afjjuwypq" path="res://addons/block_code/examples/pong_game/hud.tscn" id="8_yg457"]
+[ext_resource type="PackedScene" uid="uid://bis7afjjuwypq" path="res://addons/block_code/simple_nodes/simple_scoring/simple_scoring.tscn" id="8_yg457"]
 [ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://addons/block_code/examples/pong_game/ball.tscn" id="9_xrqll"]
 [ext_resource type="PackedScene" uid="uid://1ownc3rikn2k" path="res://addons/block_code/examples/pong_game/ball_spawn_area.tscn" id="10_5vs1t"]
 [ext_resource type="PackedScene" uid="uid://fhoapg3anjsu" path="res://addons/block_code/examples/pong_game/goal_area.tscn" id="12_nqmxu"]
@@ -1092,7 +1092,7 @@ position = Vector2(1984, 544)
 script = ExtResource("3_6jaq8")
 block_script = SubResource("Resource_6drva")
 
-[node name="HUD" parent="." instance=ExtResource("8_yg457")]
+[node name="SimpleScoring" parent="." instance=ExtResource("8_yg457")]
 follow_viewport_enabled = true
 
 [node name="BlockCode" type="Node" parent="."]
