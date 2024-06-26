@@ -2,6 +2,13 @@ extends GutTest
 ## Tests for CategoryFactory
 
 
+func free_block_list(blocks: Array[Block]):
+	var block: Block = blocks.pop_back()
+	while block != null:
+		block.free()
+		block = blocks.pop_back()
+
+
 func get_category_names(categories: Array[BlockCategory]) -> Array[String]:
 	var names: Array[String] = []
 	for category in categories:
@@ -11,12 +18,15 @@ func get_category_names(categories: Array[BlockCategory]) -> Array[String]:
 
 func get_class_category_names(_class_name: String) -> Array[String]:
 	var blocks: Array[Block] = CategoryFactory.get_inherited_blocks(_class_name)
-	return get_category_names(CategoryFactory.get_categories(blocks))
+	var names: Array[String] = get_category_names(CategoryFactory.get_categories(blocks))
+	free_block_list(blocks)
+	return names
 
 
 func test_general_category_names():
 	var blocks: Array[Block] = CategoryFactory.get_general_blocks()
 	var names: Array[String] = get_category_names(CategoryFactory.get_categories(blocks))
+	free_block_list(blocks)
 	assert_eq(
 		names,
 		[
