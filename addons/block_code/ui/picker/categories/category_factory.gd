@@ -16,102 +16,102 @@ const BUILTIN_PROPS: Dictionary = {
 	"Lifecycle":
 	{
 		"color": Color("ec3b59"),
-		"order": 000,
+		"order": 10,
 	},
 	"Transform | Position":
 	{
 		"color": Color("4b6584"),
-		"order": 010,
+		"order": 20,
 	},
 	"Transform | Rotation":
 	{
 		"color": Color("4b6584"),
-		"order": 011,
+		"order": 30,
 	},
 	"Transform | Scale":
 	{
 		"color": Color("4b6584"),
-		"order": 012,
+		"order": 40,
 	},
 	"Graphics | Modulate":
 	{
 		"color": Color("03aa74"),
-		"order": 013,
+		"order": 50,
 	},
 	"Graphics | Visibility":
 	{
 		"color": Color("03aa74"),
-		"order": 014,
+		"order": 60,
 	},
 	"Sounds":
 	{
 		"color": Color("e30fc0"),
-		"order": 020,
+		"order": 70,
 	},
 	"Physics | Mass":
 	{
 		"color": Color("a5b1c2"),
-		"order": 022,
+		"order": 80,
 	},
 	"Physics | Velocity":
 	{
 		"color": Color("a5b1c2"),
-		"order": 023,
+		"order": 90,
 	},
 	"Input":
 	{
 		"color": Color("d54322"),
-		"order": 024,
+		"order": 100,
 	},
 	"Communication | Methods":
 	{
 		"color": Color("4b7bec"),
-		"order": 030,
+		"order": 110,
 	},
 	"Communication | Groups":
 	{
 		"color": Color("4b7bec"),
-		"order": 031,
+		"order": 120,
 	},
 	"Info | Score":
 	{
 		"color": Color("cf6a87"),
-		"order": 031,
+		"order": 130,
 	},
 	"Loops":
 	{
 		"color": Color("20bf6b"),
-		"order": 100,
+		"order": 140,
 	},
 	"Logic | Conditionals":
 	{
 		"color": Color("45aaf2"),
-		"order": 200,
+		"order": 150,
 	},
 	"Logic | Comparison":
 	{
 		"color": Color("45aaf2"),
-		"order": 201,
+		"order": 160,
 	},
 	"Logic | Boolean":
 	{
 		"color": Color("45aaf2"),
-		"order": 202,
+		"order": 170,
 	},
 	"Variables":
 	{
 		"color": Color("ff8f08"),
-		"order": 300,
+		"order": 180,
 	},
 	"Math":
 	{
 		"color": Color("a55eea"),
-		"order": 400,
+		"order": 190,
 	},
 	"Log":
 	{
 		"color": Color("002050"),
-		"order": 99940,
+		"order": 200,
 	},
 }
 
