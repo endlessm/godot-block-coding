@@ -43,6 +43,11 @@ const BUILTIN_PROPS: Dictionary = {
 		"color": Color("03aa74"),
 		"order": 60,
 	},
+	"Graphics | Viewport":
+	{
+		"color": Color("03aa74"),
+		"order": 61,
+	},
 	"Sounds":
 	{
 		"color": Color("e30fc0"),
@@ -462,6 +467,33 @@ static func get_general_blocks() -> Array[Block]:
 	b.tooltip_text = "Play the audio stream with volume and pitch"
 	b.category = "Sounds"
 	block_list.append(b)
+#endregion
+#region Graphics
+
+	var viewport_width = ProjectSettings.get_setting("display/window/size/viewport_width")
+	var viewport_height = ProjectSettings.get_setting("display/window/size/viewport_height")
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_INT
+	b.block_format = "viewport width"
+	b.statement = "%s" % viewport_width
+	b.category = "Graphics | Viewport"
+	block_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_INT
+	b.block_format = "viewport height"
+	b.statement = "%s" % viewport_height
+	b.category = "Graphics | Viewport"
+	block_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_VECTOR2
+	b.block_format = "viewport center"
+	b.statement = "Vector2(%s, %s)" % [viewport_width / 2, viewport_height / 2]
+	b.category = "Graphics | Viewport"
+	block_list.append(b)
+
 #endregion
 
 	return block_list
