@@ -60,6 +60,10 @@ func _update_parent_script():
 	for property_name in persist_properties:
 		parent.set(property_name, persist_properties.get(property_name))
 
+	# Run simple setup after node is ready
+	if parent.has_method("simple_setup"):
+		parent.call_deferred("simple_setup")
+
 
 func _get_configuration_warnings():
 	var warnings = []

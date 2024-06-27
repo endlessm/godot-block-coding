@@ -19,6 +19,10 @@ func _set_texture(new_texture):
 
 
 func _ready():
+	simple_setup()
+
+
+func simple_setup():
 	_set_texture(texture)
 
 
