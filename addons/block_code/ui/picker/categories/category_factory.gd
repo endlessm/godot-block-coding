@@ -160,6 +160,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.block_name = "ready_block"
 	b.block_format = "On Ready"
 	b.statement = "func _ready():"
+	b.tooltip_text = 'The following will be executed when the node is "ready"'
 	b.category = "Lifecycle"
 	block_list.append(b)
 
@@ -167,6 +168,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.block_name = "process_block"
 	b.block_format = "On Process"
 	b.statement = "func _process(delta):"
+	b.tooltip_text = "The following will be executed during the processing step of the main loop"
 	b.category = "Lifecycle"
 	block_list.append(b)
 
@@ -174,12 +176,14 @@ static func get_general_blocks() -> Array[Block]:
 	b.block_name = "physics_process_block"
 	b.block_format = "On Physics Process"
 	b.statement = "func _physics_process(delta):"
+	b.tooltip_text = 'The following will be executed during the "physics" processing step of the main loop'
 	b.category = "Lifecycle"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Queue Free"
 	b.statement = "queue_free()"
+	b.tooltip_text = "Queues this node to be deleted at the end of the current frame"
 	b.category = "Lifecycle"
 	block_list.append(b)
 
@@ -229,6 +233,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.block_format = "print {text: STRING}"
 	b.statement = "print({text})"
 	b.defaults = {"text": "Hello"}
+	b.tooltip_text = "Print the text to output"
 	b.category = "Log"
 	block_list.append(b)
 
@@ -241,12 +246,14 @@ static func get_general_blocks() -> Array[Block]:
 	b.block_format = "Define method {method_name: NIL}"
 	b.statement = "func {method_name}():"
 	b.category = "Communication | Methods"
+	b.tooltip_text = "Define a method/function with following statements"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Call method {method_name: STRING} in group {group: STRING}"
 	b.statement = "get_tree().call_group({group}, {method_name})"
 	b.category = "Communication | Methods"
+	b.tooltip_text = "Calls the method/function on each member of the given group"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
@@ -259,6 +266,7 @@ static func get_general_blocks() -> Array[Block]:
 		"""
 		. dedent()
 	)
+	b.tooltip_text = "Calls the method/function of the given node"
 	b.category = "Communication | Methods"
 	block_list.append(b)
 
@@ -266,23 +274,27 @@ static func get_general_blocks() -> Array[Block]:
 	b.block_format = "Add to group {group: STRING}"
 	b.statement = "add_to_group({group})"
 	b.category = "Communication | Groups"
+	b.tooltip_text = "Add this node into the group"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Add {node: NODE_PATH} to group {group: STRING}"
 	b.statement = "get_node({node}).add_to_group({group})"
 	b.category = "Communication | Groups"
+	b.tooltip_text = "Add the node into the group"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Remove from group {group: STRING}"
 	b.statement = "remove_from_group({group})"
+	b.tooltip_text = "Remove this node from the group"
 	b.category = "Communication | Groups"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_format = "Remove {node: NODE_PATH} from group {group: STRING}"
 	b.statement = "get_node({node}).remove_from_group({group})"
+	b.tooltip_text = "Remove the node from the group"
 	b.category = "Communication | Groups"
 	block_list.append(b)
 
@@ -290,6 +302,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Is in group {group: STRING}"
 	b.statement = "is_in_group({group})"
+	b.tooltip_text = "Is this node in the group"
 	b.category = "Communication | Groups"
 	block_list.append(b)
 
@@ -297,6 +310,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Is {node: NODE_PATH} in group {group: STRING}"
 	b.statement = "get_node({node}).is_in_group({group})"
+	b.tooltip_text = "Is the node in the group"
 	b.category = "Communication | Groups"
 	block_list.append(b)
 
@@ -429,6 +443,7 @@ static func get_general_blocks() -> Array[Block]:
 		"""
 		. dedent()
 	)
+	b.tooltip_text = "Load a resource file as the audio stream"
 	b.category = "Sounds"
 	block_list.append(b)
 
@@ -444,6 +459,7 @@ static func get_general_blocks() -> Array[Block]:
 		. dedent()
 	)
 	b.defaults = {"db": "0.0", "pitch": "1.0"}
+	b.tooltip_text = "Play the audio stream with volume and pitch"
 	b.category = "Sounds"
 	block_list.append(b)
 #endregion
