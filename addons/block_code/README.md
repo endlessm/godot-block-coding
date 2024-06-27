@@ -48,6 +48,10 @@ We will now seek feedback from learners, educators and game makers, as well as r
 - Should this be a plugin or an extension?
 - Should blocks generate GDScript or be dynamically executed?
 
+## Feedback
+
+Please share feedback in the [Godot Forum Block Coding thread](https://forum.godotengine.org/t/block-coding-high-level-block-based-visual-programming/68941).
+
 ## Development
 
 ### pre-commit
