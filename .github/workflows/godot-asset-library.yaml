@@ -18,3 +18,4 @@ jobs:
           username: ${{ secrets.GODOT_ASSET_LIBRARY_USERNAME }}
           password: ${{ secrets.GODOT_ASSET_LIBRARY_PASSWORD }}
           assetId: 3095
+          assetTemplate: asset-template.json.hb
