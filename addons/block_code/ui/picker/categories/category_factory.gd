@@ -470,27 +470,24 @@ static func get_general_blocks() -> Array[Block]:
 #endregion
 #region Graphics
 
-	var viewport_width = ProjectSettings.get_setting("display/window/size/viewport_width")
-	var viewport_height = ProjectSettings.get_setting("display/window/size/viewport_height")
-
 	b = BLOCKS["parameter_block"].instantiate()
-	b.variant_type = TYPE_INT
+	b.variant_type = TYPE_FLOAT
 	b.block_format = "Viewport Width"
-	b.statement = "%s" % viewport_width
+	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.x / scale.x + get_viewport_rect().size.x / scale.x).call()"
 	b.category = "Graphics | Viewport"
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
-	b.variant_type = TYPE_INT
-	b.block_format = "viewport height"
-	b.statement = "get_viewport().get_visible_rect().size.y"
+	b.variant_type = TYPE_FLOAT
+	b.block_format = "Viewport Height"
+	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.y / scale.y + get_viewport_rect().size.y / scale.y).call()"
 	b.category = "Graphics | Viewport"
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_VECTOR2
-	b.block_format = "viewport center"
-	b.statement = "get_viewport().get_visible_rect().get_center()"
+	b.block_format = "Viewport Center"
+	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()"
 	b.category = "Graphics | Viewport"
 	block_list.append(b)
 
