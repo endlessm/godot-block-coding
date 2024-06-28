@@ -353,6 +353,13 @@ static func get_general_blocks() -> Array[Block]:
 	b.category = "Variables"
 	block_list.append(b)
 
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_VECTOR2
+	b.block_format = "Vector2 x: {x: FLOAT} y: {y: FLOAT}"
+	b.statement = "Vector2({x}, {y})"
+	b.category = "Variables"
+	block_list.append(b)
+
 #endregion
 #region Math
 
