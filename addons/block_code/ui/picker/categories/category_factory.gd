@@ -475,7 +475,7 @@ static func get_general_blocks() -> Array[Block]:
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_INT
-	b.block_format = "viewport width"
+	b.block_format = "Viewport Width"
 	b.statement = "%s" % viewport_width
 	b.category = "Graphics | Viewport"
 	block_list.append(b)
