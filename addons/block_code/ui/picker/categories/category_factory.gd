@@ -490,7 +490,7 @@ static func get_general_blocks() -> Array[Block]:
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_VECTOR2
 	b.block_format = "viewport center"
-	b.statement = "Vector2(%s, %s)" % [viewport_width / 2, viewport_height / 2]
+	b.statement = "get_viewport().get_visible_rect().get_center()"
 	b.category = "Graphics | Viewport"
 	block_list.append(b)
 
