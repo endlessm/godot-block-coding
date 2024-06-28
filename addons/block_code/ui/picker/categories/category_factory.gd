@@ -43,6 +43,11 @@ const BUILTIN_PROPS: Dictionary = {
 		"color": Color("03aa74"),
 		"order": 60,
 	},
+	"Graphics | Viewport":
+	{
+		"color": Color("03aa74"),
+		"order": 61,
+	},
 	"Sounds":
 	{
 		"color": Color("e30fc0"),
@@ -348,6 +353,13 @@ static func get_general_blocks() -> Array[Block]:
 	b.category = "Variables"
 	block_list.append(b)
 
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_VECTOR2
+	b.block_format = "Vector2 x: {x: FLOAT} y: {y: FLOAT}"
+	b.statement = "Vector2({x}, {y})"
+	b.category = "Variables"
+	block_list.append(b)
+
 #endregion
 #region Math
 
@@ -462,6 +474,30 @@ static func get_general_blocks() -> Array[Block]:
 	b.tooltip_text = "Play the audio stream with volume and pitch"
 	b.category = "Sounds"
 	block_list.append(b)
+#endregion
+#region Graphics
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_FLOAT
+	b.block_format = "Viewport Width"
+	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.x / scale.x + get_viewport_rect().size.x / scale.x).call()"
+	b.category = "Graphics | Viewport"
+	block_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_FLOAT
+	b.block_format = "Viewport Height"
+	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.y / scale.y + get_viewport_rect().size.y / scale.y).call()"
+	b.category = "Graphics | Viewport"
+	block_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.variant_type = TYPE_VECTOR2
+	b.block_format = "Viewport Center"
+	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()"
+	b.category = "Graphics | Viewport"
+	block_list.append(b)
+
 #endregion
 
 	return block_list

@@ -31,6 +31,7 @@ func test_general_category_names():
 		names,
 		[
 			"Lifecycle",
+			"Graphics | Viewport",
 			"Sounds",
 			"Input",
 			"Communication | Methods",
