@@ -71,3 +71,20 @@ Now `pre-commit` will run automatically on `git commit`!
 ### Testing
 
 This plugin uses the [Godot Unit Test](https://gut.readthedocs.io/en/latest/) (GUT) plugin for testing. In the editor, select the **GUT** tab in the bottom panel to open the test panel. Then select **Run All** to run the tests.
+
+Tests can also be run from the command line using the GUT command line script:
+
+```
+godot --path . --headless --script addons/gut/gut_cmdln.gd -gexit
+```
+
+A few options are of note here. `--path` instructs Godot to use the project in
+the current directory. `--headless` instructs Godot to run without a display or
+sound. `--script` instructs Godot to run the GUT command line script instead of
+running the main scene. `-gexit` is an option for the GUT command line script
+that instructs GUT to exit after the tests complete.
+
+There are several other GUT command line options for running specific tests.
+For example, `-gtest=path/to/test_script_1.gd,path/to/test_script_2.gd` can be
+used to run specific test scripts. A specific test function can be specified
+with `-gunit_test_name=test_to_run`.
