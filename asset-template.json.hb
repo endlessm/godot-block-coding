@@ -7,7 +7,7 @@
   "cost": "MIT",
   "support_level": "community",
   "download_provider": "GitHub",
-  "download_commit": "{{ context.release.tag_name }}",
+  "download_commit": "{{ env.GITHUB_SHA }}",
   "browse_url": "{{ context.repository.html_url }}",
   "issues_url": "{{ context.repository.html_url }}/issues",
   "icon_url": "https://raw.githubusercontent.com/endlessm/godot-block-coding/{{ context.release.tag_name }}/icon.png"
