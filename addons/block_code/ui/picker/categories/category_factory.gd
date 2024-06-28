@@ -635,6 +635,17 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			b.category = "Input"
 			block_list.append(b)
 
+			b = BLOCKS["statement_block"].instantiate()
+			b.block_type = Types.BlockType.EXECUTE
+			b.block_format = "Move and slide"
+			b.statement = "move_and_slide()"
+			b.category = "Physics | Velocity"
+			block_list.append(b)
+
+			props = {
+				"velocity": "Physics | Velocity",
+			}
+
 	var prop_list = ClassDB.class_get_property_list(_class_name, true)
 	block_list.append_array(blocks_from_property_list(prop_list, props))
 
