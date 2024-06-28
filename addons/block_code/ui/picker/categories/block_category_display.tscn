@@ -10,53 +10,25 @@ offset_right = -918.0
 offset_bottom = -246.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_bottom = 40
 script = ExtResource("1_wkdht")
 
-[node name="Background" type="ColorRect" parent="."]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-custom_minimum_size = Vector2(400, 0)
-layout_mode = 2
-
-[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 4)
-layout_mode = 2
-
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
-toggle_mode = true
-text = "Category"
-flat = true
-alignment = 0
-icon_alignment = 2
+theme_override_font_sizes/font_size = 18
+text = "Example Category
+"
 
-[node name="BlocksContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-
-[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/BlocksContainer"]
-custom_minimum_size = Vector2(0, 4)
-layout_mode = 2
-
-[node name="Blocks" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BlocksContainer"]
+[node name="Blocks" type="VBoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 14
-
-[node name="Spacer3" type="Control" parent="MarginContainer/VBoxContainer/BlocksContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-
-[connection signal="toggled" from="MarginContainer/VBoxContainer/Button" to="." method="_on_button_toggled"]
