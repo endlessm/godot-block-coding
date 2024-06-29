@@ -36,6 +36,15 @@ func add_block(block: Block, position: Vector2 = Vector2.ZERO) -> void:
 	_window.custom_minimum_size.y = max(block.position.y + EXTEND_MARGIN, _window.custom_minimum_size.y)
 
 
+func get_blocks() -> Array[Block]:
+	var blocks: Array[Block] = []
+	for child in _window.get_children():
+		var block = child as Block
+		if block:
+			blocks.append(block)
+	return blocks
+
+
 func arrange_block(block: Block, nearby_block: Block) -> void:
 	add_block(block)
 	block.global_position = (nearby_block.global_position + (nearby_block.get_size() * Vector2.RIGHT) + BLOCK_AUTO_PLACE_MARGIN)

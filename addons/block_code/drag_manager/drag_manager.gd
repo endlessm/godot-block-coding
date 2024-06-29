@@ -37,7 +37,7 @@ class Drag:
 
 	var snap_block: Block:
 		get:
-			return target_snap_point.block if target_snap_point else null
+			return target_snap_point.get_parent_block() if target_snap_point else null
 
 	func _init(block: Block, block_scope: String, offset: Vector2, block_canvas: BlockCanvas):
 		assert(block.get_parent() == null)
@@ -89,10 +89,6 @@ class Drag:
 			push_error("Warning: node %s is not of class SnapPoint." % node)
 			return false
 
-		if _snap_point.block == null:
-			push_error("Warning: snap point %s does not reference its parent block." % _snap_point)
-			return false
-
 		if not _block_canvas.is_ancestor_of(_snap_point):
 			# We only snap to blocks on the canvas:
 			return false
@@ -109,26 +105,28 @@ class Drag:
 			return false
 
 		# Check if any parent node is this node
-		var parent = _snap_point
-		var top_block
-		while parent is SnapPoint:
-			if parent.block == _block:
-				return false
+		if _snap_point.is_ancestor_of(_block):
+			return false
 
-			top_block = parent.block
-			parent = parent.block.get_parent()
+		var top_block = _get_top_block_for_node(_snap_point)
 
 		# Check if scope is valid
 		if _block_scope != "":
 			if top_block is EntryBlock:
 				if _block_scope != top_block.get_entry_statement():
 					return false
-			else:
+			elif top_block:
 				var tree_scope := DragManager.get_tree_scope(top_block)
 				if tree_scope != "" and _block_scope != tree_scope:
 					return false
 
 		return true
+
+	func _get_top_block_for_node(node: Node) -> Block:
+		for top_block in _block_canvas.get_blocks():
+			if top_block.is_ancestor_of(node):
+				return top_block
+		return null
 
 	func sort_snap_points_by_distance(a: SnapPoint, b: SnapPoint):
 		return _get_distance_to_snap_point(a) < _get_distance_to_snap_point(b)
@@ -249,12 +247,6 @@ func drag_ended():
 func connect_block_canvas_signals(block: Block):
 	block.drag_started.connect(drag_block)
 	block.modified.connect(func(): block_modified.emit())
-
-
-func drag_copy_parameter(block: Block, parent: Block):
-	if parent is EntryBlock:
-		block.scope = parent.get_entry_statement()
-	copy_picked_block_and_drag(block)
 
 
 ## Returns the scope of the first non-empty scope child block

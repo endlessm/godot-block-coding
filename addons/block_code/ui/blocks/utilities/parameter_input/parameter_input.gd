@@ -7,13 +7,9 @@ signal modified
 @export var placeholder: String = "Parameter":
 	set = _set_placeholder
 
-@export var block_path: NodePath
-
 @export var variant_type: Variant.Type = TYPE_STRING
 @export var block_type: Types.BlockType = Types.BlockType.VALUE
 var option: bool = false
-
-var block: Block
 
 @onready var _panel := %Panel
 @onready var snap_point := %SnapPoint
@@ -94,9 +90,6 @@ func _ready():
 
 	_set_placeholder(placeholder)
 
-	if block == null:
-		block = get_node_or_null(block_path)
-	snap_point.block = block
 	snap_point.block_type = block_type
 	snap_point.variant_type = variant_type
 

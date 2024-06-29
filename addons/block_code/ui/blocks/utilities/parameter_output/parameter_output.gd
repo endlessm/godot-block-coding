@@ -5,17 +5,12 @@ extends MarginContainer
 var block: Block
 var output_block: Block
 
-@export var block_path: NodePath
-
 @export var block_params: Dictionary
 
 @onready var _snap_point := %SnapPoint
 
 
 func _ready():
-	if block == null:
-		block = get_node_or_null(block_path)
-	_snap_point.block = block
 	_snap_point.block_type = Types.BlockType.NONE
 
 	_update_parameter_block()

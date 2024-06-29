@@ -135,7 +135,6 @@ static func format_string(parent_block: Block, attach_to: Node, string: String, 
 				parameter_input.variant_type = param_type
 			elif option:
 				parameter_input.option = true
-			parameter_input.block = parent_block
 			parameter_input.modified.connect(func(): parent_block.modified.emit())
 
 			attach_to.add_child(parameter_input)
