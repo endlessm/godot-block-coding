@@ -41,28 +41,24 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Print Generated Script"
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/ScriptVBox"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer"]
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/HBoxContainer/ScriptVBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Picker" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/HBoxContainer" instance=ExtResource("2_hv5f3")]
+[node name="Picker" parent="MarginContainer/HBoxContainer/ScriptVBox/HSplitContainer" instance=ExtResource("2_hv5f3")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="NodeBlockCanvas" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/HBoxContainer" instance=ExtResource("3_ml5y3")]
+[node name="NodeBlockCanvas" parent="MarginContainer/HBoxContainer/ScriptVBox/HSplitContainer" instance=ExtResource("3_ml5y3")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="DragManager" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer" instance=ExtResource("4_yijtu")]
+[node name="DragManager" parent="MarginContainer/HBoxContainer/ScriptVBox" instance=ExtResource("4_yijtu")]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-picker_path = NodePath("../HBoxContainer/Picker")
-block_canvas_path = NodePath("../HBoxContainer/NodeBlockCanvas")
+picker_path = NodePath("../HSplitContainer/Picker")
+block_canvas_path = NodePath("../HSplitContainer/NodeBlockCanvas")
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/ScriptVBox/HBoxContainer/Button" to="." method="_on_button_pressed"]

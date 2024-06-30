@@ -11,41 +11,26 @@ script = ExtResource("1_tkt44")
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="CategoryMarginContainer" type="MarginContainer" parent="HBoxContainer"]
+[node name="CategoryScroll" type="ScrollContainer" parent="HSplitContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 12
 
-[node name="CategoryScroll" type="ScrollContainer" parent="HBoxContainer/CategoryMarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-horizontal_scroll_mode = 0
-
-[node name="CategoryList" type="VBoxContainer" parent="HBoxContainer/CategoryMarginContainer/CategoryScroll"]
+[node name="CategoryList" type="VBoxContainer" parent="HSplitContainer/CategoryScroll"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="BlockMarginContainer" type="MarginContainer" parent="HBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 12
-
-[node name="BlockScroll" type="ScrollContainer" parent="HBoxContainer/BlockMarginContainer"]
+[node name="BlockScroll" type="ScrollContainer" parent="HSplitContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-horizontal_scroll_mode = 0
 
-[node name="BlockList" type="VBoxContainer" parent="HBoxContainer/BlockMarginContainer/BlockScroll"]
+[node name="BlockList" type="VBoxContainer" parent="HSplitContainer/BlockScroll"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_constants/separation = 0
