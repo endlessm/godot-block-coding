@@ -691,6 +691,16 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 static func _get_input_blocks() -> Array[Block]:
 	var block_list: Array[Block]
 
+	var editor_input_actions: Dictionary = {}
+	var editor_input_action_deadzones: Dictionary = {}
+	if Engine.is_editor_hint():
+		var actions := InputMap.get_actions()
+		for action in actions:
+			if action.begins_with("spatial_editor"):
+				var events := InputMap.action_get_events(action)
+				editor_input_actions[action] = events
+				editor_input_action_deadzones[action] = InputMap.action_get_deadzone(action)
+
 	InputMap.load_from_project_settings()
 
 	var block: Block = BLOCKS["parameter_block"].instantiate()
@@ -700,5 +710,11 @@ static func _get_input_blocks() -> Array[Block]:
 	block.defaults = {"action_name": OptionData.new(InputMap.get_actions()), "action": OptionData.new(["pressed", "just_pressed", "just_released"])}
 	block.category = "Input"
 	block_list.append(block)
+
+	if Engine.is_editor_hint():
+		for action in editor_input_actions.keys():
+			InputMap.add_action(action, editor_input_action_deadzones[action])
+			for event in editor_input_actions[action]:
+				InputMap.action_add_event(action, event)
 
 	return block_list
