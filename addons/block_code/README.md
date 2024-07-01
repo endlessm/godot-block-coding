@@ -24,9 +24,11 @@ That said, we are in no way opposed to having this project grow to be able to cr
 1. Install the plugin through the Godot AssetLib searching for the name
    Block Coding. You can also download it from the online [Asset
    Library](https://godotengine.org/asset-library/asset/3095) and import
-   it through AssetLib. Finally, you can clone the git repository and
+   it through AssetLib. Alternatively, you can clone the git repository and
    drag the `addons/block_code/` directory into your project's
-   `res://addons/` directory.
+   `res://addons/` directory. *If you want to open the cloned repository
+   project, reload the project once after opening it for the first time
+   to resolve any errors. This is a Godot issue.*
 
 2. Make sure to enable the plugin in **Project** → **Project Settings** → **Plugins**.
 
