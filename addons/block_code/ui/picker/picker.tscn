@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://addons/block_code/ui/picker/picker.gd" id="1_tkt44"]
 
 [node name="Picker" type="MarginContainer"]
-custom_minimum_size = Vector2(200, 0)
 offset_right = 251.0
 offset_bottom = 253.0
 script = ExtResource("1_tkt44")
@@ -11,41 +10,45 @@ script = ExtResource("1_tkt44")
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="WidgetContainer" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="CategoryMarginContainer" type="MarginContainer" parent="HBoxContainer"]
+[node name="CategoryMarginContainer" type="MarginContainer" parent="WidgetContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 12
 
-[node name="CategoryScroll" type="ScrollContainer" parent="HBoxContainer/CategoryMarginContainer"]
+[node name="CategoryScroll" type="ScrollContainer" parent="WidgetContainer/CategoryMarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_scroll_mode = 0
 
-[node name="CategoryList" type="VBoxContainer" parent="HBoxContainer/CategoryMarginContainer/CategoryScroll"]
+[node name="CategoryList" type="VBoxContainer" parent="WidgetContainer/CategoryMarginContainer/CategoryScroll"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="BlockMarginContainer" type="MarginContainer" parent="HBoxContainer"]
+[node name="BlockMarginContainer" type="MarginContainer" parent="WidgetContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="BlockScroll" type="ScrollContainer" parent="HBoxContainer/BlockMarginContainer"]
+[node name="BlockScroll" type="ScrollContainer" parent="WidgetContainer/BlockMarginContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-horizontal_scroll_mode = 0
+horizontal_scroll_mode = 3
 
-[node name="BlockList" type="VBoxContainer" parent="HBoxContainer/BlockMarginContainer/BlockScroll"]
+[node name="BlockList" type="VBoxContainer" parent="WidgetContainer/BlockMarginContainer/BlockScroll"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 0

@@ -7,6 +7,7 @@ signal block_picked(block: Block)
 @onready var _block_list := %BlockList
 @onready var _block_scroll := %BlockScroll
 @onready var _category_list := %CategoryList
+@onready var _widget_container := %WidgetContainer
 
 
 func bsd_selected(bsd: BlockScriptData):
@@ -78,3 +79,7 @@ func _category_selected(category: BlockCategory):
 		if block_category_display.category.name == category.name:
 			_block_scroll.scroll_vertical = block_category_display.position.y
 			break
+
+
+func set_collapsed(collapsed: bool):
+	_widget_container.visible = not collapsed

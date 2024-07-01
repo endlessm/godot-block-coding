@@ -45,24 +45,46 @@ text = "Print Generated Script"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer"]
+[node name="PickerSplit" type="HSplitContainer" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Picker" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/HBoxContainer" instance=ExtResource("2_hv5f3")]
+[node name="Picker" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit" instance=ExtResource("2_hv5f3")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="NodeBlockCanvas" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/HBoxContainer" instance=ExtResource("3_ml5y3")]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit/MarginContainer"]
+layout_mode = 2
+
+[node name="NodeBlockCanvas" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit/MarginContainer/VBoxContainer" instance=ExtResource("3_ml5y3")]
 unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BottomBar" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CollapseButton" type="Button" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit/MarginContainer/VBoxContainer/BottomBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Collapse the picker toolbar. Shortcut (Ctrl-Space)"
+flat = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit/MarginContainer/VBoxContainer/BottomBar"]
 layout_mode = 2
 
 [node name="DragManager" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer" instance=ExtResource("4_yijtu")]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-picker_path = NodePath("../HBoxContainer/Picker")
-block_canvas_path = NodePath("../HBoxContainer/NodeBlockCanvas")
+picker_path = NodePath("../PickerSplit/Picker")
+block_canvas_path = NodePath("../PickerSplit/MarginContainer/VBoxContainer/NodeBlockCanvas")
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/ScriptVBox/HBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit/MarginContainer/VBoxContainer/BottomBar/CollapseButton" to="." method="_on_collapse_button_pressed"]
