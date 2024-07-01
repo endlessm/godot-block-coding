@@ -5,11 +5,11 @@
 
 [node name="EntryBlock" instance=ExtResource("1_byjbb")]
 script = ExtResource("2_3ik8h")
-defaults = null
+signal_name = ""
+defaults = {}
 block_name = "entry_block"
 label = "EntryBlock"
 block_type = 1
-
 
 [node name="Background" parent="VBoxContainer/TopMarginContainer" index="0"]
 show_top = false

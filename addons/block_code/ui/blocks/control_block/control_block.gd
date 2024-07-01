@@ -145,7 +145,6 @@ func format():
 		snap_container.add_theme_constant_override("margin_left", Constants.CONTROL_MARGIN)
 
 		var snap_point: SnapPoint = preload("res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn").instantiate()
-		snap_point.block = self
 		snap_container.add_child(snap_point)
 
 		snaps.append(snap_point)

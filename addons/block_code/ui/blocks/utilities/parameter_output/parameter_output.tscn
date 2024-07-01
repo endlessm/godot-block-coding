@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://dp01u74qkty7r"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/parameter_output/parameter_output.gd" id="1_eebb2"]
+[ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="2_ngr7c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tn6h4"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[node name="ParameterOutput" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1052.0
+offset_bottom = -617.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_eebb2")
+
+[node name="Panel" type="Panel" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tn6h4")
+
+[node name="SnapPoint" parent="." node_paths=PackedStringArray("snapped_block") instance=ExtResource("2_ngr7c")]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+block_type = 0
+snapped_block = NodePath("ParameterBlock")
+variant_type = 4
+
+[connection signal="child_exiting_tree" from="." to="SnapPoint" method="_on_parameter_output_child_exiting_tree"]
+[connection signal="snapped_block_changed" from="SnapPoint" to="." method="_on_snap_point_snapped_block_changed"]
+[connection signal="snapped_block_removed" from="SnapPoint" to="." method="_on_snap_point_snapped_block_removed"]
