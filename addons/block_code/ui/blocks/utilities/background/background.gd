@@ -77,14 +77,9 @@ func _draw():
 	]
 
 	var stroke_polygon = []
-	if shift_top == 0:
-		stroke_polygon += [
-			[0.0, 0.0],
-		]
-	else:
-		stroke_polygon += [
-			[shift_top, 0.0],
-		]
+	stroke_polygon += [
+		[shift_top, 0.0],
+	]
 	if show_top:
 		stroke_polygon += [
 			[Constants.KNOB_X + shift_top, 0.0],
@@ -100,14 +95,10 @@ func _draw():
 		[Constants.KNOB_X + Constants.KNOB_Z + shift_bottom, size.y + Constants.KNOB_H],
 		[Constants.KNOB_X + shift_bottom, size.y],
 	]
-	if shift_bottom == 0:
-		stroke_polygon += [
-			[0.0, size.y],
-		]
-	else:
-		stroke_polygon += [
-			[shift_bottom, size.y],
-		]
+
+	stroke_polygon += [
+		[shift_bottom, size.y],
+	]
 	if shift_top + shift_bottom == 0:
 		stroke_polygon += [
 			[0.0, 0.0],
