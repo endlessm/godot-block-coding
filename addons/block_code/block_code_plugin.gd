@@ -13,7 +13,6 @@ const DISABLED_CLASSES := [
 	"BlockScriptData",
 	"DragManager",
 	"InstructionTree",
-	"EditorInterfaceAccess",
 	"Types",
 	"BasicBlock",
 	"Block",

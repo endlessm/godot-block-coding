@@ -2,8 +2,6 @@
 class_name MainPanel
 extends Control
 
-var eia: EditorInterfaceAccess
-
 @onready var _picker: Picker = %Picker
 @onready var _block_canvas: BlockCanvas = %NodeBlockCanvas
 @onready var _drag_manager: DragManager = %DragManager
@@ -15,7 +13,6 @@ var eia: EditorInterfaceAccess
 @onready var _icon_collapse := EditorInterface.get_editor_theme().get_icon("Back", "EditorIcons")
 @onready var _icon_expand := EditorInterface.get_editor_theme().get_icon("Forward", "EditorIcons")
 
-var block_code_tab: Button
 var _current_block_code_node: BlockCode
 var _scene_root: Node
 var _block_code_nodes: Array
@@ -30,10 +27,7 @@ func _ready():
 	_drag_manager.block_dropped.connect(save_script)
 	_drag_manager.block_modified.connect(save_script)
 
-	eia = EditorInterfaceAccess.new()
-
 	# Setup block scripting environment
-	block_code_tab = eia.Utils.find_child_by_name(eia.context_switcher, "Block Code")
 	undo_redo.version_changed.connect(_on_undo_redo_version_changed)
 
 	_collapse_button.icon = _icon_collapse
@@ -64,7 +58,7 @@ func switch_script(block_code_node: BlockCode):
 	_title_bar.bsd_selected(block_script)
 	_block_canvas.bsd_selected(block_script)
 	if block_code_node:
-		block_code_tab.pressed.emit()
+		EditorInterface.set_main_screen_editor("Block Code")
 
 
 func save_script():
