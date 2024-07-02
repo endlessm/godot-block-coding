@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Push to Godot Asset Library
-        uses: wjt/godot-asset-lib-action@fd3395aa70bba333c0d3cc33c78dc03c18d149ae
+        uses: wjt/godot-asset-lib-action@9cce3792b504bec69eb06b852b008d095e372f56
         with:
           username: ${{ secrets.GODOT_ASSET_LIBRARY_USERNAME }}
           password: ${{ secrets.GODOT_ASSET_LIBRARY_PASSWORD }}
