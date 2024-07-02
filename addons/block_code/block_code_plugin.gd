@@ -41,7 +41,8 @@ const DISABLED_CLASSES := [
 	"Picker",
 	"TitleBar",
 	"MainPanel",
-	"BlockCodePlugin"
+	"BlockCodePlugin",
+	"BlockCategoryButton"
 ]
 
 

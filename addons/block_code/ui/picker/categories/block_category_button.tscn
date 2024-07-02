@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://bdtetj0gs45hv"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/picker/categories/block_category_button.gd" id="1_pxxnl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eogpc"]
+bg_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ousiv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fyk0j"]
+bg_color = Color(1, 1, 1, 0.196078)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ha83k"]
+bg_color = Color(1, 1, 1, 0.392157)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dgecf"]
+
+[node name="BlockCategoryButton" type="MarginContainer"]
+custom_minimum_size = Vector2(150, 0)
+offset_right = 148.0
+offset_bottom = 32.0
+script = ExtResource("1_pxxnl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_eogpc")
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Example"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ousiv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fyk0j")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ha83k")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dgecf")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -9,11 +9,17 @@ var eia: EditorInterfaceAccess
 @onready var _drag_manager: DragManager = %DragManager
 @onready var _title_bar: TitleBar = %TitleBar
 @onready var _editor_inspector: EditorInspector = EditorInterface.get_inspector()
+@onready var _picker_split: HSplitContainer = %PickerSplit
+@onready var _collapse_button: Button = %CollapseButton
+
+@onready var _icon_collapse := EditorInterface.get_editor_theme().get_icon("Back", "EditorIcons")
+@onready var _icon_expand := EditorInterface.get_editor_theme().get_icon("Forward", "EditorIcons")
 
 var block_code_tab: Button
 var _current_block_code_node: BlockCode
 var _scene_root: Node
 var _block_code_nodes: Array
+var _collapsed: bool = false
 
 var undo_redo: EditorUndoRedoManager
 
@@ -29,6 +35,8 @@ func _ready():
 	# Setup block scripting environment
 	block_code_tab = eia.Utils.find_child_by_name(eia.context_switcher, "Block Code")
 	undo_redo.version_changed.connect(_on_undo_redo_version_changed)
+
+	_collapse_button.icon = _icon_collapse
 
 
 func _on_undo_redo_version_changed():
@@ -92,6 +100,11 @@ func _input(event):
 			else:
 				_drag_manager.drag_ended()
 
+	if event is InputEventKey:
+		if Input.is_key_pressed(KEY_CTRL) and event.pressed and event.keycode == KEY_BACKSLASH:
+			_collapse_button.button_pressed = not _collapse_button.button_pressed
+			toggle_collapse()
+
 
 func _print_generated_script():
 	if _current_block_code_node == null:
@@ -100,3 +113,15 @@ func _print_generated_script():
 	var script: String = _block_canvas.generate_script_from_current_window(block_script.script_inherits)
 	print(script)
 	print("Debug script! (not saved)")
+
+
+func toggle_collapse():
+	_collapsed = not _collapsed
+
+	_collapse_button.icon = _icon_expand if _collapsed else _icon_collapse
+	_picker.set_collapsed(_collapsed)
+	_picker_split.collapsed = _collapsed
+
+
+func _on_collapse_button_pressed():
+	toggle_collapse()

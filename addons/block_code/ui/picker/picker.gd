@@ -5,6 +5,9 @@ extends MarginContainer
 signal block_picked(block: Block)
 
 @onready var _block_list := %BlockList
+@onready var _block_scroll := %BlockScroll
+@onready var _category_list := %CategoryList
+@onready var _widget_container := %WidgetContainer
 
 
 func bsd_selected(bsd: BlockScriptData):
@@ -33,6 +36,9 @@ func bsd_selected(bsd: BlockScriptData):
 
 
 func reset_picker():
+	for c in _category_list.get_children():
+		c.queue_free()
+
 	for c in _block_list.get_children():
 		c.queue_free()
 
@@ -46,6 +52,12 @@ func init_picker(extra_blocks: Array[Block] = [], extra_categories: Array[BlockC
 	for _category in block_categories:
 		var category: BlockCategory = _category as BlockCategory
 
+		var block_category_button: BlockCategoryButton = preload("res://addons/block_code/ui/picker/categories/block_category_button.tscn").instantiate()
+		block_category_button.category = category
+		block_category_button.selected.connect(_category_selected)
+
+		_category_list.add_child(block_category_button)
+
 		var block_category_display := preload("res://addons/block_code/ui/picker/categories/block_category_display.tscn").instantiate()
 		block_category_display.category = category
 
@@ -55,6 +67,19 @@ func init_picker(extra_blocks: Array[Block] = [], extra_categories: Array[BlockC
 			var block: Block = _block as Block
 			block.drag_started.connect(_block_picked)
 
+		_block_scroll.scroll_vertical = 0
+
 
 func _block_picked(block: Block):
 	block_picked.emit(block)
+
+
+func _category_selected(category: BlockCategory):
+	for block_category_display in _block_list.get_children():
+		if block_category_display.category.name == category.name:
+			_block_scroll.scroll_vertical = block_category_display.position.y
+			break
+
+
+func set_collapsed(collapsed: bool):
+	_widget_container.visible = not collapsed
