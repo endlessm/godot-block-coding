@@ -12,6 +12,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Check tag is annotated
+        run: |
+          [[ $(git cat-file -t ${{ github.event.release.tag_name }}) == "tag" ]]
       - name: Push to Godot Asset Library
         uses: wjt/godot-asset-lib-action@9cce3792b504bec69eb06b852b008d095e372f56
         with:
