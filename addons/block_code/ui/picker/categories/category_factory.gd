@@ -328,38 +328,6 @@ static func get_general_blocks() -> Array[Block]:
 
 #endregion
 #region Variables
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_format = "Set String {var: STRING} {value: STRING}"
-	b.statement = "VAR_DICT[{var}] = {value}"
-	b.category = "Variables"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_format = "Get String {var: STRING}"
-	b.statement = "VAR_DICT[{var}]"
-	b.category = "Variables"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_format = "Set Int {var: STRING} {value: INT}"
-	b.statement = "VAR_DICT[{var}] = {value}"
-	b.category = "Variables"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.variant_type = TYPE_INT
-	b.block_format = "Get Int {var: STRING}"
-	b.statement = "VAR_DICT[{var}]"
-	b.category = "Variables"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_format = "To String {int: INT}"
-	b.statement = "str({int})"
-	b.category = "Variables"
-	block_list.append(b)
-
 	b = BLOCKS["parameter_block"].instantiate()
 	b.variant_type = TYPE_VECTOR2
 	b.block_format = "Vector2 x: {x: FLOAT} y: {y: FLOAT}"
@@ -513,10 +481,10 @@ static func get_general_blocks() -> Array[Block]:
 static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 	var block_list: Array[Block] = []
 
-	var block_type = property.type
+	var variant_type = property.type
 
-	if block_type:
-		var type_string: String = Types.VARIANT_TYPE_TO_STRING[block_type]
+	if variant_type:
+		var type_string: String = Types.VARIANT_TYPE_TO_STRING[variant_type]
 
 		var b = BLOCKS["statement_block"].instantiate()
 		b.block_format = "Set %s to {value: %s}" % [property.name.capitalize(), type_string]
@@ -531,7 +499,7 @@ static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 		block_list.append(b)
 
 		b = BLOCKS["parameter_block"].instantiate()
-		b.block_type = block_type
+		b.variant_type = variant_type
 		b.block_format = "%s" % property.name.capitalize()
 		b.statement = "%s" % property.name
 		b.category = property.category
@@ -764,5 +732,29 @@ static func _get_input_blocks() -> Array[Block]:
 			InputMap.add_action(action, editor_input_action_deadzones[action])
 			for event in editor_input_actions[action]:
 				InputMap.action_add_event(action, event)
+
+	return block_list
+
+
+static func get_variable_blocks(variables: Array[VariableResource]):
+	var block_list: Array[Block]
+
+	for variable in variables:
+		var type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
+
+		var b = BLOCKS["parameter_block"].instantiate()
+		b.variant_type = variable.var_type
+		b.block_format = variable.var_name
+		b.statement = variable.var_name
+		# HACK: Color the blocks since they are outside of the normal picker system
+		b.color = BUILTIN_PROPS["Variables"].color
+		block_list.append(b)
+
+		b = BLOCKS["statement_block"].instantiate()
+		b.block_type = Types.BlockType.EXECUTE
+		b.block_format = "Set %s to {value: %s}" % [variable.var_name, type_string]
+		b.statement = "%s = {value}" % [variable.var_name]
+		b.color = BUILTIN_PROPS["Variables"].color
+		block_list.append(b)
 
 	return block_list

@@ -3,6 +3,7 @@ class_name Picker
 extends MarginContainer
 
 signal block_picked(block: Block)
+signal variable_created(variable: VariableResource)
 
 @onready var _block_list := %BlockList
 @onready var _block_scroll := %BlockScroll
@@ -10,6 +11,7 @@ signal block_picked(block: Block)
 @onready var _widget_container := %WidgetContainer
 
 var scroll_tween: Tween
+var _variable_category_display: VariableCategoryDisplay = null
 
 
 func bsd_selected(bsd: BlockScriptData):
@@ -35,6 +37,7 @@ func bsd_selected(bsd: BlockScriptData):
 	blocks_to_add.append_array(CategoryFactory.get_inherited_blocks(parent_class))
 
 	init_picker(blocks_to_add, categories_to_add)
+	reload_variables(bsd.variables)
 
 
 func reset_picker():
@@ -60,7 +63,14 @@ func init_picker(extra_blocks: Array[Block] = [], extra_categories: Array[BlockC
 
 		_category_list.add_child(block_category_button)
 
-		var block_category_display := preload("res://addons/block_code/ui/picker/categories/block_category_display.tscn").instantiate()
+		var block_category_display: BlockCategoryDisplay
+		if category.name != "Variables":
+			block_category_display = preload("res://addons/block_code/ui/picker/categories/block_category_display.tscn").instantiate()
+		else:
+			block_category_display = preload("res://addons/block_code/ui/picker/categories/variable_category/variable_category_display.tscn").instantiate()
+			block_category_display.variable_created.connect(func(variable): variable_created.emit(variable))
+			_variable_category_display = block_category_display
+
 		block_category_display.category = category
 
 		_block_list.add_child(block_category_display)
@@ -92,3 +102,19 @@ func _category_selected(category: BlockCategory):
 
 func set_collapsed(collapsed: bool):
 	_widget_container.visible = not collapsed
+
+
+func reload_variables(variables: Array[VariableResource]):
+	if _variable_category_display:
+		for c in _variable_category_display.variable_blocks.get_children():
+			c.queue_free()
+
+		var i := 1
+		for block in CategoryFactory.get_variable_blocks(variables):
+			_variable_category_display.variable_blocks.add_child(block)
+			block.drag_started.connect(_block_picked)
+			if i % 2 == 0:
+				var spacer := Control.new()
+				spacer.custom_minimum_size.y = 12
+				_variable_category_display.variable_blocks.add_child(spacer)
+			i += 1

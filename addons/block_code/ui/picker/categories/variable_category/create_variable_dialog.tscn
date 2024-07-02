@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbrm7wwkao0c0"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.gd" id="1_b52me"]
+
+[node name="CreateVariableDialog" type="ConfirmationDialog"]
+title = "Create New Variable"
+initial_position = 1
+size = Vector2i(300, 183)
+visible = true
+ok_button_text = "Create"
+script = ExtResource("1_b52me")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 292.0
+offset_bottom = 134.0
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Name "
+
+[node name="VariableInput" type="LineEdit" parent="VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Type "
+
+[node name="TypeOption" type="OptionButton" parent="VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 6
+selected = 0
+popup/item_0/text = "STRING"
+popup/item_0/id = 0
+popup/item_1/text = "BOOL"
+popup/item_1/id = 1
+popup/item_2/text = "INT"
+popup/item_2/id = 2
+popup/item_3/text = "FLOAT"
+popup/item_3/id = 3
+popup/item_4/text = "VECTOR2"
+popup/item_4/id = 4
+popup/item_5/text = "COLOR"
+popup/item_5/id = 5
+
+[node name="ErrorsContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 8
+
+[node name="Messages" type="RichTextLabel" parent="VBoxContainer/ErrorsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_constants/line_separation = 4
+fit_content = true
+
+[connection signal="canceled" from="." to="." method="_on_canceled"]
+[connection signal="confirmed" from="." to="." method="_on_confirmed"]
+[connection signal="text_changed" from="VBoxContainer/GridContainer/VariableInput" to="." method="_on_variable_input_text_changed"]
