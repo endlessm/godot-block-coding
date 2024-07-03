@@ -103,7 +103,14 @@ func _on_scene_changed(scene_root: Node):
 
 
 func _on_editor_inspector_edited_object_changed():
-	var block_code: BlockCode = editor_inspector.get_edited_object() as BlockCode
+	var edited_node: Node = editor_inspector.get_edited_object() as Node
+	var block_code: BlockCode = edited_node as BlockCode
+	if block_code == null and edited_node:
+		# As a fallback, check if the edited node has a BlockCode node as a
+		# child and use that. We will only check one level deep to avoid
+		# confusing scenarios where a node could have multiple children, each
+		# with their own BlockCode nodes.
+		block_code = edited_node.find_children("*", "BlockCode", false).pop_front()
 	BlockCodePlugin.main_panel.switch_script(block_code)
 	if block_code:
 		make_bottom_panel_item_visible(main_panel)
