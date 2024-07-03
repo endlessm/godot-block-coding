@@ -52,48 +52,34 @@ func _draw():
 	var fill_polygon: PackedVector2Array
 	fill_polygon.append(Vector2(0.0, 0.0))
 	if show_top:
-		fill_polygon.append_array(PackedVector2Array(
-			[
-				Vector2(Constants.KNOB_X + shift_top, 0.0),
-				Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_top, Constants.KNOB_H),
-				Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_top, Constants.KNOB_H),
-				Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_top, 0.0),
-			]
-		))
-	fill_polygon.append_array(PackedVector2Array(
-		[
-			Vector2(size.x, 0.0),
-			Vector2(size.x, size.y),
-			Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_bottom, size.y),
-			Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_bottom, size.y + Constants.KNOB_H),
-			Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_bottom, size.y + Constants.KNOB_H),
-			Vector2(Constants.KNOB_X + shift_bottom, size.y),
-			Vector2(0.0, size.y),
-			Vector2(0.0, 0.0),
-		]
-	))
+		fill_polygon.append(Vector2(Constants.KNOB_X + shift_top, 0.0))
+		fill_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_top, Constants.KNOB_H))
+		fill_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_top, Constants.KNOB_H))
+		fill_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_top, 0.0))
+
+	fill_polygon.append(Vector2(size.x, 0.0))
+	fill_polygon.append(Vector2(size.x, size.y))
+	fill_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_bottom, size.y))
+	fill_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_bottom, size.y + Constants.KNOB_H))
+	fill_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_bottom, size.y + Constants.KNOB_H))
+	fill_polygon.append(Vector2(Constants.KNOB_X + shift_bottom, size.y))
+	fill_polygon.append(Vector2(0.0, size.y))
+	fill_polygon.append(Vector2(0.0, 0.0))
 
 	var stroke_polygon: PackedVector2Array
 	stroke_polygon.append(Vector2(shift_top, 0.0))
 	if show_top:
-		stroke_polygon.append_array(PackedVector2Array(
-			[
-				Vector2(Constants.KNOB_X + shift_top, 0.0),
-				Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_top, Constants.KNOB_H),
-				Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_top, Constants.KNOB_H),
-				Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_top, 0.0),
-			]
-		))
-	stroke_polygon.append_array(PackedVector2Array(
-		[
-			Vector2(size.x, 0.0),
-			Vector2(size.x, size.y),
-			Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_bottom, size.y),
-			Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_bottom, size.y + Constants.KNOB_H),
-			Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_bottom, size.y + Constants.KNOB_H),
-			Vector2(Constants.KNOB_X + shift_bottom, size.y),
-		]
-	))
+		stroke_polygon.append(Vector2(Constants.KNOB_X + shift_top, 0.0))
+		stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_top, Constants.KNOB_H))
+		stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_top, Constants.KNOB_H))
+		stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_top, 0.0))
+
+	stroke_polygon.append(Vector2(size.x, 0.0))
+	stroke_polygon.append(Vector2(size.x, size.y))
+	stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_bottom, size.y))
+	stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_bottom, size.y + Constants.KNOB_H))
+	stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_bottom, size.y + Constants.KNOB_H))
+	stroke_polygon.append(Vector2(Constants.KNOB_X + shift_bottom, size.y))
 
 	stroke_polygon.append(Vector2(shift_bottom, size.y))
 	if shift_top + shift_bottom == 0:
