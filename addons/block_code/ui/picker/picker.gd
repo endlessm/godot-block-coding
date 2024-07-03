@@ -9,6 +9,8 @@ signal block_picked(block: Block)
 @onready var _category_list := %CategoryList
 @onready var _widget_container := %WidgetContainer
 
+var scroll_tween: Tween
+
 
 func bsd_selected(bsd: BlockScriptData):
 	if not bsd:
@@ -74,10 +76,17 @@ func _block_picked(block: Block):
 	block_picked.emit(block)
 
 
+func scroll_to(y: float):
+	if scroll_tween:
+		scroll_tween.kill()
+	scroll_tween = create_tween()
+	scroll_tween.tween_property(_block_scroll, "scroll_vertical", y, 0.2)
+
+
 func _category_selected(category: BlockCategory):
 	for block_category_display in _block_list.get_children():
 		if block_category_display.category.name == category.name:
-			_block_scroll.scroll_vertical = block_category_display.position.y
+			scroll_to(block_category_display.position.y)
 			break
 
 
