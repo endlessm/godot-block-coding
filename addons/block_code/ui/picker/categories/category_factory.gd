@@ -2,7 +2,6 @@ class_name CategoryFactory
 extends Object
 
 const BLOCKS: Dictionary = {
-	"basic_block": preload("res://addons/block_code/ui/blocks/basic_block/basic_block.tscn"),
 	"control_block": preload("res://addons/block_code/ui/blocks/control_block/control_block.tscn"),
 	"parameter_block": preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn"),
 	"statement_block": preload("res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"),
