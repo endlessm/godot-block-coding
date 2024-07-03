@@ -3,7 +3,8 @@ class_name BlockCodePlugin
 extends EditorPlugin
 
 const MainPanel := preload("res://addons/block_code/ui/main_panel.tscn")
-static var main_panel
+static var main_panel: MainPanel
+static var block_code_button: Button
 
 var editor_inspector: EditorInspector
 
@@ -52,11 +53,6 @@ func _enter_tree():
 	main_panel = MainPanel.instantiate()
 	main_panel.undo_redo = get_undo_redo()
 
-	# Add the main panel to the editor's main viewport.
-	EditorInterface.get_editor_main_screen().add_child(main_panel)
-	# Hide the main panel. Very much required.
-	_make_visible(false)
-
 	# Remove unwanted class nodes from create node
 	old_feature_profile = EditorInterface.get_current_feature_profile()
 
@@ -75,8 +71,13 @@ func _enter_tree():
 
 
 func _exit_tree():
+	if block_code_button:
+		remove_control_from_bottom_panel(main_panel)
+		block_code_button = null
+
 	if main_panel:
 		main_panel.queue_free()
+		main_panel = null
 
 	var editor_paths: EditorPaths = EditorInterface.get_editor_paths()
 	if editor_paths:
@@ -96,21 +97,21 @@ func _ready():
 
 
 func _on_scene_changed(scene_root: Node):
+	var scene_has_block_code_nodes = scene_root.find_children("*", "BlockCode").size() > 0 if scene_root else false
+	if scene_has_block_code_nodes and block_code_button == null:
+		block_code_button = add_control_to_bottom_panel(main_panel, _get_plugin_name())
+	elif not scene_has_block_code_nodes and block_code_button:
+		remove_control_from_bottom_panel(main_panel)
+		block_code_button = null
 	BlockCodePlugin.main_panel.switch_scene(scene_root)
+	_on_editor_inspector_edited_object_changed()
 
 
 func _on_editor_inspector_edited_object_changed():
 	var block_code: BlockCode = editor_inspector.get_edited_object() as BlockCode
 	BlockCodePlugin.main_panel.switch_script(block_code)
-
-
-func _has_main_screen():
-	return true
-
-
-func _make_visible(visible):
-	if main_panel:
-		main_panel.visible = visible
+	if block_code:
+		make_bottom_panel_item_visible(main_panel)
 
 
 func _get_plugin_name():

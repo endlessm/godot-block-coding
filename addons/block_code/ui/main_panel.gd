@@ -57,8 +57,6 @@ func switch_script(block_code_node: BlockCode):
 	_picker.bsd_selected(block_script)
 	_title_bar.bsd_selected(block_script)
 	_block_canvas.bsd_selected(block_script)
-	if block_code_node:
-		EditorInterface.set_main_screen_editor("Block Code")
 
 
 func save_script():
