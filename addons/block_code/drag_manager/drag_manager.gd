@@ -245,8 +245,10 @@ func drag_ended():
 
 
 func connect_block_canvas_signals(block: Block):
-	block.drag_started.connect(drag_block)
-	block.modified.connect(func(): block_modified.emit())
+	if block.drag_started.get_connections().size() == 0:
+		block.drag_started.connect(drag_block)
+	if block.modified.get_connections().size() == 0:
+		block.modified.connect(func(): block_modified.emit())
 
 
 ## Returns the scope of the first non-empty scope child block

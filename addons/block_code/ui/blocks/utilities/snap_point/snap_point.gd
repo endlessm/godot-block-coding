@@ -88,7 +88,7 @@ func _on_child_entered_tree(node):
 	if snapped_block:
 		# We only allow a single snapped block at a time
 		push_warning("Attempted to add more than one Block node ({block}) to the same SnapPoint ({snap_point})".format({"block": new_block, "snap_point": self}))
-		call_deferred("remove_child", snapped_block)
+		remove_child.call_deferred(snapped_block)
 	snapped_block = new_block
 
 
