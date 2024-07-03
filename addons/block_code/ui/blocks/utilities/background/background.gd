@@ -46,65 +46,58 @@ func _set_shift_bottom(new_shift_bottom):
 	queue_redraw()
 
 
-func float_array_to_Vector2Array(coords: Array) -> PackedVector2Array:
-	# Convert the array of floats into a PackedVector2Array.
-	var array: PackedVector2Array = []
-	for coord in coords:
-		array.append(Vector2(coord[0], coord[1]))
-	return array
-
-
 func _draw():
 	outline_color = color.darkened(0.2)
 
-	var fill_polygon = [[0.0, 0.0]]
+	var fill_polygon: PackedVector2Array
+	fill_polygon.append(Vector2(0.0, 0.0))
 	if show_top:
-		fill_polygon += [
-			[Constants.KNOB_X + shift_top, 0.0],
-			[Constants.KNOB_X + Constants.KNOB_Z + shift_top, Constants.KNOB_H],
-			[Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_top, Constants.KNOB_H],
-			[Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_top, 0.0],
+		fill_polygon.append_array(PackedVector2Array(
+			[
+				Vector2(Constants.KNOB_X + shift_top, 0.0),
+				Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_top, Constants.KNOB_H),
+				Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_top, Constants.KNOB_H),
+				Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_top, 0.0),
+			]
+		))
+	fill_polygon.append_array(PackedVector2Array(
+		[
+			Vector2(size.x, 0.0),
+			Vector2(size.x, size.y),
+			Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_bottom, size.y),
+			Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_bottom, size.y + Constants.KNOB_H),
+			Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_bottom, size.y + Constants.KNOB_H),
+			Vector2(Constants.KNOB_X + shift_bottom, size.y),
+			Vector2(0.0, size.y),
+			Vector2(0.0, 0.0),
 		]
-	fill_polygon += [
-		[size.x, 0.0],
-		[size.x, size.y],
-		[Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_bottom, size.y],
-		[Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_bottom, size.y + Constants.KNOB_H],
-		[Constants.KNOB_X + Constants.KNOB_Z + shift_bottom, size.y + Constants.KNOB_H],
-		[Constants.KNOB_X + shift_bottom, size.y],
-		[0.0, size.y],
-		[0.0, 0.0],
-	]
+	))
 
-	var stroke_polygon = []
-	stroke_polygon += [
-		[shift_top, 0.0],
-	]
+	var stroke_polygon: PackedVector2Array
+	stroke_polygon.append(Vector2(shift_top, 0.0))
 	if show_top:
-		stroke_polygon += [
-			[Constants.KNOB_X + shift_top, 0.0],
-			[Constants.KNOB_X + Constants.KNOB_Z + shift_top, Constants.KNOB_H],
-			[Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_top, Constants.KNOB_H],
-			[Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_top, 0.0],
+		stroke_polygon.append_array(PackedVector2Array(
+			[
+				Vector2(Constants.KNOB_X + shift_top, 0.0),
+				Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_top, Constants.KNOB_H),
+				Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_top, Constants.KNOB_H),
+				Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_top, 0.0),
+			]
+		))
+	stroke_polygon.append_array(PackedVector2Array(
+		[
+			Vector2(size.x, 0.0),
+			Vector2(size.x, size.y),
+			Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_bottom, size.y),
+			Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_bottom, size.y + Constants.KNOB_H),
+			Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_bottom, size.y + Constants.KNOB_H),
+			Vector2(Constants.KNOB_X + shift_bottom, size.y),
 		]
-	stroke_polygon += [
-		[size.x, 0.0],
-		[size.x, size.y],
-		[Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_bottom, size.y],
-		[Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_bottom, size.y + Constants.KNOB_H],
-		[Constants.KNOB_X + Constants.KNOB_Z + shift_bottom, size.y + Constants.KNOB_H],
-		[Constants.KNOB_X + shift_bottom, size.y],
-	]
+	))
 
-	stroke_polygon += [
-		[shift_bottom, size.y],
-	]
+	stroke_polygon.append(Vector2(shift_bottom, size.y))
 	if shift_top + shift_bottom == 0:
-		stroke_polygon += [
-			[0.0, 0.0],
-		]
+		stroke_polygon.append(Vector2(0.0, 0.0))
 
-	var packed_fill_polygon = float_array_to_Vector2Array(fill_polygon)
-	var packed_stroke_polygon = float_array_to_Vector2Array(stroke_polygon)
-	draw_colored_polygon(packed_fill_polygon, color)
-	draw_polyline(packed_stroke_polygon, outline_color, Constants.OUTLINE_WIDTH)
+	draw_colored_polygon(fill_polygon, color)
+	draw_polyline(stroke_polygon, outline_color, Constants.OUTLINE_WIDTH)
