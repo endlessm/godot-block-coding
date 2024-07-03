@@ -23,6 +23,7 @@ func _update_parameter_block():
 	var parameter_block = preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn").instantiate()
 	for key in block_params:
 		parameter_block[key] = block_params[key]
+	parameter_block.spawned_by = self
 	_snap_point.add_child.call_deferred(parameter_block)
 
 
@@ -33,6 +34,9 @@ func _on_parameter_block_drag_started(drag_block: Block):
 func _on_snap_point_snapped_block_changed(snap_block: Block):
 	if snap_block == null:
 		return
+	# FIXME: The spawned_by property isn't serialized, so we'll set it here to
+	#        be sure. In the future, we should try to get rid of this property.
+	snap_block.spawned_by = self
 	snap_block.drag_started.connect(_on_parameter_block_drag_started)
 
 

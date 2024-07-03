@@ -12,6 +12,7 @@ extends Block
 
 var param_name_input_pairs: Array
 var param_input_strings: Dictionary  # Only loaded from serialized
+var spawned_by: ParameterOutput
 
 
 func _ready():

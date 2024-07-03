@@ -19,6 +19,8 @@ class Drag:
 	var _block_scope: String
 	var _block_canvas: BlockCanvas
 	var _preview_block: Control
+	var _snap_points: Array[Node]
+	var _delete_areas: Array[Rect2]
 	var action: DragAction:
 		get:
 			return action
@@ -49,7 +51,28 @@ class Drag:
 		_block_scope = block_scope
 		_block_canvas = block_canvas
 
+	func set_snap_points(snap_points: Array[Node]):
+		_snap_points = snap_points.filter(_snaps_to)
+
+	func add_delete_area(delete_area: Rect2):
+		_delete_areas.append(delete_area)
+
+	func update_drag_position():
+		global_position = get_global_mouse_position()
+
+		for rect in _delete_areas:
+			if rect.has_point(get_global_mouse_position()):
+				action = DragAction.REMOVE
+				target_snap_point = null
+				return
+
+		action = DragAction.PLACE
+
+		target_snap_point = _find_closest_snap_point()
+
 	func apply_drag() -> Block:
+		update_drag_position()
+
 		if action == DragAction.PLACE:
 			_place_block()
 			return _block
@@ -82,7 +105,7 @@ class Drag:
 
 		target_snap_point = null
 
-	func snaps_to(node: Node) -> bool:
+	func _snaps_to(node: Node) -> bool:
 		var _snap_point: SnapPoint = node as SnapPoint
 
 		if not _snap_point:
@@ -99,9 +122,6 @@ class Drag:
 
 		if _block.block_type == Types.BlockType.VALUE and not Types.can_cast(_block.variant_type, _snap_point.variant_type):
 			# We only snap Value blocks to snaps that can cast to same variant:
-			return false
-
-		if _get_distance_to_snap_point(_snap_point) > Constants.MINIMUM_SNAP_DISTANCE:
 			return false
 
 		# Check if any parent node is this node
@@ -122,14 +142,23 @@ class Drag:
 
 		return true
 
+	func _find_closest_snap_point() -> Node:
+		var closest_snap_point: SnapPoint = null
+		var closest_distance: int
+		for snap_point in _snap_points:
+			var distance = _get_distance_to_snap_point(snap_point)
+			if distance > Constants.MINIMUM_SNAP_DISTANCE:
+				continue
+			elif closest_snap_point == null or distance < closest_distance:
+				closest_snap_point = snap_point
+				closest_distance = distance
+		return closest_snap_point
+
 	func _get_top_block_for_node(node: Node) -> Block:
 		for top_block in _block_canvas.get_blocks():
 			if top_block.is_ancestor_of(node):
 				return top_block
 		return null
-
-	func sort_snap_points_by_distance(a: SnapPoint, b: SnapPoint):
-		return _get_distance_to_snap_point(a) < _get_distance_to_snap_point(b)
 
 	func _get_distance_to_snap_point(snap_point: SnapPoint) -> float:
 		var from_global: Vector2 = _block.global_position
@@ -172,34 +201,19 @@ func _ready():
 
 
 func _process(_delta):
-	_update_drag_position()
-
-
-func _update_drag_position():
-	if not drag:
-		return
-
-	drag.position = get_local_mouse_position()
-
-	if _picker.get_global_rect().has_point(get_global_mouse_position()):
-		drag.action = DragAction.REMOVE
-	else:
-		drag.action = DragAction.PLACE
-
-	# Find closest snap point not child of current node
-	var snap_points: Array[Node] = get_tree().get_nodes_in_group("snap_point").filter(drag.snaps_to)
-	snap_points.sort_custom(drag.sort_snap_points_by_distance)
-
-	drag.target_snap_point = snap_points[0] if snap_points.size() > 0 else null
+	if drag:
+		drag.update_drag_position()
 
 
 func drag_block(block: Block, copied_from: Block = null):
 	var offset: Vector2
 
-	if copied_from:
+	if copied_from and copied_from.is_inside_tree():
 		offset = get_global_mouse_position() - copied_from.global_position
-	else:
+	elif block.is_inside_tree():
 		offset = get_global_mouse_position() - block.global_position
+	else:
+		offset = Vector2.ZERO
 
 	var parent = block.get_parent()
 
@@ -213,6 +227,10 @@ func drag_block(block: Block, copied_from: Block = null):
 		_block_canvas.set_scope(block_scope)
 
 	drag = Drag.new(block, block_scope, offset, _block_canvas)
+	drag.set_snap_points(get_tree().get_nodes_in_group("snap_point"))
+	drag.add_delete_area(_picker.get_global_rect())
+	if block is ParameterBlock and block.spawned_by:
+		drag.add_delete_area(block.spawned_by.get_global_rect())
 	add_child(drag)
 
 
@@ -228,8 +246,6 @@ func copy_picked_block_and_drag(block: Block):
 func drag_ended():
 	if not drag:
 		return
-
-	_update_drag_position()
 
 	var block = drag.apply_drag()
 
