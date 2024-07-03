@@ -60,9 +60,5 @@ func _get_index_for_bsd(bsd: BlockScriptData) -> int:
 
 func _on_node_option_button_item_selected(index):
 	var block_code_node = _node_option_button.get_item_metadata(index) as BlockCode
-	# FIXME: We should clear the existing selection, but at the moment this
-	#        causes the new node to be deselected due to signal handlers being
-	#        called in the wrong order.
-	#_editor_selection.clear()
-	if block_code_node:
-		EditorInterface.edit_node(block_code_node)
+	_editor_selection.clear()
+	_editor_selection.add_node(block_code_node)
