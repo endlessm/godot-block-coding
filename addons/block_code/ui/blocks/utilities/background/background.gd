@@ -3,11 +3,10 @@ extends Control
 
 const Constants = preload("res://addons/block_code/ui/constants.gd")
 
+var outline_color: Color
+
 @export var color: Color:
 	set = _set_color
-
-@export var outline_color: Color:
-	set = _set_outline_color
 
 @export var show_top: bool = true:
 	set = _set_show_top
@@ -23,11 +22,7 @@ const Constants = preload("res://addons/block_code/ui/constants.gd")
 
 func _set_color(new_color):
 	color = new_color
-	queue_redraw()
-
-
-func _set_outline_color(new_outline_color):
-	outline_color = new_outline_color
+	outline_color = color.darkened(0.2)
 	queue_redraw()
 
 
@@ -47,8 +42,6 @@ func _set_shift_bottom(new_shift_bottom):
 
 
 func _draw():
-	outline_color = color.darkened(0.2)
-
 	var fill_polygon: PackedVector2Array
 	fill_polygon.append(Vector2(0.0, 0.0))
 	if show_top:
