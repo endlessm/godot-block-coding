@@ -73,7 +73,7 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-tooltip_text = "Collapse the picker toolbar. Shortcut (Ctrl-Space)"
+tooltip_text = "Toggle Block Picker (Ctrl+BackSlash)"
 flat = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit/MarginContainer/VBoxContainer/BottomBar"]
