@@ -16,10 +16,10 @@
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
 serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.835294, 0.262745, 0.133333, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Move with player 1 buttons, speed {speed: VECTOR2}"], ["statement", "var dir = Vector2()
-dir.x += float(Input.is_key_pressed(KEY_D))
-dir.x -= float(Input.is_key_pressed(KEY_A))
-dir.y += float(Input.is_key_pressed(KEY_S))
-dir.y -= float(Input.is_key_pressed(KEY_W))
+dir.x += float(Input.is_physical_key_pressed(KEY_D))
+dir.x -= float(Input.is_physical_key_pressed(KEY_A))
+dir.y += float(Input.is_physical_key_pressed(KEY_S))
+dir.y -= float(Input.is_physical_key_pressed(KEY_W))
 dir = dir.normalized()
 velocity = dir*{speed}
 move_and_slide()"], ["defaults", {}], ["param_input_strings", {
@@ -55,10 +55,10 @@ var VAR_DICT := {}
 
 func _process(delta):
 	var dir = Vector2()
-	dir.x += float(Input.is_key_pressed(KEY_D))
-	dir.x -= float(Input.is_key_pressed(KEY_A))
-	dir.y += float(Input.is_key_pressed(KEY_S))
-	dir.y -= float(Input.is_key_pressed(KEY_W))
+	dir.x += float(Input.is_physical_key_pressed(KEY_D))
+	dir.x -= float(Input.is_physical_key_pressed(KEY_A))
+	dir.y += float(Input.is_physical_key_pressed(KEY_S))
+	dir.y -= float(Input.is_physical_key_pressed(KEY_W))
 	dir = dir.normalized()
 	velocity = dir*Vector2(0,1000)
 	move_and_slide()
@@ -69,10 +69,10 @@ func _process(delta):
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
 serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.835294, 0.262745, 0.133333, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Move with player 2 buttons, speed {speed: VECTOR2}"], ["statement", "var dir = Vector2()
-dir.x += float(Input.is_key_pressed(KEY_RIGHT))
-dir.x -= float(Input.is_key_pressed(KEY_LEFT))
-dir.y += float(Input.is_key_pressed(KEY_DOWN))
-dir.y -= float(Input.is_key_pressed(KEY_UP))
+dir.x += float(Input.is_physical_key_pressed(KEY_RIGHT))
+dir.x -= float(Input.is_physical_key_pressed(KEY_LEFT))
+dir.y += float(Input.is_physical_key_pressed(KEY_DOWN))
+dir.y -= float(Input.is_physical_key_pressed(KEY_UP))
 dir = dir.normalized()
 velocity = dir*{speed}
 move_and_slide()"], ["defaults", {}], ["param_input_strings", {
@@ -108,10 +108,10 @@ var VAR_DICT := {}
 
 func _process(delta):
 	var dir = Vector2()
-	dir.x += float(Input.is_key_pressed(KEY_RIGHT))
-	dir.x -= float(Input.is_key_pressed(KEY_LEFT))
-	dir.y += float(Input.is_key_pressed(KEY_DOWN))
-	dir.y -= float(Input.is_key_pressed(KEY_UP))
+	dir.x += float(Input.is_physical_key_pressed(KEY_RIGHT))
+	dir.x -= float(Input.is_physical_key_pressed(KEY_LEFT))
+	dir.y += float(Input.is_physical_key_pressed(KEY_DOWN))
+	dir.y -= float(Input.is_physical_key_pressed(KEY_UP))
 	dir = dir.normalized()
 	velocity = dir*Vector2(0,1000)
 	move_and_slide()
