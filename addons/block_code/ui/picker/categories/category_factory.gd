@@ -150,7 +150,10 @@ static func get_categories(blocks: Array[Block], extra_categories: Array[BlockCa
 	# convert an array type besides Array.assign().
 	var cats: Array[BlockCategory] = []
 	cats.assign(cat_map.values())
-	cats.sort_custom(_category_cmp)
+	# Accessing a static Callable from a static function fails in 4.2.1.
+	# Use the fully qualified name.
+	# https://github.com/godotengine/godot/issues/86032
+	cats.sort_custom(CategoryFactory._category_cmp)
 	return cats
 
 
