@@ -7,8 +7,9 @@ const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(16, 8)
 
 @onready var _window: Control = %Window
 @onready var _window_scroll: ScrollContainer = %WindowScroll
-@onready var _choose_block_code_label: Label = %ChooseBlockCodeLabel
-@onready var _create_block_code_label: Label = %CreateBlockCodeLabel
+@onready var _select_node_box: BoxContainer = %SelectNodeBox
+@onready var _create_block_code_box: BoxContainer = %CreateBlockCodeBox
+@onready var _add_block_code_button: Button = %AddBlockCodeButton
 
 var _block_scenes_by_class = {}
 
@@ -59,14 +60,16 @@ func set_child(n: Node):
 func bsd_selected(bsd: BlockScriptData):
 	clear_canvas()
 
-	_choose_block_code_label.visible = false
-	_create_block_code_label.visible = false
+	_select_node_box.visible = false
+	_create_block_code_box.visible = false
+	_add_block_code_button.disabled = true
 
-	if not bsd and scene_has_bsd_nodes():
-		_choose_block_code_label.visible = true
+	if not bsd and EditorInterface.get_inspector().get_edited_object() is Node:
+		_create_block_code_box.visible = true
+		_add_block_code_button.disabled = false
 		return
-	elif not bsd and not scene_has_bsd_nodes():
-		_create_block_code_label.visible = true
+	elif not bsd:
+		_select_node_box.visible = true
 		return
 
 	for tree in bsd.block_trees.array:
@@ -151,3 +154,21 @@ func set_scope(scope: String):
 func release_scope():
 	for block in _window.get_children():
 		block.modulate = Color.WHITE
+
+
+func _on_add_block_code_button_pressed():
+	_add_block_code_button.disabled = true
+
+	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
+	var scene_root: Node = EditorInterface.get_edited_scene_root()
+
+	if edited_node == null or scene_root == null:
+		return
+
+	var block_code = BlockCode.new()
+	block_code.name = "BlockCode"
+	edited_node.add_child(block_code, true)
+	block_code.owner = scene_root
+
+	EditorInterface.get_selection().clear()
+	EditorInterface.get_selection().add_node(block_code)

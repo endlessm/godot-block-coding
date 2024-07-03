@@ -52,6 +52,7 @@ func _enter_tree():
 
 	main_panel = MainPanel.instantiate()
 	main_panel.undo_redo = get_undo_redo()
+	block_code_button = add_control_to_bottom_panel(main_panel, _get_plugin_name())
 
 	# Remove unwanted class nodes from create node
 	old_feature_profile = EditorInterface.get_current_feature_profile()
@@ -97,12 +98,6 @@ func _ready():
 
 
 func _on_scene_changed(scene_root: Node):
-	var scene_has_block_code_nodes = scene_root.find_children("*", "BlockCode").size() > 0 if scene_root else false
-	if scene_has_block_code_nodes and block_code_button == null:
-		block_code_button = add_control_to_bottom_panel(main_panel, _get_plugin_name())
-	elif not scene_has_block_code_nodes and block_code_button:
-		remove_control_from_bottom_panel(main_panel)
-		block_code_button = null
 	BlockCodePlugin.main_panel.switch_scene(scene_root)
 	_on_editor_inspector_edited_object_changed()
 
