@@ -46,15 +46,14 @@ size_flags_vertical = 4
 [node name="Label" type="Label" parent="CreateBlockCodeBox"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "Use block coding to create custom behavior and game mechanics for this node."
+text = "Use block coding to create custom behavior and game mechanics for \"{node}\"."
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="AddBlockCodeButton" type="Button" parent="CreateBlockCodeBox"]
-unique_name_in_owner = true
+[node name="Button" type="Button" parent="CreateBlockCodeBox"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Add Block Code"
 icon = ExtResource("2_710vn")
 
-[connection signal="pressed" from="CreateBlockCodeBox/AddBlockCodeButton" to="." method="_on_add_block_code_button_pressed"]
+[connection signal="pressed" from="CreateBlockCodeBox/Button" to="." method="_on_add_block_code_button_pressed"]

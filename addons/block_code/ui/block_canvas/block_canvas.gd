@@ -9,7 +9,9 @@ const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(16, 8)
 @onready var _window_scroll: ScrollContainer = %WindowScroll
 @onready var _select_node_box: BoxContainer = %SelectNodeBox
 @onready var _create_block_code_box: BoxContainer = %CreateBlockCodeBox
-@onready var _add_block_code_button: Button = %AddBlockCodeButton
+@onready var _create_block_code_label: Label = %CreateBlockCodeBox/Label
+@onready var _create_block_code_button: Button = %CreateBlockCodeBox/Button
+@onready var _create_block_code_label_format: String = _create_block_code_label.text
 
 var _block_scenes_by_class = {}
 
@@ -62,11 +64,12 @@ func bsd_selected(bsd: BlockScriptData):
 
 	_select_node_box.visible = false
 	_create_block_code_box.visible = false
-	_add_block_code_button.disabled = true
+	_create_block_code_button.disabled = true
 
 	if not bsd and EditorInterface.get_inspector().get_edited_object() is Node:
 		_create_block_code_box.visible = true
-		_add_block_code_button.disabled = false
+		_create_block_code_label.text = _create_block_code_label_format.format({"node": EditorInterface.get_inspector().get_edited_object().name})
+		_create_block_code_button.disabled = false
 		return
 	elif not bsd:
 		_select_node_box.visible = true
@@ -157,7 +160,7 @@ func release_scope():
 
 
 func _on_add_block_code_button_pressed():
-	_add_block_code_button.disabled = true
+	_create_block_code_button.disabled = true
 
 	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
 	var scene_root: Node = EditorInterface.get_edited_scene_root()
