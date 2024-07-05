@@ -67,6 +67,8 @@ func _update_parent_script():
 
 func _get_configuration_warnings():
 	var warnings = []
+	if get_parent() is BlockCode:
+		warnings.append("The parent must not be a BlockCode.")
 	if block_script and _get_custom_or_native_class(get_parent()) != block_script.script_inherits:
 		var warning = "The parent is not a %s. Create a new BlockCode node and reattach." % block_script.script_inherits
 		warnings.append(warning)
