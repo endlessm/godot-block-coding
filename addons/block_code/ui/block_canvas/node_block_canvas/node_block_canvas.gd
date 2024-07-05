@@ -24,7 +24,7 @@ func generate_script_from_current_window(bsd: BlockScriptData):
 	script += "extends %s\n\n" % bsd.script_inherits
 
 	for variable in bsd.variables:
-		script += "var %s\n\n" % variable.var_name
+		script += "var %s: %s\n\n" % [variable.var_name, type_string(variable.var_type)]
 
 	script += "\n"
 
