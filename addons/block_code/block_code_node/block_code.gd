@@ -67,6 +67,8 @@ func _update_parent_script():
 
 func _get_configuration_warnings():
 	var warnings = []
+	if self.owner == null:
+		warnings.append("A BlockCode must not be a root node.")
 	if get_parent() is BlockCode:
 		warnings.append("The parent must not be a BlockCode.")
 	if get_parent().find_children("*", "BlockCode", false).size() > 1:
