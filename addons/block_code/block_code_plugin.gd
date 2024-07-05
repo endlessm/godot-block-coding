@@ -8,6 +8,8 @@ static var block_code_button: Button
 
 var editor_inspector: EditorInspector
 
+var selected_block_code_node: BlockCode
+
 var old_feature_profile: String = ""
 
 const DISABLED_CLASSES := [
@@ -93,6 +95,7 @@ func _exit_tree():
 func _ready():
 	connect("scene_changed", _on_scene_changed)
 	editor_inspector.connect("edited_object_changed", _on_editor_inspector_edited_object_changed)
+	editor_inspector.connect("property_edited", _on_editor_inspector_property_edited)
 	_on_scene_changed(EditorInterface.get_edited_scene_root())
 	_on_editor_inspector_edited_object_changed()
 
@@ -103,17 +106,49 @@ func _on_scene_changed(scene_root: Node):
 
 
 func _on_editor_inspector_edited_object_changed():
-	var edited_node: Node = editor_inspector.get_edited_object() as Node
-	var block_code: BlockCode = edited_node as BlockCode
-	if block_code == null and edited_node:
-		# As a fallback, check if the edited node has a BlockCode node as a
-		# child and use that. We will only check one level deep to avoid
-		# confusing scenarios where a node could have multiple children, each
-		# with their own BlockCode nodes.
-		block_code = edited_node.find_children("*", "BlockCode", false).pop_front()
-	BlockCodePlugin.main_panel.switch_script(block_code)
-	if block_code:
+	var edited_node = editor_inspector.get_edited_object() as Node
+
+	# We will edit either the selected node (if it is a BlockCode node) or
+	# the first BlockCode child of that node.
+	selected_block_code_node = list_block_code_for_node(edited_node).pop_front()
+	if not is_block_code_editable(selected_block_code_node):
+		selected_block_code_node = null
+
+	BlockCodePlugin.main_panel.switch_block_code_node(selected_block_code_node)
+	if selected_block_code_node:
 		make_bottom_panel_item_visible(main_panel)
+
+
+static func is_block_code_editable(block_code: BlockCode) -> bool:
+	if not block_code:
+		return false
+
+	# A BlockCode node can be edited if it belongs to the edited scene, or it
+	# is an editable instance.
+
+	var scene_node = EditorInterface.get_edited_scene_root()
+
+	return block_code == scene_node or block_code.owner == scene_node or scene_node.is_editable_instance(block_code.owner)
+
+
+static func node_has_block_code(node: Node, recursive: bool = false) -> bool:
+	return list_block_code_for_node(node, recursive).size() > 0
+
+
+static func list_block_code_for_node(node: Node, recursive: bool = false) -> Array[BlockCode]:
+	var result: Array[BlockCode] = []
+
+	if node is BlockCode:
+		result.append(node)
+	elif node:
+		result.append_array(node.find_children("*", "BlockCode", recursive))
+
+	return result
+
+
+func _on_editor_inspector_property_edited(property: String):
+	if selected_block_code_node:
+		_on_editor_inspector_edited_object_changed()
 
 
 func _get_plugin_name():

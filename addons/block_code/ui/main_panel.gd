@@ -65,6 +65,10 @@ func save_script():
 
 	var scene_node = EditorInterface.get_edited_scene_root()
 
+	if not BlockCodePlugin.is_block_code_editable(_current_block_code_node):
+		print("Block code for {node} is not editable.".format({"node": _current_block_code_node}))
+		return
+
 	var block_script: BlockScriptData = _current_block_code_node.block_script
 
 	var resource_path_split = block_script.resource_path.split("::", true, 1)
