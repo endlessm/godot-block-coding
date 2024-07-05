@@ -115,7 +115,10 @@ func _on_editor_inspector_edited_object_changed():
 		selected_block_code_node = null
 
 	BlockCodePlugin.main_panel.switch_block_code_node(selected_block_code_node)
-	if selected_block_code_node:
+	if edited_node is BlockCode:
+		# If the user explicitly chose a BlockCode node, show the Block Code
+		# editor. We only do this for the BlockCode node itself, rather than
+		# nodes containing BlockCode, to avoid conflicts with other panels.
 		make_bottom_panel_item_visible(main_panel)
 
 
