@@ -64,15 +64,12 @@ static func get_custom_blocks() -> Array[Block]:
 	# Movement
 	b = CategoryFactory.BLOCKS["statement_block"].instantiate()
 	b.block_type = Types.BlockType.EXECUTE
-	b.block_format = "Move with player 1 buttons, speed {speed: VECTOR2}"
-	b.statement = "move_with_player_buttons('player_1', {speed})"
-	b.category = "Input"
-	block_list.append(b)
-
-	b = CategoryFactory.BLOCKS["statement_block"].instantiate()
-	b.block_type = Types.BlockType.EXECUTE
-	b.block_format = "Move with player 2 buttons, speed {speed: VECTOR2}"
-	b.statement = "move_with_player_buttons('player_2', {speed})"
+	b.block_format = "Move with {player: OPTION} buttons, speed {speed: VECTOR2}"
+	b.statement = 'move_with_player_buttons("{player}", {speed})'
+	b.defaults = {
+		"player": OptionData.new(["player_1", "player_2"]),
+		"speed": "300,300",
+	}
 	b.category = "Input"
 	block_list.append(b)
 
