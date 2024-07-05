@@ -14,7 +14,6 @@ extends Control
 @onready var _icon_expand := EditorInterface.get_editor_theme().get_icon("Forward", "EditorIcons")
 
 var _current_block_code_node: BlockCode
-var _scene_root: Node
 var _block_code_nodes: Array
 var _collapsed: bool = false
 
@@ -51,7 +50,7 @@ func switch_scene(scene_root: Node):
 	_title_bar.scene_selected(scene_root)
 
 
-func switch_script(block_code_node: BlockCode):
+func switch_block_code_node(block_code_node: BlockCode):
 	var block_script: BlockScriptData = block_code_node.block_script if block_code_node else null
 	_current_block_code_node = block_code_node
 	_picker.bsd_selected(block_script)
@@ -64,9 +63,24 @@ func save_script():
 		print("No script loaded to save.")
 		return
 
+	var scene_node = EditorInterface.get_edited_scene_root()
+
 	var block_script: BlockScriptData = _current_block_code_node.block_script
 
+	var resource_path_split = block_script.resource_path.split("::", true, 1)
+	var resource_scene = resource_path_split[0]
+
 	undo_redo.create_action("Modify %s's block code script" % _current_block_code_node.get_parent().name)
+
+	if resource_scene and resource_scene != scene_node.scene_file_path:
+		# This resource is from another scene. Since the user is changing it
+		# here, we'll make a copy for this scene rather than changing it in the
+		# other scene file.
+		undo_redo.add_undo_property(_current_block_code_node, "block_script", _current_block_code_node.block_script)
+		block_script = block_script.duplicate(true)
+		_current_block_code_node.block_script = block_script
+		undo_redo.add_do_property(_current_block_code_node, "block_script", _current_block_code_node.block_script)
+
 	undo_redo.add_undo_property(_current_block_code_node.block_script, "block_trees", _current_block_code_node.block_script.block_trees)
 	undo_redo.add_undo_property(_current_block_code_node.block_script, "generated_script", _current_block_code_node.block_script.generated_script)
 
