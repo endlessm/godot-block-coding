@@ -218,19 +218,17 @@ func _on_replace_block_code_button_pressed():
 func _input(event):
 	if event is InputEventKey:
 		if event.keycode == KEY_SHIFT:
-			if event.pressed:
-				_mouse_override.mouse_filter = Control.MOUSE_FILTER_PASS
-				_mouse_override.mouse_default_cursor_shape = Control.CURSOR_MOVE
-			else:
-				_mouse_override.mouse_filter = Control.MOUSE_FILTER_IGNORE
-				_mouse_override.mouse_default_cursor_shape = Control.CURSOR_ARROW
+			set_mouse_override(event.pressed)
 
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
+		if event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_MIDDLE:
 			if event.pressed and is_mouse_over():
 				_panning = true
 			else:
 				_panning = false
+
+		if event.button_index == MOUSE_BUTTON_MIDDLE:
+			set_mouse_override(event.pressed)
 
 		var relative_mouse_pos := get_global_mouse_position() - get_global_rect().position
 
@@ -247,7 +245,7 @@ func _input(event):
 			_window.position -= (old_mouse_window_pos - canvas_to_window(relative_mouse_pos)) * _window.scale.x
 
 	if event is InputEventMouseMotion:
-		if Input.is_key_pressed(KEY_SHIFT) and _panning:
+		if (Input.is_key_pressed(KEY_SHIFT) and _panning) or (Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) and _panning):
 			_window.position += event.relative
 
 
@@ -261,3 +259,12 @@ func window_to_canvas(v: Vector2) -> Vector2:
 
 func is_mouse_over() -> bool:
 	return get_global_rect().has_point(get_global_mouse_position())
+
+
+func set_mouse_override(override: bool):
+	if override:
+		_mouse_override.mouse_filter = Control.MOUSE_FILTER_PASS
+		_mouse_override.mouse_default_cursor_shape = Control.CURSOR_MOVE
+	else:
+		_mouse_override.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_mouse_override.mouse_default_cursor_shape = Control.CURSOR_ARROW
