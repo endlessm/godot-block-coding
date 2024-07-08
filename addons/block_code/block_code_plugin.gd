@@ -7,6 +7,7 @@ static var main_panel: MainPanel
 static var block_code_button: Button
 
 var editor_inspector: EditorInspector
+var editor_selection: EditorSelection
 
 var selected_block_code_node: BlockCode
 
@@ -51,6 +52,7 @@ func _enter_tree():
 	Types.init_cast_graph()
 
 	editor_inspector = EditorInterface.get_inspector()
+	editor_selection = EditorInterface.get_selection()
 
 	main_panel = MainPanel.instantiate()
 	main_panel.undo_redo = get_undo_redo()
@@ -101,25 +103,42 @@ func _ready():
 
 
 func _on_scene_changed(scene_root: Node):
-	BlockCodePlugin.main_panel.switch_scene(scene_root)
+	main_panel.switch_scene(scene_root)
 	_on_editor_inspector_edited_object_changed()
 
 
 func _on_editor_inspector_edited_object_changed():
-	var edited_node = editor_inspector.get_edited_object() as Node
+	var edited_object = editor_inspector.get_edited_object()
+	#var edited_node = edited_object as Node
+	var selected_nodes = editor_selection.get_selected_nodes()
+
+	if edited_object is BlockCode and selected_nodes.has(edited_object):
+		# If a BlockCode node is being edited, and it was explicitly selected
+		# (as opposed to edited in the Inspector alone), select its parent node
+		# as well. This provides a clearer indication of what is being edited.
+		# Changing the selection will cause edited_object_changed to fire again,
+		# so we will return early to avoid duplicate work.
+		var parent_node = edited_object.get_parent()
+		if parent_node:
+			EditorInterface.get_selection().add_node.call_deferred(parent_node)
+		make_bottom_panel_item_visible(main_panel)
+		return
+
+	if edited_object and edited_object.get_class() == "MultiNodeEdit":
+		# If multiple nodes are shown in the inspector, we will find the first
+		# BlockCode node in the list of selected nodes and use that. This
+		# occurs when the user selects multiple items in the Scene panel, or
+		# when we select the parent of a BlockCode node.
+		edited_object = selected_nodes.filter(func(node): return node is BlockCode).pop_front()
 
 	# We will edit either the selected node (if it is a BlockCode node) or
-	# the first BlockCode child of that node.
-	selected_block_code_node = list_block_code_for_node(edited_node).pop_front()
+	# the first BlockCode child of that node. Keep track of the block code node
+	# being edited so we know to monitor for changes from EditorInspector.
+	selected_block_code_node = list_block_code_for_node(edited_object as Node).pop_front()
 	if not is_block_code_editable(selected_block_code_node):
 		selected_block_code_node = null
 
-	BlockCodePlugin.main_panel.switch_block_code_node(selected_block_code_node)
-	if edited_node is BlockCode:
-		# If the user explicitly chose a BlockCode node, show the Block Code
-		# editor. We only do this for the BlockCode node itself, rather than
-		# nodes containing BlockCode, to avoid conflicts with other panels.
-		make_bottom_panel_item_visible(main_panel)
+	main_panel.switch_block_code_node(selected_block_code_node)
 
 
 static func is_block_code_editable(block_code: BlockCode) -> bool:

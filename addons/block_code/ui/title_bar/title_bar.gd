@@ -63,5 +63,8 @@ func _get_index_for_bsd(bsd: BlockScriptData) -> int:
 
 func _on_node_option_button_item_selected(index):
 	var block_code_node = _node_option_button.get_item_metadata(index) as BlockCode
+	var parent_node = block_code_node.get_parent() as Node
 	_editor_selection.clear()
 	_editor_selection.add_node(block_code_node)
+	if parent_node:
+		_editor_selection.add_node(parent_node)
