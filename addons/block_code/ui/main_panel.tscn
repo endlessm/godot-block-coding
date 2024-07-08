@@ -93,4 +93,7 @@ block_canvas_path = NodePath("../PickerSplit/MarginContainer/VBoxContainer/NodeB
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/ScriptVBox/HBoxContainer/PrintScriptButton" to="." method="_on_print_script_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/ScriptVBox/HBoxContainer/DeleteNodeButton" to="." method="_on_delete_node_button_pressed"]
+[connection signal="add_block_code" from="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit/MarginContainer/VBoxContainer/NodeBlockCanvas" to="." method="_on_node_block_canvas_add_block_code"]
+[connection signal="open_scene" from="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit/MarginContainer/VBoxContainer/NodeBlockCanvas" to="." method="_on_node_block_canvas_open_scene"]
+[connection signal="replace_block_code" from="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit/MarginContainer/VBoxContainer/NodeBlockCanvas" to="." method="_on_node_block_canvas_replace_block_code"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit/MarginContainer/VBoxContainer/BottomBar/CollapseButton" to="." method="_on_collapse_button_pressed"]

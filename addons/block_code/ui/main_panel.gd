@@ -30,7 +30,7 @@ func _ready():
 
 	# Setup block scripting environment
 	undo_redo.version_changed.connect(_on_undo_redo_version_changed)
-	
+
 	if not _delete_node_button.icon:
 		_delete_node_button.icon = _icon_delete
 	_collapse_button.icon = _icon_collapse
@@ -172,3 +172,53 @@ func toggle_collapse():
 
 func _on_collapse_button_pressed():
 	toggle_collapse()
+
+
+func _on_node_block_canvas_add_block_code():
+	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
+	var scene_root: Node = EditorInterface.get_edited_scene_root()
+
+	if edited_node == null or scene_root == null:
+		return
+
+	var block_code = BlockCode.new()
+	block_code.name = "BlockCode"
+
+	undo_redo.create_action("Add block code for %s" % edited_node.name, UndoRedo.MERGE_DISABLE, edited_node)
+
+	undo_redo.add_do_method(edited_node, "add_child", block_code, true)
+	undo_redo.add_do_property(block_code, "owner", scene_root)
+	undo_redo.add_do_reference(block_code)
+	undo_redo.add_undo_method(edited_node, "remove_child", block_code)
+	undo_redo.add_undo_property(block_code, "owner", null)
+
+	undo_redo.commit_action()
+
+	EditorInterface.get_selection().clear()
+	EditorInterface.get_selection().add_node(block_code)
+
+
+func _on_node_block_canvas_open_scene():
+	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
+
+	if edited_node == null or edited_node.owner == null:
+		return
+
+	EditorInterface.open_scene_from_path(edited_node.scene_file_path)
+
+
+func _on_node_block_canvas_replace_block_code():
+	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
+	var scene_root: Node = EditorInterface.get_edited_scene_root()
+
+	undo_redo.create_action("Replace block code %s" % edited_node.name, UndoRedo.MERGE_DISABLE, scene_root)
+
+	undo_redo.add_do_method(scene_root, "set_editable_instance", edited_node, true)
+	undo_redo.add_undo_method(scene_root, "set_editable_instance", edited_node, false)
+
+	undo_redo.commit_action()
+
+	var block_code_nodes = BlockCodePlugin.list_block_code_for_node(edited_node)
+#
+	EditorInterface.get_selection().clear()
+	EditorInterface.get_selection().add_node(block_code_nodes.pop_front() if block_code_nodes.size() > 0 else edited_node)

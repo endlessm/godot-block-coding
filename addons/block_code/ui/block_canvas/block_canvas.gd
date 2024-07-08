@@ -21,14 +21,19 @@ const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(16, 8)
 @onready var _open_scene_button: Button = %OpenSceneButton
 @onready var _replace_block_code_button: Button = %ReplaceBlockCodeButton
 
+@onready var _open_scene_icon = _open_scene_button.get_theme_icon("Load", "EditorIcons")
+
 var _block_scenes_by_class = {}
 
 signal reconnect_block(block: Block)
+signal add_block_code
+signal open_scene
+signal replace_block_code
 
 
 func _ready():
 	if not _open_scene_button.icon:
-		_open_scene_button.icon = _open_scene_button.get_theme_icon("Load", "EditorIcons")
+		_open_scene_button.icon = _open_scene_icon
 	_populate_block_scenes_by_class()
 
 
@@ -189,39 +194,16 @@ func release_scope():
 func _on_add_block_code_button_pressed():
 	_add_block_code_button.disabled = true
 
-	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
-	var scene_root: Node = EditorInterface.get_edited_scene_root()
-
-	if edited_node == null or scene_root == null:
-		return
-
-	var block_code = BlockCode.new()
-	block_code.name = "BlockCode"
-	edited_node.add_child(block_code, true)
-	block_code.owner = scene_root
-
-	EditorInterface.get_selection().clear()
-	EditorInterface.get_selection().add_node(block_code)
+	add_block_code.emit()
 
 
 func _on_open_scene_button_pressed():
 	_open_scene_button.disabled = true
 
-	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
-
-	if edited_node == null or edited_node.owner == null:
-		return
-
-	EditorInterface.open_scene_from_path(edited_node.scene_file_path)
+	open_scene.emit()
 
 
 func _on_replace_block_code_button_pressed():
-	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
-	var scene_root: Node = EditorInterface.get_edited_scene_root()
+	_replace_block_code_button.disabled = true
 
-	scene_root.set_editable_instance(edited_node, true)
-
-	var block_code_nodes = BlockCodePlugin.list_block_code_for_node(edited_node)
-#
-	EditorInterface.get_selection().clear()
-	EditorInterface.get_selection().add_node(block_code_nodes.pop_front() if block_code_nodes.size() > 0 else edited_node)
+	replace_block_code.emit()
