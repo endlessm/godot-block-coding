@@ -57,8 +57,13 @@ class Drag:
 	func add_delete_area(delete_area: Rect2):
 		_delete_areas.append(delete_area)
 
-	func update_drag_position():
+	func update_drag_state():
 		global_position = get_global_mouse_position()
+
+		if _block_canvas.is_mouse_over():
+			scale = Vector2(_block_canvas.zoom, _block_canvas.zoom)
+		else:
+			scale = Vector2(1, 1)
 
 		for rect in _delete_areas:
 			if rect.has_point(get_global_mouse_position()):
@@ -71,7 +76,7 @@ class Drag:
 		target_snap_point = _find_closest_snap_point()
 
 	func apply_drag() -> Block:
-		update_drag_position()
+		update_drag_state()
 
 		if action == DragAction.PLACE:
 			_place_block()
@@ -147,7 +152,7 @@ class Drag:
 		var closest_distance: int
 		for snap_point in _snap_points:
 			var distance = _get_distance_to_snap_point(snap_point)
-			if distance > Constants.MINIMUM_SNAP_DISTANCE:
+			if distance > Constants.MINIMUM_SNAP_DISTANCE * _block_canvas.zoom:
 				continue
 			elif closest_snap_point == null or distance < closest_distance:
 				closest_snap_point = snap_point
@@ -202,7 +207,7 @@ func _ready():
 
 func _process(_delta):
 	if drag:
-		drag.update_drag_position()
+		drag.update_drag_state()
 
 
 func drag_block(block: Block, copied_from: Block = null):
@@ -214,6 +219,9 @@ func drag_block(block: Block, copied_from: Block = null):
 		offset = get_global_mouse_position() - block.global_position
 	else:
 		offset = Vector2.ZERO
+
+	if _block_canvas.is_ancestor_of(block):
+		offset /= _block_canvas.zoom
 
 	var parent = block.get_parent()
 

@@ -28,6 +28,11 @@ const ZOOM_FACTOR: float = 1.1
 
 var _block_scenes_by_class = {}
 var _panning := false
+var zoom: float:
+	set(value):
+		_window.scale = Vector2(value, value)
+	get:
+		return _window.scale.x
 
 signal reconnect_block(block: Block)
 signal add_block_code
@@ -82,7 +87,7 @@ func bsd_selected(bsd: BlockScriptData):
 	var edited_node = EditorInterface.get_inspector().get_edited_object() as Node
 
 	_window.position = Vector2(0, 0)
-	_window.scale = Vector2(1, 1)
+	zoom = 1
 	_zoom_label.visible = false
 
 	_empty_box.visible = false
@@ -111,6 +116,7 @@ func bsd_selected(bsd: BlockScriptData):
 		_selected_node_box.visible = true
 		_selected_node_label.text = _selected_node_label_format.format({"node": edited_node.name})
 		_add_block_code_button.disabled = false
+
 
 func _load_bsd(bsd: BlockScriptData):
 	for tree in bsd.block_trees.array:
@@ -235,14 +241,14 @@ func _input(event):
 		if is_mouse_over():
 			var old_mouse_window_pos := canvas_to_window(relative_mouse_pos)
 
-			if event.button_index == MOUSE_BUTTON_WHEEL_UP and _window.scale.x < 2:
-				_window.scale *= ZOOM_FACTOR
-			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and _window.scale.x > 0.2:
-				_window.scale /= ZOOM_FACTOR
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP and zoom < 2:
+				zoom *= ZOOM_FACTOR
+			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 0.2:
+				zoom /= ZOOM_FACTOR
 
-			_zoom_label.text = "%.1fx" % _window.scale.x
+			_zoom_label.text = "%.1fx" % zoom
 
-			_window.position -= (old_mouse_window_pos - canvas_to_window(relative_mouse_pos)) * _window.scale.x
+			_window.position -= (old_mouse_window_pos - canvas_to_window(relative_mouse_pos)) * zoom
 
 	if event is InputEventMouseMotion:
 		if (Input.is_key_pressed(KEY_SHIFT) and _panning) or (Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) and _panning):
