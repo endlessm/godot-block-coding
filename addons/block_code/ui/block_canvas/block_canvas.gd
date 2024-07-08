@@ -27,7 +27,8 @@ signal reconnect_block(block: Block)
 
 
 func _ready():
-	_open_scene_button.icon = _open_scene_button.get_theme_icon("Load", "EditorIcons")
+	if not _open_scene_button.icon:
+		_open_scene_button.icon = _open_scene_button.get_theme_icon("Load", "EditorIcons")
 	_populate_block_scenes_by_class()
 
 
