@@ -6,10 +6,12 @@ extends Control
 @onready var _block_canvas: BlockCanvas = %NodeBlockCanvas
 @onready var _drag_manager: DragManager = %DragManager
 @onready var _title_bar: TitleBar = %TitleBar
+@onready var _delete_node_button: Button = %DeleteNodeButton
 @onready var _editor_inspector: EditorInspector = EditorInterface.get_inspector()
 @onready var _picker_split: HSplitContainer = %PickerSplit
 @onready var _collapse_button: Button = %CollapseButton
 
+@onready var _icon_delete := EditorInterface.get_editor_theme().get_icon("Remove", "EditorIcons")
 @onready var _icon_collapse := EditorInterface.get_editor_theme().get_icon("Back", "EditorIcons")
 @onready var _icon_expand := EditorInterface.get_editor_theme().get_icon("Forward", "EditorIcons")
 
@@ -28,7 +30,9 @@ func _ready():
 
 	# Setup block scripting environment
 	undo_redo.version_changed.connect(_on_undo_redo_version_changed)
-
+	
+	if not _delete_node_button.icon:
+		_delete_node_button.icon = _icon_delete
 	_collapse_button.icon = _icon_collapse
 
 
@@ -42,8 +46,40 @@ func _on_undo_redo_version_changed():
 	_block_canvas.bsd_selected(block_script)
 
 
-func _on_button_pressed():
+func _on_print_script_button_pressed():
 	_print_generated_script()
+
+
+func _on_delete_node_button_pressed():
+	var scene_root = EditorInterface.get_edited_scene_root()
+
+	if not scene_root:
+		return
+
+	if not _current_block_code_node:
+		return
+
+	var dialog = ConfirmationDialog.new()
+	var text_format: String = 'Delete block code ("{node}") for "{parent}"?'
+	dialog.dialog_text = text_format.format({"node": _current_block_code_node.name, "parent": _current_block_code_node.get_parent().name})
+	EditorInterface.popup_dialog_centered(dialog)
+	dialog.connect("confirmed", _on_delete_dialog_confirmed.bind(_current_block_code_node))
+	pass  # Replace with function body.
+
+
+func _on_delete_dialog_confirmed(block_code_node: BlockCode):
+	var parent_node = block_code_node.get_parent()
+
+	if not parent_node:
+		return
+
+	undo_redo.create_action("Delete %s's block code script" % _current_block_code_node.get_parent().name, UndoRedo.MERGE_DISABLE, parent_node)
+	undo_redo.add_do_property(block_code_node, "owner", null)
+	undo_redo.add_do_method(parent_node, "remove_child", block_code_node)
+	undo_redo.add_undo_method(parent_node, "add_child", block_code_node)
+	undo_redo.add_undo_property(block_code_node, "owner", block_code_node.owner)
+	undo_redo.add_undo_reference(block_code_node)
+	undo_redo.commit_action()
 
 
 func switch_scene(scene_root: Node):
@@ -53,6 +89,7 @@ func switch_scene(scene_root: Node):
 func switch_block_code_node(block_code_node: BlockCode):
 	var block_script: BlockScriptData = block_code_node.block_script if block_code_node else null
 	_current_block_code_node = block_code_node
+	_delete_node_button.disabled = _current_block_code_node == null
 	_picker.bsd_selected(block_script)
 	_title_bar.bsd_selected(block_script)
 	_block_canvas.bsd_selected(block_script)
