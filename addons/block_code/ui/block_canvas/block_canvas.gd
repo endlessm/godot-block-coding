@@ -4,9 +4,9 @@ extends MarginContainer
 
 const EXTEND_MARGIN: float = 800
 const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(16, 8)
+const ZOOM_FACTOR: float = 1.1
 
 @onready var _window: Control = %Window
-@onready var _window_scroll: ScrollContainer = %WindowScroll
 @onready var _empty_box: BoxContainer = %EmptyBox
 
 @onready var _selected_node_box: BoxContainer = %SelectedNodeBox
@@ -23,7 +23,16 @@ const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(16, 8)
 
 @onready var _open_scene_icon = _open_scene_button.get_theme_icon("Load", "EditorIcons")
 
+@onready var _mouse_override: Control = %MouseOverride
+@onready var _zoom_label: Label = %ZoomLabel
+
 var _block_scenes_by_class = {}
+var _panning := false
+var zoom: float:
+	set(value):
+		_window.scale = Vector2(value, value)
+	get:
+		return _window.scale.x
 
 signal reconnect_block(block: Block)
 signal add_block_code
@@ -48,10 +57,8 @@ func _populate_block_scenes_by_class():
 
 
 func add_block(block: Block, position: Vector2 = Vector2.ZERO) -> void:
-	block.position = position
-	block.position.y += _window_scroll.scroll_vertical
+	block.position = canvas_to_window(position)
 	_window.add_child(block)
-	_window.custom_minimum_size.y = max(block.position.y + EXTEND_MARGIN, _window.custom_minimum_size.y)
 
 
 func get_blocks() -> Array[Block]:
@@ -79,6 +86,10 @@ func bsd_selected(bsd: BlockScriptData):
 
 	var edited_node = EditorInterface.get_inspector().get_edited_object() as Node
 
+	_window.position = Vector2(0, 0)
+	zoom = 1
+	_zoom_label.visible = false
+
 	_empty_box.visible = false
 	_selected_node_box.visible = false
 	_selected_node_with_block_code_box.visible = false
@@ -88,6 +99,7 @@ func bsd_selected(bsd: BlockScriptData):
 
 	if bsd != null:
 		_load_bsd(bsd)
+		_zoom_label.visible = true
 	elif edited_node == null:
 		_empty_box.visible = true
 	elif BlockCodePlugin.node_has_block_code(edited_node):
@@ -207,3 +219,58 @@ func _on_replace_block_code_button_pressed():
 	_replace_block_code_button.disabled = true
 
 	replace_block_code.emit()
+
+
+func _input(event):
+	if event is InputEventKey:
+		if event.keycode == KEY_SHIFT:
+			set_mouse_override(event.pressed)
+
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_MIDDLE:
+			if event.pressed and is_mouse_over():
+				_panning = true
+			else:
+				_panning = false
+
+		if event.button_index == MOUSE_BUTTON_MIDDLE:
+			set_mouse_override(event.pressed)
+
+		var relative_mouse_pos := get_global_mouse_position() - get_global_rect().position
+
+		if is_mouse_over():
+			var old_mouse_window_pos := canvas_to_window(relative_mouse_pos)
+
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP and zoom < 2:
+				zoom *= ZOOM_FACTOR
+			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 0.2:
+				zoom /= ZOOM_FACTOR
+
+			_zoom_label.text = "%.1fx" % zoom
+
+			_window.position -= (old_mouse_window_pos - canvas_to_window(relative_mouse_pos)) * zoom
+
+	if event is InputEventMouseMotion:
+		if (Input.is_key_pressed(KEY_SHIFT) and _panning) or (Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) and _panning):
+			_window.position += event.relative
+
+
+func canvas_to_window(v: Vector2) -> Vector2:
+	return _window.get_transform().affine_inverse() * v
+
+
+func window_to_canvas(v: Vector2) -> Vector2:
+	return _window.get_transform() * v
+
+
+func is_mouse_over() -> bool:
+	return get_global_rect().has_point(get_global_mouse_position())
+
+
+func set_mouse_override(override: bool):
+	if override:
+		_mouse_override.mouse_filter = Control.MOUSE_FILTER_PASS
+		_mouse_override.mouse_default_cursor_shape = Control.CURSOR_MOVE
+	else:
+		_mouse_override.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_mouse_override.mouse_default_cursor_shape = Control.CURSOR_ARROW
