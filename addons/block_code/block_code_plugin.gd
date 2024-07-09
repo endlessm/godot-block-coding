@@ -136,6 +136,9 @@ func _on_editor_inspector_edited_object_changed():
 
 
 func select_block_code_node(block_code: BlockCode):
+	if block_code == _selected_block_code:
+		return
+
 	if not is_block_code_editable(block_code):
 		block_code = null
 
@@ -153,7 +156,21 @@ func select_block_code_node(block_code: BlockCode):
 		_selected_block_code.property_list_changed.connect(_on_selected_block_code_changed)
 		editor_inspector.property_edited.connect(_on_editor_inspector_property_edited)
 
+	_refresh_block_code_node()
+
+
+func _refresh_block_code_node():
 	main_panel.switch_block_code_node(_selected_block_code)
+
+
+func _on_selected_block_code_changed():
+	if _selected_block_code:
+		_refresh_block_code_node()
+
+
+func _on_editor_inspector_property_edited(property: String):
+	if _selected_block_code:
+		_refresh_block_code_node()
 
 
 static func is_block_code_editable(block_code: BlockCode) -> bool:
@@ -181,16 +198,6 @@ static func list_block_code_nodes_for_node(node: Node, recursive: bool = false) 
 		result.append_array(node.find_children("*", "BlockCode", recursive))
 
 	return result
-
-
-func _on_selected_block_code_changed():
-	if _selected_block_code:
-		_on_editor_inspector_edited_object_changed()
-
-
-func _on_editor_inspector_property_edited(property: String):
-	if _selected_block_code:
-		_on_editor_inspector_edited_object_changed()
 
 
 func _get_plugin_name():
