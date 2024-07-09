@@ -228,7 +228,7 @@ func _on_node_block_canvas_replace_block_code():
 
 
 func _select_block_code_node(edited_node: Node):
-	var block_code_nodes = BlockCodePlugin.list_block_code_for_node(edited_node)
+	var block_code_nodes = BlockCodePlugin.list_block_code_nodes_for_node(edited_node)
 	if block_code_nodes.size() > 0:
 		_set_selection([block_code_nodes.pop_front()])
 	else:

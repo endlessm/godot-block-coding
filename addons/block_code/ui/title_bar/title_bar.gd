@@ -42,15 +42,15 @@ func _update_node_option_button_items():
 	if not scene_root:
 		return
 
-	for block_code_node in BlockCodePlugin.list_block_code_for_node(scene_root, true):
-		if not BlockCodePlugin.is_block_code_editable(block_code_node):
+	for block_code in BlockCodePlugin.list_block_code_nodes_for_node(scene_root, true):
+		if not BlockCodePlugin.is_block_code_editable(block_code):
 			continue
 
 		var node_item_index = _node_option_button.item_count
-		var node_label = "{name} ({type})".format({"name": scene_root.get_path_to(block_code_node).get_concatenated_names(), "type": block_code_node.block_script.script_inherits})
+		var node_label = "{name} ({type})".format({"name": scene_root.get_path_to(block_code).get_concatenated_names(), "type": block_code.block_script.script_inherits})
 		_node_option_button.add_item(node_label)
 		_node_option_button.set_item_icon(node_item_index, _block_code_icon)
-		_node_option_button.set_item_metadata(node_item_index, block_code_node)
+		_node_option_button.set_item_metadata(node_item_index, block_code)
 
 
 func _get_index_for_bsd(bsd: BlockScriptData) -> int:
