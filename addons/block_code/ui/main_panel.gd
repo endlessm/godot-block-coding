@@ -6,15 +6,16 @@ extends Control
 @onready var _block_canvas: BlockCanvas = %NodeBlockCanvas
 @onready var _drag_manager: DragManager = %DragManager
 @onready var _title_bar: TitleBar = %TitleBar
+@onready var _delete_node_button: Button = %DeleteNodeButton
 @onready var _editor_inspector: EditorInspector = EditorInterface.get_inspector()
 @onready var _picker_split: HSplitContainer = %PickerSplit
 @onready var _collapse_button: Button = %CollapseButton
 
+@onready var _icon_delete := EditorInterface.get_editor_theme().get_icon("Remove", "EditorIcons")
 @onready var _icon_collapse := EditorInterface.get_editor_theme().get_icon("Back", "EditorIcons")
 @onready var _icon_expand := EditorInterface.get_editor_theme().get_icon("Forward", "EditorIcons")
 
 var _current_block_code_node: BlockCode
-var _scene_root: Node
 var _block_code_nodes: Array
 var _collapsed: bool = false
 
@@ -30,6 +31,8 @@ func _ready():
 	# Setup block scripting environment
 	undo_redo.version_changed.connect(_on_undo_redo_version_changed)
 
+	if not _delete_node_button.icon:
+		_delete_node_button.icon = _icon_delete
 	_collapse_button.icon = _icon_collapse
 
 
@@ -43,22 +46,53 @@ func _on_undo_redo_version_changed():
 	_block_canvas.bsd_selected(block_script)
 
 
-func _on_button_pressed():
+func _on_print_script_button_pressed():
 	_print_generated_script()
+
+
+func _on_delete_node_button_pressed():
+	var scene_root = EditorInterface.get_edited_scene_root()
+
+	if not scene_root:
+		return
+
+	if not _current_block_code_node:
+		return
+
+	var dialog = ConfirmationDialog.new()
+	var text_format: String = 'Delete block code ("{node}") for "{parent}"?'
+	dialog.dialog_text = text_format.format({"node": _current_block_code_node.name, "parent": _current_block_code_node.get_parent().name})
+	EditorInterface.popup_dialog_centered(dialog)
+	dialog.connect("confirmed", _on_delete_dialog_confirmed.bind(_current_block_code_node))
+	pass  # Replace with function body.
+
+
+func _on_delete_dialog_confirmed(block_code_node: BlockCode):
+	var parent_node = block_code_node.get_parent()
+
+	if not parent_node:
+		return
+
+	undo_redo.create_action("Delete %s's block code script" % _current_block_code_node.get_parent().name, UndoRedo.MERGE_DISABLE, parent_node)
+	undo_redo.add_do_property(block_code_node, "owner", null)
+	undo_redo.add_do_method(parent_node, "remove_child", block_code_node)
+	undo_redo.add_undo_method(parent_node, "add_child", block_code_node)
+	undo_redo.add_undo_property(block_code_node, "owner", block_code_node.owner)
+	undo_redo.add_undo_reference(block_code_node)
+	undo_redo.commit_action()
 
 
 func switch_scene(scene_root: Node):
 	_title_bar.scene_selected(scene_root)
 
 
-func switch_script(block_code_node: BlockCode):
+func switch_block_code_node(block_code_node: BlockCode):
 	var block_script: BlockScriptData = block_code_node.block_script if block_code_node else null
 	_current_block_code_node = block_code_node
+	_delete_node_button.disabled = _current_block_code_node == null
 	_picker.bsd_selected(block_script)
 	_title_bar.bsd_selected(block_script)
 	_block_canvas.bsd_selected(block_script)
-	if block_code_node:
-		EditorInterface.set_main_screen_editor("Block Code")
 
 
 func save_script():
@@ -66,9 +100,28 @@ func save_script():
 		print("No script loaded to save.")
 		return
 
+	var scene_node = EditorInterface.get_edited_scene_root()
+
+	if not BlockCodePlugin.is_block_code_editable(_current_block_code_node):
+		print("Block code for {node} is not editable.".format({"node": _current_block_code_node}))
+		return
+
 	var block_script: BlockScriptData = _current_block_code_node.block_script
 
+	var resource_path_split = block_script.resource_path.split("::", true, 1)
+	var resource_scene = resource_path_split[0]
+
 	undo_redo.create_action("Modify %s's block code script" % _current_block_code_node.get_parent().name)
+
+	if resource_scene and resource_scene != scene_node.scene_file_path:
+		# This resource is from another scene. Since the user is changing it
+		# here, we'll make a copy for this scene rather than changing it in the
+		# other scene file.
+		undo_redo.add_undo_property(_current_block_code_node, "block_script", _current_block_code_node.block_script)
+		block_script = block_script.duplicate(true)
+		_current_block_code_node.block_script = block_script
+		undo_redo.add_do_property(_current_block_code_node, "block_script", _current_block_code_node.block_script)
+
 	undo_redo.add_undo_property(_current_block_code_node.block_script, "block_trees", _current_block_code_node.block_script.block_trees)
 	undo_redo.add_undo_property(_current_block_code_node.block_script, "generated_script", _current_block_code_node.block_script.generated_script)
 
@@ -119,3 +172,53 @@ func toggle_collapse():
 
 func _on_collapse_button_pressed():
 	toggle_collapse()
+
+
+func _on_node_block_canvas_add_block_code():
+	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
+	var scene_root: Node = EditorInterface.get_edited_scene_root()
+
+	if edited_node == null or scene_root == null:
+		return
+
+	var block_code = BlockCode.new()
+	block_code.name = "BlockCode"
+
+	undo_redo.create_action("Add block code for %s" % edited_node.name, UndoRedo.MERGE_DISABLE, edited_node)
+
+	undo_redo.add_do_method(edited_node, "add_child", block_code, true)
+	undo_redo.add_do_property(block_code, "owner", scene_root)
+	undo_redo.add_do_reference(block_code)
+	undo_redo.add_undo_method(edited_node, "remove_child", block_code)
+	undo_redo.add_undo_property(block_code, "owner", null)
+
+	undo_redo.commit_action()
+
+	EditorInterface.get_selection().clear()
+	EditorInterface.get_selection().add_node(block_code)
+
+
+func _on_node_block_canvas_open_scene():
+	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
+
+	if edited_node == null or edited_node.owner == null:
+		return
+
+	EditorInterface.open_scene_from_path(edited_node.scene_file_path)
+
+
+func _on_node_block_canvas_replace_block_code():
+	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
+	var scene_root: Node = EditorInterface.get_edited_scene_root()
+
+	undo_redo.create_action("Replace block code %s" % edited_node.name, UndoRedo.MERGE_DISABLE, scene_root)
+
+	undo_redo.add_do_method(scene_root, "set_editable_instance", edited_node, true)
+	undo_redo.add_undo_method(scene_root, "set_editable_instance", edited_node, false)
+
+	undo_redo.commit_action()
+
+	var block_code_nodes = BlockCodePlugin.list_block_code_for_node(edited_node)
+#
+	EditorInterface.get_selection().clear()
+	EditorInterface.get_selection().add_node(block_code_nodes.pop_front() if block_code_nodes.size() > 0 else edited_node)

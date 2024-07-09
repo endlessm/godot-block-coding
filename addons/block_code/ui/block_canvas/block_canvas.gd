@@ -7,15 +7,33 @@ const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(16, 8)
 
 @onready var _window: Control = %Window
 @onready var _window_scroll: ScrollContainer = %WindowScroll
-@onready var _choose_block_code_label: Label = %ChooseBlockCodeLabel
-@onready var _create_block_code_label: Label = %CreateBlockCodeLabel
+@onready var _empty_box: BoxContainer = %EmptyBox
+
+@onready var _selected_node_box: BoxContainer = %SelectedNodeBox
+@onready var _selected_node_label: Label = %SelectedNodeBox/Label
+@onready var _selected_node_label_format: String = _selected_node_label.text
+
+@onready var _selected_node_with_block_code_box: BoxContainer = %SelectedNodeWithBlockCodeBox
+@onready var _selected_node_with_block_code_label: Label = %SelectedNodeWithBlockCodeBox/Label
+@onready var _selected_node_with_block_code_label_format: String = _selected_node_with_block_code_label.text
+
+@onready var _add_block_code_button: Button = %AddBlockCodeButton
+@onready var _open_scene_button: Button = %OpenSceneButton
+@onready var _replace_block_code_button: Button = %ReplaceBlockCodeButton
+
+@onready var _open_scene_icon = _open_scene_button.get_theme_icon("Load", "EditorIcons")
 
 var _block_scenes_by_class = {}
 
 signal reconnect_block(block: Block)
+signal add_block_code
+signal open_scene
+signal replace_block_code
 
 
 func _ready():
+	if not _open_scene_button.icon:
+		_open_scene_button.icon = _open_scene_icon
 	_populate_block_scenes_by_class()
 
 
@@ -59,16 +77,36 @@ func set_child(n: Node):
 func bsd_selected(bsd: BlockScriptData):
 	clear_canvas()
 
-	_choose_block_code_label.visible = false
-	_create_block_code_label.visible = false
+	var edited_node = EditorInterface.get_inspector().get_edited_object() as Node
 
-	if not bsd and scene_has_bsd_nodes():
-		_choose_block_code_label.visible = true
-		return
-	elif not bsd and not scene_has_bsd_nodes():
-		_create_block_code_label.visible = true
-		return
+	_empty_box.visible = false
+	_selected_node_box.visible = false
+	_selected_node_with_block_code_box.visible = false
+	_add_block_code_button.disabled = true
+	_open_scene_button.disabled = true
+	_replace_block_code_button.disabled = true
 
+	if bsd != null:
+		_load_bsd(bsd)
+	elif edited_node == null:
+		_empty_box.visible = true
+	elif BlockCodePlugin.node_has_block_code(edited_node):
+		# If the selected node has a block code node, but BlockCodePlugin didn't
+		# provide it to bsd_selected, we assume the block code itself is not
+		# editable. In that case, provide options to either edit the node's
+		# scene file, or override the BlockCode node. This is mostly to avoid
+		# creating a situation where a node has multiple BlockCode nodes.
+		_selected_node_with_block_code_box.visible = true
+		_selected_node_with_block_code_label.text = _selected_node_with_block_code_label_format.format({"node": edited_node.name})
+		_open_scene_button.disabled = false if edited_node.scene_file_path else true
+		_replace_block_code_button.disabled = false
+	else:
+		_selected_node_box.visible = true
+		_selected_node_label.text = _selected_node_label_format.format({"node": edited_node.name})
+		_add_block_code_button.disabled = false
+
+
+func _load_bsd(bsd: BlockScriptData):
 	for tree in bsd.block_trees.array:
 		load_tree(_window, tree)
 
@@ -151,3 +189,21 @@ func set_scope(scope: String):
 func release_scope():
 	for block in _window.get_children():
 		block.modulate = Color.WHITE
+
+
+func _on_add_block_code_button_pressed():
+	_add_block_code_button.disabled = true
+
+	add_block_code.emit()
+
+
+func _on_open_scene_button_pressed():
+	_open_scene_button.disabled = true
+
+	open_scene.emit()
+
+
+func _on_replace_block_code_button_pressed():
+	_replace_block_code_button.disabled = true
+
+	replace_block_code.emit()

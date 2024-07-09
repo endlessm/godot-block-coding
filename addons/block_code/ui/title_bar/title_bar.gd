@@ -15,7 +15,7 @@ func _ready():
 
 
 func scene_selected(scene_root: Node):
-	_update_node_option_button_options()
+	_update_node_option_button_items()
 	var current_block_code = _editor_inspector.get_edited_object() as BlockCode
 	if not current_block_code:
 		bsd_selected(null)
@@ -27,14 +27,14 @@ func bsd_selected(bsd: BlockScriptData):
 	#       we'll crudely update the list of BlockCode nodes whenever the
 	#       selection changes.
 
-	_update_node_option_button_options()
+	_update_node_option_button_items()
 
 	var select_index = _get_index_for_bsd(bsd)
 	if _node_option_button.selected != select_index:
 		_node_option_button.select(select_index)
 
 
-func _update_node_option_button_options():
+func _update_node_option_button_items():
 	_node_option_button.clear()
 
 	var scene_root = EditorInterface.get_edited_scene_root()
@@ -42,7 +42,10 @@ func _update_node_option_button_options():
 	if not scene_root:
 		return
 
-	for block_code_node in scene_root.find_children("*", "BlockCode"):
+	for block_code_node in BlockCodePlugin.list_block_code_for_node(scene_root, true):
+		if not BlockCodePlugin.is_block_code_editable(block_code_node):
+			continue
+
 		var node_item_index = _node_option_button.item_count
 		var node_label = "{name} ({type})".format({"name": scene_root.get_path_to(block_code_node).get_concatenated_names(), "type": block_code_node.block_script.script_inherits})
 		_node_option_button.add_item(node_label)
@@ -60,9 +63,8 @@ func _get_index_for_bsd(bsd: BlockScriptData) -> int:
 
 func _on_node_option_button_item_selected(index):
 	var block_code_node = _node_option_button.get_item_metadata(index) as BlockCode
-	# FIXME: We should clear the existing selection, but at the moment this
-	#        causes the new node to be deselected due to signal handlers being
-	#        called in the wrong order.
-	#_editor_selection.clear()
-	if block_code_node:
-		EditorInterface.edit_node(block_code_node)
+	var parent_node = block_code_node.get_parent() as Node
+	_editor_selection.clear()
+	_editor_selection.add_node(block_code_node)
+	if parent_node:
+		_editor_selection.add_node(parent_node)

@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://addons/block_code/examples/pong_game/ball.tscn" id="9_xrqll"]
 [ext_resource type="PackedScene" uid="uid://fhoapg3anjsu" path="res://addons/block_code/examples/pong_game/goal_area.tscn" id="12_nqmxu"]
 
-[sub_resource type="Resource" id="Resource_k50df"]
+[sub_resource type="Resource" id="Resource_k6jw1"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
 serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.835294, 0.262745, 0.133333, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Move with player 1 buttons, speed {speed: VECTOR2}"], ["statement", "var dir = Vector2()
@@ -26,29 +26,29 @@ move_and_slide()"], ["defaults", {}], ["param_input_strings", {
 "speed": "0,1000"
 }]]
 
-[sub_resource type="Resource" id="Resource_bjhgb"]
+[sub_resource type="Resource" id="Resource_e61h1"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_k50df")
+serialized_block = SubResource("Resource_k6jw1")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_fwk6m"]
+[sub_resource type="Resource" id="Resource_pm7ay"]
 script = ExtResource("5_wr38c")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "process_block"], ["label", "EntryBlock"], ["color", Color(0.92549, 0.231373, 0.34902, 1)], ["block_type", 1], ["position", Vector2(167, 112)], ["scope", ""], ["block_format", "On Process"], ["statement", "func _process(delta):"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
+serialized_props = [["block_name", "process_block"], ["label", "EntryBlock"], ["color", Color(0.92549, 0.231373, 0.34902, 1)], ["block_type", 1], ["position", Vector2(174, 102)], ["scope", ""], ["block_format", "On Process"], ["statement", "func _process(delta):"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
 
-[sub_resource type="Resource" id="Resource_8ar27"]
+[sub_resource type="Resource" id="Resource_uln40"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_fwk6m")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_bjhgb")]]
+serialized_block = SubResource("Resource_pm7ay")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_e61h1")]]
 
-[sub_resource type="Resource" id="Resource_ue2t3"]
+[sub_resource type="Resource" id="Resource_4j61k"]
 script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_8ar27")])
+array = Array[ExtResource("4_qtggh")]([SubResource("Resource_uln40")])
 
 [sub_resource type="Resource" id="Resource_qmak3"]
 script = ExtResource("7_uuuue")
 script_inherits = "SimpleCharacter"
-block_trees = SubResource("Resource_ue2t3")
+block_trees = SubResource("Resource_4j61k")
 generated_script = "extends SimpleCharacter
 
 var VAR_DICT := {}
