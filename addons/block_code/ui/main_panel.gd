@@ -19,7 +19,13 @@ var _current_block_code_node: BlockCode
 var _block_code_nodes: Array
 var _collapsed: bool = false
 
-var undo_redo: EditorUndoRedoManager
+var undo_redo: EditorUndoRedoManager:
+	set(value):
+		if undo_redo:
+			undo_redo.version_changed.disconnect(_on_undo_redo_version_changed)
+		undo_redo = value
+		if undo_redo:
+			undo_redo.version_changed.connect(_on_undo_redo_version_changed)
 
 
 func _ready():
@@ -28,12 +34,10 @@ func _ready():
 	_drag_manager.block_dropped.connect(save_script)
 	_drag_manager.block_modified.connect(save_script)
 
-	# Setup block scripting environment
-	undo_redo.version_changed.connect(_on_undo_redo_version_changed)
-
 	if not _delete_node_button.icon:
 		_delete_node_button.icon = _icon_delete
-	_collapse_button.icon = _icon_collapse
+	if not _collapse_button.icon:
+		_collapse_button.icon = _icon_collapse
 
 
 func _on_undo_redo_version_changed():
@@ -188,14 +192,12 @@ func _on_node_block_canvas_add_block_code():
 
 	undo_redo.add_do_method(edited_node, "add_child", block_code, true)
 	undo_redo.add_do_property(block_code, "owner", scene_root)
+	undo_redo.add_do_method(self, "_select_block_code_node", edited_node)
 	undo_redo.add_do_reference(block_code)
 	undo_redo.add_undo_method(edited_node, "remove_child", block_code)
 	undo_redo.add_undo_property(block_code, "owner", null)
 
 	undo_redo.commit_action()
-
-	EditorInterface.get_selection().clear()
-	EditorInterface.get_selection().add_node(block_code)
 
 
 func _on_node_block_canvas_open_scene():
@@ -213,12 +215,27 @@ func _on_node_block_canvas_replace_block_code():
 
 	undo_redo.create_action("Replace block code %s" % edited_node.name, UndoRedo.MERGE_DISABLE, scene_root)
 
+	# FIXME: When this is undone, the new state is not correctly shown in the
+	#        editor due to an issue in Godot:
+	#        <https://github.com/godotengine/godot/issues/45915>
+	#        Ideally this should fix itself in a future version of Godot.
+
 	undo_redo.add_do_method(scene_root, "set_editable_instance", edited_node, true)
+	undo_redo.add_do_method(self, "_select_block_code_node", edited_node)
 	undo_redo.add_undo_method(scene_root, "set_editable_instance", edited_node, false)
 
 	undo_redo.commit_action()
 
+
+func _select_block_code_node(edited_node: Node):
 	var block_code_nodes = BlockCodePlugin.list_block_code_for_node(edited_node)
-#
+	if block_code_nodes.size() > 0:
+		_set_selection([block_code_nodes.pop_front()])
+	else:
+		_set_selection([edited_node])
+
+
+func _set_selection(nodes: Array[Node]):
 	EditorInterface.get_selection().clear()
-	EditorInterface.get_selection().add_node(block_code_nodes.pop_front() if block_code_nodes.size() > 0 else edited_node)
+	for node in nodes:
+		EditorInterface.get_selection().add_node(node)
