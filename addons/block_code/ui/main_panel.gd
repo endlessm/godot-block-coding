@@ -15,6 +15,8 @@ extends Control
 @onready var _icon_collapse := EditorInterface.get_editor_theme().get_icon("Back", "EditorIcons")
 @onready var _icon_expand := EditorInterface.get_editor_theme().get_icon("Forward", "EditorIcons")
 
+const Constants = preload("res://addons/block_code/ui/constants.gd")
+
 var _current_block_code_node: BlockCode
 var _block_code_nodes: Array
 var _collapsed: bool = false
@@ -86,6 +88,14 @@ func _on_delete_dialog_confirmed(block_code_node: BlockCode):
 	undo_redo.commit_action()
 
 
+func _try_migration():
+	var version: int = _current_block_code_node.block_script.version
+	if version == Constants.CURRENT_DATA_VERSION:
+		# No migration needed.
+		return
+	push_warning("Migration not implemented from %d to %d" % [version, Constants.CURRENT_DATA_VERSION])
+
+
 func switch_scene(scene_root: Node):
 	_title_bar.scene_selected(scene_root)
 
@@ -94,6 +104,8 @@ func switch_block_code_node(block_code_node: BlockCode):
 	var block_script: BlockScriptData = block_code_node.block_script if block_code_node else null
 	_current_block_code_node = block_code_node
 	_delete_node_button.disabled = _current_block_code_node == null
+	if _current_block_code_node != null:
+		_try_migration()
 	_picker.bsd_selected(block_script)
 	_title_bar.bsd_selected(block_script)
 	_block_canvas.bsd_selected(block_script)
@@ -133,6 +145,7 @@ func save_script():
 	var generated_script = _block_canvas.generate_script_from_current_window(block_script.script_inherits)
 	block_script.block_trees = block_trees
 	block_script.generated_script = generated_script
+	block_script.version = Constants.CURRENT_DATA_VERSION
 
 	undo_redo.add_do_property(_current_block_code_node.block_script, "block_trees", block_trees)
 	undo_redo.add_do_property(_current_block_code_node.block_script, "generated_script", generated_script)
