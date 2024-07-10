@@ -4,6 +4,7 @@ extends MarginContainer
 
 const EXTEND_MARGIN: float = 800
 const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(16, 8)
+const DEFAULT_WINDOW_MARGIN: Vector2 = Vector2(24, 24)
 const ZOOM_FACTOR: float = 1.1
 
 @onready var _window: Control = %Window
@@ -31,6 +32,7 @@ var _panning := false
 var zoom: float:
 	set(value):
 		_window.scale = Vector2(value, value)
+		_zoom_label.text = "%.1fx" % value
 	get:
 		return _window.scale.x
 
@@ -88,6 +90,8 @@ func bsd_selected(bsd: BlockScriptData):
 
 	_window.position = Vector2(0, 0)
 	zoom = 1
+
+	_window.visible = false
 	_zoom_label.visible = false
 
 	_empty_box.visible = false
@@ -99,7 +103,9 @@ func bsd_selected(bsd: BlockScriptData):
 
 	if bsd != null:
 		_load_bsd(bsd)
+		_window.visible = true
 		_zoom_label.visible = true
+		reset_window_position()
 	elif edited_node == null:
 		_empty_box.visible = true
 	elif BlockCodePlugin.node_has_block_code(edited_node):
@@ -132,6 +138,7 @@ func scene_has_bsd_nodes() -> bool:
 
 func clear_canvas():
 	for child in _window.get_children():
+		_window.remove_child(child)
 		child.queue_free()
 
 
@@ -140,7 +147,6 @@ func load_tree(parent: Node, node: SerializedBlockTreeNode):
 	var scene: Block = load(_block_scene_path).instantiate()
 	for prop_pair in node.serialized_block.serialized_props:
 		scene.set(prop_pair[0], prop_pair[1])
-
 	parent.add_child(scene)
 
 	var scene_block: Block = scene as Block
@@ -246,13 +252,27 @@ func _input(event):
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 0.2:
 				zoom /= ZOOM_FACTOR
 
-			_zoom_label.text = "%.1fx" % zoom
-
 			_window.position -= (old_mouse_window_pos - canvas_to_window(relative_mouse_pos)) * zoom
 
 	if event is InputEventMouseMotion:
 		if (Input.is_key_pressed(KEY_SHIFT) and _panning) or (Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) and _panning):
 			_window.position += event.relative
+
+
+func reset_window_position():
+	var blocks = get_blocks()
+	var top_left: Vector2 = Vector2.INF
+
+	for block in blocks:
+		if block.position.x < top_left.x:
+			top_left.x = block.position.x
+		if block.position.y < top_left.y:
+			top_left.y = block.position.y
+
+	if top_left == Vector2.INF:
+		top_left = Vector2.ZERO
+
+	_window.position = (-top_left + DEFAULT_WINDOW_MARGIN) * zoom
 
 
 func canvas_to_window(v: Vector2) -> Vector2:
