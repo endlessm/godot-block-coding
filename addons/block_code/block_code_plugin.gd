@@ -9,7 +9,7 @@ static var block_code_button: Button
 var editor_inspector: EditorInspector
 var editor_selection: EditorSelection
 
-var selected_block_code_node: BlockCode
+var _selected_block_code: BlockCode
 
 var old_feature_profile: String = ""
 
@@ -97,14 +97,12 @@ func _exit_tree():
 func _ready():
 	connect("scene_changed", _on_scene_changed)
 	editor_inspector.connect("edited_object_changed", _on_editor_inspector_edited_object_changed)
-	editor_inspector.connect("property_edited", _on_editor_inspector_property_edited)
 	_on_scene_changed(EditorInterface.get_edited_scene_root())
 	_on_editor_inspector_edited_object_changed()
 
 
 func _on_scene_changed(scene_root: Node):
 	main_panel.switch_scene(scene_root)
-	_on_editor_inspector_edited_object_changed()
 
 
 func _on_editor_inspector_edited_object_changed():
@@ -112,7 +110,10 @@ func _on_editor_inspector_edited_object_changed():
 	#var edited_node = edited_object as Node
 	var selected_nodes = editor_selection.get_selected_nodes()
 
-	if edited_object is BlockCode and selected_nodes.has(edited_object):
+	if edited_object is BlockCode:
+		make_bottom_panel_item_visible(main_panel)
+
+	if edited_object is BlockCode and selected_nodes.size() == 1 and edited_object.owner and edited_object != _selected_block_code:
 		# If a BlockCode node is being edited, and it was explicitly selected
 		# (as opposed to edited in the Inspector alone), select its parent node
 		# as well. This provides a clearer indication of what is being edited.
@@ -120,8 +121,7 @@ func _on_editor_inspector_edited_object_changed():
 		# so we will return early to avoid duplicate work.
 		var parent_node = edited_object.get_parent()
 		if parent_node:
-			EditorInterface.get_selection().add_node.call_deferred(parent_node)
-		make_bottom_panel_item_visible(main_panel)
+			editor_selection.add_node.call_deferred(parent_node)
 		return
 
 	if edited_object and edited_object.get_class() == "MultiNodeEdit":
@@ -131,14 +131,46 @@ func _on_editor_inspector_edited_object_changed():
 		# when we select the parent of a BlockCode node.
 		edited_object = selected_nodes.filter(func(node): return node is BlockCode).pop_front()
 
-	# We will edit either the selected node (if it is a BlockCode node) or
-	# the first BlockCode child of that node. Keep track of the block code node
-	# being edited so we know to monitor for changes from EditorInspector.
-	selected_block_code_node = list_block_code_for_node(edited_object as Node).pop_front()
-	if not is_block_code_editable(selected_block_code_node):
-		selected_block_code_node = null
+	var block_code_node = list_block_code_nodes_for_node(edited_object as Node).pop_front()
+	select_block_code_node(block_code_node)
 
-	main_panel.switch_block_code_node(selected_block_code_node)
+
+func select_block_code_node(block_code: BlockCode):
+	if block_code == _selected_block_code:
+		return
+
+	if not is_block_code_editable(block_code):
+		block_code = null
+
+	if _selected_block_code:
+		_selected_block_code.tree_entered.disconnect(_on_selected_block_code_changed)
+		_selected_block_code.tree_exited.disconnect(_on_selected_block_code_changed)
+		_selected_block_code.property_list_changed.disconnect(_on_selected_block_code_changed)
+		editor_inspector.property_edited.disconnect(_on_editor_inspector_property_edited)
+
+	_selected_block_code = block_code
+
+	if _selected_block_code:
+		_selected_block_code.tree_entered.connect(_on_selected_block_code_changed)
+		_selected_block_code.tree_exited.connect(_on_selected_block_code_changed)
+		_selected_block_code.property_list_changed.connect(_on_selected_block_code_changed)
+		editor_inspector.property_edited.connect(_on_editor_inspector_property_edited)
+
+	_refresh_block_code_node()
+
+
+func _refresh_block_code_node():
+	main_panel.switch_block_code_node(_selected_block_code)
+
+
+func _on_selected_block_code_changed():
+	if _selected_block_code:
+		_refresh_block_code_node()
+
+
+func _on_editor_inspector_property_edited(property: String):
+	if _selected_block_code:
+		_refresh_block_code_node()
 
 
 static func is_block_code_editable(block_code: BlockCode) -> bool:
@@ -154,10 +186,10 @@ static func is_block_code_editable(block_code: BlockCode) -> bool:
 
 
 static func node_has_block_code(node: Node, recursive: bool = false) -> bool:
-	return list_block_code_for_node(node, recursive).size() > 0
+	return list_block_code_nodes_for_node(node, recursive).size() > 0
 
 
-static func list_block_code_for_node(node: Node, recursive: bool = false) -> Array[BlockCode]:
+static func list_block_code_nodes_for_node(node: Node, recursive: bool = false) -> Array[BlockCode]:
 	var result: Array[BlockCode] = []
 
 	if node is BlockCode:
@@ -166,11 +198,6 @@ static func list_block_code_for_node(node: Node, recursive: bool = false) -> Arr
 		result.append_array(node.find_children("*", "BlockCode", recursive))
 
 	return result
-
-
-func _on_editor_inspector_property_edited(property: String):
-	if selected_block_code_node:
-		_on_editor_inspector_edited_object_changed()
 
 
 func _get_plugin_name():
