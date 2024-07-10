@@ -19,10 +19,6 @@ config/icon="res://icon.svg"
 
 enabled=PackedStringArray("res://addons/block_code/plugin.cfg", "res://addons/gut/plugin.cfg", "res://addons/plugin_refresher/plugin.cfg")
 
-[physics]
-
-2d/default_gravity=0.0
-
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
