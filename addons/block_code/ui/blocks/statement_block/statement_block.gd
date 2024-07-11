@@ -58,6 +58,8 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 	for pair in param_name_input_pairs:
 		formatted_statement = formatted_statement.replace("{%s}" % pair[0], pair[1].get_string())
 
+	formatted_statement = InstructionTree.IDHandler.make_unique(formatted_statement)
+
 	var statement_lines := formatted_statement.split("\n")
 
 	var root: InstructionTree.TreeNode = InstructionTree.TreeNode.new(statement_lines[0])

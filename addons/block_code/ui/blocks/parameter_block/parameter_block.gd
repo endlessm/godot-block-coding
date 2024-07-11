@@ -55,6 +55,8 @@ func get_parameter_string() -> String:
 	for pair in param_name_input_pairs:
 		formatted_statement = formatted_statement.replace("{%s}" % pair[0], pair[1].get_string())
 
+	formatted_statement = InstructionTree.IDHandler.make_unique(formatted_statement)
+
 	return formatted_statement
 
 
