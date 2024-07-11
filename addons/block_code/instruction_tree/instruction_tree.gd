@@ -31,14 +31,13 @@ class IDHandler:
 	static func make_unique(formatted_string: String) -> String:
 		var unique_string = formatted_string
 		var regex = RegEx.new()
-		regex.compile("[^\\s]+__\\b")
+		regex.compile("\\b__[^\\s]+")
 		var ids: Dictionary = {}
 		for result in regex.search_all(formatted_string):
 			var result_string = result.get_string()
-			var base_string = result_string.trim_suffix("__")
-			if not ids.has(base_string):
-				ids[base_string] = get_unique_id(base_string)
-			unique_string = unique_string.replace(result_string, base_string + "_%d" % ids[base_string])
+			if not ids.has(result_string):
+				ids[result_string] = get_unique_id(result_string)
+			unique_string = unique_string.replace(result_string, result_string + "_%d" % ids[result_string])
 
 		return unique_string
 

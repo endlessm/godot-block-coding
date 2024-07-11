@@ -204,7 +204,7 @@ static func get_general_blocks() -> Array[Block]:
 
 	b = BLOCKS["control_block"].instantiate()
 	b.block_formats = ["repeat {number: INT}"]
-	b.statements = ["for i in {number}:"]
+	b.statements = ["for __i in {number}:"]
 	b.category = "Loops"
 	block_list.append(b)
 
@@ -423,10 +423,10 @@ static func get_general_blocks() -> Array[Block]:
 	b.block_format = "Load file {file_path: STRING} as sound {name: STRING}"
 	b.statement = (
 		"""
-		VAR_DICT[{name}] = AudioStreamPlayer.new()
-		VAR_DICT[{name}].name = {name}
-		VAR_DICT[{name}].set_stream(load({file_path}))
-		add_child(VAR_DICT[{name}])
+		var __sound = AudioStreamPlayer.new()
+		__sound.name = {name}
+		__sound.set_stream(load({file_path}))
+		add_child(__sound)
 		"""
 		. dedent()
 	)
@@ -439,9 +439,10 @@ static func get_general_blocks() -> Array[Block]:
 	b.block_format = "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"
 	b.statement = (
 		"""
-		VAR_DICT[{name}].volume_db = {db}
-		VAR_DICT[{name}].pitch_scale = {pitch}
-		VAR_DICT[{name}].play()
+		var __sound_node = get_node({name})
+		__sound_node.volume_db = {db}
+		__sound_node.pitch_scale = {pitch}
+		__sound_node.play()
 		"""
 		. dedent()
 	)
