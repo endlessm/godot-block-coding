@@ -3,8 +3,9 @@ class_name BlockCanvas
 extends MarginContainer
 
 const EXTEND_MARGIN: float = 800
-const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(16, 8)
-const DEFAULT_WINDOW_MARGIN: Vector2 = Vector2(24, 24)
+const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(25, 8)
+const DEFAULT_WINDOW_MARGIN: Vector2 = Vector2(25, 25)
+const SNAP_GRID: Vector2 = Vector2(25, 25)
 const ZOOM_FACTOR: float = 1.1
 
 @onready var _window: Control = %Window
@@ -27,6 +28,7 @@ const ZOOM_FACTOR: float = 1.1
 @onready var _mouse_override: Control = %MouseOverride
 @onready var _zoom_label: Label = %ZoomLabel
 
+var _current_bsd: BlockScriptData
 var _block_scenes_by_class = {}
 var _panning := false
 var zoom: float:
@@ -59,7 +61,11 @@ func _populate_block_scenes_by_class():
 
 
 func add_block(block: Block, position: Vector2 = Vector2.ZERO) -> void:
-	block.position = canvas_to_window(position)
+	if block is EntryBlock:
+		block.position = canvas_to_window(position).snapped(SNAP_GRID)
+	else:
+		block.position = canvas_to_window(position)
+
 	_window.add_child(block)
 
 
@@ -74,7 +80,9 @@ func get_blocks() -> Array[Block]:
 
 func arrange_block(block: Block, nearby_block: Block) -> void:
 	add_block(block)
-	block.global_position = (nearby_block.global_position + (nearby_block.get_size() * Vector2.RIGHT) + BLOCK_AUTO_PLACE_MARGIN)
+	var rect = nearby_block.get_global_rect()
+	rect.position += (rect.size * Vector2.RIGHT) + BLOCK_AUTO_PLACE_MARGIN
+	block.global_position = rect.position
 
 
 func set_child(n: Node):
@@ -105,7 +113,9 @@ func bsd_selected(bsd: BlockScriptData):
 		_load_bsd(bsd)
 		_window.visible = true
 		_zoom_label.visible = true
-		reset_window_position()
+
+		if bsd != _current_bsd:
+			reset_window_position()
 	elif edited_node == null:
 		_empty_box.visible = true
 	elif BlockCodePlugin.node_has_block_code(edited_node):
@@ -122,6 +132,8 @@ func bsd_selected(bsd: BlockScriptData):
 		_selected_node_box.visible = true
 		_selected_node_label.text = _selected_node_label_format.format({"node": edited_node.name})
 		_add_block_code_button.disabled = false
+
+	_current_bsd = bsd
 
 
 func _load_bsd(bsd: BlockScriptData):
