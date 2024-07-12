@@ -1,22 +1,10 @@
 extends GutTest
 ## Tests for InstructionTree
 
-var tree: InstructionTree = null
-
-
-func before_each():
-	tree = InstructionTree.new()
-
-
-func after_each():
-	if tree != null:
-		tree.free()
-		tree = null
-
 
 func test_single_node_text():
 	var node = InstructionTree.TreeNode.new("blah")
-	var text: String = tree.generate_text(node, 0)
+	var text: String = InstructionTree.generate_text(node, 0)
 	assert_eq(text, "blah\n")
 
 
@@ -24,7 +12,7 @@ func test_root_depth_text():
 	var node = InstructionTree.TreeNode.new("blah")
 	var text: String
 	for depth in range(5):
-		text = tree.generate_text(node, depth)
+		text = InstructionTree.generate_text(node, depth)
 		assert_eq(text, "\t".repeat(depth) + "blah\n")
 
 
@@ -34,7 +22,7 @@ func test_child_node_text():
 	var grandchild = InstructionTree.TreeNode.new("grandchild")
 	parent.add_child(child)
 	child.add_child(grandchild)
-	var text: String = tree.generate_text(parent, 0)
+	var text: String = InstructionTree.generate_text(parent, 0)
 	assert_eq(text, "parent\n\tchild\n\t\tgrandchild\n")
 
 
@@ -44,7 +32,7 @@ func test_sibling_node_text():
 	var sister = InstructionTree.TreeNode.new("sister")
 	node.next = brother
 	brother.next = sister
-	var text: String = tree.generate_text(node, 0)
+	var text: String = InstructionTree.generate_text(node, 0)
 	assert_eq(text, "node\nbrother\nsister\n")
 
 
@@ -63,5 +51,5 @@ func test_tree_node_text():
 	root.next = sibling
 	sibling.add_child(nephew)
 
-	var text: String = tree.generate_text(root, 0)
+	var text: String = InstructionTree.generate_text(root, 0)
 	assert_eq(text, "root\n\tchild1\n\t\tgrandchild\n\tchild2\nsibling\n\tnephew\n")

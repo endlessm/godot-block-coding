@@ -42,13 +42,13 @@ class IDHandler:
 		return unique_string
 
 
-func generate_text(root_node: TreeNode, start_depth: int = 0) -> String:
+static func generate_text(root_node: TreeNode, start_depth: int = 0) -> String:
 	var out = PackedStringArray()
 	generate_text_recursive(root_node, start_depth, out)
 	return "".join(out)
 
 
-func generate_text_recursive(node: TreeNode, depth: int, out: PackedStringArray):
+static func generate_text_recursive(node: TreeNode, depth: int, out: PackedStringArray):
 	if node.data != "":
 		out.append("\t".repeat(depth) + node.data + "\n")
 

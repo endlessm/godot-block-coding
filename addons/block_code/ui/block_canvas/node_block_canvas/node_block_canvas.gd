@@ -36,7 +36,7 @@ func generate_script_from_current_window(bsd: BlockScriptData):
 		script += _generate_script_from_entry_blocks(entry_statement, entry_blocks, init_func)
 
 	if init_func.children:
-		script += InstructionTree.new().generate_text(init_func)
+		script += InstructionTree.generate_text(init_func)
 
 	return script
 
@@ -52,9 +52,8 @@ func _generate_script_from_entry_blocks(entry_statement: String, entry_blocks: A
 		var next_block := entry_block.bottom_snap.get_snapped_block()
 
 		if next_block != null:
-			var generator: InstructionTree = InstructionTree.new()
 			var instruction_node: InstructionTree.TreeNode = next_block.get_instruction_node()
-			var to_append := generator.generate_text(instruction_node, 1)
+			var to_append := InstructionTree.generate_text(instruction_node, 1)
 			script += to_append
 			script += "\n"
 			is_empty = false
