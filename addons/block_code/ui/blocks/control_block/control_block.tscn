@@ -5,6 +5,7 @@
 
 [node name="ControlBlock" type="MarginContainer"]
 size_flags_horizontal = 0
+mouse_filter = 2
 script = ExtResource("1_2hbir")
 block_name = "control_block"
 label = "Control Block"
@@ -13,13 +14,16 @@ bottom_snap_path = NodePath("VBoxContainer/SnapPoint")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_bottom = 30
 
@@ -34,8 +38,8 @@ color = Color(0.59979, 0.536348, 0.876215, 1)
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
+mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("3_nhryi")]
 layout_mode = 2
-block_path = NodePath("../..")

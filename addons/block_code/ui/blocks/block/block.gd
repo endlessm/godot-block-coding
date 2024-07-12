@@ -31,6 +31,7 @@ var bottom_snap: SnapPoint
 
 func _ready():
 	bottom_snap = get_node_or_null(bottom_snap_path)
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 static func get_block_class():
