@@ -24,7 +24,6 @@ const DISABLED_CLASSES := [
 	"StatementBlock",
 	"DragDropArea",
 	"SnapPoint",
-	"NodeBlockCanvas",
 	"SerializedBlockTreeNodeArray",
 	"SerializedBlockTreeNode",
 	"SerializedBlock",
