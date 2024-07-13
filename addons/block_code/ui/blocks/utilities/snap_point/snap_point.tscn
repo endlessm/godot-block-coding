@@ -10,6 +10,7 @@ offset_right = -1152.0
 offset_bottom = -648.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_kseym")
 
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]

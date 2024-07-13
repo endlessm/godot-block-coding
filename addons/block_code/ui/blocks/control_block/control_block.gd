@@ -141,7 +141,10 @@ func format():
 
 		var snap_container := MarginContainer.new()
 		snap_container.name = "SnapContainer%d" % i
+		snap_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		snap_container.custom_minimum_size.x = 30
 		snap_container.custom_minimum_size.y = 30
+		snap_container.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		snap_container.add_theme_constant_override("margin_left", Constants.CONTROL_MARGIN)
 
 		var snap_point: SnapPoint = preload("res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn").instantiate()
