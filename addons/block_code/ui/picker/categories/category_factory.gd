@@ -193,6 +193,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "queue_free"
 	b.block_format = "Queue Free"
 	b.statement = "queue_free()"
 	b.tooltip_text = "Queues this node to be deleted at the end of the current frame"
@@ -203,6 +204,7 @@ static func get_general_blocks() -> Array[Block]:
 #region Loops
 
 	b = BLOCKS["control_block"].instantiate()
+	b.block_name = "for_loop"
 	b.block_formats = ["repeat {number: INT}"]
 	b.statements = ["for __i in {number}:"]
 	b.category = "Loops"
@@ -210,6 +212,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["control_block"].instantiate()
+	b.block_name = "while_loop"
 	b.block_formats = ["while {condition: BOOL}"]
 	b.statements = ["while {condition}:"]
 	b.category = "Loops"
@@ -224,6 +227,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "await_scene_ready"
 	b.block_format = "Await scene ready"
 	b.statement = (
 		"""
@@ -236,12 +240,14 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "break"
 	b.block_format = "Break"
 	b.statement = "break"
 	b.category = "Loops"
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "continue"
 	b.block_format = "Continue"
 	b.statement = "continue"
 	b.category = "Loops"
@@ -251,6 +257,7 @@ static func get_general_blocks() -> Array[Block]:
 #region Logs
 
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "print"
 	b.block_format = "print {text: STRING}"
 	b.statement = "print({text})"
 	b.defaults = {"text": "Hello"}
@@ -262,6 +269,7 @@ static func get_general_blocks() -> Array[Block]:
 #region Communication
 
 	b = BLOCKS["entry_block"].instantiate()
+	b.block_name = "define_method"
 	# HACK: make signals work with new entry nodes. NIL instead of STRING type allows
 	# plain text input for function name. Should revamp signals later
 	b.block_format = "Define method {method_name: NIL}"
@@ -271,6 +279,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "call_group_method"
 	b.block_format = "Call method {method_name: STRING} in group {group: STRING}"
 	b.statement = "get_tree().call_group({group}, {method_name})"
 	b.category = "Communication | Methods"
@@ -278,6 +287,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "call_node_method"
 	b.block_format = "Call method {method_name: STRING} in node {node_path: NODE_PATH}"
 	b.statement = (
 		"""
@@ -292,6 +302,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "add_to_group"
 	b.block_format = "Add to group {group: STRING}"
 	b.statement = "add_to_group({group})"
 	b.category = "Communication | Groups"
@@ -299,6 +310,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "add_node_to_group"
 	b.block_format = "Add {node: NODE_PATH} to group {group: STRING}"
 	b.statement = "get_node({node}).add_to_group({group})"
 	b.category = "Communication | Groups"
@@ -306,6 +318,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "remove_from_group"
 	b.block_format = "Remove from group {group: STRING}"
 	b.statement = "remove_from_group({group})"
 	b.tooltip_text = "Remove this node from the group"
@@ -313,6 +326,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "remove_node_from_group"
 	b.block_format = "Remove {node: NODE_PATH} from group {group: STRING}"
 	b.statement = "get_node({node}).remove_from_group({group})"
 	b.tooltip_text = "Remove the node from the group"
@@ -320,6 +334,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "is_in_group"
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Is in group {group: STRING}"
 	b.statement = "is_in_group({group})"
@@ -328,6 +343,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "is_node_in_group"
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Is {node: NODE_PATH} in group {group: STRING}"
 	b.statement = "get_node({node}).is_in_group({group})"
@@ -337,7 +353,9 @@ static func get_general_blocks() -> Array[Block]:
 
 #endregion
 #region Variables
+
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "vector2"
 	b.variant_type = TYPE_VECTOR2
 	b.block_format = "Vector2 x: {x: FLOAT} y: {y: FLOAT}"
 	b.statement = "Vector2({x}, {y})"
@@ -348,6 +366,7 @@ static func get_general_blocks() -> Array[Block]:
 #region Math
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "add_int"
 	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} + {b: INT}"
 	b.statement = "({a} + {b})"
@@ -355,6 +374,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "subtract_int"
 	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} - {b: INT}"
 	b.statement = "({a} - {b})"
@@ -362,6 +382,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "multiply_int"
 	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} * {b: INT}"
 	b.statement = "({a} * {b})"
@@ -369,6 +390,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "divide_int"
 	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} / {b: INT}"
 	b.statement = "({a} / {b})"
@@ -376,6 +398,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "pow_int"
 	b.variant_type = TYPE_INT
 	b.block_format = "{base: INT} ^ {exp: INT}"
 	b.statement = "(pow({base}, {exp}))"
@@ -386,18 +409,21 @@ static func get_general_blocks() -> Array[Block]:
 #region Logic
 
 	b = BLOCKS["control_block"].instantiate()
+	b.block_name = "if"
 	b.block_formats = ["if    {condition: BOOL}"]
 	b.statements = ["if {condition}:"]
 	b.category = "Logic | Conditionals"
 	block_list.append(b)
 
 	b = BLOCKS["control_block"].instantiate()
+	b.block_name = "if_else"
 	b.block_formats = ["if    {condition: BOOL}", "else"]
 	b.statements = ["if {condition}:", "else:"]
 	b.category = "Logic | Conditionals"
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "compare_int"
 	b.variant_type = TYPE_BOOL
 	b.block_format = "{int1: INT} {op: OPTION} {int2: INT}"
 	b.statement = "({int1} {op} {int2})"
@@ -407,6 +433,7 @@ static func get_general_blocks() -> Array[Block]:
 
 	for op in ["and", "or"]:
 		b = BLOCKS["parameter_block"].instantiate()
+		b.block_name = op
 		b.variant_type = TYPE_BOOL
 		b.block_format = "{bool1: BOOL} %s {bool2: BOOL}" % op
 		b.statement = "({bool1} %s {bool2})" % op
@@ -414,6 +441,7 @@ static func get_general_blocks() -> Array[Block]:
 		block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "not"
 	b.variant_type = TYPE_BOOL
 	b.block_format = "Not {bool: BOOL}"
 	b.statement = "(not {bool})"
@@ -428,6 +456,7 @@ static func get_general_blocks() -> Array[Block]:
 #endregion
 #region Sounds
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "load_sound"
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Load file {file_path: STRING} as sound {name: STRING}"
 	b.statement = (
@@ -444,6 +473,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "play_sound"
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"
 	b.statement = (
@@ -463,6 +493,7 @@ static func get_general_blocks() -> Array[Block]:
 #region Graphics
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "viewport_width"
 	b.variant_type = TYPE_FLOAT
 	b.block_format = "Viewport Width"
 	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.x / scale.x + get_viewport_rect().size.x / scale.x).call()"
@@ -470,6 +501,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "viewport_height"
 	b.variant_type = TYPE_FLOAT
 	b.block_format = "Viewport Height"
 	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.y / scale.y + get_viewport_rect().size.y / scale.y).call()"
@@ -477,6 +509,7 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "viewport_center"
 	b.variant_type = TYPE_VECTOR2
 	b.block_format = "Viewport Center"
 	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()"
@@ -497,18 +530,21 @@ static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 		var type_string: String = Types.VARIANT_TYPE_TO_STRING[variant_type]
 
 		var b = BLOCKS["statement_block"].instantiate()
+		b.block_name = "set_prop_%s" % property.name
 		b.block_format = "Set %s to {value: %s}" % [property.name.capitalize(), type_string]
 		b.statement = "%s = {value}" % property.name
 		b.category = property.category
 		block_list.append(b)
 
 		b = BLOCKS["statement_block"].instantiate()
+		b.block_name = "change_prop_%s" % property.name
 		b.block_format = "Change %s by {value: %s}" % [property.name.capitalize(), type_string]
 		b.statement = "%s += {value}" % property.name
 		b.category = property.category
 		block_list.append(b)
 
 		b = BLOCKS["parameter_block"].instantiate()
+		b.block_name = "get_prop_%s" % property.name
 		b.variant_type = variant_type
 		b.block_format = "%s" % property.name.capitalize()
 		b.statement = "%s" % property.name
@@ -555,6 +591,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 	match _class_name:
 		"Node2D":
 			var b = BLOCKS["statement_block"].instantiate()
+			b.block_name = "node2d_rotation"
 			b.block_format = "Set Rotation Degrees {angle: FLOAT}"
 			b.statement = "rotation_degrees = {angle}"
 			b.category = "Transform | Rotation"
@@ -575,6 +612,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 		"RigidBody2D":
 			for verb in ["entered", "exited"]:
 				var b = BLOCKS["entry_block"].instantiate()
+				b.block_name = "rigidbody2d_on_%s" % verb
 				b.block_format = "On [body: NODE_PATH] %s" % [verb]
 				# HACK: Blocks refer to nodes by path but the callback receives the node itself;
 				# convert to path
@@ -593,6 +631,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				block_list.append(b)
 
 			var b = BLOCKS["statement_block"].instantiate()
+			b.block_name = "rigidbody2d_physics_position"
 			b.block_format = "Set Physics Position {position: VECTOR2}"
 			b.statement = (
 				"""
@@ -615,6 +654,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 
 		"AnimationPlayer":
 			var b = BLOCKS["statement_block"].instantiate()
+			b.block_name = "animationplayer_play"
 			b.block_format = "Play {animation: STRING} {direction: OPTION}"
 			b.statement = (
 				"""
@@ -633,6 +673,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			block_list.append(b)
 
 			b = BLOCKS["statement_block"].instantiate()
+			b.block_name = "animationplayer_pause"
 			b.block_format = "Pause"
 			b.statement = "pause()"
 			b.tooltip_text = "Pause the currently playing animation."
@@ -640,6 +681,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			block_list.append(b)
 
 			b = BLOCKS["statement_block"].instantiate()
+			b.block_name = "animationplayer_stop"
 			b.block_format = "Stop"
 			b.statement = "stop()"
 			b.tooltip_text = "Stop the currently playing animation."
@@ -647,6 +689,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			block_list.append(b)
 
 			b = BLOCKS["parameter_block"].instantiate()
+			b.block_name = "animationplayer_is_playing"
 			b.variant_type = TYPE_BOOL
 			b.block_format = "Is playing"
 			b.statement = "is_playing()"
@@ -657,6 +700,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 		"Area2D":
 			for verb in ["entered", "exited"]:
 				var b = BLOCKS["entry_block"].instantiate()
+				b.block_name = "area2d_on_%s" % verb
 				b.block_format = "On [body: NODE_PATH] %s" % [verb]
 				# HACK: Blocks refer to nodes by path but the callback receives the node itself;
 				# convert to path
@@ -676,6 +720,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 
 		"CharacterBody2D":
 			var b = BLOCKS["statement_block"].instantiate()
+			b.block_name = "characterbody2d_move"
 			b.block_type = Types.BlockType.EXECUTE
 			b.block_format = "Move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} with speed {speed: VECTOR2}"
 			b.statement = (
@@ -698,6 +743,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			block_list.append(b)
 
 			b = BLOCKS["statement_block"].instantiate()
+			b.block_name = "characterbody2d_move_and_slide"
 			b.block_type = Types.BlockType.EXECUTE
 			b.block_format = "Move and slide"
 			b.statement = "move_and_slide()"
@@ -730,6 +776,7 @@ static func _get_input_blocks() -> Array[Block]:
 	InputMap.load_from_project_settings()
 
 	var block: Block = BLOCKS["parameter_block"].instantiate()
+	block.block_name = "is_action"
 	block.variant_type = TYPE_BOOL
 	block.block_format = "Is action {action_name: OPTION} {action: OPTION}"
 	block.statement = 'Input.is_action_{action}("{action_name}")'
@@ -753,6 +800,7 @@ static func get_variable_blocks(variables: Array[VariableResource]):
 		var type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
 
 		var b = BLOCKS["parameter_block"].instantiate()
+		b.block_name = "get_var_%s" % variable.var_name
 		b.variant_type = variable.var_type
 		b.block_format = variable.var_name
 		b.statement = variable.var_name
@@ -761,6 +809,7 @@ static func get_variable_blocks(variables: Array[VariableResource]):
 		block_list.append(b)
 
 		b = BLOCKS["statement_block"].instantiate()
+		b.block_name = "set_var_%s" % variable.var_name
 		b.block_type = Types.BlockType.EXECUTE
 		b.block_format = "Set %s to {value: %s}" % [variable.var_name, type_string]
 		b.statement = "%s = {value}" % [variable.var_name]
