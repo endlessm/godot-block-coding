@@ -206,12 +206,21 @@ static func get_general_blocks() -> Array[Block]:
 	b.block_formats = ["repeat {number: INT}"]
 	b.statements = ["for i in {number}:"]
 	b.category = "Loops"
+	b.tooltip_text = "Run the connected blocks [i]number[/i] times"
 	block_list.append(b)
 
 	b = BLOCKS["control_block"].instantiate()
 	b.block_formats = ["while {condition: BOOL}"]
 	b.statements = ["while {condition}:"]
 	b.category = "Loops"
+	b.tooltip_text = (
+		"""
+	Run the connected blocks as long as [i]condition[/i] is true.
+
+	Hint: snap a [b]Comparison[/b] block into the condition.
+	"""
+		. dedent()
+	)
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
