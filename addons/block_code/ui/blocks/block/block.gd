@@ -74,3 +74,9 @@ func serialize_props(prop_names: Array) -> Array:
 	for p in prop_names:
 		pairs.append([p, self.get(p)])
 	return pairs
+
+
+func _make_custom_tooltip(for_text) -> Control:
+	var tooltip = preload("res://addons/block_code/ui/tooltip/tooltip.tscn").instantiate()
+	tooltip.text = for_text
+	return tooltip
