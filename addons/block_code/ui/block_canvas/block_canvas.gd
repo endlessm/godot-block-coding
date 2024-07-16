@@ -172,9 +172,11 @@ func load_tree(parent: Node, node: SerializedBlockTreeNode):
 
 func rebuild_block_trees(undo_redo):
 	_undo_redo = undo_redo
-	_current_bsd.block_trees.array = []
+	var block_trees_array = []
 	for c in _window.get_children():
-		_current_bsd.block_trees.array.append(build_tree(c))
+		block_trees_array.append(build_tree(c))
+	undo_redo.add_undo_property(_current_bsd.block_trees, "array", _current_bsd.block_trees.array)
+	undo_redo.add_do_property(_current_bsd.block_trees, "array", block_trees_array)
 
 
 func build_tree(block: Block) -> SerializedBlockTreeNode:
@@ -189,8 +191,7 @@ func build_tree(block: Block) -> SerializedBlockTreeNode:
 
 	if block.resource.path_child_pairs != path_child_pairs:
 		_undo_redo.add_undo_property(block.resource, "path_child_pairs", block.resource.path_child_pairs)
-		block.resource.path_child_pairs = path_child_pairs
-		_undo_redo.add_do_property(block.resource, "path_child_pairs", block.resource.path_child_pairs)
+		_undo_redo.add_do_property(block.resource, "path_child_pairs", path_child_pairs)
 
 	return block.resource
 
