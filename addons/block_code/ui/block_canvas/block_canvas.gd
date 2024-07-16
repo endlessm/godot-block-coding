@@ -186,10 +186,10 @@ func build_tree(block: Block) -> SerializedBlockTreeNode:
 	block.update_resources(_undo_redo)
 
 	for snap in find_snaps(block):
-		for child in snap.get_children():
-			if not child is Block:  # Make sure to not include preview
-				continue
-			path_child_pairs.append([block.get_path_to(snap), build_tree(child)])
+		var snapped_block = snap.get_snapped_block()
+		if snapped_block == null:
+			continue
+		path_child_pairs.append([block.get_path_to(snap), build_tree(snapped_block)])
 
 	if block.resource.path_child_pairs != path_child_pairs:
 		_undo_redo.add_undo_property(block.resource, "path_child_pairs", block.resource.path_child_pairs)
@@ -198,10 +198,10 @@ func build_tree(block: Block) -> SerializedBlockTreeNode:
 	return block.resource
 
 
-func find_snaps(node: Node) -> Array:
-	var snaps := []
+func find_snaps(node: Node) -> Array[SnapPoint]:
+	var snaps: Array[SnapPoint]
 
-	if node.is_in_group("snap_point"):
+	if node.is_in_group("snap_point") and node is SnapPoint:
 		snaps.append(node)
 	else:
 		for c in node.get_children():
