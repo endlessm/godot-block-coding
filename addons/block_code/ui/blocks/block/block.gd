@@ -73,8 +73,7 @@ func update_resources(undo_redo: EditorUndoRedoManager):
 	var serialized_props = get_serialized_props()
 	if serialized_props != resource.serialized_block.serialized_props:
 		undo_redo.add_undo_property(resource.serialized_block, "serialized_props", resource.serialized_block.serialized_props)
-		resource.serialized_block.serialized_props = serialized_props
-		undo_redo.add_do_property(resource.serialized_block, "serialized_props", resource.serialized_block.serialized_props)
+		undo_redo.add_do_property(resource.serialized_block, "serialized_props", serialized_props)
 
 
 # Override this method to add more serialized properties
