@@ -100,8 +100,9 @@ func bsd_selected(bsd: BlockScriptData):
 
 	var edited_node = EditorInterface.get_inspector().get_edited_object() as Node
 
-	_window.position = Vector2(0, 0)
-	zoom = 1
+	if bsd != _current_bsd:
+		_window.position = Vector2(0, 0)
+		zoom = 1
 
 	_window.visible = false
 	_zoom_label.visible = false
