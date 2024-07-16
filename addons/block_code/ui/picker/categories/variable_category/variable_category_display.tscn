@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://byne4g2yvdf3"]
+
+[ext_resource type="PackedScene" uid="uid://duhpwtfo3k0sk" path="res://addons/block_code/ui/picker/categories/block_category_display.tscn" id="1_vermd"]
+[ext_resource type="Script" path="res://addons/block_code/ui/picker/categories/variable_category/variable_category_display.gd" id="2_ggvi7"]
+[ext_resource type="PackedScene" uid="uid://t0eoc4ekvjr1" path="res://addons/block_code/ui/picker/categories/variable_category/create_variable_button.tscn" id="3_gjvnq"]
+
+[node name="VariableCategoryDisplay" instance=ExtResource("1_vermd")]
+script = ExtResource("2_ggvi7")
+
+[node name="CreateVariableButton" parent="VBoxContainer" index="1" instance=ExtResource("3_gjvnq")]
+layout_mode = 2
+
+[node name="VariableBlocks" type="VBoxContainer" parent="VBoxContainer" index="2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Spacer" type="Control" parent="VBoxContainer" index="3"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[connection signal="create_variable" from="VBoxContainer/CreateVariableButton" to="." method="_on_create_variable"]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://t0eoc4ekvjr1"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/picker/categories/variable_category/create_variable_button.gd" id="1_cw6c3"]
+[ext_resource type="PackedScene" uid="uid://dbrm7wwkao0c0" path="res://addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn" id="2_udpg5"]
+
+[node name="CreateVariableButton" type="MarginContainer"]
+size_flags_horizontal = 0
+theme_override_constants/margin_bottom = 12
+script = ExtResource("1_cw6c3")
+
+[node name="CreateButton" type="Button" parent="."]
+layout_mode = 2
+text = "Create New Variable"
+
+[node name="CreateVariableDialog" parent="." instance=ExtResource("2_udpg5")]
+unique_name_in_owner = true
+visible = false
+
+[connection signal="pressed" from="CreateButton" to="." method="_on_create_button_pressed"]
+[connection signal="create_variable" from="CreateVariableDialog" to="." method="_on_create_variable_dialog_create_variable"]

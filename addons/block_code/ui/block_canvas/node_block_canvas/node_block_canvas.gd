@@ -3,7 +3,7 @@ class_name NodeBlockCanvas
 extends BlockCanvas
 
 
-func generate_script_from_current_window(script_inherits: String = ""):
+func generate_script_from_current_window(bsd: BlockScriptData):
 	# TODO: implement multiple windows
 	var current_window := _window
 
@@ -21,9 +21,12 @@ func generate_script_from_current_window(script_inherits: String = ""):
 
 	var script: String = ""
 
-	script += "extends %s\n\n" % script_inherits
+	script += "extends %s\n\n" % bsd.script_inherits
 
-	script += "var VAR_DICT := {}\n\n"
+	for variable in bsd.variables:
+		script += "var %s: %s\n\n" % [variable.var_name, type_string(variable.var_type)]
+
+	script += "\n"
 
 	var init_func = InstructionTree.TreeNode.new("func _init():")
 
@@ -42,6 +45,8 @@ func _generate_script_from_entry_blocks(entry_statement: String, entry_blocks: A
 	var script = entry_statement + "\n"
 	var signal_node: InstructionTree.TreeNode
 	var is_empty = true
+
+	InstructionTree.IDHandler.reset()
 
 	for entry_block in entry_blocks:
 		var next_block := entry_block.bottom_snap.get_snapped_block()

@@ -32,6 +32,7 @@ var undo_redo: EditorUndoRedoManager:
 
 func _ready():
 	_picker.block_picked.connect(_drag_manager.copy_picked_block_and_drag)
+	_picker.variable_created.connect(_create_variable)
 	_block_canvas.reconnect_block.connect(_drag_manager.connect_block_canvas_signals)
 	_drag_manager.block_dropped.connect(save_script)
 	_drag_manager.block_modified.connect(save_script)
@@ -142,7 +143,7 @@ func save_script():
 	undo_redo.add_undo_property(_current_block_code_node.block_script, "generated_script", _current_block_code_node.block_script.generated_script)
 
 	var block_trees := _block_canvas.get_canvas_block_trees()
-	var generated_script = _block_canvas.generate_script_from_current_window(block_script.script_inherits)
+	var generated_script = _block_canvas.generate_script_from_current_window(block_script)
 	block_script.block_trees = block_trees
 	block_script.generated_script = generated_script
 	block_script.version = Constants.CURRENT_DATA_VERSION
@@ -174,7 +175,7 @@ func _print_generated_script():
 	if _current_block_code_node == null:
 		return
 	var block_script: BlockScriptData = _current_block_code_node.block_script
-	var script: String = _block_canvas.generate_script_from_current_window(block_script.script_inherits)
+	var script: String = _block_canvas.generate_script_from_current_window(block_script)
 	print(script)
 	print("Debug script! (not saved)")
 
@@ -252,3 +253,22 @@ func _set_selection(nodes: Array[Node]):
 	EditorInterface.get_selection().clear()
 	for node in nodes:
 		EditorInterface.get_selection().add_node(node)
+
+
+func _create_variable(variable: VariableResource):
+	if _current_block_code_node == null:
+		print("No script loaded to add variable to.")
+		return
+
+	var block_script: BlockScriptData = _current_block_code_node.block_script
+
+	undo_redo.create_action("Create variable %s in %s's block code script" % [variable.var_name, _current_block_code_node.get_parent().name])
+	undo_redo.add_undo_property(_current_block_code_node.block_script, "variables", _current_block_code_node.block_script.variables)
+
+	var new_variables = block_script.variables.duplicate()
+	new_variables.append(variable)
+
+	undo_redo.add_do_property(_current_block_code_node.block_script, "variables", new_variables)
+	undo_redo.commit_action()
+
+	_picker.reload_variables(new_variables)
