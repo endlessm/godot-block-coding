@@ -69,6 +69,10 @@ func get_serialized_props() -> Array:
 	return serialize_props(["block_name", "label", "color", "block_type", "position", "scope"])
 
 
+func _to_string():
+	return "<{block_class}:{block_name}#{rid}>".format({"block_name": block_name, "block_class": get_block_class(), "rid": get_instance_id()})
+
+
 func serialize_props(prop_names: Array) -> Array:
 	var pairs := []
 	for p in prop_names:
