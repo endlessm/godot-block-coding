@@ -21,16 +21,13 @@ signal modified
 @export var category: String
 
 ## The next block in the line of execution (can be null if end)
-@export var bottom_snap_path: NodePath
+@export var bottom_snap: SnapPoint
 
 ## The scope of the block (statement of matching entry block)
 @export var scope: String = ""
 
-var bottom_snap: SnapPoint
-
 
 func _ready():
-	bottom_snap = get_node_or_null(bottom_snap_path)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 

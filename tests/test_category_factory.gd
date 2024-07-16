@@ -57,3 +57,12 @@ const class_category_names = [
 
 func test_inherited_category_names(params = use_parameters(class_category_names)):
 	assert_eq(get_class_category_names(params[0]), params[1])
+
+
+func test_unique_block_names():
+	var blocks: Array[Block] = CategoryFactory.get_general_blocks()
+	var block_names: Dictionary
+	for block in blocks:
+		assert_does_not_have(block_names, block.block_name, "Block name %s is duplicated" % block.block_name)
+		block_names[block.block_name] = block
+	free_block_list(blocks)

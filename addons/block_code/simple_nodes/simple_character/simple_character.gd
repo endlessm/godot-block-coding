@@ -104,6 +104,7 @@ static func get_custom_blocks() -> Array[Block]:
 
 	# Movement
 	b = CategoryFactory.BLOCKS["statement_block"].instantiate()
+	b.block_name = "simplecharacter_move"
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Move with {player: OPTION} buttons as {kind: OPTION}"
 	# TODO: delta here is assumed to be the parameter name of

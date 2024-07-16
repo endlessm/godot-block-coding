@@ -306,3 +306,8 @@ func set_mouse_override(override: bool):
 	else:
 		_mouse_override.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_mouse_override.mouse_default_cursor_shape = Control.CURSOR_ARROW
+
+
+func generate_script_from_current_window(bsd: BlockScriptData) -> String:
+	# TODO: implement multiple windows
+	return InstructionTree.generate_script_from_nodes(_window.get_children(), bsd)

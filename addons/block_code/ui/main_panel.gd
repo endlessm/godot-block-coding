@@ -3,7 +3,7 @@ class_name MainPanel
 extends Control
 
 @onready var _picker: Picker = %Picker
-@onready var _block_canvas: BlockCanvas = %NodeBlockCanvas
+@onready var _block_canvas: BlockCanvas = %BlockCanvas
 @onready var _drag_manager: DragManager = %DragManager
 @onready var _title_bar: TitleBar = %TitleBar
 @onready var _delete_node_button: Button = %DeleteNodeButton
@@ -192,7 +192,7 @@ func _on_collapse_button_pressed():
 	toggle_collapse()
 
 
-func _on_node_block_canvas_add_block_code():
+func _on_block_canvas_add_block_code():
 	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
 	var scene_root: Node = EditorInterface.get_edited_scene_root()
 
@@ -214,7 +214,7 @@ func _on_node_block_canvas_add_block_code():
 	undo_redo.commit_action()
 
 
-func _on_node_block_canvas_open_scene():
+func _on_block_canvas_open_scene():
 	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
 
 	if edited_node == null or edited_node.owner == null:
@@ -223,7 +223,7 @@ func _on_node_block_canvas_open_scene():
 	EditorInterface.open_scene_from_path(edited_node.scene_file_path)
 
 
-func _on_node_block_canvas_replace_block_code():
+func _on_block_canvas_replace_block_code():
 	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
 	var scene_root: Node = EditorInterface.get_edited_scene_root()
 
