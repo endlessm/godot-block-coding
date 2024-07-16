@@ -26,6 +26,9 @@ signal modified
 ## The scope of the block (statement of matching entry block)
 @export var scope: String = ""
 
+## The resource containing the block properties and the snapped blocks
+@export var resource: SerializedBlockTreeNode
+
 
 func _ready():
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -59,6 +62,19 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 			node.next = snapped_block.get_instruction_node()
 
 	return node
+
+
+func update_resources(undo_redo: EditorUndoRedoManager):
+	if resource == null:
+		var serialized_block = SerializedBlock.new(get_block_class(), get_serialized_props())
+		resource = SerializedBlockTreeNode.new(serialized_block)
+		return
+
+	var serialized_props = get_serialized_props()
+	if serialized_props != resource.serialized_block.serialized_props:
+		undo_redo.add_undo_property(resource.serialized_block, "serialized_props", resource.serialized_block.serialized_props)
+		resource.serialized_block.serialized_props = serialized_props
+		undo_redo.add_do_property(resource.serialized_block, "serialized_props", resource.serialized_block.serialized_props)
 
 
 # Override this method to add more serialized properties
