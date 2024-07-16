@@ -2,6 +2,8 @@
 class_name ParameterBlock
 extends Block
 
+const Util = preload("res://addons/block_code/ui/util.gd")
+
 @export var block_format: String = ""
 @export var statement: String = ""
 @export var variant_type: Variant.Type
@@ -19,10 +21,11 @@ func _ready():
 	super()
 
 	block_type = Types.BlockType.VALUE
-	var new_panel = _panel.get_theme_stylebox("panel").duplicate()
-	new_panel.bg_color = color
-	new_panel.border_color = color.darkened(0.2)
-	_panel.add_theme_stylebox_override("panel", new_panel)
+	if not Util.node_is_part_of_edited_scene(self):
+		var new_panel = _panel.get_theme_stylebox("panel").duplicate()
+		new_panel.bg_color = color
+		new_panel.border_color = color.darkened(0.2)
+		_panel.add_theme_stylebox_override("panel", new_panel)
 
 	format()
 

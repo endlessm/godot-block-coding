@@ -2,6 +2,8 @@
 class_name BlockCanvas
 extends MarginContainer
 
+const Util = preload("res://addons/block_code/ui/util.gd")
+
 const EXTEND_MARGIN: float = 800
 const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(25, 8)
 const DEFAULT_WINDOW_MARGIN: Vector2 = Vector2(25, 25)
@@ -45,7 +47,7 @@ signal replace_block_code
 
 
 func _ready():
-	if not _open_scene_button.icon:
+	if not _open_scene_button.icon and not Util.node_is_part_of_edited_scene(self):
 		_open_scene_button.icon = _open_scene_icon
 	_populate_block_scenes_by_class()
 
