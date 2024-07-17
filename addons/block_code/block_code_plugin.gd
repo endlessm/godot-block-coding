@@ -6,6 +6,9 @@ const MainPanel := preload("res://addons/block_code/ui/main_panel.tscn")
 static var main_panel: MainPanel
 static var block_code_button: Button
 
+const BlockInspectorPlugin := preload("res://addons/block_code/inspector_plugin/block_script_inspector.gd")
+var block_inspector_plugin: BlockInspectorPlugin
+
 var editor_inspector: EditorInspector
 var editor_selection: EditorSelection
 
@@ -52,6 +55,8 @@ func _enter_tree():
 	main_panel = MainPanel.instantiate()
 	main_panel.undo_redo = get_undo_redo()
 	block_code_button = add_control_to_bottom_panel(main_panel, _get_plugin_name())
+	block_inspector_plugin = BlockInspectorPlugin.new()
+	add_inspector_plugin(block_inspector_plugin)
 
 	# Remove unwanted class nodes from create node
 	old_feature_profile = EditorInterface.get_current_feature_profile()
@@ -71,6 +76,8 @@ func _enter_tree():
 
 
 func _exit_tree():
+	remove_inspector_plugin(block_inspector_plugin)
+
 	if block_code_button:
 		remove_control_from_bottom_panel(main_panel)
 		block_code_button = null
