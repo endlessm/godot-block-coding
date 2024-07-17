@@ -155,7 +155,8 @@ func select_block_code_node(block_code: BlockCode):
 
 
 func _refresh_block_code_node():
-	main_panel.switch_block_code_node(_selected_block_code)
+	if main_panel:
+		main_panel.switch_block_code_node(_selected_block_code)
 
 
 func _on_selected_block_code_changed():
