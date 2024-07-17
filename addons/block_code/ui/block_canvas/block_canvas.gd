@@ -40,8 +40,6 @@ var zoom: float:
 	get:
 		return _window.scale.x
 
-var _undo_redo: EditorUndoRedoManager
-
 signal reconnect_block(block: Block)
 signal add_block_code
 signal open_scene
@@ -174,27 +172,26 @@ func load_tree(parent: Node, node: SerializedBlockTreeNode):
 
 
 func rebuild_block_trees(undo_redo):
-	_undo_redo = undo_redo
 	var block_trees_array = []
 	for c in _window.get_children():
-		block_trees_array.append(build_tree(c))
+		block_trees_array.append(build_tree(c, undo_redo))
 	undo_redo.add_undo_property(_current_bsd.block_trees, "array", _current_bsd.block_trees.array)
 	undo_redo.add_do_property(_current_bsd.block_trees, "array", block_trees_array)
 
 
-func build_tree(block: Block) -> SerializedBlockTreeNode:
+func build_tree(block: Block, undo_redo: EditorUndoRedoManager) -> SerializedBlockTreeNode:
 	var path_child_pairs = []
-	block.update_resources(_undo_redo)
+	block.update_resources(undo_redo)
 
 	for snap in find_snaps(block):
 		var snapped_block = snap.get_snapped_block()
 		if snapped_block == null:
 			continue
-		path_child_pairs.append([block.get_path_to(snap), build_tree(snapped_block)])
+		path_child_pairs.append([block.get_path_to(snap), build_tree(snapped_block, undo_redo)])
 
 	if block.resource.path_child_pairs != path_child_pairs:
-		_undo_redo.add_undo_property(block.resource, "path_child_pairs", block.resource.path_child_pairs)
-		_undo_redo.add_do_property(block.resource, "path_child_pairs", path_child_pairs)
+		undo_redo.add_undo_property(block.resource, "path_child_pairs", block.resource.path_child_pairs)
+		undo_redo.add_do_property(block.resource, "path_child_pairs", path_child_pairs)
 
 	return block.resource
 
