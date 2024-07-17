@@ -19,6 +19,17 @@ const _POSITIONS_FOR_PLAYER = {
 }
 
 
+func _init():
+	if self.get_parent():
+		return
+
+	var node = preload("res://addons/block_code/simple_nodes/simple_scoring/_simple_scoring.tscn").instantiate() as Node
+	node.replace_by(self, true)
+	node.queue_free()
+	print_tree_pretty()
+	scene_file_path = ""
+
+
 func get_custom_class():
 	return "SimpleScoring"
 
