@@ -2,15 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://cg8ibi18um3vg" path="res://addons/block_code/examples/pong_game/space.tscn" id="1_y56ac"]
 [ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="3_6jaq8"]
-[ext_resource type="PackedScene" uid="uid://ddx1cd5q6t61o" path="res://addons/block_code/simple_nodes/simple_character/simple_character.tscn" id="3_hjpbs"]
+[ext_resource type="Script" path="res://addons/block_code/simple_nodes/simple_character/simple_character.gd" id="3_mdrcv"]
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="4_qtggh"]
 [ext_resource type="Texture2D" uid="uid://tplpgtnfeda0" path="res://addons/block_code/examples/pong_game/assets/paddle.png" id="4_ra7bh"]
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block.gd" id="5_wr38c"]
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="6_ppdc3"]
 [ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="7_uuuue"]
-[ext_resource type="PackedScene" uid="uid://bis7afjjuwypq" path="res://addons/block_code/simple_nodes/simple_scoring/simple_scoring.tscn" id="8_yg457"]
 [ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://addons/block_code/examples/pong_game/ball.tscn" id="9_xrqll"]
 [ext_resource type="PackedScene" uid="uid://fhoapg3anjsu" path="res://addons/block_code/examples/pong_game/goal_area.tscn" id="12_nqmxu"]
+[ext_resource type="Script" path="res://addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd" id="13_tg3yk"]
 
 [sub_resource type="Resource" id="Resource_k6jw1"]
 script = ExtResource("5_wr38c")
@@ -796,20 +796,22 @@ version = 0
 
 [node name="Space" parent="." instance=ExtResource("1_y56ac")]
 
-[node name="PaddleLeft" parent="." groups=["paddles"] instance=ExtResource("3_hjpbs")]
+[node name="PaddleLeft" type="CharacterBody2D" parent="." groups=["paddles"]]
 modulate = Color(0.509804, 0.360784, 0.972549, 1)
 position = Vector2(64, 544)
 collision_mask = 5
+script = ExtResource("3_mdrcv")
 texture = ExtResource("4_ra7bh")
 
 [node name="BlockCode" type="Node" parent="PaddleLeft"]
 script = ExtResource("3_6jaq8")
 block_script = SubResource("Resource_qmak3")
 
-[node name="PaddleRight" parent="." groups=["paddles"] instance=ExtResource("3_hjpbs")]
+[node name="PaddleRight" type="CharacterBody2D" parent="." groups=["paddles"]]
 modulate = Color(0.509804, 0.360784, 0.972549, 1)
 position = Vector2(1856, 544)
 collision_mask = 5
+script = ExtResource("3_mdrcv")
 texture = ExtResource("4_ra7bh")
 
 [node name="BlockCode" type="Node" parent="PaddleRight"]
@@ -839,8 +841,9 @@ position = Vector2(1984, 544)
 script = ExtResource("3_6jaq8")
 block_script = SubResource("Resource_6drva")
 
-[node name="SimpleScoring" parent="." instance=ExtResource("8_yg457")]
+[node name="SimpleScoring" type="CanvasLayer" parent="." groups=["hud"]]
 follow_viewport_enabled = true
+script = ExtResource("13_tg3yk")
 
 [node name="BlockCode" type="Node" parent="SimpleScoring"]
 script = ExtResource("3_6jaq8")
