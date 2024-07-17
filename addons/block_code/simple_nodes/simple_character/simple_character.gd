@@ -52,6 +52,16 @@ func on_gravity_changed(new_gravity):
 	gravity = new_gravity
 
 
+func _init():
+	if self.get_parent():
+		return
+
+	var node = preload("res://addons/block_code/simple_nodes/simple_character/_simple_character.tscn").instantiate() as Node
+	node.replace_by(self, true)
+	node.queue_free()
+	scene_file_path = ""
+
+
 func _ready():
 	add_to_group("affected_by_gravity")
 	simple_setup()

@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://bis7afjjuwypq"]
 
-[ext_resource type="Script" path="res://addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd" id="1_yyb01"]
+[ext_resource type="Script" path="res://addons/block_code/simple_nodes/simple_scoring/_simple_scoring.gd" id="1_lc5bg"]
 
 [node name="SimpleScoring" type="CanvasLayer" groups=["hud"]]
-script = ExtResource("1_yyb01")
+script = ExtResource("1_lc5bg")
 
 [node name="PlayerLeftScore" type="Label" parent="."]
 unique_name_in_owner = true
