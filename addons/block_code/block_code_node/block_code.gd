@@ -4,7 +4,6 @@ class_name BlockCode
 extends Node
 
 @export var block_script: BlockScriptData = null
-static var plugin
 
 
 func _ready():
@@ -30,10 +29,6 @@ func _enter_tree():
 		new_bsd.script_inherits = _get_custom_or_native_class(get_parent())
 		new_bsd.generated_script = new_bsd.generated_script.replace("INHERIT_DEFAULT", new_bsd.script_inherits)
 		block_script = new_bsd
-
-	if plugin == null:
-		plugin = ClassDB.instantiate("EditorPlugin")
-		plugin.add_inspector_plugin(load("res://addons/block_code/inspector_plugin/block_script_inspector.gd").new())
 
 
 func _update_parent_script():

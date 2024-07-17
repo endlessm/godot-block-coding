@@ -1,5 +1,5 @@
 class_name BlockCategory
-extends Object
+extends RefCounted
 
 var name: String
 var block_list: Array[Block]
