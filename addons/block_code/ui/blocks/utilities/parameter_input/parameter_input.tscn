@@ -178,14 +178,16 @@ popup/item_1/id = 1
 [node name="SnapPoint" parent="." instance=ExtResource("2_6esp3")]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 block_type = 3
 variant_type = 4
 
-[connection signal="text_changed" from="InputSwitcher/TextInput/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="focus_exited" from="InputSwitcher/TextInput/LineEdit" to="." method="_on_line_edit_focus_exited"]
+[connection signal="text_submitted" from="InputSwitcher/TextInput/LineEdit" to="." method="_on_line_edit_text_submitted"]
 [connection signal="color_changed" from="InputSwitcher/ColorInput" to="." method="_on_color_input_color_changed"]
 [connection signal="item_selected" from="InputSwitcher/OptionInput" to="." method="_on_option_input_item_selected"]
-[connection signal="text_changed" from="InputSwitcher/Vector2Input/HBoxContainer/XLineEdit" to="." method="_on_line_edit_text_changed"]
-[connection signal="text_changed" from="InputSwitcher/Vector2Input/HBoxContainer/YLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="focus_exited" from="InputSwitcher/Vector2Input/HBoxContainer/XLineEdit" to="." method="_on_x_line_edit_focus_exited"]
+[connection signal="text_submitted" from="InputSwitcher/Vector2Input/HBoxContainer/XLineEdit" to="." method="_on_x_line_edit_text_submitted"]
+[connection signal="focus_exited" from="InputSwitcher/Vector2Input/HBoxContainer/YLineEdit" to="." method="_on_y_line_edit_focus_exited"]
+[connection signal="text_submitted" from="InputSwitcher/Vector2Input/HBoxContainer/YLineEdit" to="." method="_on_y_line_edit_text_submitted"]
 [connection signal="item_selected" from="InputSwitcher/BoolInput/BoolInputOption" to="." method="_on_option_input_item_selected"]
 [connection signal="snapped_block_changed" from="SnapPoint" to="." method="_on_snap_point_snapped_block_changed"]
