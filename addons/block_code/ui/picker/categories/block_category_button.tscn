@@ -1,6 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://bdtetj0gs45hv"]
+[gd_scene load_steps=7 format=3 uid="uid://bdtetj0gs45hv"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/picker/categories/block_category_button.gd" id="1_pxxnl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eogpc"]
+bg_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ousiv"]
 
@@ -32,6 +39,7 @@ theme_override_constants/margin_bottom = 8
 [node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_eogpc")
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true
