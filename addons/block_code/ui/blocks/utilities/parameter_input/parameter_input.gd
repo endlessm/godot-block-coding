@@ -31,6 +31,11 @@ var option: bool = false
 @onready var _bool_input := %BoolInput
 @onready var _bool_input_option := %BoolInputOption
 
+# Used to submit the text when losing focus:
+var _last_lineedit_submitted_text: String
+var _last_x_lineedit_submitted_text: String
+var _last_y_lineedit_submitted_text: String
+
 
 func set_raw_input(raw_input):
 	if option:
@@ -93,6 +98,10 @@ func _ready():
 	snap_point.block_type = block_type
 	snap_point.variant_type = variant_type
 
+	_last_lineedit_submitted_text = _line_edit.text
+	_last_x_lineedit_submitted_text = _x_line_edit.text
+	_last_y_lineedit_submitted_text = _y_line_edit.text
+
 	_update_visible_input()
 
 
@@ -126,8 +135,34 @@ func get_string() -> String:
 			return "%s" % input
 
 
-func _on_line_edit_text_changed(new_text):
+func _on_line_edit_text_submitted(new_text):
+	_last_lineedit_submitted_text = new_text
 	modified.emit()
+
+
+func _on_line_edit_focus_exited():
+	if _last_lineedit_submitted_text != _line_edit.text:
+		modified.emit()
+
+
+func _on_x_line_edit_text_submitted(new_text):
+	_last_x_lineedit_submitted_text = new_text
+	modified.emit()
+
+
+func _on_x_line_edit_focus_exited():
+	if _last_x_lineedit_submitted_text != _x_line_edit.text:
+		modified.emit()
+
+
+func _on_y_line_edit_text_submitted(new_text):
+	_last_y_lineedit_submitted_text = new_text
+	modified.emit()
+
+
+func _on_y_line_edit_focus_exited():
+	if _last_y_lineedit_submitted_text != _y_line_edit.text:
+		modified.emit()
 
 
 func _update_visible_input():
