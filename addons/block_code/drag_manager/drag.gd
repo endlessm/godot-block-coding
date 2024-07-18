@@ -3,7 +3,7 @@ extends Control
 
 const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canvas.gd")
 const Constants = preload("res://addons/block_code/ui/constants.gd")
-const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
+const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
 enum DragAction { NONE, PLACE, REMOVE }
@@ -142,7 +142,7 @@ func _snaps_to(node: Node) -> bool:
 			if _block_scope != top_block.get_entry_statement():
 				return false
 		elif top_block:
-			var tree_scope := DragManager.get_tree_scope(top_block)
+			var tree_scope := InstructionTree.get_tree_scope(top_block)
 			if tree_scope != "" and _block_scope != tree_scope:
 				return false
 

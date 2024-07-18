@@ -6,6 +6,7 @@ signal block_modified
 
 const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canvas.gd")
 const Drag = preload("res://addons/block_code/drag_manager/drag.gd")
+const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 const Picker = preload("res://addons/block_code/ui/picker/picker.gd")
 
 @export var picker_path: NodePath
@@ -49,7 +50,7 @@ func drag_block(block: Block, copied_from: Block = null):
 
 	block.disconnect_signals()
 
-	var block_scope := get_tree_scope(block)
+	var block_scope := InstructionTree.get_tree_scope(block)
 	if block_scope != "":
 		_block_canvas.set_scope(block_scope)
 
@@ -92,16 +93,3 @@ func connect_block_canvas_signals(block: Block):
 		block.drag_started.connect(drag_block)
 	if block.modified.get_connections().size() == 0:
 		block.modified.connect(func(): block_modified.emit())
-
-
-## Returns the scope of the first non-empty scope child block
-static func get_tree_scope(node: Node) -> String:
-	if node is Block:
-		if node.scope != "":
-			return node.scope
-
-	for c in node.get_children():
-		var scope := get_tree_scope(c)
-		if scope != "":
-			return scope
-	return ""
