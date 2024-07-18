@@ -128,7 +128,7 @@ func save_script():
 	var resource_path_split = block_script.resource_path.split("::", true, 1)
 	var resource_scene = resource_path_split[0]
 
-	undo_redo.create_action("Modify %s's block code script" % _current_block_code_node.get_parent().name)
+	undo_redo.create_action("Modify %s's block code script" % _current_block_code_node.get_parent().name, UndoRedo.MERGE_DISABLE, _current_block_code_node)
 
 	if resource_scene and resource_scene != scene_node.scene_file_path:
 		# This resource is from another scene. Since the user is changing it
@@ -136,20 +136,16 @@ func save_script():
 		# other scene file.
 		undo_redo.add_undo_property(_current_block_code_node, "block_script", _current_block_code_node.block_script)
 		block_script = block_script.duplicate(true)
-		_current_block_code_node.block_script = block_script
-		undo_redo.add_do_property(_current_block_code_node, "block_script", _current_block_code_node.block_script)
+		undo_redo.add_do_property(_current_block_code_node, "block_script", block_script)
 
-	undo_redo.add_undo_property(_current_block_code_node.block_script, "block_trees", _current_block_code_node.block_script.block_trees)
-	undo_redo.add_undo_property(_current_block_code_node.block_script, "generated_script", _current_block_code_node.block_script.generated_script)
-
-	var block_trees := _block_canvas.get_canvas_block_trees()
+	_block_canvas.rebuild_block_trees(undo_redo)
 	var generated_script = _block_canvas.generate_script_from_current_window(block_script)
-	block_script.block_trees = block_trees
-	block_script.generated_script = generated_script
+	if generated_script != block_script.generated_script:
+		undo_redo.add_undo_property(block_script, "generated_script", block_script.generated_script)
+		undo_redo.add_do_property(block_script, "generated_script", generated_script)
+
 	block_script.version = Constants.CURRENT_DATA_VERSION
 
-	undo_redo.add_do_property(_current_block_code_node.block_script, "block_trees", block_trees)
-	undo_redo.add_do_property(_current_block_code_node.block_script, "generated_script", generated_script)
 	undo_redo.commit_action()
 
 

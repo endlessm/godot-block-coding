@@ -98,8 +98,9 @@ func bsd_selected(bsd: BlockScriptData):
 
 	var edited_node = EditorInterface.get_inspector().get_edited_object() as Node
 
-	_window.position = Vector2(0, 0)
-	zoom = 1
+	if bsd != _current_bsd:
+		_window.position = Vector2(0, 0)
+		zoom = 1
 
 	_window.visible = false
 	_zoom_label.visible = false
@@ -170,30 +171,35 @@ func load_tree(parent: Node, node: SerializedBlockTreeNode):
 		load_tree(scene.get_node(c[0]), c[1])
 
 
-func get_canvas_block_trees() -> SerializedBlockTreeNodeArray:
-	var block_trees := SerializedBlockTreeNodeArray.new()
+func rebuild_block_trees(undo_redo):
+	var block_trees_array = []
 	for c in _window.get_children():
-		block_trees.array.append(build_tree(c))
+		block_trees_array.append(build_tree(c, undo_redo))
+	undo_redo.add_undo_property(_current_bsd.block_trees, "array", _current_bsd.block_trees.array)
+	undo_redo.add_do_property(_current_bsd.block_trees, "array", block_trees_array)
 
-	return block_trees
 
-
-func build_tree(block: Block) -> SerializedBlockTreeNode:
-	var n = SerializedBlockTreeNode.new()
-	n.serialized_block = SerializedBlock.new(block.get_block_class(), block.get_serialized_props())
+func build_tree(block: Block, undo_redo: EditorUndoRedoManager) -> SerializedBlockTreeNode:
+	var path_child_pairs = []
+	block.update_resources(undo_redo)
 
 	for snap in find_snaps(block):
-		for c in snap.get_children():
-			if c is Block:  # Make sure to not include preview
-				n.path_child_pairs.append([block.get_path_to(snap), build_tree(c)])
+		var snapped_block = snap.get_snapped_block()
+		if snapped_block == null:
+			continue
+		path_child_pairs.append([block.get_path_to(snap), build_tree(snapped_block, undo_redo)])
 
-	return n
+	if block.resource.path_child_pairs != path_child_pairs:
+		undo_redo.add_undo_property(block.resource, "path_child_pairs", block.resource.path_child_pairs)
+		undo_redo.add_do_property(block.resource, "path_child_pairs", path_child_pairs)
+
+	return block.resource
 
 
-func find_snaps(node: Node) -> Array:
-	var snaps := []
+func find_snaps(node: Node) -> Array[SnapPoint]:
+	var snaps: Array[SnapPoint]
 
-	if node.is_in_group("snap_point"):
+	if node.is_in_group("snap_point") and node is SnapPoint:
 		snaps.append(node)
 	else:
 		for c in node.get_children():
