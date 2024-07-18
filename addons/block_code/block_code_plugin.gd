@@ -48,6 +48,7 @@ const DISABLED_CLASSES := [
 
 func _enter_tree():
 	Types.init_cast_graph()
+	CategoryFactory.init_block_resource_dictionary()
 
 	editor_inspector = EditorInterface.get_inspector()
 	editor_selection = EditorInterface.get_selection()

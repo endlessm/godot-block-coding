@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://4hj5b3xaiuy8"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_75fle"]
+
+[resource]
+script = ExtResource("1_75fle")
+block_name = "queue_free"
+block_type = 2
+variant_type = 0
+block_format = "Queue Free"
+statement = "queue_free()"
+tooltip_text = "Queues this node to be deleted at the end of the current frame"
+category = "Lifecycle"
+defaults = {}

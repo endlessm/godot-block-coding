@@ -5,29 +5,26 @@ extends MarginContainer
 signal drag_started(block: Block)
 signal modified
 
-## Name of the block to be referenced by others in search
-@export var block_name: String = ""
-
 ## Label of block (optionally used to draw block labels)
 @export var label: String = ""
 
 ## Color of block (optionally used to draw block color)
 @export var color: Color = Color(1., 1., 1.)
 
-## Type of block to check if can be attached to snap point
-@export var block_type: Types.BlockType = Types.BlockType.EXECUTE
-
 ## Category to add the block to
 @export var category: String
 
 ## The next block in the line of execution (can be null if end)
-@export var bottom_snap: SnapPoint
+@export var bottom_snap: SnapPoint = null
+
+## Snap point that holds blocks that should be nested under this block
+@export var child_snap: SnapPoint = null
 
 ## The scope of the block (statement of matching entry block)
 @export var scope: String = ""
 
 ## The resource containing the block properties and the snapped blocks
-@export var resource: SerializedBlockTreeNode
+@export var block_resource: BlockResource
 
 
 func _ready():
@@ -52,44 +49,8 @@ func disconnect_signals():
 		drag_started.disconnect(c.callable)
 
 
-# Override this method to create custom block functionality
-func get_instruction_node() -> InstructionTree.TreeNode:
-	var node: InstructionTree.TreeNode = InstructionTree.TreeNode.new("")
-
-	if bottom_snap:
-		var snapped_block: Block = bottom_snap.get_snapped_block()
-		if snapped_block:
-			node.next = snapped_block.get_instruction_node()
-
-	return node
-
-
-func update_resources(undo_redo: EditorUndoRedoManager):
-	if resource == null:
-		var serialized_block = SerializedBlock.new(get_block_class(), get_serialized_props())
-		resource = SerializedBlockTreeNode.new(serialized_block)
-		return
-
-	var serialized_props = get_serialized_props()
-	if serialized_props != resource.serialized_block.serialized_props:
-		undo_redo.add_undo_property(resource.serialized_block, "serialized_props", resource.serialized_block.serialized_props)
-		undo_redo.add_do_property(resource.serialized_block, "serialized_props", serialized_props)
-
-
-# Override this method to add more serialized properties
-func get_serialized_props() -> Array:
-	return serialize_props(["block_name", "label", "color", "block_type", "position", "scope"])
-
-
 func _to_string():
-	return "<{block_class}:{block_name}#{rid}>".format({"block_name": block_name, "block_class": get_block_class(), "rid": get_instance_id()})
-
-
-func serialize_props(prop_names: Array) -> Array:
-	var pairs := []
-	for p in prop_names:
-		pairs.append([p, self.get(p)])
-	return pairs
+	return "<{block_class}:{block_name}#{rid}>".format({"block_name": block_resource.block_name, "block_class": get_block_class(), "rid": get_instance_id()})
 
 
 func _make_custom_tooltip(for_text) -> Control:

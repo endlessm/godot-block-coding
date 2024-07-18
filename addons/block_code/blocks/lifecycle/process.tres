@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://chioedvp50013"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_pmina"]
+
+[resource]
+script = ExtResource("1_pmina")
+block_name = "process"
+block_type = 1
+variant_type = 0
+block_format = "On Process"
+statement = "func _process(delta):"
+tooltip_text = "The following will be executed during the processing step of the main loop"
+category = "Lifecycle"
+defaults = {}

@@ -124,6 +124,40 @@ const BUILTIN_PROPS: Dictionary = {
 	},
 }
 
+static var block_resource_dictionary: Dictionary
+
+
+static func init_block_resource_dictionary():
+	block_resource_dictionary = {}
+
+	var path: String = "res://addons/block_code/blocks/"
+	var files := get_files_in_dir_recursive(path, ".tres")
+
+	for file in files:
+		var block_resource = load(file)
+		block_resource_dictionary[block_resource.block_name] = block_resource
+
+
+static func get_files_in_dir_recursive(path: String, ext: String) -> Array:
+	var files = []
+
+	var dir := DirAccess.open(path)
+
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+
+		while file_name != "":
+			var file_path = path + "/" + file_name
+			if dir.current_is_dir():
+				files.append_array(get_files_in_dir_recursive(file_path, ext))
+			elif file_name.ends_with(".tres"):
+				files.append(file_path)
+
+			file_name = dir.get_next()
+
+	return files
+
 
 ## Compare block categories for sorting. Compare by order then name.
 static func _category_cmp(a: BlockCategory, b: BlockCategory) -> bool:
@@ -132,7 +166,7 @@ static func _category_cmp(a: BlockCategory, b: BlockCategory) -> bool:
 	return a.name.naturalcasecmp_to(b.name) < 0
 
 
-static func get_categories(blocks: Array[Block], extra_categories: Array[BlockCategory] = []) -> Array[BlockCategory]:
+static func get_categories(blocks: Array[BlockResource], extra_categories: Array[BlockCategory] = []) -> Array[BlockCategory]:
 	var cat_map: Dictionary = {}
 	var extra_cat_map: Dictionary = {}
 
@@ -140,422 +174,162 @@ static func get_categories(blocks: Array[Block], extra_categories: Array[BlockCa
 		extra_cat_map[cat.name] = cat
 
 	for block in blocks:
-		var cat: BlockCategory = cat_map.get(block.category)
+		var block_cat_name: String = block.category
+		var cat: BlockCategory = cat_map.get(block_cat_name)
 		if cat == null:
-			cat = extra_cat_map.get(block.category)
+			cat = extra_cat_map.get(block_cat_name)
 			if cat == null:
-				var props: Dictionary = BUILTIN_PROPS.get(block.category, {})
+				var props: Dictionary = BUILTIN_PROPS.get(block_cat_name, {})
 				var color: Color = props.get("color", Color.SLATE_GRAY)
 				var order: int = props.get("order", 0)
-				cat = BlockCategory.new(block.category, color, order)
-			cat_map[block.category] = cat
+				cat = BlockCategory.new(block_cat_name, color, order)
+			cat_map[block_cat_name] = cat
 		cat.block_list.append(block)
 
 	# Dictionary.values() returns an untyped Array and there's no way to
 	# convert an array type besides Array.assign().
 	var cats: Array[BlockCategory] = []
 	cats.assign(cat_map.values())
+
+	# Always add variables category (if no variable block built in)
+	#var variable_cat_props = CategoryFactory.BUILTIN_PROPS["Variables"]
+	#cats.append(BlockCategory.new("Variables", variable_cat_props.color, variable_cat_props.order))
+
 	# Accessing a static Callable from a static function fails in 4.2.1.
 	# Use the fully qualified name.
 	# https://github.com/godotengine/godot/issues/86032
 	cats.sort_custom(CategoryFactory._category_cmp)
+
 	return cats
 
 
-static func get_general_blocks() -> Array[Block]:
-	var b: Block
-	var block_list: Array[Block] = []
+static func get_block_resource_from_name(block_name: String) -> BlockResource:
+	if not block_name in block_resource_dictionary:
+		push_error("Cannot construct unknown block name.")
+		return null
 
-#region Lifecycle
+	return block_resource_dictionary[block_name]
 
-	b = BLOCKS["entry_block"].instantiate()
-	b.block_name = "ready_block"
-	b.block_format = "On Ready"
-	b.statement = "func _ready():"
-	b.tooltip_text = 'The following will be executed when the node is "ready"'
-	b.category = "Lifecycle"
-	block_list.append(b)
 
-	b = BLOCKS["entry_block"].instantiate()
-	b.block_name = "process_block"
-	b.block_format = "On Process"
-	b.statement = "func _process(delta):"
-	b.tooltip_text = "The following will be executed during the processing step of the main loop"
-	b.category = "Lifecycle"
-	block_list.append(b)
+static func construct_block_from_name(block_name: String):
+	var block_resource: BlockResource = get_block_resource_from_name(block_name)
+	return construct_block_from_resource(block_resource)
 
-	b = BLOCKS["entry_block"].instantiate()
-	b.block_name = "physics_process_block"
-	b.block_format = "On Physics Process"
-	b.statement = "func _physics_process(delta):"
-	b.tooltip_text = 'The following will be executed during the "physics" processing step of the main loop'
-	b.category = "Lifecycle"
-	block_list.append(b)
 
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "queue_free"
-	b.block_format = "Queue Free"
-	b.statement = "queue_free()"
-	b.tooltip_text = "Queues this node to be deleted at the end of the current frame"
-	b.category = "Lifecycle"
-	block_list.append(b)
+# Essentially: Create UI from block resource.
+# Using current API but we can make a cleaner one
+static func construct_block_from_resource(block_resource: BlockResource):
+	if block_resource == null:
+		push_error("Cannot construct block from null block resource.")
+		return null
 
-#endregion
-#region Loops
+	var block: Block
 
-	b = BLOCKS["control_block"].instantiate()
-	b.block_name = "for_loop"
-	b.block_formats = ["repeat {number: INT}"]
-	b.statements = ["for __i in {number}:"]
-	b.category = "Loops"
-	b.tooltip_text = "Run the connected blocks [i]number[/i] times"
-	block_list.append(b)
+	if block_resource.block_type == Types.BlockType.STATEMENT:
+		block = BLOCKS["statement_block"].instantiate()
+	elif block_resource.block_type == Types.BlockType.ENTRY:
+		block = BLOCKS["entry_block"].instantiate()
+	elif block_resource.block_type == Types.BlockType.VALUE:
+		block = BLOCKS["parameter_block"].instantiate()
+	elif block_resource.block_type == Types.BlockType.CONTROL:
+		block = BLOCKS["control_block"].instantiate()
+	else:
+		push_error("Other block types not implemented yet.")
+		return null
 
-	b = BLOCKS["control_block"].instantiate()
-	b.block_name = "while_loop"
-	b.block_formats = ["while {condition: BOOL}"]
-	b.statements = ["while {condition}:"]
-	b.category = "Loops"
-	b.tooltip_text = (
-		"""
-	Run the connected blocks as long as [i]condition[/i] is true.
+	block.block_resource = block_resource
 
-	Hint: snap a [b]Comparison[/b] block into the condition.
-	"""
-		. dedent()
-	)
-	block_list.append(b)
+	return block
 
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "await_scene_ready"
-	b.block_format = "Await scene ready"
-	b.statement = (
-		"""
-		if not get_tree().root.is_node_ready():
-			await get_tree().root.ready
-		"""
-		. dedent()
-	)
-	b.category = "Loops"
-	block_list.append(b)
 
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "break"
-	b.block_format = "Break"
-	b.statement = "break"
-	b.category = "Loops"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "continue"
-	b.block_format = "Continue"
-	b.statement = "continue"
-	b.category = "Loops"
-	block_list.append(b)
-
-#endregion
-#region Logs
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "print"
-	b.block_format = "print {text: STRING}"
-	b.statement = "print({text})"
-	b.defaults = {"text": "Hello"}
-	b.tooltip_text = "Print the text to output"
-	b.category = "Log"
-	block_list.append(b)
-
-#endregion
-#region Communication
-
-	b = BLOCKS["entry_block"].instantiate()
-	b.block_name = "define_method"
-	# HACK: make signals work with new entry nodes. NIL instead of STRING type allows
-	# plain text input for function name. Should revamp signals later
-	b.block_format = "Define method {method_name: NIL}"
-	b.statement = "func {method_name}():"
-	b.category = "Communication | Methods"
-	b.tooltip_text = "Define a method/function with following statements"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "call_group_method"
-	b.block_format = "Call method {method_name: STRING} in group {group: STRING}"
-	b.statement = "get_tree().call_group({group}, {method_name})"
-	b.category = "Communication | Methods"
-	b.tooltip_text = "Calls the method/function on each member of the given group"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "call_node_method"
-	b.block_format = "Call method {method_name: STRING} in node {node_path: NODE_PATH}"
-	b.statement = (
-		"""
-		var node = get_node({node_path})
-		if node:
-			node.call({method_name})
-		"""
-		. dedent()
-	)
-	b.tooltip_text = "Calls the method/function of the given node"
-	b.category = "Communication | Methods"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "add_to_group"
-	b.block_format = "Add to group {group: STRING}"
-	b.statement = "add_to_group({group})"
-	b.category = "Communication | Groups"
-	b.tooltip_text = "Add this node into the group"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "add_node_to_group"
-	b.block_format = "Add {node: NODE_PATH} to group {group: STRING}"
-	b.statement = "get_node({node}).add_to_group({group})"
-	b.category = "Communication | Groups"
-	b.tooltip_text = "Add the node into the group"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "remove_from_group"
-	b.block_format = "Remove from group {group: STRING}"
-	b.statement = "remove_from_group({group})"
-	b.tooltip_text = "Remove this node from the group"
-	b.category = "Communication | Groups"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "remove_node_from_group"
-	b.block_format = "Remove {node: NODE_PATH} from group {group: STRING}"
-	b.statement = "get_node({node}).remove_from_group({group})"
-	b.tooltip_text = "Remove the node from the group"
-	b.category = "Communication | Groups"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "is_in_group"
-	b.variant_type = TYPE_BOOL
-	b.block_format = "Is in group {group: STRING}"
-	b.statement = "is_in_group({group})"
-	b.tooltip_text = "Is this node in the group"
-	b.category = "Communication | Groups"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "is_node_in_group"
-	b.variant_type = TYPE_BOOL
-	b.block_format = "Is {node: NODE_PATH} in group {group: STRING}"
-	b.statement = "get_node({node}).is_in_group({group})"
-	b.tooltip_text = "Is the node in the group"
-	b.category = "Communication | Groups"
-	block_list.append(b)
-
-#endregion
-#region Variables
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "vector2"
-	b.variant_type = TYPE_VECTOR2
-	b.block_format = "Vector2 x: {x: FLOAT} y: {y: FLOAT}"
-	b.statement = "Vector2({x}, {y})"
-	b.category = "Variables"
-	block_list.append(b)
-
-#endregion
-#region Math
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "add_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{a: INT} + {b: INT}"
-	b.statement = "({a} + {b})"
-	b.category = "Math"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "subtract_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{a: INT} - {b: INT}"
-	b.statement = "({a} - {b})"
-	b.category = "Math"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "multiply_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{a: INT} * {b: INT}"
-	b.statement = "({a} * {b})"
-	b.category = "Math"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "divide_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{a: INT} / {b: INT}"
-	b.statement = "({a} / {b})"
-	b.category = "Math"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "pow_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{base: INT} ^ {exp: INT}"
-	b.statement = "(pow({base}, {exp}))"
-	b.category = "Math"
-	block_list.append(b)
-
-#endregion
-#region Logic
-
-	b = BLOCKS["control_block"].instantiate()
-	b.block_name = "if"
-	b.block_formats = ["if    {condition: BOOL}"]
-	b.statements = ["if {condition}:"]
-	b.category = "Logic | Conditionals"
-	block_list.append(b)
-
-	b = BLOCKS["control_block"].instantiate()
-	b.block_name = "if_else"
-	b.block_formats = ["if    {condition: BOOL}", "else"]
-	b.statements = ["if {condition}:", "else:"]
-	b.category = "Logic | Conditionals"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "compare_int"
-	b.variant_type = TYPE_BOOL
-	b.block_format = "{int1: INT} {op: OPTION} {int2: INT}"
-	b.statement = "({int1} {op} {int2})"
-	b.defaults = {"op": OptionData.new(["==", ">", "<", ">=", "<=", "!="])}
-	b.category = "Logic | Comparison"
-	block_list.append(b)
-
-	for op in ["and", "or"]:
-		b = BLOCKS["parameter_block"].instantiate()
-		b.block_name = op
-		b.variant_type = TYPE_BOOL
-		b.block_format = "{bool1: BOOL} %s {bool2: BOOL}" % op
-		b.statement = "({bool1} %s {bool2})" % op
-		b.category = "Logic | Boolean"
-		block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "not"
-	b.variant_type = TYPE_BOOL
-	b.block_format = "Not {bool: BOOL}"
-	b.statement = "(not {bool})"
-	b.category = "Logic | Boolean"
-	block_list.append(b)
-
-#endregion
-#region Input
-
-	block_list.append_array(_get_input_blocks())
-
-#endregion
-#region Sounds
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "load_sound"
-	b.block_type = Types.BlockType.EXECUTE
-	b.block_format = "Load file {file_path: STRING} as sound {name: STRING}"
-	b.statement = (
-		"""
-		var __sound = AudioStreamPlayer.new()
-		__sound.name = {name}
-		__sound.set_stream(load({file_path}))
-		add_child(__sound)
-		"""
-		. dedent()
-	)
-	b.tooltip_text = "Load a resource file as the audio stream"
-	b.category = "Sounds"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "play_sound"
-	b.block_type = Types.BlockType.EXECUTE
-	b.block_format = "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"
-	b.statement = (
-		"""
-		var __sound_node = get_node({name})
-		__sound_node.volume_db = {db}
-		__sound_node.pitch_scale = {pitch}
-		__sound_node.play()
-		"""
-		. dedent()
-	)
-	b.defaults = {"db": "0.0", "pitch": "1.0"}
-	b.tooltip_text = "Play the audio stream with volume and pitch"
-	b.category = "Sounds"
-	block_list.append(b)
-#endregion
-#region Graphics
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "viewport_width"
-	b.variant_type = TYPE_FLOAT
-	b.block_format = "Viewport Width"
-	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.x / scale.x + get_viewport_rect().size.x / scale.x).call()"
-	b.category = "Graphics | Viewport"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "viewport_height"
-	b.variant_type = TYPE_FLOAT
-	b.block_format = "Viewport Height"
-	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.y / scale.y + get_viewport_rect().size.y / scale.y).call()"
-	b.category = "Graphics | Viewport"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "viewport_center"
-	b.variant_type = TYPE_VECTOR2
-	b.block_format = "Viewport Center"
-	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()"
-	b.category = "Graphics | Viewport"
-	block_list.append(b)
-
-#endregion
-
+static func construct_blocks_from_resource_list(block_resource_list: Array[BlockResource]) -> Array[Block]:
+	var block_list: Array[Block]  # FIXME: Assign cast
+	block_list.assign(block_resource_list.map(construct_block_from_resource))
 	return block_list
 
 
-static func property_to_blocklist(property: Dictionary) -> Array[Block]:
-	var block_list: Array[Block] = []
+static func get_general_blocks() -> Array[BlockResource]:
+	var block_resource_list: Array[BlockResource]  # FIXME: Assign cast
+	block_resource_list.assign(block_resource_dictionary.values())
+
+#region Input
+	block_resource_list.append_array(_get_input_blocks())
+#endregion
+
+	return block_resource_list
+
+
+static func get_parameter_output_blocks(block_resource_list: Array[BlockResource]) -> Array[BlockResource]:
+	var param_output_blocks: Array[BlockResource] = []
+
+	for block_resource in block_resource_list:
+		# Block must be entry to have parameter outputs (helps with performance of this method)
+		if block_resource.block_type != Types.BlockType.ENTRY:
+			continue
+
+		var regex = RegEx.create_from_string("\\[([^\\]]+)\\]")  # Capture things of format [test]
+		var results := regex.search_all(block_resource.block_format)
+
+		for result in results:
+			var param := result.get_string()
+			param = param.substr(1, param.length() - 2)
+			var split := param.split(": ")
+
+			var param_name := split[0]
+			var param_type_str := split[1]
+			var param_type = Types.STRING_TO_VARIANT_TYPE[param_type_str]
+
+			var br = BlockResource.new()
+			br.block_name = block_resource.statement + "_" + param_name
+			br.block_type = Types.BlockType.VALUE
+			br.block_format = param_name
+			br.statement = param_name
+			br.variant_type = param_type
+			br.category = block_resource.category
+
+			param_output_blocks.append(br)
+
+	return param_output_blocks
+
+
+static func property_to_blocklist(property: Dictionary) -> Array[BlockResource]:
+	var block_resource_list: Array[BlockResource] = []
 
 	var variant_type = property.type
 
 	if variant_type:
 		var type_string: String = Types.VARIANT_TYPE_TO_STRING[variant_type]
 
-		var b = BLOCKS["statement_block"].instantiate()
-		b.block_name = "set_prop_%s" % property.name
-		b.block_format = "Set %s to {value: %s}" % [property.name.capitalize(), type_string]
-		b.statement = "%s = {value}" % property.name
-		b.category = property.category
-		block_list.append(b)
+		var br := BlockResource.new()
+		br.block_type = Types.BlockType.STATEMENT
+		br.block_name = "set_prop_%s" % property.name
+		br.block_format = "Set %s to {value: %s}" % [property.name.capitalize(), type_string]
+		br.statement = "%s = {value}" % property.name
+		br.category = property.category
+		block_resource_list.append(br)
 
-		b = BLOCKS["statement_block"].instantiate()
-		b.block_name = "change_prop_%s" % property.name
-		b.block_format = "Change %s by {value: %s}" % [property.name.capitalize(), type_string]
-		b.statement = "%s += {value}" % property.name
-		b.category = property.category
-		block_list.append(b)
+		br = BlockResource.new()
+		br.block_type = Types.BlockType.STATEMENT
+		br.block_name = "change_prop_%s" % property.name
+		br.block_format = "Change %s by {value: %s}" % [property.name.capitalize(), type_string]
+		br.statement = "%s += {value}" % property.name
+		br.category = property.category
+		block_resource_list.append(br)
 
-		b = BLOCKS["parameter_block"].instantiate()
-		b.block_name = "get_prop_%s" % property.name
-		b.variant_type = variant_type
-		b.block_format = "%s" % property.name.capitalize()
-		b.statement = "%s" % property.name
-		b.category = property.category
-		block_list.append(b)
+		br = BlockResource.new()
+		br.block_type = Types.BlockType.VALUE
+		br.block_name = "get_prop_%s" % property.name
+		br.variant_type = variant_type
+		br.block_format = "%s" % property.name.capitalize()
+		br.statement = "%s" % property.name
+		br.category = property.category
+		block_resource_list.append(br)
 
-	return block_list
+	return block_resource_list
 
 
-static func blocks_from_property_list(property_list: Array, selected_props: Dictionary) -> Array[Block]:
-	var block_list: Array[Block]
+static func blocks_from_property_list(property_list: Array, selected_props: Dictionary) -> Array[BlockResource]:
+	var block_resource_list: Array[BlockResource]
 
 	for selected_property in selected_props:
 		var found_prop
@@ -565,37 +339,38 @@ static func blocks_from_property_list(property_list: Array, selected_props: Dict
 				found_prop.category = selected_props[selected_property]
 				break
 		if found_prop:
-			block_list.append_array(property_to_blocklist(found_prop))
+			block_resource_list.append_array(property_to_blocklist(found_prop))
 		else:
 			push_warning("No property matching %s found in %s" % [selected_property, property_list])
 
-	return block_list
+	return block_resource_list
 
 
-static func get_inherited_blocks(_class_name: String) -> Array[Block]:
-	var blocks: Array[Block] = []
+static func get_inherited_blocks(_class_name: String) -> Array[BlockResource]:
+	var block_resource_list: Array[BlockResource] = []
 
 	var current: String = _class_name
 
 	while current != "":
-		blocks.append_array(get_built_in_blocks(current))
+		block_resource_list.append_array(get_built_in_blocks(current))
 		current = ClassDB.get_parent_class(current)
 
-	return blocks
+	return block_resource_list
 
 
-static func get_built_in_blocks(_class_name: String) -> Array[Block]:
+static func get_built_in_blocks(_class_name: String) -> Array[BlockResource]:
 	var props: Dictionary = {}
-	var block_list: Array[Block] = []
+	var block_resource_list: Array[BlockResource] = []
 
 	match _class_name:
 		"Node2D":
-			var b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "node2d_rotation"
-			b.block_format = "Set Rotation Degrees {angle: FLOAT}"
-			b.statement = "rotation_degrees = {angle}"
-			b.category = "Transform | Rotation"
-			block_list.append(b)
+			var br := BlockResource.new()
+			br.block_name = "node2d_rotation"
+			br.block_type = Types.BlockType.STATEMENT
+			br.block_format = "Set Rotation Degrees {angle: FLOAT}"
+			br.statement = "rotation_degrees = {angle}"
+			br.category = "Transform | Rotation"
+			block_resource_list.append(br)
 
 			props = {
 				"position": "Transform | Position",
@@ -604,36 +379,24 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			}
 
 		"CanvasItem":
-			props = {
-				"modulate": "Graphics | Modulate",
-				"visible": "Graphics | Visibility",
-			}
+			props = {"modulate": "Graphics | Modulate", "visible": "Graphics | Visibility"}
 
 		"RigidBody2D":
 			for verb in ["entered", "exited"]:
-				var b = BLOCKS["entry_block"].instantiate()
-				b.block_name = "rigidbody2d_on_%s" % verb
-				b.block_format = "On [body: NODE_PATH] %s" % [verb]
-				# HACK: Blocks refer to nodes by path but the callback receives the node itself;
-				# convert to path
-				b.statement = (
-					(
-						"""
-						func _on_body_%s(_body: Node):
-							var body: NodePath = _body.get_path()
-						"""
-						. dedent()
-					)
-					% [verb]
-				)
-				b.signal_name = "body_%s" % [verb]
-				b.category = "Communication | Methods"
-				block_list.append(b)
+				var br = BlockResource.new()
+				br.block_name = "rigidbody2d_on_%s" % verb
+				br.block_type = Types.BlockType.ENTRY
+				br.block_format = "On [body: OBJECT] %s" % [verb]
+				br.statement = "func _on_body_%s(body: Node):" % [verb]
+				br.signal_name = "body_%s" % [verb]
+				br.category = "Communication | Methods"
+				block_resource_list.append(br)
 
-			var b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "rigidbody2d_physics_position"
-			b.block_format = "Set Physics Position {position: VECTOR2}"
-			b.statement = (
+			var br = BlockResource.new()
+			br.block_name = "rigidbody2d_physics_position"
+			br.block_type = Types.BlockType.STATEMENT
+			br.block_format = "Set Physics Position {position: VECTOR2}"
+			br.statement = (
 				"""
 				PhysicsServer2D.body_set_state(
 					get_rid(),
@@ -643,20 +406,17 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				"""
 				. dedent()
 			)
-			b.category = "Transform | Position"
-			block_list.append(b)
+			br.category = "Transform | Position"
+			block_resource_list.append(br)
 
-			props = {
-				"mass": "Physics | Mass",
-				"linear_velocity": "Physics | Velocity",
-				"angular_velocity": "Physics | Velocity",
-			}
+			props = {"mass": "Physics | Mass", "linear_velocity": "Physics | Velocity", "angular_velocity": "Physics | Velocity"}
 
 		"AnimationPlayer":
-			var b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "animationplayer_play"
-			b.block_format = "Play {animation: STRING} {direction: OPTION}"
-			b.statement = (
+			var br = BlockResource.new()
+			br.block_name = "animationplayer_play"
+			br.block_type = Types.BlockType.STATEMENT
+			br.block_format = "Play {animation: STRING} {direction: OPTION}"
+			br.statement = (
 				"""
 				if "{direction}" == "ahead":
 					play({animation})
@@ -665,65 +425,58 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				"""
 				. dedent()
 			)
-			b.defaults = {
+			br.defaults = {
 				"direction": OptionData.new(["ahead", "backwards"]),
 			}
-			b.tooltip_text = "Play the animation."
-			b.category = "Graphics | Animation"
-			block_list.append(b)
+			br.tooltip_text = "Play the animation."
+			br.category = "Graphics | Animation"
+			block_resource_list.append(br)
 
-			b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "animationplayer_pause"
-			b.block_format = "Pause"
-			b.statement = "pause()"
-			b.tooltip_text = "Pause the currently playing animation."
-			b.category = "Graphics | Animation"
-			block_list.append(b)
+			br = BlockResource.new()
+			br.block_name = "animationplayer_pause"
+			br.block_type = Types.BlockType.STATEMENT
+			br.block_format = "Pause"
+			br.statement = "pause()"
+			br.tooltip_text = "Pause the currently playing animation."
+			br.category = "Graphics | Animation"
+			block_resource_list.append(br)
 
-			b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "animationplayer_stop"
-			b.block_format = "Stop"
-			b.statement = "stop()"
-			b.tooltip_text = "Stop the currently playing animation."
-			b.category = "Graphics | Animation"
-			block_list.append(b)
+			br = BlockResource.new()
+			br.block_name = "animationplayer_stop"
+			br.block_type = Types.BlockType.STATEMENT
+			br.block_format = "Stop"
+			br.statement = "stop()"
+			br.tooltip_text = "Stop the currently playing animation."
+			br.category = "Graphics | Animation"
+			block_resource_list.append(br)
 
-			b = BLOCKS["parameter_block"].instantiate()
-			b.block_name = "animationplayer_is_playing"
-			b.variant_type = TYPE_BOOL
-			b.block_format = "Is playing"
-			b.statement = "is_playing()"
-			b.tooltip_text = "Check if an animation is currently playing."
-			b.category = "Graphics | Animation"
-			block_list.append(b)
+			br = BlockResource.new()
+			br.block_name = "animationplayer_is_playing"
+			br.block_type = Types.BlockType.STATEMENT
+			br.variant_type = TYPE_BOOL
+			br.block_format = "Is playing"
+			br.statement = "is_playing()"
+			br.tooltip_text = "Check if an animation is currently playing."
+			br.category = "Graphics | Animation"
+			block_resource_list.append(br)
 
 		"Area2D":
 			for verb in ["entered", "exited"]:
-				var b = BLOCKS["entry_block"].instantiate()
-				b.block_name = "area2d_on_%s" % verb
-				b.block_format = "On [body: NODE_PATH] %s" % [verb]
-				# HACK: Blocks refer to nodes by path but the callback receives the node itself;
-				# convert to path
-				b.statement = (
-					(
-						"""
-						func _on_body_%s(_body: Node2D):
-							var body: NodePath = _body.get_path()
-						"""
-						. dedent()
-					)
-					% [verb]
-				)
-				b.signal_name = "body_%s" % [verb]
-				b.category = "Communication | Methods"
-				block_list.append(b)
+				var br = BlockResource.new()
+				br.block_name = "area2d_on_%s" % verb
+				br.block_type = Types.BlockType.ENTRY
+				br.block_format = "On [body: OBJECT] %s" % [verb]
+				br.statement = "func _on_body_%s(body: Node):" % [verb]
+				br.signal_name = "body_%s" % [verb]
+				br.category = "Communication | Methods"
+				block_resource_list.append(br)
 
 		"CharacterBody2D":
-			var b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "characterbody2d_move"
-			b.block_type = Types.BlockType.EXECUTE
-			b.block_format = "Move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} with speed {speed: VECTOR2}"
-			b.statement = (
+			var br = BlockResource.new()
+			br.block_name = "characterbody2d_move"
+			br.block_type = Types.BlockType.STATEMENT
+			br.block_format = "Move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} with speed {speed: VECTOR2}"
+			br.statement = (
 				"var dir = Vector2()\n"
 				+ "dir.x += float(Input.is_key_pressed(OS.find_keycode_from_string({right})))\n"
 				+ "dir.x -= float(Input.is_key_pressed(OS.find_keycode_from_string({left})))\n"
@@ -733,35 +486,33 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				+ "velocity = dir*{speed}\n"
 				+ "move_and_slide()"
 			)
-			b.defaults = {
+			br.defaults = {
 				"up": "W",
 				"down": "S",
 				"left": "A",
 				"right": "D",
 			}
-			b.category = "Input"
-			block_list.append(b)
+			br.category = "Input"
+			block_resource_list.append(br)
 
-			b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "characterbody2d_move_and_slide"
-			b.block_type = Types.BlockType.EXECUTE
-			b.block_format = "Move and slide"
-			b.statement = "move_and_slide()"
-			b.category = "Physics | Velocity"
-			block_list.append(b)
+			br = BLOCKS["statement_block"].instantiate()
+			br.block_name = "characterbody2d_move_and_slide"
+			br.block_type = Types.BlockType.STATEMENT
+			br.block_format = "Move and slide"
+			br.statement = "move_and_slide()"
+			br.category = "Physics | Velocity"
+			block_resource_list.append(br)
 
-			props = {
-				"velocity": "Physics | Velocity",
-			}
+			props = {"velocity": "Physics | Velocity"}
 
 	var prop_list = ClassDB.class_get_property_list(_class_name, true)
-	block_list.append_array(blocks_from_property_list(prop_list, props))
+	block_resource_list.append_array(blocks_from_property_list(prop_list, props))
 
-	return block_list
+	return block_resource_list
 
 
-static func _get_input_blocks() -> Array[Block]:
-	var block_list: Array[Block]
+static func _get_input_blocks() -> Array[BlockResource]:
+	var block_resource_list: Array[BlockResource] = []
 
 	var editor_input_actions: Dictionary = {}
 	var editor_input_action_deadzones: Dictionary = {}
@@ -775,14 +526,15 @@ static func _get_input_blocks() -> Array[Block]:
 
 	InputMap.load_from_project_settings()
 
-	var block: Block = BLOCKS["parameter_block"].instantiate()
-	block.block_name = "is_action"
-	block.variant_type = TYPE_BOOL
-	block.block_format = "Is action {action_name: OPTION} {action: OPTION}"
-	block.statement = 'Input.is_action_{action}("{action_name}")'
-	block.defaults = {"action_name": OptionData.new(InputMap.get_actions()), "action": OptionData.new(["pressed", "just_pressed", "just_released"])}
-	block.category = "Input"
-	block_list.append(block)
+	var br: BlockResource = BlockResource.new()
+	br.block_name = "is_action"
+	br.block_type = Types.BlockType.VALUE
+	br.variant_type = TYPE_BOOL
+	br.block_format = "Is action {action_name: OPTION} {action: OPTION}"
+	br.statement = 'Input.is_action_{action}("{action_name}")'
+	br.defaults = {"action_name": OptionData.new(InputMap.get_actions()), "action": OptionData.new(["pressed", "just_pressed", "just_released"])}
+	br.category = "Input"
+	block_resource_list.append(br)
 
 	if Engine.is_editor_hint():
 		for action in editor_input_actions.keys():
@@ -790,30 +542,56 @@ static func _get_input_blocks() -> Array[Block]:
 			for event in editor_input_actions[action]:
 				InputMap.action_add_event(action, event)
 
-	return block_list
+	return block_resource_list
 
 
-static func get_variable_blocks(variables: Array[VariableResource]):
-	var block_list: Array[Block]
+static func get_variable_blocks(variables: Array[VariableResource]) -> Array[BlockResource]:
+	var block_resource_list: Array[BlockResource] = []
 
 	for variable in variables:
 		var type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
 
-		var b = BLOCKS["parameter_block"].instantiate()
-		b.block_name = "get_var_%s" % variable.var_name
-		b.variant_type = variable.var_type
-		b.block_format = variable.var_name
-		b.statement = variable.var_name
-		# HACK: Color the blocks since they are outside of the normal picker system
-		b.color = BUILTIN_PROPS["Variables"].color
-		block_list.append(b)
+		var br = BlockResource.new()
+		br.block_name = "get_var_%s" % variable.var_name
+		br.block_type = Types.BlockType.VALUE
+		br.variant_type = variable.var_type
+		br.block_format = variable.var_name
+		br.statement = variable.var_name
+		br.category = "Variables"
+		block_resource_list.append(br)
 
-		b = BLOCKS["statement_block"].instantiate()
-		b.block_name = "set_var_%s" % variable.var_name
-		b.block_type = Types.BlockType.EXECUTE
-		b.block_format = "Set %s to {value: %s}" % [variable.var_name, type_string]
-		b.statement = "%s = {value}" % [variable.var_name]
-		b.color = BUILTIN_PROPS["Variables"].color
-		block_list.append(b)
+		br = BlockResource.new()
+		br.block_name = "set_var_%s" % variable.var_name
+		br.block_type = Types.BlockType.STATEMENT
+		br.block_format = "Set %s to {value: %s}" % [variable.var_name, type_string]
+		br.statement = "%s = {value}" % [variable.var_name]
+		br.category = "Variables"
+		block_resource_list.append(br)
 
-	return block_list
+	return block_resource_list
+
+
+static func get_blocks_from_bsd(bsd: BlockScriptData) -> Array[BlockResource]:
+	var blocks: Array[BlockResource] = []
+	# By default, assume the class is built-in.
+	var parent_class: String = bsd.script_inherits
+	for class_dict in ProjectSettings.get_global_class_list():
+		if class_dict.class == bsd.script_inherits:
+			var script = load(class_dict.path)
+			if script.has_method("get_custom_blocks"):
+				parent_class = str(script.get_instance_base_type())
+				blocks.append_array(script.get_custom_blocks())
+
+	blocks.append_array(get_inherited_blocks(bsd.script_inherits))
+
+	return blocks
+
+
+static func get_categories_from_bsd(bsd: BlockScriptData) -> Array[BlockCategory]:
+	for class_dict in ProjectSettings.get_global_class_list():
+		if class_dict.class == bsd.script_inherits:
+			var script = load(class_dict.path)
+			if script.has_method("get_custom_categories"):
+				return script.get_custom_categories()
+
+	return []

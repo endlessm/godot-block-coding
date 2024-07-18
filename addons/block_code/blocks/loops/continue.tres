@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://srm0bee85n0d"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_junev"]
+
+[resource]
+script = ExtResource("1_junev")
+block_name = "continue"
+block_type = 2
+variant_type = 0
+block_format = "Continue"
+statement = "continue"
+tooltip_text = ""
+category = "Loops"
+defaults = {}

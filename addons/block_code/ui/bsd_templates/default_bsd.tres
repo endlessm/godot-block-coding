@@ -1,10 +1,38 @@
-[gd_resource type="Resource" script_class="BlockScriptData" load_steps=3 format=3 uid="uid://dit7fykhl3h48"]
+[gd_resource type="Resource" script_class="BlockScriptData" load_steps=9 format=3 uid="uid://dit7fykhl3h48"]
 
 [ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="1_h8ggn"]
-[ext_resource type="Resource" uid="uid://djn5nejdsfu2a" path="res://addons/block_code/ui/bsd_templates/default_blocktrees.tres" id="1_y70fv"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_name_tree_node.gd" id="1_u5rdg"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/value_block_name_tree_node.gd" id="1_vekjp"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_name_tree.gd" id="2_ras3u"]
+
+[sub_resource type="Resource" id="Resource_eeh3p"]
+script = ExtResource("1_vekjp")
+block_name = "literal"
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_8lsoj"]
+script = ExtResource("1_u5rdg")
+block_name = "print"
+children = Array[ExtResource("1_u5rdg")]([])
+arguments = {
+"text": SubResource("Resource_eeh3p")
+}
+
+[sub_resource type="Resource" id="Resource_tlk7c"]
+script = ExtResource("1_u5rdg")
+block_name = "ready"
+children = Array[ExtResource("1_u5rdg")]([SubResource("Resource_8lsoj")])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_pc5o6"]
+script = ExtResource("2_ras3u")
+root = SubResource("Resource_tlk7c")
+canvas_position = Vector2(10, 10)
 
 [resource]
 script = ExtResource("1_h8ggn")
 script_inherits = "INHERIT_DEFAULT"
-block_trees = ExtResource("1_y70fv")
+block_name_trees = Array[ExtResource("2_ras3u")]([SubResource("Resource_pc5o6")])
+variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends INHERIT_DEFAULT"
+version = 0

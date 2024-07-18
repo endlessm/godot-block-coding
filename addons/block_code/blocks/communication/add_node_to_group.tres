@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://bpvefei72nh3a"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_5qal7"]
+
+[resource]
+script = ExtResource("1_5qal7")
+block_name = "add_node_to_group"
+block_type = 2
+variant_type = 0
+block_format = "Add {node: OBJECT} to group {group: STRING}"
+statement = "{node}.add_to_group({group})"
+tooltip_text = "Add the node into the group"
+category = "Communication | Groups"
+defaults = {}

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://7r2b2griss3i"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_6e473"]
+
+[resource]
+script = ExtResource("1_6e473")
+block_name = "define_method"
+block_type = 1
+variant_type = 0
+block_format = "Define method {method_name: NIL}"
+statement = "func {method_name}():"
+tooltip_text = "Define a method/function with following statements"
+category = "Communication | Methods"
+defaults = {}

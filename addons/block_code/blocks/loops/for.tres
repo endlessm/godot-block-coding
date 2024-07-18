@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://0g4njflvemaa"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_u01bi"]
+
+[resource]
+script = ExtResource("1_u01bi")
+block_name = "for"
+block_type = 4
+variant_type = 0
+block_format = "Repeat {n: INT}"
+statement = "for __i in {n}:"
+tooltip_text = "Run the connected blocks [i]n[/i] times"
+category = "Loops"
+defaults = {}

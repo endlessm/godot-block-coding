@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://bbtdxeey74x67"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_5krrs"]
+
+[resource]
+script = ExtResource("1_5krrs")
+block_name = "is_node_in_group"
+block_type = 3
+variant_type = 1
+block_format = "Is {node: OBJECT} in group {group: STRING}"
+statement = "{node}.is_in_group({group})"
+tooltip_text = "Is the node in the group"
+category = "Communication | Groups"
+defaults = {}
+signal_name = ""

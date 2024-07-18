@@ -2,45 +2,33 @@
 class_name StatementBlock
 extends Block
 
-@export var block_format: String = ""
-@export var statement: String = ""
-@export var defaults: Dictionary = {}
-
 @onready var _background := %Background
 @onready var _hbox := %HBoxContainer
 
-var param_name_input_pairs: Array
-var param_input_strings: Dictionary  # Only loaded from serialized
+var arg_name_to_param_input_dict: Dictionary
+var args_to_add_after_format: Dictionary  # Only used when loading
 
 
 func _ready():
 	super()
 
-	if block_type != Types.BlockType.EXECUTE:
+	if block_resource.block_type != Types.BlockType.STATEMENT:
 		_background.show_top = false
 	_background.color = color
 
 	format()
 
-	if param_input_strings:
-		for pair in param_name_input_pairs:
-			pair[1].set_raw_input(param_input_strings[pair[0]])
+	for arg_name in arg_name_to_param_input_dict:
+		if arg_name in args_to_add_after_format:
+			var argument = args_to_add_after_format[arg_name]
+			if argument is Block:
+				arg_name_to_param_input_dict[arg_name].snap_point.add_child(argument)
+			else:
+				arg_name_to_param_input_dict[arg_name].set_raw_input(argument)
 
 
 func _on_drag_drop_area_mouse_down():
 	_drag_started()
-
-
-func get_serialized_props() -> Array:
-	var props := super()
-	props.append_array(serialize_props(["block_format", "statement", "defaults"]))
-
-	var _param_input_strings: Dictionary = {}
-	for pair in param_name_input_pairs:
-		_param_input_strings[pair[0]] = pair[1].get_raw_input()
-
-	props.append(["param_input_strings", _param_input_strings])
-	return props
 
 
 static func get_block_class():
@@ -51,38 +39,12 @@ static func get_scene_path():
 	return "res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"
 
 
-# Override this method to create custom block functionality
-func get_instruction_node() -> InstructionTree.TreeNode:
-	var formatted_statement := statement
-
-	for pair in param_name_input_pairs:
-		formatted_statement = formatted_statement.replace("{%s}" % pair[0], pair[1].get_string())
-
-	formatted_statement = InstructionTree.IDHandler.make_unique(formatted_statement)
-
-	var statement_lines := formatted_statement.split("\n")
-
-	var root: InstructionTree.TreeNode = InstructionTree.TreeNode.new(statement_lines[0])
-	var node := root
-
-	for i in range(1, statement_lines.size()):
-		node.next = InstructionTree.TreeNode.new(statement_lines[i])
-		node = node.next
-
-	if bottom_snap:
-		var snapped_block: Block = bottom_snap.get_snapped_block()
-		if snapped_block:
-			node.next = snapped_block.get_instruction_node()
-
-	return root
-
-
 func format():
-	param_name_input_pairs = format_string(self, %HBoxContainer, block_format, defaults)
+	arg_name_to_param_input_dict = format_string(self, %HBoxContainer, block_resource.block_format, block_resource.defaults)
 
 
-static func format_string(parent_block: Block, attach_to: Node, string: String, _defaults: Dictionary) -> Array:
-	var _param_name_input_pairs = []
+static func format_string(parent_block: Block, attach_to: Node, string: String, _defaults: Dictionary) -> Dictionary:
+	var _arg_name_to_param_input_dict = {}
 	var regex = RegEx.new()
 	regex.compile("\\[([^\\]]+)\\]|\\{([^}]+)\\}")  # Capture things of format {test} or [test]
 	var results := regex.search_all(string)
@@ -120,13 +82,14 @@ static func format_string(parent_block: Block, attach_to: Node, string: String, 
 		if copy_block:
 			var parameter_output: ParameterOutput = preload("res://addons/block_code/ui/blocks/utilities/parameter_output/parameter_output.tscn").instantiate()
 			parameter_output.name = "ParameterOutput%d" % start  # Unique path
-			parameter_output.block_params = {
-				"block_format": param_name,
-				"statement": param_name,
-				"variant_type": param_type,
-				"color": parent_block.color,
-				"scope": parent_block.get_entry_statement() if parent_block is EntryBlock else ""
-			}
+			var entry_statement = parent_block.block_resource.statement
+			var block_resource = BlockResource.new()
+			block_resource.block_name = entry_statement + "_" + param_name
+			block_resource.block_format = param_name
+			block_resource.statement = param_name
+			block_resource.variant_type = param_type
+			block_resource.category = parent_block.block_resource.category
+			parameter_output.block_params = {"block_resource": block_resource, "color": parent_block.color, "scope": entry_statement if parent_block is EntryBlock else ""}
 			parameter_output.block = parent_block
 			attach_to.add_child(parameter_output)
 		else:
@@ -140,10 +103,11 @@ static func format_string(parent_block: Block, attach_to: Node, string: String, 
 			parameter_input.modified.connect(func(): parent_block.modified.emit())
 
 			attach_to.add_child(parameter_input)
-			if param_default:
+
+			if param_default != null:
 				parameter_input.set_raw_input(param_default)
 
-			_param_name_input_pairs.append([param_name, parameter_input])
+			_arg_name_to_param_input_dict[param_name] = parameter_input
 
 		start = result.get_end()
 
@@ -154,4 +118,4 @@ static func format_string(parent_block: Block, attach_to: Node, string: String, 
 		label.text = label_text
 		attach_to.add_child(label)
 
-	return _param_name_input_pairs
+	return _arg_name_to_param_input_dict

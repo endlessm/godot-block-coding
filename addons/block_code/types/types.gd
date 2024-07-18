@@ -1,12 +1,7 @@
 class_name Types
 extends Node
 
-enum BlockType {
-	NONE,
-	ENTRY,
-	EXECUTE,
-	VALUE,
-}
+enum BlockType { NONE, ENTRY, STATEMENT, VALUE, CONTROL }
 
 const VARIANT_TYPE_TO_STRING: Dictionary = {
 	TYPE_STRING: "STRING",
@@ -16,6 +11,7 @@ const VARIANT_TYPE_TO_STRING: Dictionary = {
 	TYPE_VECTOR2: "VECTOR2",
 	TYPE_COLOR: "COLOR",
 	TYPE_NODE_PATH: "NODE_PATH",
+	TYPE_OBJECT: "OBJECT",
 	TYPE_NIL: "NIL",
 }
 
@@ -27,6 +23,7 @@ const STRING_TO_VARIANT_TYPE: Dictionary = {
 	"VECTOR2": TYPE_VECTOR2,
 	"COLOR": TYPE_COLOR,
 	"NODE_PATH": TYPE_NODE_PATH,
+	"OBJECT": TYPE_OBJECT,
 	"NIL": TYPE_NIL,
 }
 

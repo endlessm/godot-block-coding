@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://bxl7n4tkf1mvd"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_s0hq0"]
+
+[resource]
+script = ExtResource("1_s0hq0")
+block_name = "physics_process"
+block_type = 1
+variant_type = 0
+block_format = "On Physics Process"
+statement = "func _physics_process(delta):"
+tooltip_text = "The following will be executed during the \"physics\" processing step of the main loop"
+category = "Lifecycle"
+defaults = {}

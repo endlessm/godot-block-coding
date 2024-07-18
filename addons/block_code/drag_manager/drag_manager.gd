@@ -121,11 +121,12 @@ class Drag:
 			# We only snap to blocks on the canvas:
 			return false
 
-		if _block.block_type != _snap_point.block_type:
-			# We only snap to the same block type:
-			return false
+		# We only snap to the same block type: (HACK: Control blocks can snap to statements)
+		if not (_block.block_resource.block_type == Types.BlockType.CONTROL and _snap_point.block_type == Types.BlockType.STATEMENT):
+			if _block.block_resource.block_type != _snap_point.block_type:
+				return false
 
-		if _block.block_type == Types.BlockType.VALUE and not Types.can_cast(_block.variant_type, _snap_point.variant_type):
+		if _block.block_resource.block_type == Types.BlockType.VALUE and not Types.can_cast(_block.block_resource.variant_type, _snap_point.variant_type):
 			# We only snap Value blocks to snaps that can cast to same variant:
 			return false
 
@@ -138,7 +139,7 @@ class Drag:
 		# Check if scope is valid
 		if _block_scope != "":
 			if top_block is EntryBlock:
-				if _block_scope != top_block.get_entry_statement():
+				if _block_scope != top_block.block_resource.statement:
 					return false
 			elif top_block:
 				var tree_scope := DragManager.get_tree_scope(top_block)
@@ -243,7 +244,9 @@ func drag_block(block: Block, copied_from: Block = null):
 
 
 func copy_block(block: Block) -> Block:
-	return block.duplicate(DUPLICATE_USE_INSTANTIATION)  # use instantiation
+	var new_block = CategoryFactory.construct_block_from_resource(block.block_resource)
+	new_block.color = block.color
+	return new_block  # use instantiation
 
 
 func copy_picked_block_and_drag(block: Block):

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://coy3o7q0x0y60"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_rks7c"]
+
+[resource]
+script = ExtResource("1_rks7c")
+block_name = "add_float"
+block_type = 3
+variant_type = 3
+block_format = "{a: FLOAT} + {b: FLOAT}"
+statement = "{a} + {b}"
+tooltip_text = ""
+category = "Math"
+defaults = {}
+signal_name = ""

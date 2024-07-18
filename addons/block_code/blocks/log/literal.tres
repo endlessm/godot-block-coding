@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://cqlv3qr0mpe01"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_3gd3j"]
+
+[resource]
+script = ExtResource("1_3gd3j")
+block_name = "literal"
+block_type = 3
+variant_type = 4
+block_format = "Hello"
+statement = "\"hello\""
+tooltip_text = ""
+category = "Log"
+defaults = {}
+signal_name = ""

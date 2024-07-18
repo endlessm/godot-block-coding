@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://ddj24k1fp0s82"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_ilw3v"]
+
+[resource]
+script = ExtResource("1_ilw3v")
+block_name = "vector2"
+block_type = 3
+variant_type = 5
+block_format = "Vector2 x: {x: FLOAT} y: {y: FLOAT}"
+statement = "Vector2({x}, {y})"
+tooltip_text = ""
+category = "Variables"
+defaults = {
+"x": 0.0,
+"y": 0.0
+}
+signal_name = ""

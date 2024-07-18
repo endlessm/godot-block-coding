@@ -68,7 +68,7 @@ static func get_custom_blocks() -> Array[Block]:
 	for player in _POSITIONS_FOR_PLAYER:
 		b = CategoryFactory.BLOCKS["statement_block"].instantiate()
 		b.block_name = "simplescoring_set_score"
-		b.block_type = Types.BlockType.EXECUTE
+		b.block_type = Types.BlockType.STATEMENT
 		b.block_format = "Set player %s score to {score: INT}" % player
 		b.statement = "score_%s = {score}" % _POSITIONS_FOR_PLAYER[player]
 		b.category = "Info | Score"
@@ -76,7 +76,7 @@ static func get_custom_blocks() -> Array[Block]:
 
 		b = CategoryFactory.BLOCKS["statement_block"].instantiate()
 		b.block_name = "simplescoring_change_score"
-		b.block_type = Types.BlockType.EXECUTE
+		b.block_type = Types.BlockType.STATEMENT
 		b.block_format = "Change player %s score by {score: INT}" % player
 		b.statement = "score_%s += {score}" % _POSITIONS_FOR_PLAYER[player]
 		b.category = "Info | Score"

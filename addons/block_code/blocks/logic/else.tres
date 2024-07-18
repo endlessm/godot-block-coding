@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://dpgx8j3veifgl"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_x816c"]
+
+[resource]
+script = ExtResource("1_x816c")
+block_name = "else"
+block_type = 4
+variant_type = 0
+block_format = "Else"
+statement = "else:"
+tooltip_text = ""
+category = "Logic | Conditionals"
+defaults = {}

@@ -31,7 +31,9 @@ const ZOOM_FACTOR: float = 1.1
 @onready var _zoom_label: Label = %ZoomLabel
 
 var _current_bsd: BlockScriptData
-var _block_scenes_by_class = {}
+var _current_ast_list: ASTList
+var _block_resource_cache = {}
+var _block_category_cache = {}
 var _panning := false
 var zoom: float:
 	set(value):
@@ -49,17 +51,6 @@ signal replace_block_code
 func _ready():
 	if not _open_scene_button.icon and not Util.node_is_part_of_edited_scene(self):
 		_open_scene_button.icon = _open_scene_icon
-	_populate_block_scenes_by_class()
-
-
-func _populate_block_scenes_by_class():
-	for _class in ProjectSettings.get_global_class_list():
-		if not _class.base.ends_with("Block"):
-			continue
-		var _script = load(_class.path)
-		if not _script.has_method("get_scene_path"):
-			continue
-		_block_scenes_by_class[_class.class] = _script.get_scene_path()
 
 
 func add_block(block: Block, position: Vector2 = Vector2.ZERO) -> void:
@@ -140,8 +131,93 @@ func bsd_selected(bsd: BlockScriptData):
 
 
 func _load_bsd(bsd: BlockScriptData):
-	for tree in bsd.block_trees.array:
-		load_tree(_window, tree)
+	_block_resource_cache = {}
+	_block_category_cache = {}
+
+	var custom_blocks := CategoryFactory.get_blocks_from_bsd(bsd)
+	var custom_categories := CategoryFactory.get_categories_from_bsd(bsd)
+	var block_list := CategoryFactory.get_general_blocks() + custom_blocks
+	var category_list := CategoryFactory.get_categories(block_list, custom_categories)
+
+	# IMPORTANT! Get parameter output block resources from blocks
+	block_list += CategoryFactory.get_parameter_output_blocks(block_list)
+
+	# Load blocks and categories into cache so ASTs and UI can be created from names
+	for block_resource in block_list:
+		_block_resource_cache[block_resource.block_name] = block_resource
+	for category in category_list:
+		_block_category_cache[category.name] = category
+	reload_variables(bsd.variables)
+
+	_current_ast_list = ASTList.new()
+
+	for name_tree in bsd.block_name_trees:
+		var ast: BlockAST = ast_from_name_tree(name_tree)
+		_current_ast_list.append(ast, name_tree.canvas_position)
+
+	reload_ui_from_ast_list()
+
+
+func reload_variables(variables: Array[VariableResource]):
+	var block_list := CategoryFactory.get_variable_blocks(variables)
+	for block_resource in block_list:
+		_block_resource_cache[block_resource.block_name] = block_resource
+
+
+func reload_ui_from_ast_list():
+	for ast_pair in _current_ast_list.array:
+		var root_block = ui_tree_from_ast_node(ast_pair.ast.root)
+		root_block.position = ast_pair.canvas_position
+		_window.add_child(root_block)
+
+
+func ui_tree_from_ast_node(ast_node: BlockAST.ASTNode) -> Block:
+	var block: Block = CategoryFactory.construct_block_from_resource(ast_node.data)
+	var category := get_cached_category_from_name(ast_node.data.category)
+	block.color = category.color
+	# Args
+	for arg_name in ast_node.arguments:
+		var argument = ast_node.arguments[arg_name]
+		if argument is BlockAST.ASTValueNode:
+			var value_block = ui_tree_from_ast_value_node(argument)
+			block.args_to_add_after_format[arg_name] = value_block
+		else:  # Argument is not a node, but a user input value
+			block.args_to_add_after_format[arg_name] = argument
+
+	# Children
+	var current_block: Block = block
+
+	var i: int = 0
+	for c in ast_node.children:
+		var child_block: Block = ui_tree_from_ast_node(c)
+
+		if i == 0:
+			current_block.child_snap.add_child(child_block)
+		else:
+			current_block.bottom_snap.add_child(child_block)
+
+		current_block = child_block
+		i += 1
+
+	reconnect_block.emit(block)
+	return block
+
+
+func ui_tree_from_ast_value_node(ast_value_node: BlockAST.ASTValueNode) -> Block:
+	var block = CategoryFactory.construct_block_from_resource(ast_value_node.data)
+	var category := get_cached_category_from_name(ast_value_node.data.category)
+	block.color = category.color
+	# Args
+	for arg_name in ast_value_node.arguments:
+		var argument = ast_value_node.arguments[arg_name]
+		if argument is BlockAST.ASTValueNode:
+			var value_block = ui_tree_from_ast_value_node(argument)
+			block.args_to_add_after_format[arg_name] = value_block
+		else:  # Argument is not a node, but a user input value
+			block.args_to_add_after_format[arg_name] = argument
+
+	reconnect_block.emit(block)
+	return block
 
 
 func scene_has_bsd_nodes() -> bool:
@@ -157,43 +233,165 @@ func clear_canvas():
 		child.queue_free()
 
 
-func load_tree(parent: Node, node: SerializedBlockTreeNode):
-	var _block_scene_path = _block_scenes_by_class[node.serialized_block.block_class]
-	var scene: Block = load(_block_scene_path).instantiate()
-	for prop_pair in node.serialized_block.serialized_props:
-		scene.set(prop_pair[0], prop_pair[1])
-	parent.add_child(scene)
+func get_cached_block_resource_from_name(block_name: String) -> BlockResource:
+	if not block_name in _block_resource_cache:
+		push_error("Block tried to load from name %s, but was not provided by block canvas cache." % block_name)
+		return null
 
-	var scene_block: Block = scene as Block
-	reconnect_block.emit(scene_block)
-
-	for c in node.path_child_pairs:
-		load_tree(scene.get_node(c[0]), c[1])
+	return _block_resource_cache[block_name]
 
 
-func rebuild_block_trees(undo_redo):
-	var block_trees_array = []
+func get_cached_category_from_name(category_name: String) -> BlockCategory:
+	if not category_name in _block_category_cache:
+		push_error("Category tried to load from name %s, but was not provided by block canvas cache." % category_name)
+		return null
+
+	return _block_category_cache[category_name]
+
+
+func ast_from_name_tree(tree: BlockNameTree) -> BlockAST:
+	var ast: BlockAST = BlockAST.new()
+	ast.root = ast_from_name_tree_recursive(tree.root)
+	return ast
+
+
+func ast_from_name_tree_recursive(node: BlockNameTreeNode):
+	var ast_node := BlockAST.ASTNode.new()
+	ast_node.data = get_cached_block_resource_from_name(node.block_name)
+
+	for arg_name in node.arguments:
+		var argument = node.arguments[arg_name]
+		if argument is ValueBlockNameTreeNode:
+			ast_node.arguments[arg_name] = value_ast_from_value_name_tree_recursive(argument)
+		else:
+			ast_node.arguments[arg_name] = argument
+
+	var children: Array[BlockAST.ASTNode] = []
+
+	for c in node.children:
+		children.append(ast_from_name_tree_recursive(c))
+
+	ast_node.children = children
+
+	return ast_node
+
+
+func value_ast_from_value_name_tree_recursive(value_node: ValueBlockNameTreeNode) -> BlockAST.ASTValueNode:
+	var ast_value_node := BlockAST.ASTValueNode.new()
+	ast_value_node.data = get_cached_block_resource_from_name(value_node.block_name)
+	# Args
+	for arg_name in value_node.arguments:
+		var argument = value_node.arguments[arg_name]
+		if argument is ValueBlockNameTreeNode:
+			ast_value_node.arguments[arg_name] = value_ast_from_value_name_tree_recursive(argument)
+		else:
+			ast_value_node.arguments[arg_name] = argument
+
+	return ast_value_node
+
+
+func rebuild_ast_list():
+	_current_ast_list.clear()
 	for c in _window.get_children():
-		block_trees_array.append(build_tree(c, undo_redo))
-	undo_redo.add_undo_property(_current_bsd.block_trees, "array", _current_bsd.block_trees.array)
-	undo_redo.add_do_property(_current_bsd.block_trees, "array", block_trees_array)
+		var root: BlockAST.ASTNode = build_ast(c)
+		var ast: BlockAST = BlockAST.new()
+		ast.root = root
+		_current_ast_list.append(ast, c.position)
 
 
-func build_tree(block: Block, undo_redo: EditorUndoRedoManager) -> SerializedBlockTreeNode:
-	var path_child_pairs = []
-	block.update_resources(undo_redo)
+func build_ast(block: Block) -> BlockAST.ASTNode:
+	var ast_node := BlockAST.ASTNode.new()
+	ast_node.data = block.block_resource
 
-	for snap in find_snaps(block):
-		var snapped_block = snap.get_snapped_block()
-		if snapped_block == null:
-			continue
-		path_child_pairs.append([block.get_path_to(snap), build_tree(snapped_block, undo_redo)])
+	for arg_name in block.arg_name_to_param_input_dict:
+		var param_input = block.arg_name_to_param_input_dict[arg_name]
+		var snap_point = param_input.snap_point
+		var snapped_block = snap_point.get_snapped_block()
+		if snapped_block:
+			ast_node.arguments[arg_name] = build_value_ast(snapped_block)
+		else:
+			ast_node.arguments[arg_name] = param_input.get_raw_input()
 
-	if block.resource.path_child_pairs != path_child_pairs:
-		undo_redo.add_undo_property(block.resource, "path_child_pairs", block.resource.path_child_pairs)
-		undo_redo.add_do_property(block.resource, "path_child_pairs", path_child_pairs)
+	var children: Array[BlockAST.ASTNode] = []
 
-	return block.resource
+	if block.child_snap:
+		var child: Block = block.child_snap.get_snapped_block()
+
+		while child != null:
+			var child_ast_node := build_ast(child)
+			child_ast_node.data = child.block_resource
+
+			children.append(child_ast_node)
+			if child.bottom_snap == null:
+				child = null
+			else:
+				child = child.bottom_snap.get_snapped_block()
+
+	ast_node.children = children
+
+	return ast_node
+
+
+func build_value_ast(block: ParameterBlock) -> BlockAST.ASTValueNode:
+	var ast_node := BlockAST.ASTValueNode.new()
+	ast_node.data = block.block_resource
+
+	for arg_name in block.arg_name_to_param_input_dict:
+		var param_input = block.arg_name_to_param_input_dict[arg_name]
+		var snap_point = param_input.snap_point
+		var snapped_block = snap_point.get_snapped_block()
+		if snapped_block:
+			ast_node.arguments[arg_name] = build_value_ast(snapped_block)
+		else:
+			ast_node.arguments[arg_name] = param_input.get_raw_input()
+
+	return ast_node
+
+
+func rebuild_block_name_trees():
+	var new_block_name_trees: Array[BlockNameTree] = []
+
+	for ast_pair in _current_ast_list.array:
+		var root: BlockNameTreeNode = build_block_name_tree(ast_pair.ast.root)
+		var block_name_tree: BlockNameTree = BlockNameTree.new()
+		block_name_tree.root = root
+		block_name_tree.canvas_position = ast_pair.canvas_position
+		new_block_name_trees.append(block_name_tree)
+
+	_current_bsd.block_name_trees = new_block_name_trees
+
+
+func build_block_name_tree(ast_node: BlockAST.ASTNode) -> BlockNameTreeNode:
+	var block_name_tree_node := BlockNameTreeNode.new(ast_node.data.block_name)
+
+	for arg_name in ast_node.arguments:
+		var argument = ast_node.arguments[arg_name]
+		if argument is BlockAST.ASTValueNode:
+			block_name_tree_node.arguments[arg_name] = build_block_value_name_tree(argument)
+		else:
+			block_name_tree_node.arguments[arg_name] = argument
+
+	var children: Array[BlockNameTreeNode] = []
+
+	for c in ast_node.children:
+		children.append(build_block_name_tree(c))
+
+	block_name_tree_node.children = children
+
+	return block_name_tree_node
+
+
+func build_block_value_name_tree(ast_node: BlockAST.ASTValueNode) -> ValueBlockNameTreeNode:
+	var block_name_tree_node := ValueBlockNameTreeNode.new(ast_node.data.block_name)
+
+	for arg_name in ast_node.arguments:
+		var argument = ast_node.arguments[arg_name]
+		if argument is BlockAST.ASTValueNode:
+			block_name_tree_node.arguments[arg_name] = build_block_value_name_tree(argument)
+		else:
+			block_name_tree_node.arguments[arg_name] = argument
+
+	return block_name_tree_node
 
 
 func find_snaps(node: Node) -> Array[SnapPoint]:
@@ -213,7 +411,7 @@ func set_scope(scope: String):
 		var valid := false
 
 		if block is EntryBlock:
-			if scope == block.get_entry_statement():
+			if scope == block.block_resource.statement:
 				valid = true
 		else:
 			var tree_scope := DragManager.get_tree_scope(block)
@@ -316,6 +514,5 @@ func set_mouse_override(override: bool):
 		_mouse_override.mouse_default_cursor_shape = Control.CURSOR_ARROW
 
 
-func generate_script_from_current_window(bsd: BlockScriptData) -> String:
-	# TODO: implement multiple windows
-	return InstructionTree.generate_script_from_nodes(_window.get_children(), bsd)
+func generate_script_from_current_window() -> String:
+	return ScriptGenerator.generate_script(_current_ast_list, _current_bsd)

@@ -19,22 +19,8 @@ func bsd_selected(bsd: BlockScriptData):
 		reset_picker()
 		return
 
-	var blocks_to_add: Array[Block] = []
-	var categories_to_add: Array[BlockCategory] = []
-
-	# By default, assume the class is built-in.
-	var parent_class: String = bsd.script_inherits
-	for class_dict in ProjectSettings.get_global_class_list():
-		if class_dict.class == bsd.script_inherits:
-			var script = load(class_dict.path)
-			if script.has_method("get_custom_categories"):
-				categories_to_add = script.get_custom_categories()
-			if script.has_method("get_custom_blocks"):
-				blocks_to_add = script.get_custom_blocks()
-				parent_class = str(script.get_instance_base_type())
-			break
-
-	blocks_to_add.append_array(CategoryFactory.get_inherited_blocks(parent_class))
+	var blocks_to_add: Array[BlockResource] = CategoryFactory.get_blocks_from_bsd(bsd)
+	var categories_to_add: Array[BlockCategory] = CategoryFactory.get_categories_from_bsd(bsd)
 
 	init_picker(blocks_to_add, categories_to_add)
 	reload_variables(bsd.variables)
@@ -48,7 +34,7 @@ func reset_picker():
 		c.queue_free()
 
 
-func init_picker(extra_blocks: Array[Block] = [], extra_categories: Array[BlockCategory] = []):
+func init_picker(extra_blocks: Array[BlockResource] = [], extra_categories: Array[BlockCategory] = []):
 	reset_picker()
 
 	var blocks := CategoryFactory.get_general_blocks() + extra_blocks
@@ -72,18 +58,11 @@ func init_picker(extra_blocks: Array[Block] = [], extra_categories: Array[BlockC
 			_variable_category_display = block_category_display
 
 		block_category_display.category = category
+		block_category_display.block_picked.connect(func(block: Block): block_picked.emit(block))
 
 		_block_list.add_child(block_category_display)
 
-		for _block in category.block_list:
-			var block: Block = _block as Block
-			block.drag_started.connect(_block_picked)
-
 		_block_scroll.scroll_vertical = 0
-
-
-func _block_picked(block: Block):
-	block_picked.emit(block)
 
 
 func scroll_to(y: float):
@@ -110,9 +89,12 @@ func reload_variables(variables: Array[VariableResource]):
 			c.queue_free()
 
 		var i := 1
-		for block in CategoryFactory.get_variable_blocks(variables):
+		for block_resource in CategoryFactory.get_variable_blocks(variables):
+			var block: Block = CategoryFactory.construct_block_from_resource(block_resource)
+			# HACK: Get color hardcoded
+			block.color = CategoryFactory.BUILTIN_PROPS["Variables"].color
 			_variable_category_display.variable_blocks.add_child(block)
-			block.drag_started.connect(_block_picked)
+			block.drag_started.connect(func(block: Block): block_picked.emit(block))
 			if i % 2 == 0:
 				var spacer := Control.new()
 				spacer.custom_minimum_size.y = 12

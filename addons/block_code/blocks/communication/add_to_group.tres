@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://bvrmau8atjx1x"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_bcm71"]
+
+[resource]
+script = ExtResource("1_bcm71")
+block_name = "add_to_group"
+block_type = 2
+variant_type = 0
+block_format = "Add to group {group: STRING}"
+statement = "add_to_group({group})"
+tooltip_text = "Add this node into the group"
+category = "Communication | Groups"
+defaults = {}

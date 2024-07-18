@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://dwteydig4c6hi"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_4rhsl"]
+
+[resource]
+script = ExtResource("1_4rhsl")
+block_name = "break"
+block_type = 2
+variant_type = 0
+block_format = "Break"
+statement = "break"
+tooltip_text = ""
+category = "Loops"
+defaults = {}

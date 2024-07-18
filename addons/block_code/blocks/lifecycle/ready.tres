@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://dgwfoepoejlom"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_vk0xk"]
+
+[resource]
+script = ExtResource("1_vk0xk")
+block_name = "ready"
+block_type = 1
+variant_type = 0
+block_format = "On Ready"
+statement = "func _ready():"
+tooltip_text = "The following will be executed when the node is \"ready\""
+category = "Lifecycle"
+defaults = {}

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://barxsapb8tl0r"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_0lih2"]
+
+[resource]
+script = ExtResource("1_0lih2")
+block_name = "print"
+block_type = 2
+variant_type = 0
+block_format = "Print {text: STRING}"
+statement = "print({text})"
+tooltip_text = "Print "
+category = "Log"
+defaults = {}

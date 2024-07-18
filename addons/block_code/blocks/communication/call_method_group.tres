@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockResource" load_steps=2 format=3 uid="uid://c15vtdfihdxb8"]
+
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_resource.gd" id="1_mlm68"]
+
+[resource]
+script = ExtResource("1_mlm68")
+block_name = "call_method_group"
+block_type = 2
+variant_type = 0
+block_format = "Call method {method_name: STRING} in group {group: STRING}"
+statement = "get_tree().call_group({group}, {method_name})"
+tooltip_text = "Calls the method/function on each member of the given group"
+category = "Communication | Methods"
+defaults = {}

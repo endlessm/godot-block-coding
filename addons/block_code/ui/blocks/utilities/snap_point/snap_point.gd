@@ -2,7 +2,7 @@
 class_name SnapPoint
 extends MarginContainer
 
-@export var block_type: Types.BlockType = Types.BlockType.EXECUTE
+@export var block_type: Types.BlockType = Types.BlockType.STATEMENT
 
 @export var snapped_block: Block:
 	get:
@@ -90,6 +90,13 @@ func _on_child_entered_tree(node):
 		push_warning("Attempted to add more than one Block node ({block}) to the same SnapPoint ({snap_point})".format({"block": new_block, "snap_point": self}))
 		remove_child.call_deferred(snapped_block)
 	snapped_block = new_block
+
+	#print(self)
+	#print(get_parent_block().child_snap)
+	#print(get_parent().get_parent().child_snap)
+	#get_parent_block().print_tree_pretty()
+	#print(get_parent_block().child_snap == self)
+	#print(get_parent_block().child_snap.get_snapped_block())
 
 
 func _on_child_exiting_tree(node):
