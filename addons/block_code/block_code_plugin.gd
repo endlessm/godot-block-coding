@@ -138,7 +138,10 @@ func _on_editor_inspector_edited_object_changed():
 
 
 func select_block_code_node(block_code: BlockCode):
-	if block_code == _selected_block_code:
+	# Skip duplicate selection unless new node is null. That happens when any
+	# non-BlockCode node is selected and that needs to be passed through to the
+	# main panel.
+	if block_code and block_code == _selected_block_code:
 		return
 
 	if not is_block_code_editable(block_code):
