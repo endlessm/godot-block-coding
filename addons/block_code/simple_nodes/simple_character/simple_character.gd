@@ -8,8 +8,7 @@ const Types = preload("res://addons/block_code/types/types.gd")
 @export var texture: Texture2D:
 	set = _set_texture
 
-@export var speed: Vector2 = Vector2(300, 300):
-	set = _set_speed
+@export var speed: Vector2 = Vector2(300, 300)
 
 const PLAYER_KEYS = {
 	"player_1":
@@ -28,6 +27,9 @@ const PLAYER_KEYS = {
 	}
 }
 
+var sprite: Sprite2D
+var collision: CollisionShape2D
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -36,18 +38,13 @@ var _jumping = false
 
 func _set_texture(new_texture):
 	texture = new_texture
-
-	if not is_node_ready():
-		return
-
-	$Sprite2D.texture = texture
-	var shape = RectangleShape2D.new()
-	shape.size = Vector2(100, 100) if texture == null else texture.get_size()
-	$CollisionShape2D.shape = shape
+	if is_node_ready():
+		_texture_updated()
 
 
-func _set_speed(new_speed):
-	speed = new_speed
+func _texture_updated():
+	sprite.texture = texture
+	collision.shape.size = Vector2(100, 100) if texture == null else texture.get_size()
 
 
 ## Nodes in the "affected_by_gravity" group will receive gravity changes:
@@ -55,24 +52,33 @@ func on_gravity_changed(new_gravity):
 	gravity = new_gravity
 
 
-func _init():
-	if self.get_parent():
-		return
-
-	var node = preload("res://addons/block_code/simple_nodes/simple_character/_simple_character.tscn").instantiate() as Node
-	node.replace_by(self, true)
-	node.queue_free()
-	scene_file_path = ""
-
-
 func _ready():
-	add_to_group("affected_by_gravity")
 	simple_setup()
 
 
 func simple_setup():
-	_set_texture(texture)
-	_set_speed(speed)
+	add_to_group("affected_by_gravity", true)
+
+	sprite = Sprite2D.new()
+	sprite.name = &"Sprite2D"
+	add_child(sprite)
+
+	collision = CollisionShape2D.new()
+	collision.name = &"CollisionShape2D"
+	collision.shape = RectangleShape2D.new()
+	add_child(collision)
+
+	_texture_updated()
+
+
+func _exit_tree():
+	if collision:
+		collision.queue_free()
+		collision = null
+
+	if sprite:
+		sprite.queue_free()
+		sprite = null
 
 
 func get_custom_class():
