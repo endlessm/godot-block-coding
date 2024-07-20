@@ -172,7 +172,7 @@ func load_tree(parent: Node, node: SerializedBlockTreeNode):
 
 
 func rebuild_block_trees(undo_redo):
-	var block_trees_array = []
+	var block_trees_array: Array[SerializedBlockTreeNode]
 	for c in _window.get_children():
 		block_trees_array.append(build_tree(c, undo_redo))
 	undo_redo.add_undo_property(_current_bsd.block_trees, "array", _current_bsd.block_trees.array)
