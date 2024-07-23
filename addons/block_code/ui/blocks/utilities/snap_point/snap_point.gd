@@ -2,6 +2,8 @@
 class_name SnapPoint
 extends MarginContainer
 
+const Types = preload("res://addons/block_code/types/types.gd")
+
 @export var block_type: Types.BlockType = Types.BlockType.EXECUTE
 
 @export var snapped_block: Block:

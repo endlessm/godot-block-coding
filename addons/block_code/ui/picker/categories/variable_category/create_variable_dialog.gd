@@ -1,6 +1,8 @@
 @tool
 extends ConfirmationDialog
 
+const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
+
 signal create_variable(var_name: String, var_type: String)
 
 @onready var _variable_input := %VariableInput

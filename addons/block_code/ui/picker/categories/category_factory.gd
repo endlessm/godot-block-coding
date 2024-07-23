@@ -1,6 +1,9 @@
 class_name CategoryFactory
 extends Object
 
+const BlockCategory = preload("res://addons/block_code/ui/picker/categories/block_category.gd")
+const Types = preload("res://addons/block_code/types/types.gd")
+
 const BLOCKS: Dictionary = {
 	"control_block": preload("res://addons/block_code/ui/blocks/control_block/control_block.tscn"),
 	"parameter_block": preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn"),

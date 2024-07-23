@@ -1,8 +1,10 @@
 @tool
 extends Control
 
+const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canvas.gd")
 const Constants = preload("res://addons/block_code/ui/constants.gd")
 const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
+const Types = preload("res://addons/block_code/types/types.gd")
 
 enum DragAction { NONE, PLACE, REMOVE }
 

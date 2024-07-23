@@ -2,6 +2,8 @@
 class_name ParameterOutput
 extends MarginContainer
 
+const Types = preload("res://addons/block_code/types/types.gd")
+
 var block: Block
 var output_block: Block
 

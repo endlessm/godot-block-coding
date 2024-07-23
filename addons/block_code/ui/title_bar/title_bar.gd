@@ -1,6 +1,7 @@
 @tool
-class_name TitleBar
 extends MarginContainer
+
+const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
 
 signal node_name_changed(node_name: String)
 

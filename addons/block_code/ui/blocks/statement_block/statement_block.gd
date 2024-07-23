@@ -2,6 +2,9 @@
 class_name StatementBlock
 extends Block
 
+const ParameterInput = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.gd")
+const ParameterInputScene = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn")
+
 @export var block_format: String = ""
 @export var statement: String = ""
 @export var defaults: Dictionary = {}
@@ -130,7 +133,7 @@ static func format_string(parent_block: Block, attach_to: Node, string: String, 
 			parameter_output.block = parent_block
 			attach_to.add_child(parameter_output)
 		else:
-			var parameter_input: ParameterInput = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn").instantiate()
+			var parameter_input: ParameterInput = ParameterInputScene.instantiate()
 			parameter_input.name = "ParameterInput%d" % start  # Unique path
 			parameter_input.placeholder = param_name
 			if param_type != null:

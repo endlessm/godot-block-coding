@@ -1,6 +1,9 @@
 extends GutTest
 ## Tests for InstructionTree
 
+const CategoryFactory = preload("res://addons/block_code/ui/picker/categories/category_factory.gd")
+const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
+
 var general_blocks: Dictionary
 
 

@@ -1,6 +1,7 @@
 @tool
-class_name ParameterInput
 extends MarginContainer
+
+const Types = preload("res://addons/block_code/types/types.gd")
 
 signal modified
 

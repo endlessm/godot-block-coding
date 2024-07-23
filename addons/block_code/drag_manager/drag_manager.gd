@@ -4,7 +4,9 @@ extends Control
 signal block_dropped
 signal block_modified
 
+const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canvas.gd")
 const Drag = preload("res://addons/block_code/drag_manager/drag.gd")
+const Picker = preload("res://addons/block_code/ui/picker/picker.gd")
 
 @export var picker_path: NodePath
 @export var block_canvas_path: NodePath

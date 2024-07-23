@@ -1,8 +1,11 @@
 @tool
-class_name MainPanel
 extends Control
 
+const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canvas.gd")
+const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
 const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
+const Picker = preload("res://addons/block_code/ui/picker/picker.gd")
+const TitleBar = preload("res://addons/block_code/ui/title_bar/title_bar.gd")
 
 @onready var _picker: Picker = %Picker
 @onready var _block_canvas: BlockCanvas = %BlockCanvas

@@ -2,6 +2,9 @@
 class_name SimpleScoring
 extends CanvasLayer
 
+const CategoryFactory = preload("res://addons/block_code/ui/picker/categories/category_factory.gd")
+const Types = preload("res://addons/block_code/types/types.gd")
+
 @export var score_left: int:
 	set = _set_score_left
 

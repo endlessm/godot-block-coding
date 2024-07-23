@@ -1,6 +1,7 @@
 @tool
-class_name VariableCategoryDisplay
-extends BlockCategoryDisplay
+extends "res://addons/block_code/ui/picker/categories/block_category_display.gd"
+
+const Types = preload("res://addons/block_code/types/types.gd")
 
 signal variable_created(variable: VariableResource)
 

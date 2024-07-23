@@ -1,7 +1,7 @@
 @tool
-class_name BlockCategoryButton
 extends MarginContainer
 
+const BlockCategory = preload("res://addons/block_code/ui/picker/categories/block_category.gd")
 const Util = preload("res://addons/block_code/ui/util.gd")
 
 signal selected

@@ -1,6 +1,8 @@
 extends GutTest
 ## Tests for CategoryFactory
 
+const BlockCategory = preload("res://addons/block_code/ui/picker/categories/block_category.gd")
+
 
 func free_block_list(blocks: Array[Block]):
 	var block: Block = blocks.pop_back()
