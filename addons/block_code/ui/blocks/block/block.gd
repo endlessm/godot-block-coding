@@ -29,6 +29,9 @@ signal modified
 ## The resource containing the block properties and the snapped blocks
 @export var resource: SerializedBlockTreeNode
 
+# FIXME: Add export to this variable and remove bottom_snap_path above.
+# There is a bug in Godot 4.2 that prevents using SnapPoint directly:
+# https://github.com/godotengine/godot/issues/82670
 var bottom_snap: SnapPoint
 
 
