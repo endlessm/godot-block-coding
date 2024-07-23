@@ -1,5 +1,7 @@
 extends EditorInspectorPlugin
 
+const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
+
 
 func _can_handle(object):
 	return object is BlockCode

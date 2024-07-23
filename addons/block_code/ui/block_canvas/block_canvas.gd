@@ -1,7 +1,9 @@
 @tool
-class_name BlockCanvas
 extends MarginContainer
 
+const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
+const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
+const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 const Util = preload("res://addons/block_code/ui/util.gd")
 
 const EXTEND_MARGIN: float = 800
@@ -216,7 +218,7 @@ func set_scope(scope: String):
 			if scope == block.get_entry_statement():
 				valid = true
 		else:
-			var tree_scope := DragManager.get_tree_scope(block)
+			var tree_scope := InstructionTree.get_tree_scope(block)
 			if tree_scope == "" or scope == tree_scope:
 				valid = true
 

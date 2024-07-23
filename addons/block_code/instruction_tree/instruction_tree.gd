@@ -1,4 +1,3 @@
-class_name InstructionTree
 extends Object
 
 
@@ -99,7 +98,7 @@ static func _generate_script_from_entry_blocks(entry_statement: String, entry_bl
 	var signal_node: TreeNode
 	var is_empty = true
 
-	InstructionTree.IDHandler.reset()
+	IDHandler.reset()
 
 	for entry_block in entry_blocks:
 		var next_block := entry_block.bottom_snap.get_snapped_block()
@@ -121,3 +120,16 @@ static func _generate_script_from_entry_blocks(entry_statement: String, entry_bl
 		script += "\tpass\n\n"
 
 	return script
+
+
+## Returns the scope of the first non-empty scope child block
+static func get_tree_scope(node: Node) -> String:
+	if node is Block:
+		if node.scope != "":
+			return node.scope
+
+	for c in node.get_children():
+		var scope := get_tree_scope(c)
+		if scope != "":
+			return scope
+	return ""

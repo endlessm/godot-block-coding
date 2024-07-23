@@ -1,6 +1,12 @@
 @tool
-class_name Picker
 extends MarginContainer
+
+const BlockCategory = preload("res://addons/block_code/ui/picker/categories/block_category.gd")
+const BlockCategoryButtonScene = preload("res://addons/block_code/ui/picker/categories/block_category_button.tscn")
+const BlockCategoryButton = preload("res://addons/block_code/ui/picker/categories/block_category_button.gd")
+const BlockCategoryDisplay = preload("res://addons/block_code/ui/picker/categories/block_category_display.gd")
+const CategoryFactory = preload("res://addons/block_code/ui/picker/categories/category_factory.gd")
+const VariableCategoryDisplay = preload("res://addons/block_code/ui/picker/categories/variable_category/variable_category_display.gd")
 
 signal block_picked(block: Block)
 signal variable_created(variable: VariableResource)
@@ -57,7 +63,7 @@ func init_picker(extra_blocks: Array[Block] = [], extra_categories: Array[BlockC
 	for _category in block_categories:
 		var category: BlockCategory = _category as BlockCategory
 
-		var block_category_button: BlockCategoryButton = preload("res://addons/block_code/ui/picker/categories/block_category_button.tscn").instantiate()
+		var block_category_button: BlockCategoryButton = BlockCategoryButtonScene.instantiate()
 		block_category_button.category = category
 		block_category_button.selected.connect(_category_selected)
 

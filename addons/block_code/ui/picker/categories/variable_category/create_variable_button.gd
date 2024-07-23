@@ -1,5 +1,4 @@
 @tool
-class_name CreateVariableButton
 extends MarginContainer
 
 signal create_variable(var_name: String, var_type: String)

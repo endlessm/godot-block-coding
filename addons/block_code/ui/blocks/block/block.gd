@@ -2,6 +2,9 @@
 class_name Block
 extends MarginContainer
 
+const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
+const Types = preload("res://addons/block_code/types/types.gd")
+
 signal drag_started(block: Block)
 signal modified
 

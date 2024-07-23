@@ -2,6 +2,9 @@
 class_name SimpleScoring
 extends CanvasLayer
 
+const CategoryFactory = preload("res://addons/block_code/ui/picker/categories/category_factory.gd")
+const Types = preload("res://addons/block_code/types/types.gd")
+
 @export var score_left: int:
 	set = _set_score_left
 
@@ -26,7 +29,6 @@ func _init():
 	var node = preload("res://addons/block_code/simple_nodes/simple_scoring/_simple_scoring.tscn").instantiate() as Node
 	node.replace_by(self, true)
 	node.queue_free()
-	print_tree_pretty()
 	scene_file_path = ""
 
 

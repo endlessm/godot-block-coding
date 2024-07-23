@@ -1,6 +1,7 @@
 @tool
-class_name BlockCategoryDisplay
 extends MarginContainer
+
+const BlockCategory = preload("res://addons/block_code/ui/picker/categories/block_category.gd")
 
 var category: BlockCategory
 

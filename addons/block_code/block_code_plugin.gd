@@ -1,8 +1,9 @@
 @tool
-class_name BlockCodePlugin
 extends EditorPlugin
+const MainPanelScene := preload("res://addons/block_code/ui/main_panel.tscn")
+const MainPanel = preload("res://addons/block_code/ui/main_panel.gd")
+const Types = preload("res://addons/block_code/types/types.gd")
 
-const MainPanel := preload("res://addons/block_code/ui/main_panel.tscn")
 static var main_panel: MainPanel
 static var block_code_button: Button
 
@@ -18,31 +19,15 @@ var old_feature_profile: String = ""
 
 const DISABLED_CLASSES := [
 	"BlockScriptData",
-	"DragManager",
-	"InstructionTree",
-	"Types",
 	"Block",
 	"ControlBlock",
 	"ParameterBlock",
 	"StatementBlock",
-	"DragDropArea",
 	"SnapPoint",
 	"SerializedBlockTreeNodeArray",
 	"SerializedBlockTreeNode",
 	"SerializedBlock",
-	"PackedSceneTreeNodeArray",
-	"PackedSceneTreeNode",
-	"BlockCanvas",
 	"CategoryFactory",
-	"BlockCategoryDisplay",
-	"BlockCategory",
-	"Picker",
-	"TitleBar",
-	"MainPanel",
-	"BlockCodePlugin",
-	"BlockCategoryButton",
-	"CreateVariableButton",
-	"VariableCategoryDisplay"
 ]
 
 
@@ -52,7 +37,7 @@ func _enter_tree():
 	editor_inspector = EditorInterface.get_inspector()
 	editor_selection = EditorInterface.get_selection()
 
-	main_panel = MainPanel.instantiate()
+	main_panel = MainPanelScene.instantiate()
 	main_panel.undo_redo = get_undo_redo()
 	block_code_button = add_control_to_bottom_panel(main_panel, _get_plugin_name())
 	block_inspector_plugin = BlockInspectorPlugin.new()

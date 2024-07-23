@@ -2,6 +2,9 @@
 class_name SimpleCharacter
 extends CharacterBody2D
 
+const CategoryFactory = preload("res://addons/block_code/ui/picker/categories/category_factory.gd")
+const Types = preload("res://addons/block_code/types/types.gd")
+
 @export var texture: Texture2D:
 	set = _set_texture
 

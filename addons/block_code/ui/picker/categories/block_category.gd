@@ -1,4 +1,3 @@
-class_name BlockCategory
 extends RefCounted
 
 var name: String
