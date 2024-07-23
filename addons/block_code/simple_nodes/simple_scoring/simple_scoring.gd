@@ -26,7 +26,6 @@ func _init():
 	var node = preload("res://addons/block_code/simple_nodes/simple_scoring/_simple_scoring.tscn").instantiate() as Node
 	node.replace_by(self, true)
 	node.queue_free()
-	print_tree_pretty()
 	scene_file_path = ""
 
 
