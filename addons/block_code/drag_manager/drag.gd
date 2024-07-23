@@ -4,13 +4,15 @@ extends Control
 const Constants = preload("res://addons/block_code/ui/constants.gd")
 const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
 
+enum DragAction { NONE, PLACE, REMOVE }
+
 var _block: Block
 var _block_scope: String
 var _block_canvas: BlockCanvas
 var _preview_block: Control
 var _snap_points: Array[Node]
 var _delete_areas: Array[Rect2]
-var action: DragManager.DragAction:
+var action: DragAction:
 	get:
 		return action
 	set(value):
@@ -60,11 +62,11 @@ func update_drag_state():
 
 	for rect in _delete_areas:
 		if rect.has_point(get_global_mouse_position()):
-			action = DragManager.DragAction.REMOVE
+			action = DragAction.REMOVE
 			target_snap_point = null
 			return
 
-	action = DragManager.DragAction.PLACE
+	action = DragAction.PLACE
 
 	target_snap_point = _find_closest_snap_point()
 
@@ -72,10 +74,10 @@ func update_drag_state():
 func apply_drag() -> Block:
 	update_drag_state()
 
-	if action == DragManager.DragAction.PLACE:
+	if action == DragAction.PLACE:
 		_place_block()
 		return _block
-	elif action == DragManager.DragAction.REMOVE:
+	elif action == DragAction.REMOVE:
 		_remove_block()
 		return null
 	else:
@@ -172,7 +174,7 @@ func _get_distance_to_snap_point(snap_point: SnapPoint) -> float:
 
 func _update_action_hint():
 	match action:
-		DragManager.DragAction.REMOVE:
+		DragAction.REMOVE:
 			_block.modulate = Color(1.0, 1.0, 1.0, 0.5)
 		_:
 			_block.modulate = Color.WHITE

@@ -1,5 +1,4 @@
 @tool
-class_name DragManager
 extends Control
 
 signal block_dropped
@@ -11,8 +10,6 @@ const Drag = preload("res://addons/block_code/drag_manager/drag.gd")
 @export var block_canvas_path: NodePath
 
 const Constants = preload("res://addons/block_code/ui/constants.gd")
-
-enum DragAction { NONE, PLACE, REMOVE }
 
 var _picker: Picker
 var _block_canvas: BlockCanvas

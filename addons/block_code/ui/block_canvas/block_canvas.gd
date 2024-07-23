@@ -2,6 +2,7 @@
 class_name BlockCanvas
 extends MarginContainer
 
+const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
 const Util = preload("res://addons/block_code/ui/util.gd")
 
 const EXTEND_MARGIN: float = 800

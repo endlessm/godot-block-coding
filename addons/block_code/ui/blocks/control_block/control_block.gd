@@ -3,6 +3,7 @@ class_name ControlBlock
 extends Block
 
 const Constants = preload("res://addons/block_code/ui/constants.gd")
+const DragDropArea = preload("res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.gd")
 
 @export var block_formats: Array = []
 @export var statements: Array = []

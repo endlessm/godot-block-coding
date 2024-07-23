@@ -1,5 +1,4 @@
 @tool
-class_name DragDropArea
 extends MarginContainer
 
 signal mouse_down

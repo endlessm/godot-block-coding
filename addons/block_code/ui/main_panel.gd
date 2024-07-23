@@ -2,6 +2,8 @@
 class_name MainPanel
 extends Control
 
+const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
+
 @onready var _picker: Picker = %Picker
 @onready var _block_canvas: BlockCanvas = %BlockCanvas
 @onready var _drag_manager: DragManager = %DragManager

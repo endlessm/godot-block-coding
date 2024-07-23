@@ -18,14 +18,12 @@ var old_feature_profile: String = ""
 
 const DISABLED_CLASSES := [
 	"BlockScriptData",
-	"DragManager",
 	"InstructionTree",
 	"Types",
 	"Block",
 	"ControlBlock",
 	"ParameterBlock",
 	"StatementBlock",
-	"DragDropArea",
 	"SnapPoint",
 	"SerializedBlockTreeNodeArray",
 	"SerializedBlockTreeNode",
