@@ -24,7 +24,8 @@ signal modified
 @export var category: String
 
 ## The next block in the line of execution (can be null if end)
-@export var bottom_snap_path: NodePath
+@export var bottom_snap_path: NodePath:
+	set = _set_bottom_snap_path
 
 ## The scope of the block (statement of matching entry block)
 @export var scope: String = ""
@@ -35,8 +36,12 @@ signal modified
 var bottom_snap: SnapPoint
 
 
-func _ready():
+func _set_bottom_snap_path(value: NodePath):
+	bottom_snap_path = value
 	bottom_snap = get_node_or_null(bottom_snap_path)
+
+
+func _ready():
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
