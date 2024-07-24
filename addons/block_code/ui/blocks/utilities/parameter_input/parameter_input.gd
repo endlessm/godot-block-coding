@@ -193,15 +193,11 @@ func _update_visible_input():
 
 func _switch_input(node: Node):
 	for c in _input_switcher.get_children():
-		c.visible = false
-
-	if node:
-		node.visible = true
+		c.visible = c == node
 
 
 func _on_color_input_color_changed(color):
 	_update_panel_bg_color(color)
-
 	modified.emit()
 
 
