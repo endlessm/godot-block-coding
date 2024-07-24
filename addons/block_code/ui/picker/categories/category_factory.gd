@@ -593,16 +593,9 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 
 	match _class_name:
 		"Node2D":
-			var b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "node2d_rotation"
-			b.block_format = "Set Rotation Degrees {angle: FLOAT}"
-			b.statement = "rotation_degrees = {angle}"
-			b.category = "Transform | Rotation"
-			block_list.append(b)
-
 			props = {
 				"position": "Transform | Position",
-				"rotation": "Transform | Rotation",
+				"rotation_degrees": "Transform | Rotation",
 				"scale": "Transform | Scale",
 			}
 
