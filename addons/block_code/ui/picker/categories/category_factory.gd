@@ -362,6 +362,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.variant_type = TYPE_VECTOR2
 	b.block_format = "Vector2 x: {x: FLOAT} y: {y: FLOAT}"
 	b.statement = "Vector2({x}, {y})"
+	b.defaults = {"x": "0", "y": "0"}
 	b.category = "Variables"
 	block_list.append(b)
 
@@ -373,6 +374,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} + {b: INT}"
 	b.statement = "({a} + {b})"
+	b.defaults = {"a": "1", "b": "1"}
 	b.category = "Math"
 	block_list.append(b)
 
@@ -381,6 +383,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} - {b: INT}"
 	b.statement = "({a} - {b})"
+	b.defaults = {"a": "1", "b": "1"}
 	b.category = "Math"
 	block_list.append(b)
 
@@ -389,6 +392,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} * {b: INT}"
 	b.statement = "({a} * {b})"
+	b.defaults = {"a": "1", "b": "1"}
 	b.category = "Math"
 	block_list.append(b)
 
@@ -397,6 +401,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.variant_type = TYPE_INT
 	b.block_format = "{a: INT} / {b: INT}"
 	b.statement = "({a} / {b})"
+	b.defaults = {"a": "1", "b": "1"}
 	b.category = "Math"
 	block_list.append(b)
 
@@ -405,6 +410,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.variant_type = TYPE_INT
 	b.block_format = "{base: INT} ^ {exp: INT}"
 	b.statement = "(pow({base}, {exp}))"
+	b.defaults = {"base": "1", "exp": "1"}
 	b.category = "Math"
 	block_list.append(b)
 
@@ -413,14 +419,14 @@ static func get_general_blocks() -> Array[Block]:
 
 	b = BLOCKS["control_block"].instantiate()
 	b.block_name = "if"
-	b.block_formats = ["if    {condition: BOOL}"]
+	b.block_formats = ["if {condition: BOOL}"]
 	b.statements = ["if {condition}:"]
 	b.category = "Logic | Conditionals"
 	block_list.append(b)
 
 	b = BLOCKS["control_block"].instantiate()
 	b.block_name = "if_else"
-	b.block_formats = ["if    {condition: BOOL}", "else"]
+	b.block_formats = ["if {condition: BOOL}", "else"]
 	b.statements = ["if {condition}:", "else:"]
 	b.category = "Logic | Conditionals"
 	block_list.append(b)
@@ -430,7 +436,11 @@ static func get_general_blocks() -> Array[Block]:
 	b.variant_type = TYPE_BOOL
 	b.block_format = "{int1: INT} {op: OPTION} {int2: INT}"
 	b.statement = "({int1} {op} {int2})"
-	b.defaults = {"op": OptionData.new(["==", ">", "<", ">=", "<=", "!="])}
+	b.defaults = {
+		"op": OptionData.new(["==", ">", "<", ">=", "<=", "!="]),
+		"int1": "1",
+		"int2": "1",
+	}
 	b.category = "Logic | Comparison"
 	block_list.append(b)
 
@@ -529,6 +539,20 @@ static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 
 	var variant_type = property.type
 
+	const FALLBACK_SET_FOR_TYPE = {
+		TYPE_INT: "0",
+		TYPE_FLOAT: "0",
+		TYPE_VECTOR2: "0, 0",
+		TYPE_COLOR: "DARK_ORANGE",
+	}
+
+	const FALLBACK_CHANGE_FOR_TYPE = {
+		TYPE_INT: "1",
+		TYPE_FLOAT: "1",
+		TYPE_VECTOR2: "1, 1",
+		TYPE_COLOR: "DARK_ORANGE",
+	}
+
 	if variant_type:
 		var type_string: String = Types.VARIANT_TYPE_TO_STRING[variant_type]
 
@@ -536,15 +560,20 @@ static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 		b.block_name = "set_prop_%s" % property.name
 		b.block_format = "Set %s to {value: %s}" % [property.name.capitalize(), type_string]
 		b.statement = "%s = {value}" % property.name
+		var default_set = property.get("default_set", FALLBACK_SET_FOR_TYPE.get(variant_type, ""))
+		b.defaults = {"value": default_set}
 		b.category = property.category
 		block_list.append(b)
 
-		b = BLOCKS["statement_block"].instantiate()
-		b.block_name = "change_prop_%s" % property.name
-		b.block_format = "Change %s by {value: %s}" % [property.name.capitalize(), type_string]
-		b.statement = "%s += {value}" % property.name
-		b.category = property.category
-		block_list.append(b)
+		if property.get("has_change", true):
+			b = BLOCKS["statement_block"].instantiate()
+			b.block_name = "change_prop_%s" % property.name
+			b.block_format = "Change %s by {value: %s}" % [property.name.capitalize(), type_string]
+			b.statement = "%s += {value}" % property.name
+			var default_change = property.get("default_change", FALLBACK_CHANGE_FOR_TYPE[variant_type])
+			b.defaults = {"value": default_change}
+			b.category = property.category
+			block_list.append(b)
 
 		b = BLOCKS["parameter_block"].instantiate()
 		b.block_name = "get_prop_%s" % property.name
@@ -565,7 +594,7 @@ static func blocks_from_property_list(property_list: Array, selected_props: Dict
 		for prop in property_list:
 			if selected_property == prop.name:
 				found_prop = prop
-				found_prop.category = selected_props[selected_property]
+				found_prop.merge(selected_props[selected_property])
 				break
 		if found_prop:
 			block_list.append_array(property_to_blocklist(found_prop))
@@ -594,15 +623,38 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 	match _class_name:
 		"Node2D":
 			props = {
-				"position": "Transform | Position",
-				"rotation_degrees": "Transform | Rotation",
-				"scale": "Transform | Scale",
+				"position":
+				{
+					"category": "Transform | Position",
+					"default_set": "100, 100",
+					"default_change": "1, 1",
+				},
+				"rotation_degrees":
+				{
+					"category": "Transform | Rotation",
+					"default_set": "45",
+					"default_change": "1",
+				},
+				"scale":
+				{
+					"category": "Transform | Scale",
+					"default_set": "2, 2",
+					"default_change": "0.1, 0.1",
+				},
 			}
 
 		"CanvasItem":
 			props = {
-				"modulate": "Graphics | Modulate",
-				"visible": "Graphics | Visibility",
+				"modulate":
+				{
+					"category": "Graphics | Modulate",
+					"has_change": false,
+				},
+				"visible":
+				{
+					"category": "Graphics | Visibility",
+					"has_change": false,
+				},
 			}
 
 		"RigidBody2D":
@@ -643,9 +695,9 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			block_list.append(b)
 
 			props = {
-				"mass": "Physics | Mass",
-				"linear_velocity": "Physics | Velocity",
-				"angular_velocity": "Physics | Velocity",
+				"mass": {"category": "Physics | Mass"},
+				"linear_velocity": {"category": "Physics | Velocity"},
+				"angular_velocity": {"category": "Physics | Velocity"},
 			}
 
 		"AnimationPlayer":
@@ -747,7 +799,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			block_list.append(b)
 
 			props = {
-				"velocity": "Physics | Velocity",
+				"velocity": {"category": "Physics | Velocity"},
 			}
 
 	var prop_list = ClassDB.class_get_property_list(_class_name, true)
