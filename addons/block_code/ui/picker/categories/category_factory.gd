@@ -502,6 +502,21 @@ static func get_general_blocks() -> Array[Block]:
 	b.tooltip_text = "Play the audio stream with volume and pitch"
 	b.category = "Sounds"
 	block_list.append(b)
+
+	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "stop_sound"
+	b.block_type = Types.BlockType.EXECUTE
+	b.block_format = "Stop the sound {name: STRING}"
+	b.statement = (
+		"""
+		var __sound_node = get_node({name})
+		__sound_node.stop()
+		"""
+		. dedent()
+	)
+	b.tooltip_text = "Stop the audio stream"
+	b.category = "Sounds"
+	block_list.append(b)
 #endregion
 #region Graphics
 
