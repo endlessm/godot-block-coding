@@ -4,9 +4,9 @@
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/entry_block/entry_block.gd" id="2_3ik8h"]
 
 [node name="EntryBlock" instance=ExtResource("1_byjbb")]
+focus_mode = 2
 script = ExtResource("2_3ik8h")
 signal_name = ""
-defaults = {}
 block_name = "entry_block"
 label = "EntryBlock"
 block_type = 1

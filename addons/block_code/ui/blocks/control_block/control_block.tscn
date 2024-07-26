@@ -5,6 +5,7 @@
 
 [node name="ControlBlock" type="MarginContainer"]
 size_flags_horizontal = 0
+focus_mode = 2
 mouse_filter = 2
 script = ExtResource("1_2hbir")
 block_name = "control_block"
