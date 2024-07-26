@@ -33,9 +33,11 @@ var option: bool = false
 @onready var _bool_input_option := %BoolInputOption
 
 # Used to submit the text when losing focus:
-var _last_lineedit_submitted_text: String
-var _last_x_lineedit_submitted_text: String
-var _last_y_lineedit_submitted_text: String
+@onready var _last_submitted_text = {
+	_line_edit: _line_edit.text,
+	_x_line_edit: _x_line_edit.text,
+	_y_line_edit: _y_line_edit.text,
+}
 
 
 func set_raw_input(raw_input):
@@ -99,10 +101,6 @@ func _ready():
 	snap_point.block_type = block_type
 	snap_point.variant_type = variant_type
 
-	_last_lineedit_submitted_text = _line_edit.text
-	_last_x_lineedit_submitted_text = _x_line_edit.text
-	_last_y_lineedit_submitted_text = _y_line_edit.text
-
 	_update_visible_input()
 
 
@@ -136,34 +134,44 @@ func get_string() -> String:
 			return "%s" % input
 
 
-func _on_line_edit_text_submitted(new_text):
-	_last_lineedit_submitted_text = new_text
+func _validate_and_submit_edit_text(line_edit: Node, type: Variant.Type):
+	if _last_submitted_text[line_edit] == line_edit.text:
+		return
+	match type:
+		TYPE_FLOAT:
+			if not line_edit.text.is_valid_float():
+				line_edit.text = _last_submitted_text[line_edit]
+				return
+		TYPE_INT:
+			if not line_edit.text.is_valid_int():
+				line_edit.text = _last_submitted_text[line_edit]
+				return
+	_last_submitted_text[line_edit] = line_edit.text
 	modified.emit()
+
+
+func _on_line_edit_text_submitted(_new_text):
+	_validate_and_submit_edit_text(_line_edit, variant_type)
 
 
 func _on_line_edit_focus_exited():
-	if _last_lineedit_submitted_text != _line_edit.text:
-		modified.emit()
+	_validate_and_submit_edit_text(_line_edit, variant_type)
 
 
-func _on_x_line_edit_text_submitted(new_text):
-	_last_x_lineedit_submitted_text = new_text
-	modified.emit()
+func _on_x_line_edit_text_submitted(_new_text):
+	_validate_and_submit_edit_text(_x_line_edit, TYPE_FLOAT)
 
 
 func _on_x_line_edit_focus_exited():
-	if _last_x_lineedit_submitted_text != _x_line_edit.text:
-		modified.emit()
+	_validate_and_submit_edit_text(_x_line_edit, TYPE_FLOAT)
 
 
-func _on_y_line_edit_text_submitted(new_text):
-	_last_y_lineedit_submitted_text = new_text
-	modified.emit()
+func _on_y_line_edit_text_submitted(_new_text):
+	_validate_and_submit_edit_text(_y_line_edit, TYPE_FLOAT)
 
 
 func _on_y_line_edit_focus_exited():
-	if _last_y_lineedit_submitted_text != _y_line_edit.text:
-		modified.emit()
+	_validate_and_submit_edit_text(_y_line_edit, TYPE_FLOAT)
 
 
 func _update_visible_input():
@@ -185,15 +193,11 @@ func _update_visible_input():
 
 func _switch_input(node: Node):
 	for c in _input_switcher.get_children():
-		c.visible = false
-
-	if node:
-		node.visible = true
+		c.visible = c == node
 
 
 func _on_color_input_color_changed(color):
 	_update_panel_bg_color(color)
-
 	modified.emit()
 
 
