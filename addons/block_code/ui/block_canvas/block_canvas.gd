@@ -161,10 +161,16 @@ func clear_canvas():
 
 
 func load_tree(parent: Node, node: SerializedBlockTreeNode):
-	var _block_scene_path = _block_scenes_by_class[node.serialized_block.block_class]
-	var scene: Block = load(_block_scene_path).instantiate()
+	var scene: Block = Util.instantiate_block(node.name)
+
+	# TODO: Remove once the data/UI decouple is done.
+	if scene == null:
+		var _block_scene_path = _block_scenes_by_class[node.serialized_block.block_class]
+		scene = load(_block_scene_path).instantiate()
 	for prop_pair in node.serialized_block.serialized_props:
 		scene.set(prop_pair[0], prop_pair[1])
+
+	scene.position = node.position
 	scene.resource = node
 	parent.add_child(scene)
 
