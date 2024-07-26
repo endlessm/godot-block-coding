@@ -83,7 +83,7 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 func update_resources(undo_redo: EditorUndoRedoManager):
 	if resource == null:
 		var serialized_block = SerializedBlock.new(get_block_class(), get_serialized_props())
-		resource = SerializedBlockTreeNode.new(serialized_block)
+		resource = SerializedBlockTreeNode.new(block_name, position, serialized_block)
 		return
 
 	var serialized_props = get_serialized_props()
