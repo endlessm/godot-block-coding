@@ -85,6 +85,9 @@ func init_picker(extra_blocks: Array[Block] = [], extra_categories: Array[BlockC
 			var block: Block = _block as Block
 			block.drag_started.connect(_block_picked)
 
+			# Don't allow the block to be deleted while in the picker.
+			block.can_delete = false
+
 		_block_scroll.scroll_vertical = 0
 
 
