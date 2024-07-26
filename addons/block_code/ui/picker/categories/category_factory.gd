@@ -175,7 +175,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.block_name = "ready_block"
 	b.block_format = "On Ready"
 	b.statement = "func _ready():"
-	b.tooltip_text = 'The following will be executed when the node is "ready"'
+	b.tooltip_text = 'Attached blocks will be executed once when the node is "ready"'
 	b.category = "Lifecycle"
 	block_list.append(b)
 
@@ -183,7 +183,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.block_name = "process_block"
 	b.block_format = "On Process"
 	b.statement = "func _process(delta):"
-	b.tooltip_text = "The following will be executed during the processing step of the main loop"
+	b.tooltip_text = "Attached blocks will be executed during the processing step of the main loop"
 	b.category = "Lifecycle"
 	block_list.append(b)
 
@@ -191,7 +191,7 @@ static func get_general_blocks() -> Array[Block]:
 	b.block_name = "physics_process_block"
 	b.block_format = "On Physics Process"
 	b.statement = "func _physics_process(delta):"
-	b.tooltip_text = 'The following will be executed during the "physics" processing step of the main loop'
+	b.tooltip_text = 'Attached blocks will be executed during the "physics" processing step of the main loop'
 	b.category = "Lifecycle"
 	block_list.append(b)
 
