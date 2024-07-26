@@ -504,6 +504,25 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
+	b.block_name = "pause_continue_sound"
+	b.block_type = Types.BlockType.EXECUTE
+	b.block_format = "{pause: OPTION} the sound {name: STRING}"
+	b.statement = (
+		"""
+		var __sound_node = get_node({name})
+		if "{pause}" == "pause":
+			__sound_node.stream_paused = true
+		else:
+			__sound_node.stream_paused = false
+		"""
+		. dedent()
+	)
+	b.defaults = {"pause": OptionData.new(["Pause", "Continue"])}
+	b.tooltip_text = "Pause/Continue the audio stream"
+	b.category = "Sounds"
+	block_list.append(b)
+
+	b = BLOCKS["statement_block"].instantiate()
 	b.block_name = "stop_sound"
 	b.block_type = Types.BlockType.EXECUTE
 	b.block_format = "Stop the sound {name: STRING}"
