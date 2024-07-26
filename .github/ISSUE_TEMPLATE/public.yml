@@ -30,7 +30,7 @@ body:
     attributes:
       label: Block Coding Plugin Version
       description: What version of the plugin are you using? You can check in **Project** → **Project Settings** → **Plugins**
-      placeholder: e.g. Windows 11, Fedora Silverblue 39, Ubuntu 22.04, etc.
+      placeholder: e.g. v0.6.1
 
   - type: input
     id: os
