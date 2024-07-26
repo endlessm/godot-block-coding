@@ -2,6 +2,7 @@
 class_name Block
 extends MarginContainer
 
+const BlocksCatalog = preload("res://addons/block_code/blocks_catalog.gd")
 const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
@@ -99,7 +100,13 @@ func update_resources(undo_redo: EditorUndoRedoManager):
 
 # Override this method to add more serialized properties
 func get_serialized_props() -> Array:
-	return serialize_props(["block_name", "label", "color", "block_type", "position", "scope"])
+	if not BlocksCatalog.has_block(block_name):
+		return serialize_props(["block_name", "label", "color", "block_type", "position", "scope"])
+
+	# TODO: Remove remaining serialization:
+	# - Derive color from category.
+	# - Handle scope in a different way?
+	return serialize_props(["color", "scope"])
 
 
 func _to_string():

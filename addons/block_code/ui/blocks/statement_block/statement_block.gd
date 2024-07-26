@@ -36,7 +36,8 @@ func _on_drag_drop_area_mouse_down():
 
 func get_serialized_props() -> Array:
 	var props := super()
-	props.append_array(serialize_props(["block_format", "statement", "defaults"]))
+	if not BlocksCatalog.has_block(block_name):
+		props.append_array(serialize_props(["block_format", "statement", "defaults"]))
 
 	var _param_input_strings: Dictionary = {}
 	for pair in param_name_input_pairs:
