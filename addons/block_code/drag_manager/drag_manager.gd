@@ -80,6 +80,7 @@ func drag_ended():
 
 	if block:
 		connect_block_canvas_signals(block)
+		block.grab_focus()
 
 	_block_canvas.release_scope()
 

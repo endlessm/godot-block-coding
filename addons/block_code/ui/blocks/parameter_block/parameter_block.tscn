@@ -18,6 +18,7 @@ corner_radius_bottom_left = 16
 offset_right = 16.0
 offset_bottom = 8.0
 size_flags_horizontal = 0
+focus_mode = 2
 mouse_filter = 2
 script = ExtResource("1_0hajy")
 block_name = &"parameter_block"
