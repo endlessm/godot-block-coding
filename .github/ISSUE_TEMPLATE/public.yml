@@ -29,15 +29,22 @@ body:
     id: v
     attributes:
       label: Block Coding Plugin Version
-      description: What version of the plugin are you using? You can check in **Project** → **Project Settings** → **Plugins**
-      placeholder: e.g. v0.6.1
+      description: What version of the plugin are you using? You can check in **Project** → **Project Settings** → **Plugins**.
+      placeholder: v0.0.0
+
+  - type: input
+    id: godot
+    attributes:
+      label: Godot Engine Version
+      description: What version of Godot are you using? You can copy it by clicking the version in **Help** → **About Godot…**.
+      placeholder: v0.0.0.stable
 
   - type: input
     id: os
     attributes:
       label: Operating System
       description: What specific OS and version are you seeing the problem on?
-      placeholder: e.g. Windows 11, Fedora Silverblue 39, Ubuntu 22.04, etc.
+      placeholder: Windows 11, Fedora Silverblue 39, Ubuntu 22.04, etc.
 
   - type: textarea
     id: logs
