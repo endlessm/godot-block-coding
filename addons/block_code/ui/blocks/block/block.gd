@@ -9,7 +9,7 @@ signal drag_started(block: Block)
 signal modified
 
 ## Name of the block to be referenced by others in search
-@export var block_name: String = ""
+@export var block_name: StringName
 
 ## Label of block (optionally used to draw block labels)
 @export var label: String = ""

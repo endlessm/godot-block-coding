@@ -6,8 +6,7 @@
 [node name="EntryBlock" instance=ExtResource("1_byjbb")]
 script = ExtResource("2_3ik8h")
 signal_name = ""
-defaults = {}
-block_name = "entry_block"
+block_name = &"entry_block"
 label = "EntryBlock"
 block_type = 1
 

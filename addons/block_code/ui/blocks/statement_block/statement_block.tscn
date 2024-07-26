@@ -9,7 +9,7 @@
 size_flags_horizontal = 0
 mouse_filter = 2
 script = ExtResource("1_6wvlf")
-block_name = "statement_block"
+block_name = &"statement_block"
 label = "StatementBlock"
 bottom_snap_path = NodePath("VBoxContainer/SnapPoint")
 

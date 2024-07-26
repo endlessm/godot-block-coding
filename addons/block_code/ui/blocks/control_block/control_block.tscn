@@ -7,7 +7,7 @@
 size_flags_horizontal = 0
 mouse_filter = 2
 script = ExtResource("1_2hbir")
-block_name = "control_block"
+block_name = &"control_block"
 label = "Control Block"
 color = Color(0.59979, 0.536348, 0.876215, 1)
 bottom_snap_path = NodePath("VBoxContainer/SnapPoint")
