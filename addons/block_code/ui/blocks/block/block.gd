@@ -86,7 +86,12 @@ func update_resources(undo_redo: EditorUndoRedoManager):
 		resource = SerializedBlockTreeNode.new(block_name, position, serialized_block)
 		return
 
+	if resource.position != position:
+		undo_redo.add_undo_property(resource, "position", resource.position)
+		undo_redo.add_do_property(resource, "position", position)
+
 	var serialized_props = get_serialized_props()
+
 	if serialized_props != resource.serialized_block.serialized_props:
 		undo_redo.add_undo_property(resource.serialized_block, "serialized_props", resource.serialized_block.serialized_props)
 		undo_redo.add_do_property(resource.serialized_block, "serialized_props", serialized_props)
