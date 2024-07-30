@@ -45,6 +45,8 @@ func _set_bottom_snap_path(value: NodePath):
 
 
 func _ready():
+	if bottom_snap == null:
+		_set_bottom_snap_path(bottom_snap_path)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
