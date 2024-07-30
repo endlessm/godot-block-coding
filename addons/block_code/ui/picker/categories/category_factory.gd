@@ -576,14 +576,14 @@ static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 	const FALLBACK_SET_FOR_TYPE = {
 		TYPE_INT: "0",
 		TYPE_FLOAT: "0",
-		TYPE_VECTOR2: "0, 0",
+		TYPE_VECTOR2: "0,0",
 		TYPE_COLOR: "DARK_ORANGE",
 	}
 
 	const FALLBACK_CHANGE_FOR_TYPE = {
 		TYPE_INT: "1",
 		TYPE_FLOAT: "1",
-		TYPE_VECTOR2: "1, 1",
+		TYPE_VECTOR2: "1,1",
 		TYPE_COLOR: "DARK_ORANGE",
 	}
 
@@ -660,8 +660,8 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				"position":
 				{
 					"category": "Transform | Position",
-					"default_set": "100, 100",
-					"default_change": "1, 1",
+					"default_set": "100,100",
+					"default_change": "1,1",
 				},
 				"rotation_degrees":
 				{
@@ -672,8 +672,8 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				"scale":
 				{
 					"category": "Transform | Scale",
-					"default_set": "2, 2",
-					"default_change": "0.1, 0.1",
+					"default_set": "2,2",
+					"default_change": "0.1,0.1",
 				},
 			}
 
