@@ -164,6 +164,7 @@ func load_tree(parent: Node, node: SerializedBlockTreeNode):
 	var scene: Block = load(_block_scene_path).instantiate()
 	for prop_pair in node.serialized_block.serialized_props:
 		scene.set(prop_pair[0], prop_pair[1])
+	scene.resource = node
 	parent.add_child(scene)
 
 	var scene_block: Block = scene as Block
