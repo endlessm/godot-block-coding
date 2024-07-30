@@ -494,6 +494,7 @@ static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 	var variant_type = property.type
 
 	const FALLBACK_SET_FOR_TYPE = {
+		TYPE_BOOL: false,
 		TYPE_INT: "0",
 		TYPE_FLOAT: "0",
 		TYPE_VECTOR2: "0,0",
@@ -501,6 +502,7 @@ static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 	}
 
 	const FALLBACK_CHANGE_FOR_TYPE = {
+		TYPE_BOOL: true,
 		TYPE_INT: "1",
 		TYPE_FLOAT: "1",
 		TYPE_VECTOR2: "1,1",
