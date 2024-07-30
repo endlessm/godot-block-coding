@@ -667,24 +667,6 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			block_list.append(b)
 
 			b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "audiostreamplayer_pause_continue"
-			b.block_type = Types.BlockType.EXECUTE
-			b.block_format = "{pause: OPTION} the sound"
-			b.statement = (
-				"""
-				if "{pause}" == "pause":
-					stream_paused = true
-				else:
-					stream_paused = false
-				"""
-				. dedent()
-			)
-			b.defaults = {"pause": OptionData.new(["Pause", "Continue"])}
-			b.tooltip_text = "Pause/Continue the audio stream"
-			b.category = "Sounds"
-			block_list.append(b)
-
-			b = BLOCKS["statement_block"].instantiate()
 			b.block_name = "audiostreamplayer_stop"
 			b.block_type = Types.BlockType.EXECUTE
 			b.block_format = "Stop"
@@ -692,6 +674,14 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			b.tooltip_text = "Stop the audio stream"
 			b.category = "Sounds"
 			block_list.append(b)
+
+			props = {
+				"stream_paused":
+				{
+					"category": "Sounds",
+					"has_change": false,
+				},
+			}
 
 		"AnimationPlayer":
 			var b = BLOCKS["statement_block"].instantiate()
