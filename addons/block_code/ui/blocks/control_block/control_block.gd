@@ -13,14 +13,9 @@ var snaps: Array
 var param_name_input_pairs_array: Array
 var param_input_strings_array: Array  # Only loaded from serialized
 
-@onready var _background := %Background
-
 
 func _ready():
 	super()
-
-	_background.color = color
-	_background.custom_minimum_size.x = Constants.CONTROL_MARGIN
 
 	format()
 
@@ -148,9 +143,18 @@ func format():
 		snap_container.custom_minimum_size.x = 30
 		snap_container.custom_minimum_size.y = 30
 		snap_container.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-		snap_container.add_theme_constant_override("margin_left", Constants.CONTROL_MARGIN)
+
+		var snap_gutter := Control.new()
+		snap_gutter.name = "Background"
+		snap_gutter.set_script(preload("res://addons/block_code/ui/blocks/utilities/background/gutter.gd"))
+		snap_gutter.custom_minimum_size.x = Constants.CONTROL_MARGIN
+		snap_gutter.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		snap_gutter.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		snap_gutter.color = color
+		snap_container.add_child(snap_gutter)
 
 		var snap_point: SnapPoint = preload("res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn").instantiate()
+		snap_point.add_theme_constant_override("margin_left", Constants.CONTROL_MARGIN)
 		snap_container.add_child(snap_point)
 
 		snaps.append(snap_point)
