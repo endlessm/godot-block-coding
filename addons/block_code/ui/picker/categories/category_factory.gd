@@ -457,76 +457,6 @@ static func get_general_blocks() -> Array[Block]:
 	block_list.append_array(_get_input_blocks())
 
 #endregion
-#region Sounds
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "load_sound"
-	b.block_type = Types.BlockType.STATEMENT
-	b.block_format = "Load file {file_path: STRING} as sound {name: STRING}"
-	b.statement = (
-		"""
-		var __sound = AudioStreamPlayer.new()
-		__sound.name = {name}
-		__sound.set_stream(load({file_path}))
-		add_child(__sound)
-		"""
-		. dedent()
-	)
-	b.tooltip_text = "Load a resource file as the audio stream"
-	b.category = "Sounds"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "play_sound"
-	b.block_type = Types.BlockType.STATEMENT
-	b.block_format = "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"
-	b.statement = (
-		"""
-		var __sound_node = get_node({name})
-		__sound_node.volume_db = {db}
-		__sound_node.pitch_scale = {pitch}
-		__sound_node.play()
-		"""
-		. dedent()
-	)
-	b.defaults = {"db": "0.0", "pitch": "1.0"}
-	b.tooltip_text = "Play the audio stream with volume and pitch"
-	b.category = "Sounds"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "pause_continue_sound"
-	b.block_type = Types.BlockType.STATEMENT
-	b.block_format = "{pause: OPTION} the sound {name: STRING}"
-	b.statement = (
-		"""
-		var __sound_node = get_node({name})
-		if "{pause}" == "pause":
-			__sound_node.stream_paused = true
-		else:
-			__sound_node.stream_paused = false
-		"""
-		. dedent()
-	)
-	b.defaults = {"pause": OptionData.new(["Pause", "Continue"])}
-	b.tooltip_text = "Pause/Continue the audio stream"
-	b.category = "Sounds"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "stop_sound"
-	b.block_type = Types.BlockType.STATEMENT
-	b.block_format = "Stop the sound {name: STRING}"
-	b.statement = (
-		"""
-		var __sound_node = get_node({name})
-		__sound_node.stop()
-		"""
-		. dedent()
-	)
-	b.tooltip_text = "Stop the audio stream"
-	b.category = "Sounds"
-	block_list.append(b)
-#endregion
 #region Graphics
 
 	b = BLOCKS["parameter_block"].instantiate()
@@ -723,6 +653,43 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				"linear_velocity": {"category": "Physics | Velocity"},
 				"angular_velocity": {"category": "Physics | Velocity"},
 			}
+
+		"AudioStreamPlayer":
+			var b = BLOCKS["statement_block"].instantiate()
+			b.block_name = "audiostreamplayer_play"
+			b.block_type = Types.BlockType.EXECUTE
+			b.block_format = "Play"
+			b.statement = "play()"
+			b.tooltip_text = "Play the audio stream"
+			b.category = "Sounds"
+			block_list.append(b)
+
+			b = BLOCKS["statement_block"].instantiate()
+			b.block_name = "audiostreamplayer_pause_continue"
+			b.block_type = Types.BlockType.EXECUTE
+			b.block_format = "{pause: OPTION} the sound"
+			b.statement = (
+				"""
+				if "{pause}" == "pause":
+					stream_paused = true
+				else:
+					stream_paused = false
+				"""
+				. dedent()
+			)
+			b.defaults = {"pause": OptionData.new(["Pause", "Continue"])}
+			b.tooltip_text = "Pause/Continue the audio stream"
+			b.category = "Sounds"
+			block_list.append(b)
+
+			b = BLOCKS["statement_block"].instantiate()
+			b.block_name = "audiostreamplayer_stop"
+			b.block_type = Types.BlockType.EXECUTE
+			b.block_format = "Stop"
+			b.statement = "stop()"
+			b.tooltip_text = "Stop the audio stream"
+			b.category = "Sounds"
+			block_list.append(b)
 
 		"AnimationPlayer":
 			var b = BLOCKS["statement_block"].instantiate()
