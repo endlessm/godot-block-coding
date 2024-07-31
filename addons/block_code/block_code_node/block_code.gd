@@ -25,7 +25,7 @@ func _enter_tree():
 
 	# Create script
 	if block_script == null:
-		var new_block_script: BlockScriptSerialization = load("res://addons/block_code/ui/bsd_templates/default_bsd.tres").duplicate(true)
+		var new_block_script: BlockScriptSerialization = load("res://addons/block_code/serialization/default_block_script.tres").duplicate(true)
 		new_block_script.script_inherits = _get_custom_or_native_class(get_parent())
 		new_block_script.generated_script = new_block_script.generated_script.replace("INHERIT_DEFAULT", new_block_script.script_inherits)
 		block_script = new_block_script
