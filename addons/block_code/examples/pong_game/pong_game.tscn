@@ -1,4 +1,4 @@
-[gd_scene load_steps=129 format=3 uid="uid://tf7b8c64ecc0"]
+[gd_scene load_steps=122 format=3 uid="uid://tf7b8c64ecc0"]
 
 [ext_resource type="PackedScene" uid="uid://cg8ibi18um3vg" path="res://addons/block_code/examples/pong_game/space.tscn" id="1_y56ac"]
 [ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="3_6jaq8"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="4_qtggh"]
 [ext_resource type="Texture2D" uid="uid://tplpgtnfeda0" path="res://addons/block_code/examples/pong_game/assets/paddle.png" id="4_ra7bh"]
 [ext_resource type="Script" path="res://addons/block_code/serialization/block_serialized_properties.gd" id="5_wr38c"]
-[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="6_ppdc3"]
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/option_data.gd" id="7_3q6bj"]
 [ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="7_uuuue"]
 [ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://addons/block_code/examples/pong_game/ball.tscn" id="9_xrqll"]
@@ -91,14 +90,10 @@ position = Vector2(75, 300)
 path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_7x3sw")]]
 block_serialized_properties = SubResource("Resource_x6ddv")
 
-[sub_resource type="Resource" id="Resource_a04yd"]
-script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_yiq7s"), SubResource("Resource_0m462")])
-
 [sub_resource type="Resource" id="Resource_m2svk"]
 script = ExtResource("7_uuuue")
 script_inherits = "SimpleCharacter"
-block_trees = SubResource("Resource_a04yd")
+block_trees = Array[ExtResource("4_qtggh")]([SubResource("Resource_yiq7s"), SubResource("Resource_0m462")])
 variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends SimpleCharacter
 
@@ -190,14 +185,10 @@ position = Vector2(50, 300)
 path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_enqe8")]]
 block_serialized_properties = SubResource("Resource_3wgnl")
 
-[sub_resource type="Resource" id="Resource_y05sx"]
-script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_hrubs"), SubResource("Resource_s8vl4")])
-
 [sub_resource type="Resource" id="Resource_ysbi4"]
 script = ExtResource("7_uuuue")
 script_inherits = "SimpleCharacter"
-block_trees = SubResource("Resource_y05sx")
+block_trees = Array[ExtResource("4_qtggh")]([SubResource("Resource_hrubs"), SubResource("Resource_s8vl4")])
 variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends SimpleCharacter
 
@@ -519,14 +510,10 @@ position = Vector2(50, 475)
 path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterOutput0/SnapPoint"), SubResource("Resource_gj1nu")], [NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_rs6a0")]]
 block_serialized_properties = SubResource("Resource_7mdg3")
 
-[sub_resource type="Resource" id="Resource_t48yv"]
-script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_1h6wi"), SubResource("Resource_gmlt0"), SubResource("Resource_tyrtu")])
-
 [sub_resource type="Resource" id="Resource_6m2mk"]
 script = ExtResource("7_uuuue")
 script_inherits = "RigidBody2D"
-block_trees = SubResource("Resource_t48yv")
+block_trees = Array[ExtResource("4_qtggh")]([SubResource("Resource_1h6wi"), SubResource("Resource_gmlt0"), SubResource("Resource_tyrtu")])
 variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends RigidBody2D
 
@@ -680,14 +667,10 @@ position = Vector2(100, 50)
 path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterOutput0/SnapPoint"), SubResource("Resource_3wodo")], [NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_wva5q")]]
 block_serialized_properties = SubResource("Resource_fufky")
 
-[sub_resource type="Resource" id="Resource_v6too"]
-script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_fkj3e")])
-
 [sub_resource type="Resource" id="Resource_4xylj"]
 script = ExtResource("7_uuuue")
 script_inherits = "Area2D"
-block_trees = SubResource("Resource_v6too")
+block_trees = Array[ExtResource("4_qtggh")]([SubResource("Resource_fkj3e")])
 variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends Area2D
 
@@ -809,14 +792,10 @@ position = Vector2(75, 50)
 path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterOutput0/SnapPoint"), SubResource("Resource_0x61c")], [NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_1a3km")]]
 block_serialized_properties = SubResource("Resource_c4had")
 
-[sub_resource type="Resource" id="Resource_14gac"]
-script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_qtw4n")])
-
 [sub_resource type="Resource" id="Resource_xoc8a"]
 script = ExtResource("7_uuuue")
 script_inherits = "Area2D"
-block_trees = SubResource("Resource_14gac")
+block_trees = Array[ExtResource("4_qtggh")]([SubResource("Resource_qtw4n")])
 variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends Area2D
 
@@ -944,14 +923,10 @@ position = Vector2(50, 450)
 path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_c17ry")]]
 block_serialized_properties = SubResource("Resource_udc68")
 
-[sub_resource type="Resource" id="Resource_cu24c"]
-script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_njwj4"), SubResource("Resource_t8g7r"), SubResource("Resource_v2aur")])
-
 [sub_resource type="Resource" id="Resource_q418f"]
 script = ExtResource("7_uuuue")
 script_inherits = "SimpleScoring"
-block_trees = SubResource("Resource_cu24c")
+block_trees = Array[ExtResource("4_qtggh")]([SubResource("Resource_njwj4"), SubResource("Resource_t8g7r"), SubResource("Resource_v2aur")])
 variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends SimpleScoring
 
