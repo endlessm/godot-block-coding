@@ -143,7 +143,7 @@ func bsd_selected(bsd: BlockScriptData):
 
 
 func _load_bsd(bsd: BlockScriptData):
-	for tree in bsd.block_trees.array:
+	for tree in bsd.block_trees:
 		load_tree(_window, tree)
 
 
@@ -165,9 +165,9 @@ func load_tree(parent: Node, node: SerializedBlockTreeNode):
 
 	# TODO: Remove once the data/UI decouple is done.
 	if scene == null:
-		var _block_scene_path = _block_scenes_by_class[node.serialized_block.block_class]
+		var _block_scene_path = _block_scenes_by_class[node.block_serialized_properties.block_class]
 		scene = load(_block_scene_path).instantiate()
-	for prop_pair in node.serialized_block.serialized_props:
+	for prop_pair in node.block_serialized_properties.serialized_props:
 		scene.set(prop_pair[0], prop_pair[1])
 
 	scene.position = node.position
@@ -182,11 +182,11 @@ func load_tree(parent: Node, node: SerializedBlockTreeNode):
 
 
 func rebuild_block_trees(undo_redo):
-	var block_trees_array: Array[SerializedBlockTreeNode]
+	var block_trees: Array[SerializedBlockTreeNode]
 	for c in _window.get_children():
-		block_trees_array.append(build_tree(c, undo_redo))
-	undo_redo.add_undo_property(_current_bsd.block_trees, "array", _current_bsd.block_trees.array)
-	undo_redo.add_do_property(_current_bsd.block_trees, "array", block_trees_array)
+		block_trees.append(build_tree(c, undo_redo))
+	undo_redo.add_undo_property(_current_bsd, "block_trees", _current_bsd.block_trees)
+	undo_redo.add_do_property(_current_bsd, "block_trees", block_trees)
 
 
 func build_tree(block: Block, undo_redo: EditorUndoRedoManager) -> SerializedBlockTreeNode:

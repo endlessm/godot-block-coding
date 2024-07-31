@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="BlockScriptData" load_steps=8 format=3 uid="uid://dit7fykhl3h48"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="1_barc5"]
-[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block.gd" id="2_cgfpx"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialized_properties.gd" id="2_cgfpx"]
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="3_gx4d7"]
 [ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="4_cqq7x"]
 
@@ -15,7 +15,7 @@ script = ExtResource("1_barc5")
 name = &"ready_block"
 position = Vector2(54, 47)
 path_child_pairs = []
-serialized_block = SubResource("Resource_b0aen")
+block_serialized_properties = SubResource("Resource_b0aen")
 
 [sub_resource type="Resource" id="Resource_nkub8"]
 script = ExtResource("3_gx4d7")
