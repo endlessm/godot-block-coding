@@ -20,8 +20,8 @@ var scroll_tween: Tween
 var _variable_category_display: VariableCategoryDisplay = null
 
 
-func bsd_selected(bsd: BlockScriptData):
-	if not bsd:
+func block_script_selected(block_script: BlockScriptSerialization):
+	if not block_script:
 		reset_picker()
 		return
 
@@ -29,9 +29,9 @@ func bsd_selected(bsd: BlockScriptData):
 	var categories_to_add: Array[BlockCategory] = []
 
 	# By default, assume the class is built-in.
-	var parent_class: String = bsd.script_inherits
+	var parent_class: String = block_script.script_inherits
 	for class_dict in ProjectSettings.get_global_class_list():
-		if class_dict.class == bsd.script_inherits:
+		if class_dict.class == block_script.script_inherits:
 			var script = load(class_dict.path)
 			if script.has_method("get_custom_categories"):
 				categories_to_add = script.get_custom_categories()
@@ -43,7 +43,7 @@ func bsd_selected(bsd: BlockScriptData):
 	blocks_to_add.append_array(CategoryFactory.get_inherited_blocks(parent_class))
 
 	init_picker(blocks_to_add, categories_to_add)
-	reload_variables(bsd.variables)
+	reload_variables(block_script.variables)
 
 
 func reset_picker():

@@ -3,7 +3,7 @@
 class_name BlockCode
 extends Node
 
-@export var block_script: BlockScriptData = null
+@export var block_script: BlockScriptSerialization = null
 
 
 func _ready():
@@ -25,10 +25,10 @@ func _enter_tree():
 
 	# Create script
 	if block_script == null:
-		var new_bsd: BlockScriptData = load("res://addons/block_code/ui/bsd_templates/default_bsd.tres").duplicate(true)
-		new_bsd.script_inherits = _get_custom_or_native_class(get_parent())
-		new_bsd.generated_script = new_bsd.generated_script.replace("INHERIT_DEFAULT", new_bsd.script_inherits)
-		block_script = new_bsd
+		var new_block_script: BlockScriptSerialization = load("res://addons/block_code/ui/bsd_templates/default_bsd.tres").duplicate(true)
+		new_block_script.script_inherits = _get_custom_or_native_class(get_parent())
+		new_block_script.generated_script = new_block_script.generated_script.replace("INHERIT_DEFAULT", new_block_script.script_inherits)
+		block_script = new_block_script
 
 
 func _update_parent_script():

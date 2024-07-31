@@ -54,14 +54,14 @@ func _on_undo_redo_version_changed():
 	if _current_block_code_node == null:
 		return
 
-	var block_script: BlockScriptData = _current_block_code_node.block_script
-	_picker.bsd_selected(block_script)
-	_title_bar.bsd_selected(block_script)
-	_block_canvas.bsd_selected(block_script)
+	var block_script: BlockScriptSerialization = _current_block_code_node.block_script
+	_picker.block_script_selected(block_script)
+	_title_bar.block_script_selected(block_script)
+	_block_canvas.block_script_selected(block_script)
 
 
 func _on_show_script_button_pressed():
-	var block_script: BlockScriptData = _current_block_code_node.block_script
+	var block_script: BlockScriptSerialization = _current_block_code_node.block_script
 	var script: String = _block_canvas.generate_script_from_current_window(block_script)
 
 	script_window_requested.emit(script)
@@ -112,14 +112,14 @@ func switch_scene(scene_root: Node):
 
 
 func switch_block_code_node(block_code_node: BlockCode):
-	var block_script: BlockScriptData = block_code_node.block_script if block_code_node else null
+	var block_script: BlockScriptSerialization = block_code_node.block_script if block_code_node else null
 	_current_block_code_node = block_code_node
 	_delete_node_button.disabled = _current_block_code_node == null
 	if _current_block_code_node != null:
 		_try_migration()
-	_picker.bsd_selected(block_script)
-	_title_bar.bsd_selected(block_script)
-	_block_canvas.bsd_selected(block_script)
+	_picker.block_script_selected(block_script)
+	_title_bar.block_script_selected(block_script)
+	_block_canvas.block_script_selected(block_script)
 
 
 func save_script():
@@ -133,7 +133,7 @@ func save_script():
 		print("Block code for {node} is not editable.".format({"node": _current_block_code_node}))
 		return
 
-	var block_script: BlockScriptData = _current_block_code_node.block_script
+	var block_script: BlockScriptSerialization = _current_block_code_node.block_script
 
 	var resource_path_split = block_script.resource_path.split("::", true, 1)
 	var resource_scene = resource_path_split[0]
@@ -180,7 +180,7 @@ func _input(event):
 func _print_generated_script():
 	if _current_block_code_node == null:
 		return
-	var block_script: BlockScriptData = _current_block_code_node.block_script
+	var block_script: BlockScriptSerialization = _current_block_code_node.block_script
 	var script: String = _block_canvas.generate_script_from_current_window(block_script)
 	print(script)
 	print("Debug script! (not saved)")
@@ -266,7 +266,7 @@ func _create_variable(variable: VariableResource):
 		print("No script loaded to add variable to.")
 		return
 
-	var block_script: BlockScriptData = _current_block_code_node.block_script
+	var block_script: BlockScriptSerialization = _current_block_code_node.block_script
 
 	undo_redo.create_action("Create variable %s in %s's block code script" % [variable.var_name, _current_block_code_node.get_parent().name])
 	undo_redo.add_undo_property(_current_block_code_node.block_script, "variables", _current_block_code_node.block_script.variables)

@@ -1,4 +1,4 @@
-class_name BlockScriptData
+class_name BlockScriptSerialization
 extends Resource
 
 @export var script_inherits: String
