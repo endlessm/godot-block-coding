@@ -1,6 +1,7 @@
 @tool
 extends Control
 
+const Background = preload("res://addons/block_code/ui/blocks/utilities/background/background.gd")
 const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canvas.gd")
 const Constants = preload("res://addons/block_code/ui/constants.gd")
 const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
@@ -189,8 +190,7 @@ func _update_preview():
 
 	if target_snap_point:
 		# Make preview block
-		_preview_block = Control.new()
-		_preview_block.set_script(preload("res://addons/block_code/ui/blocks/utilities/background/background.gd"))
+		_preview_block = Background.new()
 
 		_preview_block.color = Color(1, 1, 1, 0.5)
 		_preview_block.custom_minimum_size = _block.get_global_rect().size

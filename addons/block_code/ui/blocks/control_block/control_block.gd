@@ -2,8 +2,10 @@
 class_name ControlBlock
 extends Block
 
+const Background = preload("res://addons/block_code/ui/blocks/utilities/background/background.gd")
 const Constants = preload("res://addons/block_code/ui/constants.gd")
 const DragDropArea = preload("res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.gd")
+const Gutter = preload("res://addons/block_code/ui/blocks/utilities/background/gutter.gd")
 
 @export var block_formats: Array = []
 @export var statements: Array = []
@@ -13,14 +15,9 @@ var snaps: Array
 var param_name_input_pairs_array: Array
 var param_input_strings_array: Array  # Only loaded from serialized
 
-@onready var _background := %Background
-
 
 func _ready():
 	super()
-
-	_background.color = color
-	_background.custom_minimum_size.x = Constants.CONTROL_MARGIN
 
 	format()
 
@@ -109,9 +106,8 @@ func format():
 		row.custom_minimum_size.y = 30
 		row.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 
-		var bg := Control.new()
+		var bg := Background.new()
 		bg.name = "Background"
-		bg.set_script(preload("res://addons/block_code/ui/blocks/utilities/background/background.gd"))
 		bg.color = color
 		if i != 0:
 			bg.shift_top = Constants.CONTROL_MARGIN
@@ -148,20 +144,27 @@ func format():
 		snap_container.custom_minimum_size.x = 30
 		snap_container.custom_minimum_size.y = 30
 		snap_container.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-		snap_container.add_theme_constant_override("margin_left", Constants.CONTROL_MARGIN)
+
+		var snap_gutter := Gutter.new()
+		snap_gutter.name = "Background"
+		snap_gutter.custom_minimum_size.x = Constants.CONTROL_MARGIN
+		snap_gutter.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		snap_gutter.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		snap_gutter.color = color
+		snap_container.add_child(snap_gutter)
 
 		var snap_point: SnapPoint = preload("res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn").instantiate()
+		snap_point.add_theme_constant_override("margin_left", Constants.CONTROL_MARGIN)
 		snap_container.add_child(snap_point)
 
 		snaps.append(snap_point)
 
 		%Rows.add_child(snap_container)
 
-	var bg := Control.new()
+	var bg := Background.new()
 	bg.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	bg.custom_minimum_size.x = 100
 	bg.custom_minimum_size.y = 30
-	bg.set_script(preload("res://addons/block_code/ui/blocks/utilities/background/background.gd"))
 	bg.color = color
 	bg.shift_top = Constants.CONTROL_MARGIN
 	%Rows.add_child(bg)

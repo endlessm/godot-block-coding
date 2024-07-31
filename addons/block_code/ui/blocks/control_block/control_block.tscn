@@ -27,13 +27,6 @@ mouse_filter = 2
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_bottom = 30
 
-[node name="Background" type="ColorRect" parent="VBoxContainer/MarginContainer/MarginContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(20, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-color = Color(0.59979, 0.536348, 0.876215, 1)
-
 [node name="Rows" type="VBoxContainer" parent="VBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
