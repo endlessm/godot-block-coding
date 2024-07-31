@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BlockScriptData" load_steps=6 format=3 uid="uid://dit7fykhl3h48"]
 
-[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="1_barc5"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization.gd" id="1_barc5"]
 [ext_resource type="Script" path="res://addons/block_code/serialization/block_serialized_properties.gd" id="2_cgfpx"]
 [ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="4_cqq7x"]
 

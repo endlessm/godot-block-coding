@@ -32,7 +32,7 @@ signal modified
 @export var scope: String = ""
 
 ## The resource containing the block properties and the snapped blocks
-@export var resource: SerializedBlockTreeNode
+@export var resource: BlockSerialization
 
 # FIXME: Add export to this variable and remove bottom_snap_path above.
 # There is a bug in Godot 4.2 that prevents using SnapPoint directly:
@@ -118,7 +118,7 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 func update_resources(undo_redo: EditorUndoRedoManager):
 	if resource == null:
 		var block_serialized_properties = BlockSerializedProperties.new(get_block_class(), get_serialized_props())
-		resource = SerializedBlockTreeNode.new(block_name, position, block_serialized_properties)
+		resource = BlockSerialization.new(block_name, position, block_serialized_properties)
 		return
 
 	if resource.position != position:

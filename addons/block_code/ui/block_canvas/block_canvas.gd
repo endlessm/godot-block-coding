@@ -160,7 +160,7 @@ func clear_canvas():
 		child.queue_free()
 
 
-func load_tree(parent: Node, node: SerializedBlockTreeNode):
+func load_tree(parent: Node, node: BlockSerialization):
 	var scene: Block = Util.instantiate_block(node.name)
 
 	# TODO: Remove once the data/UI decouple is done.
@@ -182,14 +182,14 @@ func load_tree(parent: Node, node: SerializedBlockTreeNode):
 
 
 func rebuild_block_trees(undo_redo):
-	var block_trees: Array[SerializedBlockTreeNode]
+	var block_trees: Array[BlockSerialization]
 	for c in _window.get_children():
 		block_trees.append(build_tree(c, undo_redo))
 	undo_redo.add_undo_property(_current_bsd, "block_trees", _current_bsd.block_trees)
 	undo_redo.add_do_property(_current_bsd, "block_trees", block_trees)
 
 
-func build_tree(block: Block, undo_redo: EditorUndoRedoManager) -> SerializedBlockTreeNode:
+func build_tree(block: Block, undo_redo: EditorUndoRedoManager) -> BlockSerialization:
 	var path_child_pairs = []
 	block.update_resources(undo_redo)
 

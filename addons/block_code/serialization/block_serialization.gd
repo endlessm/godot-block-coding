@@ -1,4 +1,4 @@
-class_name SerializedBlockTreeNode
+class_name BlockSerialization
 extends Resource
 
 @export var name: StringName

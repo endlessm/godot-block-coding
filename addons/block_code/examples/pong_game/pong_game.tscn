@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cg8ibi18um3vg" path="res://addons/block_code/examples/pong_game/space.tscn" id="1_y56ac"]
 [ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="3_6jaq8"]
 [ext_resource type="Script" path="res://addons/block_code/simple_nodes/simple_character/simple_character.gd" id="3_mdrcv"]
-[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node.gd" id="4_qtggh"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization.gd" id="4_qtggh"]
 [ext_resource type="Texture2D" uid="uid://tplpgtnfeda0" path="res://addons/block_code/examples/pong_game/assets/paddle.png" id="4_ra7bh"]
 [ext_resource type="Script" path="res://addons/block_code/serialization/block_serialized_properties.gd" id="5_wr38c"]
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/option_data.gd" id="7_3q6bj"]
