@@ -3,12 +3,11 @@ extends Object
 const BlockDefinition = preload("res://addons/block_code/block_definition.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
-static var _created: bool = false
 static var _catalog: Dictionary
 
 
 static func setup():
-	if _created:
+	if _catalog:
 		return
 
 	_catalog = {}
@@ -26,8 +25,6 @@ static func setup():
 	block_definition.description = "Print the text to output"
 	block_definition.category = "Log"
 	_catalog[&"print"] = block_definition
-
-	_created = true
 
 
 static func get_block(block_name: StringName):
