@@ -6,6 +6,7 @@ const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canva
 const Constants = preload("res://addons/block_code/ui/constants.gd")
 const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
+const Util = preload("res://addons/block_code/ui/util.gd")
 
 enum DragAction { NONE, PLACE, REMOVE }
 
@@ -33,7 +34,7 @@ var target_snap_point: SnapPoint:
 
 var snap_block: Block:
 	get:
-		return target_snap_point.get_parent_block() if target_snap_point else null
+		return Util.get_parent_block(target_snap_point) if target_snap_point else null
 
 
 func _init(block: Block, block_scope: String, offset: Vector2, block_canvas: BlockCanvas):
