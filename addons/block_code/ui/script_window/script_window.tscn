@@ -1,0 +1,84 @@
+[gd_scene load_steps=4 format=3 uid="uid://v3nopbe4l0ph"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/script_window/script_window.gd" id="1_jja22"]
+
+[sub_resource type="SystemFont" id="SystemFont_r6ct2"]
+font_names = PackedStringArray("DejaVu Sans Mono")
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_yvmnf"]
+number_color = Color(0.498039, 0.760784, 0.686275, 1)
+symbol_color = Color(0.803922, 0.811765, 0.823529, 1)
+function_color = Color(0.290196, 0.576471, 0.819608, 1)
+member_variable_color = Color(0.615686, 0.729412, 0.831373, 1)
+keyword_colors = {
+"and": Color(1, 0.439216, 0.521569, 1),
+"elif": Color(1, 0.54902, 0.8, 1),
+"else": Color(1, 0.54902, 0.8, 1),
+"extends": Color(1, 0.439216, 0.521569, 1),
+"for": Color(1, 0.54902, 0.8, 1),
+"func": Color(1, 0.439216, 0.521569, 1),
+"if": Color(1, 0.54902, 0.8, 1),
+"not": Color(1, 0.439216, 0.521569, 1),
+"or": Color(1, 0.439216, 0.521569, 1),
+"return": Color(1, 0.54902, 0.8, 1),
+"var": Color(1, 0.439216, 0.521569, 1)
+}
+color_regions = {
+"\" \"": Color(1, 0.929412, 0.627451, 1),
+"' '": Color(1, 0.929412, 0.627451, 1)
+}
+
+[node name="ScriptWindow" type="Window"]
+title = "Block Code Generated GDScript"
+initial_position = 1
+size = Vector2i(750, 750)
+transient = true
+script = ExtResource("1_jja22")
+
+[node name="Margin" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+
+[node name="CopyCode" type="Button" parent="Margin/VBox"]
+layout_mode = 2
+text = "Copy"
+
+[node name="ColorRect" type="ColorRect" parent="Margin/VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.172833, 0.172833, 0.172833, 1)
+
+[node name="Scroll" type="ScrollContainer" parent="Margin/VBox/ColorRect"]
+layout_mode = 2
+offset_top = -27.0
+offset_right = 700.0
+offset_bottom = 673.0
+
+[node name="Margin" type="MarginContainer" parent="Margin/VBox/ColorRect/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 35
+theme_override_constants/margin_top = 55
+theme_override_constants/margin_right = 35
+theme_override_constants/margin_bottom = 35
+
+[node name="Code" type="TextEdit" parent="Margin/VBox/ColorRect/Scroll/Margin"]
+layout_mode = 2
+theme_override_colors/background_color = Color(0.144063, 0.144063, 0.144062, 1)
+theme_override_fonts/font = SubResource("SystemFont_r6ct2")
+editable = false
+syntax_highlighter = SubResource("CodeHighlighter_yvmnf")
+
+[connection signal="pressed" from="Margin/VBox/CopyCode" to="." method="_on_copy_code_pressed"]

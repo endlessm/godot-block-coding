@@ -1,6 +1,8 @@
 @tool
 extends Control
 
+signal script_window_requested(script: String)
+
 const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canvas.gd")
 const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
 const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
@@ -58,8 +60,11 @@ func _on_undo_redo_version_changed():
 	_block_canvas.bsd_selected(block_script)
 
 
-func _on_print_script_button_pressed():
-	_print_generated_script()
+func _on_show_script_button_pressed():
+	var block_script: BlockScriptData = _current_block_code_node.block_script
+	var script: String = _block_canvas.generate_script_from_current_window(block_script)
+
+	script_window_requested.emit(script)
 
 
 func _on_delete_node_button_pressed():
