@@ -3,6 +3,7 @@ extends EditorPlugin
 const MainPanelScene := preload("res://addons/block_code/ui/main_panel.tscn")
 const MainPanel = preload("res://addons/block_code/ui/main_panel.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
+const ScriptWindow := preload("res://addons/block_code/ui/script_window/script_window.tscn")
 
 static var main_panel: MainPanel
 static var block_code_button: Button
@@ -38,6 +39,7 @@ func _enter_tree():
 	editor_selection = EditorInterface.get_selection()
 
 	main_panel = MainPanelScene.instantiate()
+	main_panel.script_window_requested.connect(script_window_requested)
 	main_panel.undo_redo = get_undo_redo()
 	block_code_button = add_control_to_bottom_panel(main_panel, _get_plugin_name())
 	block_inspector_plugin = BlockInspectorPlugin.new()
@@ -59,6 +61,17 @@ func _enter_tree():
 		new_profile.save_to_file(dir)
 		EditorInterface.set_current_feature_profile("block_code")
 
+func script_window_requested(script: String):
+	
+	var script_window = ScriptWindow.instantiate()
+	script_window.script_content = script
+	
+	EditorInterface.get_base_control().add_child(script_window)
+	
+	await script_window.close_requested
+	
+	script_window.queue_free()
+	script_window = null
 
 func _exit_tree():
 	remove_inspector_plugin(block_inspector_plugin)
