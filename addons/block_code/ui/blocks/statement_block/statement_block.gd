@@ -3,7 +3,6 @@ class_name StatementBlock
 extends Block
 
 const ParameterInput = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.gd")
-const ParameterInputScene = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn")
 
 @export var block_format: String = ""
 @export var statement: String = ""
@@ -121,7 +120,7 @@ static func format_string(parent_block: Block, attach_to: Node, string: String, 
 		var param_node: Node
 
 		if copy_block:
-			var parameter_output: ParameterOutput = preload("res://addons/block_code/ui/blocks/utilities/parameter_output/parameter_output.tscn").instantiate()
+			var parameter_output: ParameterOutput = load("res://addons/block_code/ui/blocks/utilities/parameter_output/parameter_output.tscn").instantiate()
 			parameter_output.name = "ParameterOutput%d" % start  # Unique path
 			parameter_output.block_params = {
 				"block_format": param_name,
@@ -133,7 +132,7 @@ static func format_string(parent_block: Block, attach_to: Node, string: String, 
 			parameter_output.block = parent_block
 			attach_to.add_child(parameter_output)
 		else:
-			var parameter_input: ParameterInput = ParameterInputScene.instantiate()
+			var parameter_input: ParameterInput = load("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn").instantiate()
 			parameter_input.name = "ParameterInput%d" % start  # Unique path
 			parameter_input.placeholder = param_name
 			if param_type != null:

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/block_code/simple_nodes/simple_character/_simple_character.gd" id="1_idjqv"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ffh0f"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jpheu"]
 size = Vector2(100, 100)
 
 [node name="SimpleCharacter" type="CharacterBody2D"]
@@ -11,4 +11,4 @@ script = ExtResource("1_idjqv")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_ffh0f")
+shape = SubResource("RectangleShape2D_jpheu")
