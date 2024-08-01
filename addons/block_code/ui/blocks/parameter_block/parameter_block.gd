@@ -2,6 +2,7 @@
 class_name ParameterBlock
 extends Block
 
+const Constants = preload("res://addons/block_code/ui/constants.gd")
 const Util = preload("res://addons/block_code/ui/util.gd")
 
 @export var block_format: String = ""
@@ -16,16 +17,24 @@ var param_name_input_pairs: Array
 var param_input_strings: Dictionary  # Only loaded from serialized
 var spawned_by: ParameterOutput
 
+var _panel_normal: StyleBox
+var _panel_focus: StyleBox
+
 
 func _ready():
 	super()
 
+	_panel_normal = _panel.get_theme_stylebox("panel").duplicate()
+	_panel_normal.bg_color = color
+	_panel_normal.border_color = color.darkened(0.2)
+
+	_panel_focus = _panel.get_theme_stylebox("panel").duplicate()
+	_panel_focus.bg_color = color
+	_panel_focus.border_color = Constants.FOCUS_BORDER_COLOR
+
 	block_type = Types.BlockType.VALUE
 	if not Util.node_is_part_of_edited_scene(self):
-		var new_panel = _panel.get_theme_stylebox("panel").duplicate()
-		new_panel.bg_color = color
-		new_panel.border_color = color.darkened(0.2)
-		_panel.add_theme_stylebox_override("panel", new_panel)
+		_panel.add_theme_stylebox_override("panel", _panel_normal)
 
 	format()
 
@@ -73,3 +82,11 @@ static func get_scene_path():
 
 func format():
 	param_name_input_pairs = StatementBlock.format_string(self, %HBoxContainer, block_format, defaults)
+
+
+func _on_focus_entered():
+	_panel.add_theme_stylebox_override("panel", _panel_focus)
+
+
+func _on_focus_exited():
+	_panel.add_theme_stylebox_override("panel", _panel_normal)
