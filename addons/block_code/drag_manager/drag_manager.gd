@@ -5,6 +5,7 @@ signal block_dropped
 signal block_modified
 
 const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canvas.gd")
+const BlockTreeUtil = preload("res://addons/block_code/ui/block_tree_util.gd")
 const Drag = preload("res://addons/block_code/drag_manager/drag.gd")
 const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 const Picker = preload("res://addons/block_code/ui/picker/picker.gd")
@@ -50,7 +51,7 @@ func drag_block(block: Block, copied_from: Block = null):
 
 	block.disconnect_signals()
 
-	var block_scope := InstructionTree.get_tree_scope(block)
+	var block_scope := BlockTreeUtil.get_tree_scope(block)
 	if block_scope != "":
 		_block_canvas.set_scope(block_scope)
 

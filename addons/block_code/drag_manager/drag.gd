@@ -3,6 +3,7 @@ extends Control
 
 const Background = preload("res://addons/block_code/ui/blocks/utilities/background/background.gd")
 const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canvas.gd")
+const BlockTreeUtil = preload("res://addons/block_code/ui/block_tree_util.gd")
 const Constants = preload("res://addons/block_code/ui/constants.gd")
 const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
@@ -143,7 +144,7 @@ func _snaps_to(node: Node) -> bool:
 			if _block_scope != top_block.get_entry_statement():
 				return false
 		elif top_block:
-			var tree_scope := InstructionTree.get_tree_scope(top_block)
+			var tree_scope := BlockTreeUtil.get_tree_scope(top_block)
 			if tree_scope != "" and _block_scope != tree_scope:
 				return false
 

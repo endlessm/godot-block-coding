@@ -1,6 +1,7 @@
 extends GutTest
 ## Tests for InstructionTree
 
+const BlockTreeUtil = preload("res://addons/block_code/ui/block_tree_util.gd")
 const CategoryFactory = preload("res://addons/block_code/ui/picker/categories/category_factory.gd")
 const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 
@@ -88,7 +89,7 @@ func test_tree_node_text():
 
 func test_script_no_nodes():
 	var bsd := BlockScriptData.new("Foo")
-	var script := InstructionTree.generate_script_from_nodes([], bsd)
+	var script := BlockTreeUtil.generate_script_from_nodes([], bsd)
 	assert_eq(
 		script,
 		(
@@ -105,7 +106,7 @@ func test_script_no_nodes():
 func test_script_no_entry_blocks():
 	var bsd := BlockScriptData.new("Foo")
 	var nodes: Array[Node] = [Node.new(), Node2D.new(), Control.new()]
-	var script := InstructionTree.generate_script_from_nodes(nodes, bsd)
+	var script := BlockTreeUtil.generate_script_from_nodes(nodes, bsd)
 	assert_eq(
 		script,
 		(
@@ -137,7 +138,7 @@ func test_basic_script():
 	assert_eq(ready_block.bottom_snap.get_snapped_block(), print_block)
 
 	var bsd := BlockScriptData.new("Node2D")
-	var script := InstructionTree.generate_script_from_nodes([ready_block], bsd)
+	var script := BlockTreeUtil.generate_script_from_nodes([ready_block], bsd)
 	assert_eq(
 		script,
 		(
@@ -165,7 +166,7 @@ func test_multiple_entry_script():
 	var ready_block_2: Block = dup_node(ready_block)
 
 	var bsd := BlockScriptData.new("Node2D")
-	var script := InstructionTree.generate_script_from_nodes([ready_block, ready_block_2], bsd)
+	var script := BlockTreeUtil.generate_script_from_nodes([ready_block, ready_block_2], bsd)
 	assert_eq(
 		script,
 		(
@@ -196,7 +197,7 @@ func test_signal_script():
 	entered_block.bottom_snap.snapped_block = print_block
 
 	var bsd := BlockScriptData.new("Area2D")
-	var script = InstructionTree.generate_script_from_nodes([entered_block], bsd)
+	var script = BlockTreeUtil.generate_script_from_nodes([entered_block], bsd)
 	assert_eq(
 		script,
 		(
