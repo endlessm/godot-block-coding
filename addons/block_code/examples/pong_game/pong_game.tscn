@@ -1,4 +1,4 @@
-[gd_scene load_steps=112 format=3 uid="uid://tf7b8c64ecc0"]
+[gd_scene load_steps=129 format=3 uid="uid://tf7b8c64ecc0"]
 
 [ext_resource type="PackedScene" uid="uid://cg8ibi18um3vg" path="res://addons/block_code/examples/pong_game/space.tscn" id="1_y56ac"]
 [ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="3_6jaq8"]
@@ -7,125 +7,198 @@
 [ext_resource type="Texture2D" uid="uid://tplpgtnfeda0" path="res://addons/block_code/examples/pong_game/assets/paddle.png" id="4_ra7bh"]
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block.gd" id="5_wr38c"]
 [ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/serialized_block_tree_node_array.gd" id="6_ppdc3"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/option_data.gd" id="7_1f578"]
 [ext_resource type="Script" path="res://addons/block_code/block_script_data/block_script_data.gd" id="7_uuuue"]
 [ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://addons/block_code/examples/pong_game/ball.tscn" id="9_xrqll"]
 [ext_resource type="PackedScene" uid="uid://fhoapg3anjsu" path="res://addons/block_code/examples/pong_game/goal_area.tscn" id="12_nqmxu"]
 [ext_resource type="Script" path="res://addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd" id="13_tg3yk"]
 
-[sub_resource type="Resource" id="Resource_k6jw1"]
+[sub_resource type="Resource" id="Resource_7v74l"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.835294, 0.262745, 0.133333, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Move with player 1 buttons, speed {speed: VECTOR2}"], ["statement", "var dir = Vector2()
-dir.x += float(Input.is_physical_key_pressed(KEY_D))
-dir.x -= float(Input.is_physical_key_pressed(KEY_A))
-dir.y += float(Input.is_physical_key_pressed(KEY_S))
-dir.y -= float(Input.is_physical_key_pressed(KEY_W))
-dir = dir.normalized()
-velocity = dir*{speed}
-move_and_slide()"], ["defaults", {}], ["param_input_strings", {
-"speed": "0,1000"
+serialized_props = [["block_name", "set_prop_speed"], ["label", "StatementBlock"], ["color", Color(0.647059, 0.694118, 0.760784, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Set Speed to {value: VECTOR2}"], ["statement", "speed = {value}"], ["defaults", {
+"value": "0,0"
+}], ["param_input_strings", {
+"value": "0,1000"
 }]]
 
-[sub_resource type="Resource" id="Resource_e61h1"]
+[sub_resource type="Resource" id="Resource_trpau"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_k6jw1")
+serialized_block = SubResource("Resource_7v74l")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_pm7ay"]
+[sub_resource type="Resource" id="Resource_g57b7"]
 script = ExtResource("5_wr38c")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "process_block"], ["label", "EntryBlock"], ["color", Color(0.92549, 0.231373, 0.34902, 1)], ["block_type", 1], ["position", Vector2(174, 102)], ["scope", ""], ["block_format", "On Process"], ["statement", "func _process(delta):"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
+serialized_props = [["block_name", "ready_block"], ["label", "EntryBlock"], ["color", Color(0.92549, 0.231373, 0.34902, 1)], ["block_type", 1], ["position", Vector2(75, 50)], ["scope", ""], ["block_format", "On Ready"], ["statement", "func _ready():"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
 
-[sub_resource type="Resource" id="Resource_uln40"]
+[sub_resource type="Resource" id="Resource_5atf0"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_pm7ay")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_e61h1")]]
+serialized_block = SubResource("Resource_g57b7")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_trpau")]]
 
-[sub_resource type="Resource" id="Resource_4j61k"]
+[sub_resource type="Resource" id="Resource_ykx8c"]
+script = ExtResource("7_1f578")
+selected = 0
+items = ["top-down", "platformer", "spaceship"]
+
+[sub_resource type="Resource" id="Resource_rv265"]
+script = ExtResource("7_1f578")
+selected = 0
+items = ["player_1", "player_2"]
+
+[sub_resource type="Resource" id="Resource_rsniy"]
+script = ExtResource("7_1f578")
+selected = 0
+items = ["top-down", "platformer", "spaceship"]
+
+[sub_resource type="Resource" id="Resource_daqtm"]
+script = ExtResource("7_1f578")
+selected = 0
+items = ["player_1", "player_2"]
+
+[sub_resource type="Resource" id="Resource_ttufp"]
+script = ExtResource("5_wr38c")
+block_class = &"StatementBlock"
+serialized_props = [["block_name", "simplecharacter_move"], ["label", "StatementBlock"], ["color", Color(0.835294, 0.262745, 0.133333, 1)], ["block_type", 2], ["position", Vector2(-44, -18)], ["scope", ""], ["block_format", "Move with {player: OPTION} buttons as {kind: OPTION}"], ["statement", "move_with_player_buttons(\"{player}\", \"{kind}\", delta)"], ["defaults", {
+"kind": SubResource("Resource_ykx8c"),
+"player": SubResource("Resource_rv265")
+}], ["param_input_strings", {
+"kind": SubResource("Resource_rsniy"),
+"player": SubResource("Resource_daqtm")
+}]]
+
+[sub_resource type="Resource" id="Resource_24g32"]
+script = ExtResource("4_qtggh")
+serialized_block = SubResource("Resource_ttufp")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_jjdkl"]
+script = ExtResource("5_wr38c")
+block_class = &"EntryBlock"
+serialized_props = [["block_name", "process_block"], ["label", "EntryBlock"], ["color", Color(0.92549, 0.231373, 0.34902, 1)], ["block_type", 1], ["position", Vector2(75, 175)], ["scope", ""], ["block_format", "On Process"], ["statement", "func _process(delta):"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
+
+[sub_resource type="Resource" id="Resource_oxdce"]
+script = ExtResource("4_qtggh")
+serialized_block = SubResource("Resource_jjdkl")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_24g32")]]
+
+[sub_resource type="Resource" id="Resource_lwf35"]
 script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_uln40")])
+array = Array[ExtResource("4_qtggh")]([SubResource("Resource_5atf0"), SubResource("Resource_oxdce")])
 
-[sub_resource type="Resource" id="Resource_qmak3"]
+[sub_resource type="Resource" id="Resource_dhvli"]
 script = ExtResource("7_uuuue")
 script_inherits = "SimpleCharacter"
-block_trees = SubResource("Resource_4j61k")
+block_trees = SubResource("Resource_lwf35")
 variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends SimpleCharacter
 
-var VAR_DICT := {}
+
+func _ready():
+	speed = Vector2(0,1000)
 
 func _process(delta):
-	var dir = Vector2()
-	dir.x += float(Input.is_physical_key_pressed(KEY_D))
-	dir.x -= float(Input.is_physical_key_pressed(KEY_A))
-	dir.y += float(Input.is_physical_key_pressed(KEY_S))
-	dir.y -= float(Input.is_physical_key_pressed(KEY_W))
-	dir = dir.normalized()
-	velocity = dir*Vector2(0,1000)
-	move_and_slide()
+	move_with_player_buttons(\"player_1\", \"top-down\", delta)
 
 "
 version = 0
 
-[sub_resource type="Resource" id="Resource_d4hry"]
+[sub_resource type="Resource" id="Resource_sfqsw"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.835294, 0.262745, 0.133333, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Move with player 2 buttons, speed {speed: VECTOR2}"], ["statement", "var dir = Vector2()
-dir.x += float(Input.is_physical_key_pressed(KEY_RIGHT))
-dir.x -= float(Input.is_physical_key_pressed(KEY_LEFT))
-dir.y += float(Input.is_physical_key_pressed(KEY_DOWN))
-dir.y -= float(Input.is_physical_key_pressed(KEY_UP))
-dir = dir.normalized()
-velocity = dir*{speed}
-move_and_slide()"], ["defaults", {}], ["param_input_strings", {
-"speed": "0,1000"
+serialized_props = [["block_name", "set_prop_speed"], ["label", "StatementBlock"], ["color", Color(0.647059, 0.694118, 0.760784, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Set Speed to {value: VECTOR2}"], ["statement", "speed = {value}"], ["defaults", {
+"value": "0,0"
+}], ["param_input_strings", {
+"value": "0,1000"
 }]]
 
-[sub_resource type="Resource" id="Resource_c0nei"]
+[sub_resource type="Resource" id="Resource_iax81"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_d4hry")
+serialized_block = SubResource("Resource_sfqsw")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_wrx2u"]
+[sub_resource type="Resource" id="Resource_weya7"]
 script = ExtResource("5_wr38c")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "process_block"], ["label", "EntryBlock"], ["color", Color(0.92549, 0.231373, 0.34902, 1)], ["block_type", 1], ["position", Vector2(179, 149)], ["scope", ""], ["block_format", "On Process"], ["statement", "func _process(delta):"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
+serialized_props = [["block_name", "ready_block"], ["label", "EntryBlock"], ["color", Color(0.92549, 0.231373, 0.34902, 1)], ["block_type", 1], ["position", Vector2(-400, -75)], ["scope", ""], ["block_format", "On Ready"], ["statement", "func _ready():"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
 
-[sub_resource type="Resource" id="Resource_75h61"]
+[sub_resource type="Resource" id="Resource_bfsko"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_wrx2u")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_c0nei")]]
+serialized_block = SubResource("Resource_weya7")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_iax81")]]
 
-[sub_resource type="Resource" id="Resource_r5rk4"]
+[sub_resource type="Resource" id="Resource_wv5rg"]
+script = ExtResource("7_1f578")
+selected = 0
+items = ["top-down", "platformer", "spaceship"]
+
+[sub_resource type="Resource" id="Resource_r4lu4"]
+script = ExtResource("7_1f578")
+selected = 0
+items = ["player_1", "player_2"]
+
+[sub_resource type="Resource" id="Resource_qhieq"]
+script = ExtResource("7_1f578")
+selected = 0
+items = ["top-down", "platformer", "spaceship"]
+
+[sub_resource type="Resource" id="Resource_mjeck"]
+script = ExtResource("7_1f578")
+selected = 1
+items = ["player_1", "player_2"]
+
+[sub_resource type="Resource" id="Resource_rag8u"]
+script = ExtResource("5_wr38c")
+block_class = &"StatementBlock"
+serialized_props = [["block_name", "simplecharacter_move"], ["label", "StatementBlock"], ["color", Color(0.835294, 0.262745, 0.133333, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Move with {player: OPTION} buttons as {kind: OPTION}"], ["statement", "move_with_player_buttons(\"{player}\", \"{kind}\", delta)"], ["defaults", {
+"kind": SubResource("Resource_wv5rg"),
+"player": SubResource("Resource_r4lu4")
+}], ["param_input_strings", {
+"kind": SubResource("Resource_qhieq"),
+"player": SubResource("Resource_mjeck")
+}]]
+
+[sub_resource type="Resource" id="Resource_4a0ls"]
+script = ExtResource("4_qtggh")
+serialized_block = SubResource("Resource_rag8u")
+path_child_pairs = []
+
+[sub_resource type="Resource" id="Resource_m3ow7"]
+script = ExtResource("5_wr38c")
+block_class = &"EntryBlock"
+serialized_props = [["block_name", "process_block"], ["label", "EntryBlock"], ["color", Color(0.92549, 0.231373, 0.34902, 1)], ["block_type", 1], ["position", Vector2(-400, 50)], ["scope", ""], ["block_format", "On Process"], ["statement", "func _process(delta):"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
+
+[sub_resource type="Resource" id="Resource_57n2n"]
+script = ExtResource("4_qtggh")
+serialized_block = SubResource("Resource_m3ow7")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_4a0ls")]]
+
+[sub_resource type="Resource" id="Resource_cosx1"]
 script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_75h61")])
+array = Array[ExtResource("4_qtggh")]([SubResource("Resource_bfsko"), SubResource("Resource_57n2n")])
 
-[sub_resource type="Resource" id="Resource_lxj2y"]
+[sub_resource type="Resource" id="Resource_krmii"]
 script = ExtResource("7_uuuue")
 script_inherits = "SimpleCharacter"
-block_trees = SubResource("Resource_r5rk4")
+block_trees = SubResource("Resource_cosx1")
 variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends SimpleCharacter
 
-var VAR_DICT := {}
+
+func _ready():
+	speed = Vector2(0,1000)
 
 func _process(delta):
-	var dir = Vector2()
-	dir.x += float(Input.is_physical_key_pressed(KEY_RIGHT))
-	dir.x -= float(Input.is_physical_key_pressed(KEY_LEFT))
-	dir.y += float(Input.is_physical_key_pressed(KEY_DOWN))
-	dir.y -= float(Input.is_physical_key_pressed(KEY_UP))
-	dir = dir.normalized()
-	velocity = dir*Vector2(0,1000)
-	move_and_slide()
+	move_with_player_buttons(\"player_2\", \"top-down\", delta)
 
 "
 version = 0
 
-[sub_resource type="Resource" id="Resource_80onm"]
+[sub_resource type="Resource" id="Resource_o1lqr"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Load file {file_path: STRING} as sound {name: STRING}"], ["statement", "
+serialized_props = [["block_name", "load_sound"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Load file {file_path: STRING} as sound {name: STRING}"], ["statement", "
 var __sound = AudioStreamPlayer.new()
 __sound.name = {name}
 __sound.set_stream(load({file_path}))
@@ -135,15 +208,15 @@ add_child(__sound)
 "name": "score_sound"
 }]]
 
-[sub_resource type="Resource" id="Resource_jfgyp"]
+[sub_resource type="Resource" id="Resource_mipb3"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_80onm")
+serialized_block = SubResource("Resource_o1lqr")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_0qgyx"]
+[sub_resource type="Resource" id="Resource_648ge"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Load file {file_path: STRING} as sound {name: STRING}"], ["statement", "
+serialized_props = [["block_name", "load_sound"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Load file {file_path: STRING} as sound {name: STRING}"], ["statement", "
 var __sound = AudioStreamPlayer.new()
 __sound.name = {name}
 __sound.set_stream(load({file_path}))
@@ -153,15 +226,15 @@ add_child(__sound)
 "name": "wall_hit"
 }]]
 
-[sub_resource type="Resource" id="Resource_515lv"]
+[sub_resource type="Resource" id="Resource_mvbi7"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_0qgyx")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_jfgyp")]]
+serialized_block = SubResource("Resource_648ge")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_mipb3")]]
 
-[sub_resource type="Resource" id="Resource_na8wd"]
+[sub_resource type="Resource" id="Resource_i4exi"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Load file {file_path: STRING} as sound {name: STRING}"], ["statement", "
+serialized_props = [["block_name", "load_sound"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Load file {file_path: STRING} as sound {name: STRING}"], ["statement", "
 var __sound = AudioStreamPlayer.new()
 __sound.name = {name}
 __sound.set_stream(load({file_path}))
@@ -171,22 +244,22 @@ add_child(__sound)
 "name": "paddle_hit"
 }]]
 
-[sub_resource type="Resource" id="Resource_bku44"]
+[sub_resource type="Resource" id="Resource_6dpro"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_na8wd")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_515lv")]]
+serialized_block = SubResource("Resource_i4exi")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_mvbi7")]]
 
-[sub_resource type="Resource" id="Resource_2m4ct"]
+[sub_resource type="Resource" id="Resource_lds2e"]
 script = ExtResource("5_wr38c")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "ready_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(49, 42)], ["scope", ""], ["block_format", "On Ready"], ["statement", "func _ready():"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
+serialized_props = [["block_name", "ready_block"], ["label", "EntryBlock"], ["color", Color(0.92549, 0.231373, 0.34902, 1)], ["block_type", 1], ["position", Vector2(-125, 0)], ["scope", ""], ["block_format", "On Ready"], ["statement", "func _ready():"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
 
-[sub_resource type="Resource" id="Resource_lfbxc"]
+[sub_resource type="Resource" id="Resource_omh7u"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_2m4ct")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_bku44")]]
+serialized_block = SubResource("Resource_lds2e")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_6dpro")]]
 
-[sub_resource type="Resource" id="Resource_0sepo"]
+[sub_resource type="Resource" id="Resource_2b0uo"]
 script = ExtResource("5_wr38c")
 block_class = &"ParameterBlock"
 serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", "
@@ -194,12 +267,12 @@ func _on_body_entered(_body: Node):
 	var body: NodePath = _body.get_path()
 "], ["block_format", "body"], ["statement", "body"], ["defaults", {}], ["variant_type", 22], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_k5cwt"]
+[sub_resource type="Resource" id="Resource_4mv67"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_0sepo")
+serialized_block = SubResource("Resource_2b0uo")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_uucid"]
+[sub_resource type="Resource" id="Resource_1bl8g"]
 script = ExtResource("5_wr38c")
 block_class = &"ParameterBlock"
 serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", "
@@ -207,28 +280,28 @@ func _on_body_entered(_body: Node):
 	var body: NodePath = _body.get_path()
 "], ["block_format", "body"], ["statement", "body"], ["defaults", {}], ["variant_type", 22], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_64xkq"]
+[sub_resource type="Resource" id="Resource_01vgy"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_uucid")
+serialized_block = SubResource("Resource_1bl8g")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_76m34"]
+[sub_resource type="Resource" id="Resource_ffbl6"]
 script = ExtResource("5_wr38c")
 block_class = &"ParameterBlock"
-serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Is {node: NODE_PATH} in group {group: STRING}"], ["statement", "get_node({node}).is_in_group({group})"], ["defaults", {}], ["variant_type", 1], ["param_input_strings", {
+serialized_props = [["block_name", "is_node_in_group"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Is {node: NODE_PATH} in group {group: STRING}"], ["statement", "get_node({node}).is_in_group({group})"], ["defaults", {}], ["variant_type", 1], ["param_input_strings", {
 "group": "paddles",
 "node": ""
 }]]
 
-[sub_resource type="Resource" id="Resource_fmoex"]
+[sub_resource type="Resource" id="Resource_smrc0"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_76m34")
-path_child_pairs = [[NodePath("MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_64xkq")]]
+serialized_block = SubResource("Resource_ffbl6")
+path_child_pairs = [[NodePath("MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_01vgy")]]
 
-[sub_resource type="Resource" id="Resource_d7dfr"]
+[sub_resource type="Resource" id="Resource_j0dm5"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"], ["statement", "
+serialized_props = [["block_name", "play_sound"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(20, 0)], ["scope", ""], ["block_format", "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"], ["statement", "
 var __sound_node = get_node({name})
 __sound_node.volume_db = {db}
 __sound_node.pitch_scale = {pitch}
@@ -242,12 +315,12 @@ __sound_node.play()
 "pitch": "1.0"
 }]]
 
-[sub_resource type="Resource" id="Resource_oqnor"]
+[sub_resource type="Resource" id="Resource_earoq"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_d7dfr")
+serialized_block = SubResource("Resource_j0dm5")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_uibbi"]
+[sub_resource type="Resource" id="Resource_t0vy6"]
 script = ExtResource("5_wr38c")
 block_class = &"ParameterBlock"
 serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", "
@@ -255,28 +328,28 @@ func _on_body_entered(_body: Node):
 	var body: NodePath = _body.get_path()
 "], ["block_format", "body"], ["statement", "body"], ["defaults", {}], ["variant_type", 22], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_7jqxw"]
+[sub_resource type="Resource" id="Resource_e3mj1"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_uibbi")
+serialized_block = SubResource("Resource_t0vy6")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_nchna"]
+[sub_resource type="Resource" id="Resource_xnogu"]
 script = ExtResource("5_wr38c")
 block_class = &"ParameterBlock"
-serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Is {node: NODE_PATH} in group {group: STRING}"], ["statement", "get_node({node}).is_in_group({group})"], ["defaults", {}], ["variant_type", 1], ["param_input_strings", {
+serialized_props = [["block_name", "is_node_in_group"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Is {node: NODE_PATH} in group {group: STRING}"], ["statement", "get_node({node}).is_in_group({group})"], ["defaults", {}], ["variant_type", 1], ["param_input_strings", {
 "group": "walls",
 "node": ""
 }]]
 
-[sub_resource type="Resource" id="Resource_35nkf"]
+[sub_resource type="Resource" id="Resource_njg3m"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_nchna")
-path_child_pairs = [[NodePath("MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_7jqxw")]]
+serialized_block = SubResource("Resource_xnogu")
+path_child_pairs = [[NodePath("MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_e3mj1")]]
 
-[sub_resource type="Resource" id="Resource_fywef"]
+[sub_resource type="Resource" id="Resource_4eh0w"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"], ["statement", "
+serialized_props = [["block_name", "play_sound"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(20, 0)], ["scope", ""], ["block_format", "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"], ["statement", "
 var __sound_node = get_node({name})
 __sound_node.volume_db = {db}
 __sound_node.pitch_scale = {pitch}
@@ -290,62 +363,62 @@ __sound_node.play()
 "pitch": "1.0"
 }]]
 
-[sub_resource type="Resource" id="Resource_pucal"]
+[sub_resource type="Resource" id="Resource_wijlv"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_fywef")
+serialized_block = SubResource("Resource_4eh0w")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_8nvnv"]
+[sub_resource type="Resource" id="Resource_4sgol"]
 script = ExtResource("5_wr38c")
 block_class = &"ControlBlock"
-serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(0.270588, 0.666667, 0.94902, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_formats", ["if    {condition: BOOL}"]], ["statements", ["if {condition}:"]], ["defaults", {}], ["param_input_strings_array", [{
+serialized_props = [["block_name", "if"], ["label", "Control Block"], ["color", Color(0.270588, 0.666667, 0.94902, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_formats", ["if {condition: BOOL}"]], ["statements", ["if {condition}:"]], ["defaults", {}], ["param_input_strings_array", [{
 "condition": false
 }]]]
 
-[sub_resource type="Resource" id="Resource_r8172"]
+[sub_resource type="Resource" id="Resource_kknxb"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_8nvnv")
-path_child_pairs = [[NodePath("VBoxContainer/MarginContainer/Rows/Row0/RowHBoxContainer/RowHBox/ParameterInput0/SnapPoint"), SubResource("Resource_35nkf")], [NodePath("VBoxContainer/MarginContainer/Rows/SnapContainer0/SnapPoint"), SubResource("Resource_pucal")]]
+serialized_block = SubResource("Resource_4sgol")
+path_child_pairs = [[NodePath("VBoxContainer/MarginContainer/Rows/Row0/RowHBoxContainer/RowHBox/ParameterInput0/SnapPoint"), SubResource("Resource_njg3m")], [NodePath("VBoxContainer/MarginContainer/Rows/SnapContainer0/SnapPoint"), SubResource("Resource_wijlv")]]
 
-[sub_resource type="Resource" id="Resource_fl4h4"]
+[sub_resource type="Resource" id="Resource_1qbgj"]
 script = ExtResource("5_wr38c")
 block_class = &"ControlBlock"
-serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(0.270588, 0.666667, 0.94902, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_formats", ["if    {condition: BOOL}"]], ["statements", ["if {condition}:"]], ["defaults", {}], ["param_input_strings_array", [{
+serialized_props = [["block_name", "if"], ["label", "Control Block"], ["color", Color(0.270588, 0.666667, 0.94902, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_formats", ["if {condition: BOOL}"]], ["statements", ["if {condition}:"]], ["defaults", {}], ["param_input_strings_array", [{
 "condition": false
 }]]]
 
-[sub_resource type="Resource" id="Resource_3xq0k"]
+[sub_resource type="Resource" id="Resource_rop2b"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_fl4h4")
-path_child_pairs = [[NodePath("VBoxContainer/MarginContainer/Rows/Row0/RowHBoxContainer/RowHBox/ParameterInput0/SnapPoint"), SubResource("Resource_fmoex")], [NodePath("VBoxContainer/MarginContainer/Rows/SnapContainer0/SnapPoint"), SubResource("Resource_oqnor")], [NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_r8172")]]
+serialized_block = SubResource("Resource_1qbgj")
+path_child_pairs = [[NodePath("VBoxContainer/MarginContainer/Rows/Row0/RowHBoxContainer/RowHBox/ParameterInput0/SnapPoint"), SubResource("Resource_smrc0")], [NodePath("VBoxContainer/MarginContainer/Rows/SnapContainer0/SnapPoint"), SubResource("Resource_earoq")], [NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_kknxb")]]
 
-[sub_resource type="Resource" id="Resource_eiexb"]
+[sub_resource type="Resource" id="Resource_kxhfs"]
 script = ExtResource("5_wr38c")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "entry_block"], ["label", "EntryBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 1], ["position", Vector2(50, 226)], ["scope", ""], ["block_format", "On [body: NODE_PATH] entered"], ["statement", "
+serialized_props = [["block_name", "rigidbody2d_on_entered"], ["label", "EntryBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 1], ["position", Vector2(-125, 225)], ["scope", ""], ["block_format", "On [body: NODE_PATH] entered"], ["statement", "
 func _on_body_entered(_body: Node):
 	var body: NodePath = _body.get_path()
 "], ["defaults", {}], ["param_input_strings", {}], ["signal_name", "body_entered"]]
 
-[sub_resource type="Resource" id="Resource_gg652"]
+[sub_resource type="Resource" id="Resource_i5kuh"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_eiexb")
-path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterOutput0/SnapPoint"), SubResource("Resource_k5cwt")], [NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_3xq0k")]]
+serialized_block = SubResource("Resource_kxhfs")
+path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterOutput0/SnapPoint"), SubResource("Resource_4mv67")], [NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_rop2b")]]
 
-[sub_resource type="Resource" id="Resource_py8f3"]
+[sub_resource type="Resource" id="Resource_c2usj"]
 script = ExtResource("5_wr38c")
 block_class = &"ParameterBlock"
-serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.0117647, 0.666667, 0.454902, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Viewport Center"], ["statement", "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()"], ["defaults", {}], ["variant_type", 5], ["param_input_strings", {}]]
+serialized_props = [["block_name", "viewport_center"], ["label", "Param"], ["color", Color(0.0117647, 0.666667, 0.454902, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Viewport Center"], ["statement", "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()"], ["defaults", {}], ["variant_type", 5], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_kck4x"]
+[sub_resource type="Resource" id="Resource_7dr6f"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_py8f3")
+serialized_block = SubResource("Resource_c2usj")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_fyaul"]
+[sub_resource type="Resource" id="Resource_yk1aj"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"], ["statement", "
+serialized_props = [["block_name", "play_sound"], ["label", "StatementBlock"], ["color", Color(0.890196, 0.0588235, 0.752941, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"], ["statement", "
 var __sound_node = get_node({name})
 __sound_node.volume_db = {db}
 __sound_node.pitch_scale = {pitch}
@@ -359,43 +432,49 @@ __sound_node.play()
 "pitch": "1.0"
 }]]
 
-[sub_resource type="Resource" id="Resource_1o8v3"]
+[sub_resource type="Resource" id="Resource_rjl7j"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_fyaul")
+serialized_block = SubResource("Resource_yk1aj")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_5fsso"]
+[sub_resource type="Resource" id="Resource_18v3b"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Set Physics Position {position: VECTOR2}"], ["statement", "PhysicsServer2D.body_set_state(get_rid(),PhysicsServer2D.BODY_STATE_TRANSFORM,Transform2D.IDENTITY.translated({position}))"], ["defaults", {}], ["param_input_strings", {
-"position": "960,544"
+serialized_props = [["block_name", "rigidbody2d_physics_position"], ["label", "StatementBlock"], ["color", Color(0.294118, 0.396078, 0.517647, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Set Physics Position {position: VECTOR2}"], ["statement", "
+PhysicsServer2D.body_set_state(
+	get_rid(),
+	PhysicsServer2D.BODY_STATE_TRANSFORM,
+	Transform2D.IDENTITY.translated({position})
+)
+"], ["defaults", {}], ["param_input_strings", {
+"position": ","
 }]]
 
-[sub_resource type="Resource" id="Resource_uyy35"]
+[sub_resource type="Resource" id="Resource_ctlxh"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_5fsso")
-path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_kck4x")], [NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_1o8v3")]]
+serialized_block = SubResource("Resource_18v3b")
+path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_7dr6f")], [NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_rjl7j")]]
 
-[sub_resource type="Resource" id="Resource_f3xvu"]
+[sub_resource type="Resource" id="Resource_wpq1k"]
 script = ExtResource("5_wr38c")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "entry_block"], ["label", "EntryBlock"], ["color", Color(0.941176, 0.764706, 0, 1)], ["block_type", 1], ["position", Vector2(51, 616)], ["scope", ""], ["block_format", "Define method {method_name: NIL}"], ["statement", "func {method_name}():"], ["defaults", {}], ["param_input_strings", {
+serialized_props = [["block_name", "define_method"], ["label", "EntryBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 1], ["position", Vector2(-125, 650)], ["scope", ""], ["block_format", "Define method {method_name: NIL}"], ["statement", "func {method_name}():"], ["defaults", {}], ["param_input_strings", {
 "method_name": "reset"
 }], ["signal_name", ""]]
 
-[sub_resource type="Resource" id="Resource_n4cap"]
+[sub_resource type="Resource" id="Resource_aav67"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_f3xvu")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_uyy35")]]
+serialized_block = SubResource("Resource_wpq1k")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_ctlxh")]]
 
-[sub_resource type="Resource" id="Resource_gn6n3"]
+[sub_resource type="Resource" id="Resource_rccbr"]
 script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_lfbxc"), SubResource("Resource_gg652"), SubResource("Resource_n4cap")])
+array = Array[ExtResource("4_qtggh")]([SubResource("Resource_omh7u"), SubResource("Resource_i5kuh"), SubResource("Resource_aav67")])
 
-[sub_resource type="Resource" id="Resource_hnwk2"]
+[sub_resource type="Resource" id="Resource_181ih"]
 script = ExtResource("7_uuuue")
 script_inherits = "RigidBody2D"
-block_trees = SubResource("Resource_gn6n3")
+block_trees = SubResource("Resource_rccbr")
 variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends RigidBody2D
 
@@ -430,7 +509,11 @@ func _on_body_entered(_body: Node):
 		__sound_node_2.play()
 
 func reset():
-	PhysicsServer2D.body_set_state(get_rid(),PhysicsServer2D.BODY_STATE_TRANSFORM,Transform2D.IDENTITY.translated((func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()))
+	PhysicsServer2D.body_set_state(
+		get_rid(),
+		PhysicsServer2D.BODY_STATE_TRANSFORM,
+		Transform2D.IDENTITY.translated((func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call())
+	)
 	var __sound_node_1 = get_node('score_sound')
 	__sound_node_1.volume_db = 0.0
 	__sound_node_1.pitch_scale = 1.0
@@ -441,7 +524,7 @@ func _init():
 "
 version = 0
 
-[sub_resource type="Resource" id="Resource_foxq8"]
+[sub_resource type="Resource" id="Resource_0k8hj"]
 script = ExtResource("5_wr38c")
 block_class = &"ParameterBlock"
 serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", "
@@ -449,12 +532,12 @@ func _on_body_entered(_body: Node2D):
 	var body: NodePath = _body.get_path()
 "], ["block_format", "body"], ["statement", "body"], ["defaults", {}], ["variant_type", 22], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_501iu"]
+[sub_resource type="Resource" id="Resource_rig6c"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_foxq8")
+serialized_block = SubResource("Resource_0k8hj")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_lc2mv"]
+[sub_resource type="Resource" id="Resource_t7w1d"]
 script = ExtResource("5_wr38c")
 block_class = &"ParameterBlock"
 serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", "
@@ -462,83 +545,83 @@ func _on_body_entered(_body: Node2D):
 	var body: NodePath = _body.get_path()
 "], ["block_format", "body"], ["statement", "body"], ["defaults", {}], ["variant_type", 22], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_usdsx"]
+[sub_resource type="Resource" id="Resource_ba0bv"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_lc2mv")
+serialized_block = SubResource("Resource_t7w1d")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_yudev"]
+[sub_resource type="Resource" id="Resource_jtjm4"]
 script = ExtResource("5_wr38c")
 block_class = &"ParameterBlock"
-serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Is {node: NODE_PATH} in group {group: STRING}"], ["statement", "get_node({node}).is_in_group({group})"], ["defaults", {}], ["variant_type", 1], ["param_input_strings", {
+serialized_props = [["block_name", "is_node_in_group"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Is {node: NODE_PATH} in group {group: STRING}"], ["statement", "get_node({node}).is_in_group({group})"], ["defaults", {}], ["variant_type", 1], ["param_input_strings", {
 "group": "balls",
 "node": ""
 }]]
 
-[sub_resource type="Resource" id="Resource_j8nlm"]
+[sub_resource type="Resource" id="Resource_62spx"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_yudev")
-path_child_pairs = [[NodePath("MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_usdsx")]]
+serialized_block = SubResource("Resource_jtjm4")
+path_child_pairs = [[NodePath("MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_ba0bv")]]
 
-[sub_resource type="Resource" id="Resource_rd5bb"]
+[sub_resource type="Resource" id="Resource_e25gs"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Call method {method_name: STRING} in group {group: STRING}"], ["statement", "get_tree().call_group({group}, {method_name})"], ["defaults", {}], ["param_input_strings", {
+serialized_props = [["block_name", "call_group_method"], ["label", "StatementBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Call method {method_name: STRING} in group {group: STRING}"], ["statement", "get_tree().call_group({group}, {method_name})"], ["defaults", {}], ["param_input_strings", {
 "group": "balls",
 "method_name": "reset"
 }]]
 
-[sub_resource type="Resource" id="Resource_6j2n2"]
+[sub_resource type="Resource" id="Resource_k1bnq"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_rd5bb")
+serialized_block = SubResource("Resource_e25gs")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_y52j6"]
+[sub_resource type="Resource" id="Resource_3574g"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Call method {method_name: STRING} in group {group: STRING}"], ["statement", "get_tree().call_group({group}, {method_name})"], ["defaults", {}], ["param_input_strings", {
+serialized_props = [["block_name", "call_group_method"], ["label", "StatementBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 2], ["position", Vector2(20, 0)], ["scope", ""], ["block_format", "Call method {method_name: STRING} in group {group: STRING}"], ["statement", "get_tree().call_group({group}, {method_name})"], ["defaults", {}], ["param_input_strings", {
 "group": "scoring",
 "method_name": "goal_left"
 }]]
 
-[sub_resource type="Resource" id="Resource_j6rsb"]
+[sub_resource type="Resource" id="Resource_sgg3i"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_y52j6")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_6j2n2")]]
+serialized_block = SubResource("Resource_3574g")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_k1bnq")]]
 
-[sub_resource type="Resource" id="Resource_oeuh1"]
+[sub_resource type="Resource" id="Resource_o07o5"]
 script = ExtResource("5_wr38c")
 block_class = &"ControlBlock"
-serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(0.270588, 0.666667, 0.94902, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_formats", ["if    {condition: BOOL}"]], ["statements", ["if {condition}:"]], ["defaults", {}], ["param_input_strings_array", [{
+serialized_props = [["block_name", "if"], ["label", "Control Block"], ["color", Color(0.270588, 0.666667, 0.94902, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_formats", ["if {condition: BOOL}"]], ["statements", ["if {condition}:"]], ["defaults", {}], ["param_input_strings_array", [{
 "condition": false
 }]]]
 
-[sub_resource type="Resource" id="Resource_jyu6m"]
+[sub_resource type="Resource" id="Resource_ja7i6"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_oeuh1")
-path_child_pairs = [[NodePath("VBoxContainer/MarginContainer/Rows/Row0/RowHBoxContainer/RowHBox/ParameterInput0/SnapPoint"), SubResource("Resource_j8nlm")], [NodePath("VBoxContainer/MarginContainer/Rows/SnapContainer0/SnapPoint"), SubResource("Resource_j6rsb")]]
+serialized_block = SubResource("Resource_o07o5")
+path_child_pairs = [[NodePath("VBoxContainer/MarginContainer/Rows/Row0/RowHBoxContainer/RowHBox/ParameterInput0/SnapPoint"), SubResource("Resource_62spx")], [NodePath("VBoxContainer/MarginContainer/Rows/SnapContainer0/SnapPoint"), SubResource("Resource_sgg3i")]]
 
-[sub_resource type="Resource" id="Resource_v1q5h"]
+[sub_resource type="Resource" id="Resource_8e6vl"]
 script = ExtResource("5_wr38c")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "entry_block"], ["label", "EntryBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 1], ["position", Vector2(98, 352)], ["scope", ""], ["block_format", "On [body: NODE_PATH] entered"], ["statement", "
+serialized_props = [["block_name", "area2d_on_entered"], ["label", "EntryBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 1], ["position", Vector2(-125, -150)], ["scope", ""], ["block_format", "On [body: NODE_PATH] entered"], ["statement", "
 func _on_body_entered(_body: Node2D):
 	var body: NodePath = _body.get_path()
 "], ["defaults", {}], ["param_input_strings", {}], ["signal_name", "body_entered"]]
 
-[sub_resource type="Resource" id="Resource_vj0qt"]
+[sub_resource type="Resource" id="Resource_dymgt"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_v1q5h")
-path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterOutput0/SnapPoint"), SubResource("Resource_501iu")], [NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_jyu6m")]]
+serialized_block = SubResource("Resource_8e6vl")
+path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterOutput0/SnapPoint"), SubResource("Resource_rig6c")], [NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_ja7i6")]]
 
-[sub_resource type="Resource" id="Resource_6sikv"]
+[sub_resource type="Resource" id="Resource_qatrc"]
 script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_vj0qt")])
+array = Array[ExtResource("4_qtggh")]([SubResource("Resource_dymgt")])
 
-[sub_resource type="Resource" id="Resource_bx5ai"]
+[sub_resource type="Resource" id="Resource_1yrql"]
 script = ExtResource("7_uuuue")
 script_inherits = "Area2D"
-block_trees = SubResource("Resource_6sikv")
+block_trees = SubResource("Resource_qatrc")
 variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends Area2D
 
@@ -556,7 +639,7 @@ func _init():
 "
 version = 0
 
-[sub_resource type="Resource" id="Resource_g8bbs"]
+[sub_resource type="Resource" id="Resource_mvpfc"]
 script = ExtResource("5_wr38c")
 block_class = &"ParameterBlock"
 serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", "
@@ -564,12 +647,12 @@ func _on_body_entered(_body: Node2D):
 	var body: NodePath = _body.get_path()
 "], ["block_format", "body"], ["statement", "body"], ["defaults", {}], ["variant_type", 22], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_by53e"]
+[sub_resource type="Resource" id="Resource_v2e4o"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_g8bbs")
+serialized_block = SubResource("Resource_mvpfc")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_ia057"]
+[sub_resource type="Resource" id="Resource_lt2nr"]
 script = ExtResource("5_wr38c")
 block_class = &"ParameterBlock"
 serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", "
@@ -577,83 +660,83 @@ func _on_body_entered(_body: Node2D):
 	var body: NodePath = _body.get_path()
 "], ["block_format", "body"], ["statement", "body"], ["defaults", {}], ["variant_type", 22], ["param_input_strings", {}]]
 
-[sub_resource type="Resource" id="Resource_214im"]
+[sub_resource type="Resource" id="Resource_6417q"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_ia057")
+serialized_block = SubResource("Resource_lt2nr")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_mitgp"]
+[sub_resource type="Resource" id="Resource_ppyp4"]
 script = ExtResource("5_wr38c")
 block_class = &"ParameterBlock"
-serialized_props = [["block_name", "parameter_block"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Is {node: NODE_PATH} in group {group: STRING}"], ["statement", "get_node({node}).is_in_group({group})"], ["defaults", {}], ["variant_type", 1], ["param_input_strings", {
+serialized_props = [["block_name", "is_node_in_group"], ["label", "Param"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 3], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Is {node: NODE_PATH} in group {group: STRING}"], ["statement", "get_node({node}).is_in_group({group})"], ["defaults", {}], ["variant_type", 1], ["param_input_strings", {
 "group": "balls",
 "node": ""
 }]]
 
-[sub_resource type="Resource" id="Resource_4c6cp"]
+[sub_resource type="Resource" id="Resource_i1hbe"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_mitgp")
-path_child_pairs = [[NodePath("MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_214im")]]
+serialized_block = SubResource("Resource_ppyp4")
+path_child_pairs = [[NodePath("MarginContainer/HBoxContainer/ParameterInput0/SnapPoint"), SubResource("Resource_6417q")]]
 
-[sub_resource type="Resource" id="Resource_kbjk3"]
+[sub_resource type="Resource" id="Resource_og2lu"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Call method {method_name: STRING} in group {group: STRING}"], ["statement", "get_tree().call_group({group}, {method_name})"], ["defaults", {}], ["param_input_strings", {
+serialized_props = [["block_name", "call_group_method"], ["label", "StatementBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Call method {method_name: STRING} in group {group: STRING}"], ["statement", "get_tree().call_group({group}, {method_name})"], ["defaults", {}], ["param_input_strings", {
 "group": "balls",
 "method_name": "reset"
 }]]
 
-[sub_resource type="Resource" id="Resource_svw0g"]
+[sub_resource type="Resource" id="Resource_ox4cg"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_kbjk3")
+serialized_block = SubResource("Resource_og2lu")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_ehxpt"]
+[sub_resource type="Resource" id="Resource_fqtoj"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Call method {method_name: STRING} in group {group: STRING}"], ["statement", "get_tree().call_group({group}, {method_name})"], ["defaults", {}], ["param_input_strings", {
+serialized_props = [["block_name", "call_group_method"], ["label", "StatementBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 2], ["position", Vector2(20, 0)], ["scope", ""], ["block_format", "Call method {method_name: STRING} in group {group: STRING}"], ["statement", "get_tree().call_group({group}, {method_name})"], ["defaults", {}], ["param_input_strings", {
 "group": "scoring",
 "method_name": "goal_right"
 }]]
 
-[sub_resource type="Resource" id="Resource_8f3xk"]
+[sub_resource type="Resource" id="Resource_16dgc"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_ehxpt")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_svw0g")]]
+serialized_block = SubResource("Resource_fqtoj")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_ox4cg")]]
 
-[sub_resource type="Resource" id="Resource_cyk7y"]
+[sub_resource type="Resource" id="Resource_4gpkr"]
 script = ExtResource("5_wr38c")
 block_class = &"ControlBlock"
-serialized_props = [["block_name", "control_block"], ["label", "Control Block"], ["color", Color(0.270588, 0.666667, 0.94902, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_formats", ["if    {condition: BOOL}"]], ["statements", ["if {condition}:"]], ["defaults", {}], ["param_input_strings_array", [{
+serialized_props = [["block_name", "if"], ["label", "Control Block"], ["color", Color(0.270588, 0.666667, 0.94902, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_formats", ["if {condition: BOOL}"]], ["statements", ["if {condition}:"]], ["defaults", {}], ["param_input_strings_array", [{
 "condition": false
 }]]]
 
-[sub_resource type="Resource" id="Resource_gfghu"]
+[sub_resource type="Resource" id="Resource_cujjt"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_cyk7y")
-path_child_pairs = [[NodePath("VBoxContainer/MarginContainer/Rows/Row0/RowHBoxContainer/RowHBox/ParameterInput0/SnapPoint"), SubResource("Resource_4c6cp")], [NodePath("VBoxContainer/MarginContainer/Rows/SnapContainer0/SnapPoint"), SubResource("Resource_8f3xk")]]
+serialized_block = SubResource("Resource_4gpkr")
+path_child_pairs = [[NodePath("VBoxContainer/MarginContainer/Rows/Row0/RowHBoxContainer/RowHBox/ParameterInput0/SnapPoint"), SubResource("Resource_i1hbe")], [NodePath("VBoxContainer/MarginContainer/Rows/SnapContainer0/SnapPoint"), SubResource("Resource_16dgc")]]
 
-[sub_resource type="Resource" id="Resource_ncxb3"]
+[sub_resource type="Resource" id="Resource_nkcib"]
 script = ExtResource("5_wr38c")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "entry_block"], ["label", "EntryBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 1], ["position", Vector2(195, 56)], ["scope", ""], ["block_format", "On [body: NODE_PATH] entered"], ["statement", "
+serialized_props = [["block_name", "area2d_on_entered"], ["label", "EntryBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 1], ["position", Vector2(-150, -75)], ["scope", ""], ["block_format", "On [body: NODE_PATH] entered"], ["statement", "
 func _on_body_entered(_body: Node2D):
 	var body: NodePath = _body.get_path()
 "], ["defaults", {}], ["param_input_strings", {}], ["signal_name", "body_entered"]]
 
-[sub_resource type="Resource" id="Resource_1nmq4"]
+[sub_resource type="Resource" id="Resource_kibpx"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_ncxb3")
-path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterOutput0/SnapPoint"), SubResource("Resource_by53e")], [NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_gfghu")]]
+serialized_block = SubResource("Resource_nkcib")
+path_child_pairs = [[NodePath("VBoxContainer/TopMarginContainer/MarginContainer/HBoxContainer/ParameterOutput0/SnapPoint"), SubResource("Resource_v2e4o")], [NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_cujjt")]]
 
-[sub_resource type="Resource" id="Resource_d14wa"]
+[sub_resource type="Resource" id="Resource_rdqcq"]
 script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_1nmq4")])
+array = Array[ExtResource("4_qtggh")]([SubResource("Resource_kibpx")])
 
-[sub_resource type="Resource" id="Resource_6drva"]
+[sub_resource type="Resource" id="Resource_nf08t"]
 script = ExtResource("7_uuuue")
 script_inherits = "Area2D"
-block_trees = SubResource("Resource_d14wa")
+block_trees = SubResource("Resource_rdqcq")
 variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends Area2D
 
@@ -671,112 +754,111 @@ func _init():
 "
 version = 0
 
-[sub_resource type="Resource" id="Resource_nh5qb"]
+[sub_resource type="Resource" id="Resource_esgb0"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.941176, 0.764706, 0, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Add to group {group: STRING}"], ["statement", "add_to_group({group})"], ["defaults", {}], ["param_input_strings", {
+serialized_props = [["block_name", "add_to_group"], ["label", "StatementBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Add to group {group: STRING}"], ["statement", "add_to_group({group})"], ["defaults", {}], ["param_input_strings", {
 "group": "scoring"
 }]]
 
-[sub_resource type="Resource" id="Resource_hugdn"]
+[sub_resource type="Resource" id="Resource_2cvgo"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_nh5qb")
+serialized_block = SubResource("Resource_esgb0")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_xhy0x"]
+[sub_resource type="Resource" id="Resource_yt2jg"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Set player 2 score to {score: INT}"], ["statement", "score_right = {score}"], ["defaults", {}], ["param_input_strings", {
+serialized_props = [["block_name", "simplescoring_set_score"], ["label", "StatementBlock"], ["color", Color(0.811765, 0.415686, 0.529412, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Set player 2 score to {score: INT}"], ["statement", "score_right = {score}"], ["defaults", {}], ["param_input_strings", {
 "score": "0"
 }]]
 
-[sub_resource type="Resource" id="Resource_xqajo"]
+[sub_resource type="Resource" id="Resource_qxyq6"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_xhy0x")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_hugdn")]]
+serialized_block = SubResource("Resource_yt2jg")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_2cvgo")]]
 
-[sub_resource type="Resource" id="Resource_sreck"]
+[sub_resource type="Resource" id="Resource_dptse"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Set player 1 score to {score: INT}"], ["statement", "score_left = {score}"], ["defaults", {}], ["param_input_strings", {
+serialized_props = [["block_name", "simplescoring_set_score"], ["label", "StatementBlock"], ["color", Color(0.811765, 0.415686, 0.529412, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Set player 1 score to {score: INT}"], ["statement", "score_left = {score}"], ["defaults", {}], ["param_input_strings", {
 "score": "0"
 }]]
 
-[sub_resource type="Resource" id="Resource_cweom"]
+[sub_resource type="Resource" id="Resource_6g2pn"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_sreck")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_xqajo")]]
+serialized_block = SubResource("Resource_dptse")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_qxyq6")]]
 
-[sub_resource type="Resource" id="Resource_3uk5q"]
+[sub_resource type="Resource" id="Resource_u7gx0"]
 script = ExtResource("5_wr38c")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "ready_block"], ["label", "EntryBlock"], ["color", Color(0.980392, 0.34902, 0.337255, 1)], ["block_type", 1], ["position", Vector2(54, 47)], ["block_format", "On Ready"], ["statement", "func _ready():"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
+serialized_props = [["block_name", "ready_block"], ["label", "EntryBlock"], ["color", Color(0.92549, 0.231373, 0.34902, 1)], ["block_type", 1], ["position", Vector2(-350, -275)], ["scope", ""], ["block_format", "On Ready"], ["statement", "func _ready():"], ["defaults", {}], ["param_input_strings", {}], ["signal_name", ""]]
 
-[sub_resource type="Resource" id="Resource_kt2b1"]
+[sub_resource type="Resource" id="Resource_jlgm4"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_3uk5q")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_cweom")]]
+serialized_block = SubResource("Resource_u7gx0")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_6g2pn")]]
 
-[sub_resource type="Resource" id="Resource_2wg3j"]
+[sub_resource type="Resource" id="Resource_ipq2j"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Change player 1 score by {score: INT}"], ["statement", "score_left += {score}"], ["defaults", {}], ["param_input_strings", {
+serialized_props = [["block_name", "simplescoring_change_score"], ["label", "StatementBlock"], ["color", Color(0.811765, 0.415686, 0.529412, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Change player 1 score by {score: INT}"], ["statement", "score_left += {score}"], ["defaults", {}], ["param_input_strings", {
 "score": "1"
 }]]
 
-[sub_resource type="Resource" id="Resource_ngm2f"]
+[sub_resource type="Resource" id="Resource_imfrt"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_2wg3j")
+serialized_block = SubResource("Resource_ipq2j")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_l0tk7"]
+[sub_resource type="Resource" id="Resource_uu4ng"]
 script = ExtResource("5_wr38c")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "entry_block"], ["label", "EntryBlock"], ["color", Color(0.941176, 0.764706, 0, 1)], ["block_type", 1], ["position", Vector2(499, 220)], ["block_format", "Define method {method_name: NIL}"], ["statement", "func {method_name}():"], ["defaults", {}], ["param_input_strings", {
+serialized_props = [["block_name", "define_method"], ["label", "EntryBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 1], ["position", Vector2(-350, -50)], ["scope", ""], ["block_format", "Define method {method_name: NIL}"], ["statement", "func {method_name}():"], ["defaults", {}], ["param_input_strings", {
 "method_name": "goal_right"
 }], ["signal_name", ""]]
 
-[sub_resource type="Resource" id="Resource_5315l"]
+[sub_resource type="Resource" id="Resource_ed551"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_l0tk7")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_ngm2f")]]
+serialized_block = SubResource("Resource_uu4ng")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_imfrt")]]
 
-[sub_resource type="Resource" id="Resource_g74qq"]
+[sub_resource type="Resource" id="Resource_5qjag"]
 script = ExtResource("5_wr38c")
 block_class = &"StatementBlock"
-serialized_props = [["block_name", "statement_block"], ["label", "StatementBlock"], ["color", Color(0.439216, 0.501961, 0.564706, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["block_format", "Change player 2 score by {score: INT}"], ["statement", "score_right += {score}"], ["defaults", {}], ["param_input_strings", {
+serialized_props = [["block_name", "simplescoring_change_score"], ["label", "StatementBlock"], ["color", Color(0.811765, 0.415686, 0.529412, 1)], ["block_type", 2], ["position", Vector2(0, 0)], ["scope", ""], ["block_format", "Change player 2 score by {score: INT}"], ["statement", "score_right += {score}"], ["defaults", {}], ["param_input_strings", {
 "score": "1"
 }]]
 
-[sub_resource type="Resource" id="Resource_wvrb6"]
+[sub_resource type="Resource" id="Resource_fyy20"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_g74qq")
+serialized_block = SubResource("Resource_5qjag")
 path_child_pairs = []
 
-[sub_resource type="Resource" id="Resource_4337b"]
+[sub_resource type="Resource" id="Resource_yxdgk"]
 script = ExtResource("5_wr38c")
 block_class = &"EntryBlock"
-serialized_props = [["block_name", "entry_block"], ["label", "EntryBlock"], ["color", Color(0.941176, 0.764706, 0, 1)], ["block_type", 1], ["position", Vector2(142, 273)], ["block_format", "Define method {method_name: NIL}"], ["statement", "func {method_name}():"], ["defaults", {}], ["param_input_strings", {
+serialized_props = [["block_name", "define_method"], ["label", "EntryBlock"], ["color", Color(0.294118, 0.482353, 0.92549, 1)], ["block_type", 1], ["position", Vector2(-350, 75)], ["scope", ""], ["block_format", "Define method {method_name: NIL}"], ["statement", "func {method_name}():"], ["defaults", {}], ["param_input_strings", {
 "method_name": "goal_left"
 }], ["signal_name", ""]]
 
-[sub_resource type="Resource" id="Resource_mgqxu"]
+[sub_resource type="Resource" id="Resource_4v0rp"]
 script = ExtResource("4_qtggh")
-serialized_block = SubResource("Resource_4337b")
-path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_wvrb6")]]
+serialized_block = SubResource("Resource_yxdgk")
+path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_fyy20")]]
 
-[sub_resource type="Resource" id="Resource_c8btv"]
+[sub_resource type="Resource" id="Resource_g42ud"]
 script = ExtResource("6_ppdc3")
-array = Array[ExtResource("4_qtggh")]([SubResource("Resource_kt2b1"), SubResource("Resource_5315l"), SubResource("Resource_mgqxu")])
+array = Array[ExtResource("4_qtggh")]([SubResource("Resource_jlgm4"), SubResource("Resource_ed551"), SubResource("Resource_4v0rp")])
 
-[sub_resource type="Resource" id="Resource_k3sym"]
+[sub_resource type="Resource" id="Resource_xe6aa"]
 script = ExtResource("7_uuuue")
 script_inherits = "SimpleScoring"
-block_trees = SubResource("Resource_c8btv")
+block_trees = SubResource("Resource_g42ud")
 variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends SimpleScoring
 
-var VAR_DICT := {}
 
 func _ready():
 	score_left = 0
@@ -805,7 +887,7 @@ texture = ExtResource("4_ra7bh")
 
 [node name="BlockCode" type="Node" parent="PaddleLeft"]
 script = ExtResource("3_6jaq8")
-block_script = SubResource("Resource_qmak3")
+block_script = SubResource("Resource_dhvli")
 
 [node name="PaddleRight" type="CharacterBody2D" parent="." groups=["paddles"]]
 modulate = Color(0.509804, 0.360784, 0.972549, 1)
@@ -816,7 +898,7 @@ texture = ExtResource("4_ra7bh")
 
 [node name="BlockCode" type="Node" parent="PaddleRight"]
 script = ExtResource("3_6jaq8")
-block_script = SubResource("Resource_lxj2y")
+block_script = SubResource("Resource_krmii")
 
 [node name="Ball" parent="." instance=ExtResource("9_xrqll")]
 modulate = Color(0.511, 0.362, 0.972, 1)
@@ -825,21 +907,21 @@ gravity_scale = 0.0
 
 [node name="BlockCode" type="Node" parent="Ball"]
 script = ExtResource("3_6jaq8")
-block_script = SubResource("Resource_hnwk2")
+block_script = SubResource("Resource_181ih")
 
 [node name="GoalAreaLeft" parent="." groups=["goal", "goal_left"] instance=ExtResource("12_nqmxu")]
 position = Vector2(-64, 544)
 
 [node name="BlockCode" type="Node" parent="GoalAreaLeft"]
 script = ExtResource("3_6jaq8")
-block_script = SubResource("Resource_bx5ai")
+block_script = SubResource("Resource_1yrql")
 
 [node name="GoalAreaRight" parent="." groups=["goal", "goal_right"] instance=ExtResource("12_nqmxu")]
 position = Vector2(1984, 544)
 
 [node name="BlockCode" type="Node" parent="GoalAreaRight"]
 script = ExtResource("3_6jaq8")
-block_script = SubResource("Resource_6drva")
+block_script = SubResource("Resource_nf08t")
 
 [node name="SimpleScoring" type="CanvasLayer" parent="." groups=["hud"]]
 follow_viewport_enabled = true
@@ -847,7 +929,7 @@ script = ExtResource("13_tg3yk")
 
 [node name="BlockCode" type="Node" parent="SimpleScoring"]
 script = ExtResource("3_6jaq8")
-block_script = SubResource("Resource_k3sym")
+block_script = SubResource("Resource_xe6aa")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
