@@ -29,13 +29,6 @@ func _ready():
 	_update_snapped_block_from_children()
 
 
-func get_parent_block() -> Block:
-	var parent = get_parent()
-	while parent and not parent is Block:
-		parent = parent.get_parent()
-	return parent as Block
-
-
 func _update_snapped_block_from_children():
 	# Temporary migration to set the snapped_block property based on children
 	# of this node.
