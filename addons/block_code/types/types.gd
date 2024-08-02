@@ -5,6 +5,7 @@ enum BlockType {
 	ENTRY,
 	EXECUTE,
 	VALUE,
+	CONTROL,
 }
 
 const VARIANT_TYPE_TO_STRING: Dictionary = {
