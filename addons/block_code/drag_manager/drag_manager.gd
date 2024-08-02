@@ -80,6 +80,10 @@ func drag_ended():
 
 	if block:
 		connect_block_canvas_signals(block)
+		block.grab_focus()
+
+		# Allow the block to be deleted now that it's on the canvas.
+		block.can_delete = true
 
 	_block_canvas.release_scope()
 

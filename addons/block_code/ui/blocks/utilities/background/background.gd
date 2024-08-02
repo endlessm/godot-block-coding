@@ -1,9 +1,11 @@
 @tool
 extends Control
 
+const BlockTreeUtil = preload("res://addons/block_code/ui/block_tree_util.gd")
 const Constants = preload("res://addons/block_code/ui/constants.gd")
 
 var outline_color: Color
+var parent_block: Block
 
 @export var color: Color:
 	set = _set_color
@@ -39,6 +41,12 @@ func _set_shift_top(new_shift_top):
 func _set_shift_bottom(new_shift_bottom):
 	shift_bottom = new_shift_bottom
 	queue_redraw()
+
+
+func _ready():
+	parent_block = BlockTreeUtil.get_parent_block(self)
+	parent_block.focus_entered.connect(queue_redraw)
+	parent_block.focus_exited.connect(queue_redraw)
 
 
 func _draw():
@@ -97,5 +105,5 @@ func _draw():
 		edge_polygon.append(Vector2(0.0, size.y + outline_middle))
 
 	draw_colored_polygon(fill_polygon, color)
-	draw_polyline(stroke_polygon, outline_color, Constants.OUTLINE_WIDTH)
-	draw_polyline(edge_polygon, outline_color, Constants.OUTLINE_WIDTH)
+	draw_polyline(stroke_polygon, Constants.FOCUS_BORDER_COLOR if parent_block.has_focus() else outline_color, Constants.OUTLINE_WIDTH)
+	draw_polyline(edge_polygon, Constants.FOCUS_BORDER_COLOR if parent_block.has_focus() else outline_color, Constants.OUTLINE_WIDTH)

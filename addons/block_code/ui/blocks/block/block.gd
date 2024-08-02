@@ -39,6 +39,9 @@ signal modified
 # https://github.com/godotengine/godot/issues/82670
 var bottom_snap: SnapPoint
 
+## Whether the block can be deleted by the Delete key.
+var can_delete: bool = true
+
 
 func _set_bottom_snap_path(value: NodePath):
 	bottom_snap_path = value
@@ -48,7 +51,38 @@ func _set_bottom_snap_path(value: NodePath):
 func _ready():
 	if bottom_snap == null:
 		_set_bottom_snap_path(bottom_snap_path)
+	focus_mode = FocusMode.FOCUS_ALL
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+
+func _gui_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_DELETE:
+			# Always accept the Delete key so it doesn't propagate to the
+			# BlockCode node in the scene tree.
+			accept_event()
+
+			if not can_delete:
+				return
+
+			var dialog := ConfirmationDialog.new()
+			var num_blocks = _count_child_blocks(self) + 1
+			# FIXME: Maybe this should use block_name or label, but that
+			# requires one to be both unique and human friendly.
+			if num_blocks > 1:
+				dialog.dialog_text = "Delete %d blocks?" % num_blocks
+			else:
+				dialog.dialog_text = "Delete block?"
+			dialog.confirmed.connect(remove_from_tree)
+			EditorInterface.popup_dialog_centered(dialog)
+
+
+func remove_from_tree():
+	var parent = get_parent()
+	if parent:
+		parent.remove_child(self)
+	queue_free()
+	modified.emit()
 
 
 static func get_block_class():
@@ -124,3 +158,14 @@ func _make_custom_tooltip(for_text) -> Control:
 	var tooltip = preload("res://addons/block_code/ui/tooltip/tooltip.tscn").instantiate()
 	tooltip.text = for_text
 	return tooltip
+
+
+func _count_child_blocks(node: Node) -> int:
+	var count = 0
+
+	for child in node.get_children():
+		if child is SnapPoint and child.has_snapped_block():
+			count += 1
+		count += _count_child_blocks(child)
+
+	return count

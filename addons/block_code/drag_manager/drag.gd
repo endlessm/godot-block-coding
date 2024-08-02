@@ -34,7 +34,7 @@ var target_snap_point: SnapPoint:
 
 var snap_block: Block:
 	get:
-		return target_snap_point.get_parent_block() if target_snap_point else null
+		return BlockTreeUtil.get_parent_block(target_snap_point) if target_snap_point else null
 
 
 func _init(block: Block, block_scope: String, offset: Vector2, block_canvas: BlockCanvas):

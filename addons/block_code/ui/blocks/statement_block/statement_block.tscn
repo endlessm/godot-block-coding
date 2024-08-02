@@ -7,6 +7,7 @@
 
 [node name="StatementBlock" type="MarginContainer"]
 size_flags_horizontal = 0
+focus_mode = 2
 mouse_filter = 2
 script = ExtResource("1_6wvlf")
 block_name = &"statement_block"
