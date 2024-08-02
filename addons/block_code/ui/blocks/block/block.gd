@@ -2,6 +2,7 @@
 class_name Block
 extends MarginContainer
 
+const BlocksCatalog = preload("res://addons/block_code/blocks_catalog.gd")
 const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
@@ -9,7 +10,7 @@ signal drag_started(block: Block)
 signal modified
 
 ## Name of the block to be referenced by others in search
-@export var block_name: String = ""
+@export var block_name: StringName
 
 ## Label of block (optionally used to draw block labels)
 @export var label: String = ""
@@ -83,10 +84,15 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 func update_resources(undo_redo: EditorUndoRedoManager):
 	if resource == null:
 		var serialized_block = SerializedBlock.new(get_block_class(), get_serialized_props())
-		resource = SerializedBlockTreeNode.new(serialized_block)
+		resource = SerializedBlockTreeNode.new(block_name, position, serialized_block)
 		return
 
+	if resource.position != position:
+		undo_redo.add_undo_property(resource, "position", resource.position)
+		undo_redo.add_do_property(resource, "position", position)
+
 	var serialized_props = get_serialized_props()
+
 	if serialized_props != resource.serialized_block.serialized_props:
 		undo_redo.add_undo_property(resource.serialized_block, "serialized_props", resource.serialized_block.serialized_props)
 		undo_redo.add_do_property(resource.serialized_block, "serialized_props", serialized_props)
@@ -94,7 +100,13 @@ func update_resources(undo_redo: EditorUndoRedoManager):
 
 # Override this method to add more serialized properties
 func get_serialized_props() -> Array:
-	return serialize_props(["block_name", "label", "color", "block_type", "position", "scope"])
+	if not BlocksCatalog.has_block(block_name):
+		return serialize_props(["block_name", "label", "color", "block_type", "position", "scope"])
+
+	# TODO: Remove remaining serialization:
+	# - Derive color from category.
+	# - Handle scope in a different way?
+	return serialize_props(["color", "scope"])
 
 
 func _to_string():

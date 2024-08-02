@@ -3,6 +3,7 @@ extends Object
 
 const BlockCategory = preload("res://addons/block_code/ui/picker/categories/block_category.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
+const Util = preload("res://addons/block_code/ui/util.gd")
 
 const BLOCKS: Dictionary = {
 	"control_block": preload("res://addons/block_code/ui/blocks/control_block/control_block.tscn"),
@@ -171,12 +172,7 @@ static func get_general_blocks() -> Array[Block]:
 
 #region Lifecycle
 
-	b = BLOCKS["entry_block"].instantiate()
-	b.block_name = "ready_block"
-	b.block_format = "On Ready"
-	b.statement = "func _ready():"
-	b.tooltip_text = 'Attached blocks will be executed once when the node is "ready"'
-	b.category = "Lifecycle"
+	b = Util.instantiate_block(&"ready_block")
 	block_list.append(b)
 
 	b = BLOCKS["entry_block"].instantiate()
@@ -259,13 +255,7 @@ static func get_general_blocks() -> Array[Block]:
 #endregion
 #region Logs
 
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "print"
-	b.block_format = "print {text: STRING}"
-	b.statement = "print({text})"
-	b.defaults = {"text": "Hello"}
-	b.tooltip_text = "Print the text to output"
-	b.category = "Log"
+	b = Util.instantiate_block(&"print")
 	block_list.append(b)
 
 #endregion

@@ -30,5 +30,6 @@ func get_entry_statement() -> String:
 
 func get_serialized_props() -> Array:
 	var props := super()
-	props.append_array(serialize_props(["signal_name"]))
+	if not BlocksCatalog.has_block(block_name):
+		props.append_array(serialize_props(["signal_name"]))
 	return props
