@@ -19,7 +19,7 @@ signal modified
 @export var color: Color = Color(1., 1., 1.)
 
 ## Type of block to check if can be attached to snap point
-@export var block_type: Types.BlockType = Types.BlockType.EXECUTE
+@export var block_type: Types.BlockType = Types.BlockType.STATEMENT
 
 ## Category to add the block to
 @export var category: String

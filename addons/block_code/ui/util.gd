@@ -6,7 +6,7 @@ const Types = preload("res://addons/block_code/types/types.gd")
 
 const SCENE_PER_TYPE = {
 	Types.BlockType.ENTRY: preload("res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"),
-	Types.BlockType.EXECUTE: preload("res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"),
+	Types.BlockType.STATEMENT: preload("res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"),
 }
 
 

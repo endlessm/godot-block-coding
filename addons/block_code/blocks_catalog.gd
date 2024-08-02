@@ -18,7 +18,7 @@ static func setup():
 	block_definition.category = "Lifecycle"
 	_catalog[&"ready_block"] = block_definition
 
-	block_definition = BlockDefinition.new(&"print", Types.BlockType.EXECUTE)
+	block_definition = BlockDefinition.new(&"print", Types.BlockType.STATEMENT)
 	block_definition.label_template = "print {text: STRING}"
 	block_definition.code_template = "print({text})"
 	block_definition.defaults = {"text": "Hello"}

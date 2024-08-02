@@ -19,7 +19,7 @@ var param_input_strings: Dictionary  # Only loaded from serialized
 func _ready():
 	super()
 
-	if block_type != Types.BlockType.EXECUTE:
+	if block_type != Types.BlockType.STATEMENT:
 		_background.show_top = false
 	_background.color = color
 
