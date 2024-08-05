@@ -2,7 +2,7 @@
 class_name Block
 extends MarginContainer
 
-const BlocksCatalog = preload("res://addons/block_code/blocks_catalog.gd")
+const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
 const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
@@ -19,7 +19,7 @@ signal modified
 @export var color: Color = Color(1., 1., 1.)
 
 ## Type of block to check if can be attached to snap point
-@export var block_type: Types.BlockType = Types.BlockType.EXECUTE
+@export var block_type: Types.BlockType = Types.BlockType.STATEMENT
 
 ## Category to add the block to
 @export var category: String
@@ -32,7 +32,7 @@ signal modified
 @export var scope: String = ""
 
 ## The resource containing the block properties and the snapped blocks
-@export var resource: SerializedBlockTreeNode
+@export var resource: BlockSerialization
 
 # FIXME: Add export to this variable and remove bottom_snap_path above.
 # There is a bug in Godot 4.2 that prevents using SnapPoint directly:
@@ -117,8 +117,8 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 
 func update_resources(undo_redo: EditorUndoRedoManager):
 	if resource == null:
-		var serialized_block = SerializedBlock.new(get_block_class(), get_serialized_props())
-		resource = SerializedBlockTreeNode.new(block_name, position, serialized_block)
+		var block_serialized_properties = BlockSerializedProperties.new(get_block_class(), get_serialized_props())
+		resource = BlockSerialization.new(block_name, position, block_serialized_properties)
 		return
 
 	if resource.position != position:
@@ -127,9 +127,9 @@ func update_resources(undo_redo: EditorUndoRedoManager):
 
 	var serialized_props = get_serialized_props()
 
-	if serialized_props != resource.serialized_block.serialized_props:
-		undo_redo.add_undo_property(resource.serialized_block, "serialized_props", resource.serialized_block.serialized_props)
-		undo_redo.add_do_property(resource.serialized_block, "serialized_props", serialized_props)
+	if serialized_props != resource.block_serialized_properties.serialized_props:
+		undo_redo.add_undo_property(resource.block_serialized_properties, "serialized_props", resource.block_serialized_properties.serialized_props)
+		undo_redo.add_do_property(resource.block_serialized_properties, "serialized_props", serialized_props)
 
 
 # Override this method to add more serialized properties

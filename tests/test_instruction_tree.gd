@@ -88,10 +88,10 @@ func test_tree_node_text():
 
 
 func test_script_no_nodes():
-	var bsd := BlockScriptData.new("Foo")
-	var script := BlockTreeUtil.generate_script_from_nodes([], bsd)
+	var block_script := BlockScriptSerialization.new("Foo")
+	var text_script := BlockTreeUtil.generate_script_from_nodes([], block_script)
 	assert_eq(
-		script,
+		text_script,
 		(
 			"""\
 			extends Foo
@@ -104,11 +104,11 @@ func test_script_no_nodes():
 
 
 func test_script_no_entry_blocks():
-	var bsd := BlockScriptData.new("Foo")
+	var block_script := BlockScriptSerialization.new("Foo")
 	var nodes: Array[Node] = [Node.new(), Node2D.new(), Control.new()]
-	var script := BlockTreeUtil.generate_script_from_nodes(nodes, bsd)
+	var text_script := BlockTreeUtil.generate_script_from_nodes(nodes, block_script)
 	assert_eq(
-		script,
+		text_script,
 		(
 			"""\
 			extends Foo
@@ -137,10 +137,10 @@ func test_basic_script():
 	assert_true(ready_block.bottom_snap.has_snapped_block())
 	assert_eq(ready_block.bottom_snap.get_snapped_block(), print_block)
 
-	var bsd := BlockScriptData.new("Node2D")
-	var script := BlockTreeUtil.generate_script_from_nodes([ready_block], bsd)
+	var block_script := BlockScriptSerialization.new("Node2D")
+	var text_script := BlockTreeUtil.generate_script_from_nodes([ready_block], block_script)
 	assert_eq(
-		script,
+		text_script,
 		(
 			"""\
 			extends Node2D
@@ -165,10 +165,10 @@ func test_multiple_entry_script():
 
 	var ready_block_2: Block = dup_node(ready_block)
 
-	var bsd := BlockScriptData.new("Node2D")
-	var script := BlockTreeUtil.generate_script_from_nodes([ready_block, ready_block_2], bsd)
+	var block_script := BlockScriptSerialization.new("Node2D")
+	var text_script := BlockTreeUtil.generate_script_from_nodes([ready_block, ready_block_2], block_script)
 	assert_eq(
-		script,
+		text_script,
 		(
 			"""\
 			extends Node2D
@@ -196,10 +196,10 @@ func test_signal_script():
 	entered_block.bottom_snap.insert_snapped_block(print_block)
 	entered_block.bottom_snap.snapped_block = print_block
 
-	var bsd := BlockScriptData.new("Area2D")
-	var script = BlockTreeUtil.generate_script_from_nodes([entered_block], bsd)
+	var block_script := BlockScriptSerialization.new("Area2D")
+	var text_script = BlockTreeUtil.generate_script_from_nodes([entered_block], block_script)
 	assert_eq(
-		script,
+		text_script,
 		(
 			"""\
 			extends Area2D

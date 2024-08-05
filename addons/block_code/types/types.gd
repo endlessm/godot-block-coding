@@ -3,8 +3,9 @@ extends Node
 enum BlockType {
 	NONE,
 	ENTRY,
-	EXECUTE,
+	STATEMENT,
 	VALUE,
+	CONTROL,
 }
 
 const VARIANT_TYPE_TO_STRING: Dictionary = {

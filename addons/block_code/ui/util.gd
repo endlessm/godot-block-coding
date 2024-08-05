@@ -1,12 +1,12 @@
 extends Object
 
-const BlockDefinition = preload("res://addons/block_code/block_definition.gd")
-const BlocksCatalog = preload("res://addons/block_code/blocks_catalog.gd")
+const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
+const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
 const SCENE_PER_TYPE = {
 	Types.BlockType.ENTRY: preload("res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"),
-	Types.BlockType.EXECUTE: preload("res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"),
+	Types.BlockType.STATEMENT: preload("res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"),
 }
 
 

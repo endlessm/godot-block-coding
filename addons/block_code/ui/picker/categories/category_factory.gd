@@ -460,7 +460,7 @@ static func get_general_blocks() -> Array[Block]:
 #region Sounds
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_name = "load_sound"
-	b.block_type = Types.BlockType.EXECUTE
+	b.block_type = Types.BlockType.STATEMENT
 	b.block_format = "Load file {file_path: STRING} as sound {name: STRING}"
 	b.statement = (
 		"""
@@ -477,7 +477,7 @@ static func get_general_blocks() -> Array[Block]:
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_name = "play_sound"
-	b.block_type = Types.BlockType.EXECUTE
+	b.block_type = Types.BlockType.STATEMENT
 	b.block_format = "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"
 	b.statement = (
 		"""
@@ -495,7 +495,7 @@ static func get_general_blocks() -> Array[Block]:
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_name = "pause_continue_sound"
-	b.block_type = Types.BlockType.EXECUTE
+	b.block_type = Types.BlockType.STATEMENT
 	b.block_format = "{pause: OPTION} the sound {name: STRING}"
 	b.statement = (
 		"""
@@ -514,7 +514,7 @@ static func get_general_blocks() -> Array[Block]:
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_name = "stop_sound"
-	b.block_type = Types.BlockType.EXECUTE
+	b.block_type = Types.BlockType.STATEMENT
 	b.block_format = "Stop the sound {name: STRING}"
 	b.statement = (
 		"""
@@ -793,7 +793,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 		"CharacterBody2D":
 			var b = BLOCKS["statement_block"].instantiate()
 			b.block_name = "characterbody2d_move"
-			b.block_type = Types.BlockType.EXECUTE
+			b.block_type = Types.BlockType.STATEMENT
 			b.block_format = "Move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} with speed {speed: VECTOR2}"
 			b.statement = (
 				"var dir = Vector2()\n"
@@ -816,7 +816,7 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 
 			b = BLOCKS["statement_block"].instantiate()
 			b.block_name = "characterbody2d_move_and_slide"
-			b.block_type = Types.BlockType.EXECUTE
+			b.block_type = Types.BlockType.STATEMENT
 			b.block_format = "Move and slide"
 			b.statement = "move_and_slide()"
 			b.category = "Physics | Velocity"
@@ -882,7 +882,7 @@ static func get_variable_blocks(variables: Array[VariableResource]):
 
 		b = BLOCKS["statement_block"].instantiate()
 		b.block_name = "set_var_%s" % variable.var_name
-		b.block_type = Types.BlockType.EXECUTE
+		b.block_type = Types.BlockType.STATEMENT
 		b.block_format = "Set %s to {value: %s}" % [variable.var_name, type_string]
 		b.statement = "%s = {value}" % [variable.var_name]
 		b.color = BUILTIN_PROPS["Variables"].color

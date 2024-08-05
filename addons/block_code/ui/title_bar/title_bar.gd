@@ -19,10 +19,10 @@ func scene_selected(scene_root: Node):
 	_update_node_option_button_items()
 	var current_block_code = _editor_inspector.get_edited_object() as BlockCode
 	if not current_block_code:
-		bsd_selected(null)
+		block_script_selected(null)
 
 
-func bsd_selected(bsd: BlockScriptData):
+func block_script_selected(block_script: BlockScriptSerialization):
 	# TODO: We should listen for property changes in all BlockCode nodes and
 	#       their parents. As a workaround for the UI displaying stale data,
 	#       we'll crudely update the list of BlockCode nodes whenever the
@@ -30,7 +30,7 @@ func bsd_selected(bsd: BlockScriptData):
 
 	_update_node_option_button_items()
 
-	var select_index = _get_index_for_bsd(bsd)
+	var select_index = _get_block_script_index(block_script)
 	if _node_option_button.selected != select_index:
 		_node_option_button.select(select_index)
 
@@ -54,10 +54,10 @@ func _update_node_option_button_items():
 		_node_option_button.set_item_metadata(node_item_index, block_code)
 
 
-func _get_index_for_bsd(bsd: BlockScriptData) -> int:
+func _get_block_script_index(block_script: BlockScriptSerialization) -> int:
 	for index in range(_node_option_button.item_count):
 		var block_code_node = _node_option_button.get_item_metadata(index)
-		if block_code_node.block_script == bsd:
+		if block_code_node.block_script == block_script:
 			return index
 	return -1
 

@@ -58,9 +58,9 @@ func check_errors(new_var_name: String) -> bool:
 	var duplicate_variable_name := false
 	var current_block_code = BlockCodePlugin.main_panel._current_block_code_node
 	if current_block_code:
-		var current_bsd = current_block_code.block_script
-		if current_bsd:
-			for variable in current_bsd.variables:
+		var current_block_script = current_block_code.block_script
+		if current_block_script:
+			for variable in current_block_script.variables:
 				if variable.var_name == new_var_name:
 					duplicate_variable_name = true
 					break

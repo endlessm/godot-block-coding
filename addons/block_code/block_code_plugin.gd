@@ -19,15 +19,14 @@ var _selected_block_code: BlockCode
 var old_feature_profile: String = ""
 
 const DISABLED_CLASSES := [
-	"BlockScriptData",
 	"Block",
 	"ControlBlock",
 	"ParameterBlock",
 	"StatementBlock",
 	"SnapPoint",
-	"SerializedBlockTreeNodeArray",
-	"SerializedBlockTreeNode",
-	"SerializedBlock",
+	"BlockSerialization",
+	"BlockSerializedProperties",
+	"BlockScriptSerialization",
 	"CategoryFactory",
 ]
 

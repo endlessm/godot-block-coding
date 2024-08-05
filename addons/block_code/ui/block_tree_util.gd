@@ -3,7 +3,7 @@ extends Object
 const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 
 
-static func generate_script_from_nodes(nodes: Array[Node], bsd: BlockScriptData) -> String:
+static func generate_script_from_nodes(nodes: Array[Node], block_script: BlockScriptSerialization) -> String:
 	var entry_blocks_by_entry_statement: Dictionary = {}
 
 	for block in nodes:
@@ -18,9 +18,9 @@ static func generate_script_from_nodes(nodes: Array[Node], bsd: BlockScriptData)
 
 	var script: String = ""
 
-	script += "extends %s\n\n" % bsd.script_inherits
+	script += "extends %s\n\n" % block_script.script_inherits
 
-	for variable in bsd.variables:
+	for variable in block_script.variables:
 		script += "var %s: %s\n\n" % [variable.var_name, type_string(variable.var_type)]
 
 	script += "\n"

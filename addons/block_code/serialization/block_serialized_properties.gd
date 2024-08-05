@@ -1,5 +1,7 @@
-class_name SerializedBlock
+class_name BlockSerializedProperties
 extends Resource
+
+# TODO: Remove this class after removing the remaining serialization.
 
 @export var block_class: StringName
 @export var serialized_props: Array

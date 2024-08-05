@@ -33,7 +33,7 @@ const ZOOM_FACTOR: float = 1.1
 @onready var _mouse_override: Control = %MouseOverride
 @onready var _zoom_label: Label = %ZoomLabel
 
-var _current_bsd: BlockScriptData
+var _current_block_script: BlockScriptSerialization
 var _block_scenes_by_class = {}
 var _panning := false
 var zoom: float:
@@ -96,12 +96,12 @@ func set_child(n: Node):
 		set_child(c)
 
 
-func bsd_selected(bsd: BlockScriptData):
+func block_script_selected(block_script: BlockScriptSerialization):
 	clear_canvas()
 
 	var edited_node = EditorInterface.get_inspector().get_edited_object() as Node
 
-	if bsd != _current_bsd:
+	if block_script != _current_block_script:
 		_window.position = Vector2(0, 0)
 		zoom = 1
 
@@ -115,18 +115,18 @@ func bsd_selected(bsd: BlockScriptData):
 	_open_scene_button.disabled = true
 	_replace_block_code_button.disabled = true
 
-	if bsd != null:
-		_load_bsd(bsd)
+	if block_script != null:
+		_load_block_script(block_script)
 		_window.visible = true
 		_zoom_label.visible = true
 
-		if bsd != _current_bsd:
+		if block_script != _current_block_script:
 			reset_window_position()
 	elif edited_node == null:
 		_empty_box.visible = true
 	elif BlockCodePlugin.node_has_block_code(edited_node):
 		# If the selected node has a block code node, but BlockCodePlugin didn't
-		# provide it to bsd_selected, we assume the block code itself is not
+		# provide it to block_script_selected, we assume the block code itself is not
 		# editable. In that case, provide options to either edit the node's
 		# scene file, or override the BlockCode node. This is mostly to avoid
 		# creating a situation where a node has multiple BlockCode nodes.
@@ -139,19 +139,12 @@ func bsd_selected(bsd: BlockScriptData):
 		_selected_node_label.text = _selected_node_label_format.format({"node": edited_node.name})
 		_add_block_code_button.disabled = false
 
-	_current_bsd = bsd
+	_current_block_script = block_script
 
 
-func _load_bsd(bsd: BlockScriptData):
-	for tree in bsd.block_trees.array:
+func _load_block_script(block_script: BlockScriptSerialization):
+	for tree in block_script.block_trees:
 		load_tree(_window, tree)
-
-
-func scene_has_bsd_nodes() -> bool:
-	var scene_root = EditorInterface.get_edited_scene_root()
-	if not scene_root:
-		return false
-	return scene_root.find_children("*", "BlockCode").size() > 0
 
 
 func clear_canvas():
@@ -160,14 +153,14 @@ func clear_canvas():
 		child.queue_free()
 
 
-func load_tree(parent: Node, node: SerializedBlockTreeNode):
+func load_tree(parent: Node, node: BlockSerialization):
 	var scene: Block = Util.instantiate_block(node.name)
 
 	# TODO: Remove once the data/UI decouple is done.
 	if scene == null:
-		var _block_scene_path = _block_scenes_by_class[node.serialized_block.block_class]
+		var _block_scene_path = _block_scenes_by_class[node.block_serialized_properties.block_class]
 		scene = load(_block_scene_path).instantiate()
-	for prop_pair in node.serialized_block.serialized_props:
+	for prop_pair in node.block_serialized_properties.serialized_props:
 		scene.set(prop_pair[0], prop_pair[1])
 
 	scene.position = node.position
@@ -182,14 +175,14 @@ func load_tree(parent: Node, node: SerializedBlockTreeNode):
 
 
 func rebuild_block_trees(undo_redo):
-	var block_trees_array: Array[SerializedBlockTreeNode]
+	var block_trees: Array[BlockSerialization]
 	for c in _window.get_children():
-		block_trees_array.append(build_tree(c, undo_redo))
-	undo_redo.add_undo_property(_current_bsd.block_trees, "array", _current_bsd.block_trees.array)
-	undo_redo.add_do_property(_current_bsd.block_trees, "array", block_trees_array)
+		block_trees.append(build_tree(c, undo_redo))
+	undo_redo.add_undo_property(_current_block_script, "block_trees", _current_block_script.block_trees)
+	undo_redo.add_do_property(_current_block_script, "block_trees", block_trees)
 
 
-func build_tree(block: Block, undo_redo: EditorUndoRedoManager) -> SerializedBlockTreeNode:
+func build_tree(block: Block, undo_redo: EditorUndoRedoManager) -> BlockSerialization:
 	var path_child_pairs = []
 	block.update_resources(undo_redo)
 
@@ -326,6 +319,6 @@ func set_mouse_override(override: bool):
 		_mouse_override.mouse_default_cursor_shape = Control.CURSOR_ARROW
 
 
-func generate_script_from_current_window(bsd: BlockScriptData) -> String:
+func generate_script_from_current_window(block_script: BlockScriptSerialization) -> String:
 	# TODO: implement multiple windows
-	return BlockTreeUtil.generate_script_from_nodes(_window.get_children(), bsd)
+	return BlockTreeUtil.generate_script_from_nodes(_window.get_children(), block_script)
