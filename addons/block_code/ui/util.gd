@@ -1,7 +1,7 @@
 extends Object
 
-const BlockDefinition = preload("res://addons/block_code/block_definition.gd")
-const BlocksCatalog = preload("res://addons/block_code/blocks_catalog.gd")
+const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
+const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
 const SCENE_PER_TYPE = {
