@@ -4,6 +4,7 @@ extends CanvasLayer
 
 const CategoryFactory = preload("res://addons/block_code/ui/picker/categories/category_factory.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
+const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
 
 @export var score_left: int:
 	set = _set_score_left
@@ -63,25 +64,25 @@ func set_player_score(player: String, score: int):
 		_score_labels[player].text = str(score)
 
 
-static func get_custom_blocks() -> Array[Block]:
-	var b: Block
-	var block_list: Array[Block] = []
+static func get_custom_blocks() -> Array[BlockDefinition]:
+	var bd: BlockDefinition
+	var block_definition_list: Array[BlockDefinition] = []
 
 	for player in _POSITIONS_FOR_PLAYER:
-		b = CategoryFactory.BLOCKS["statement_block"].instantiate()
-		b.block_name = "simplescoring_set_score"
-		b.block_type = Types.BlockType.STATEMENT
-		b.block_format = "Set player %s score to {score: INT}" % player
-		b.statement = "score_%s = {score}" % _POSITIONS_FOR_PLAYER[player]
-		b.category = "Info | Score"
-		block_list.append(b)
+		bd = BlockDefinition.new()
+		bd.name = "simplescoring_set_score_%s" % player
+		bd.category = "Info | Score"
+		bd.type = Types.BlockType.STATEMENT
+		bd.display_template = "Set player %s score to {score: INT}" % player
+		bd.code_template = "score_%s = {score}" % _POSITIONS_FOR_PLAYER[player]
+		block_definition_list.append(bd)
 
-		b = CategoryFactory.BLOCKS["statement_block"].instantiate()
-		b.block_name = "simplescoring_change_score"
-		b.block_type = Types.BlockType.STATEMENT
-		b.block_format = "Change player %s score by {score: INT}" % player
-		b.statement = "score_%s += {score}" % _POSITIONS_FOR_PLAYER[player]
-		b.category = "Info | Score"
-		block_list.append(b)
+		bd = BlockDefinition.new()
+		bd.name = "simplescoring_change_score_%s" % player
+		bd.category = "Info | Score"
+		bd.type = Types.BlockType.STATEMENT
+		bd.display_template = "Change player %s score by {score: INT}" % player
+		bd.code_template = "score_%s += {score}" % _POSITIONS_FOR_PLAYER[player]
+		block_definition_list.append(bd)
 
-	return block_list
+	return block_definition_list
