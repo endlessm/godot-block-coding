@@ -21,9 +21,6 @@ size_flags_horizontal = 0
 focus_mode = 2
 mouse_filter = 2
 script = ExtResource("1_0hajy")
-block_name = &"parameter_block"
-label = "Param"
-block_type = 3
 
 [node name="Panel" type="Panel" parent="."]
 unique_name_in_owner = true

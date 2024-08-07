@@ -20,26 +20,18 @@ static func get_category_color(category: String) -> Color:
 
 
 static func instantiate_block(block_definition: BlockDefinition) -> Block:
-	var scene = SCENE_PER_TYPE[block_definition.type]
-	var b = scene.instantiate()
-	b.block_name = block_definition.name
-	if block_definition.type == Types.BlockType.CONTROL:
-		b.block_formats = [block_definition.display_template]
-		b.statements = [block_definition.code_template]
-	else:
-		b.block_format = block_definition.display_template
-		b.statement = block_definition.code_template
-	if block_definition.type == Types.BlockType.VALUE:
-		b.variant_type = block_definition.variant_type
-	elif block_definition.type == Types.BlockType.ENTRY:
-		if block_definition.signal_name != "":
-			b.signal_name = block_definition.signal_name
-	b.defaults = block_definition.defaults
-	b.tooltip_text = block_definition.description
-	b.category = block_definition.category
-	b.color = get_category_color(block_definition.category)
+	if block_definition == null:
+		push_error("Cannot construct block from null block definition.")
+		return null
 
-	return b
+	var scene = SCENE_PER_TYPE.get(block_definition.type)
+	if scene == null:
+		push_error("Cannot instantiate Block from type %s" % block_definition.type)
+		return null
+
+	var block = scene.instantiate()
+	block.definition = block_definition
+	return block
 
 
 static func instantiate_block_by_name(block_name: StringName) -> Block:
