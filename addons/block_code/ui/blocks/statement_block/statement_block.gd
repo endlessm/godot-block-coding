@@ -55,32 +55,6 @@ static func get_scene_path():
 	return "res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"
 
 
-# Override this method to create custom block functionality
-func get_instruction_node() -> InstructionTree.TreeNode:
-	var formatted_statement := statement
-
-	for pair in param_name_input_pairs:
-		formatted_statement = formatted_statement.replace("{%s}" % pair[0], pair[1].get_string())
-
-	formatted_statement = InstructionTree.IDHandler.make_unique(formatted_statement)
-
-	var statement_lines := formatted_statement.split("\n")
-
-	var root: InstructionTree.TreeNode = InstructionTree.TreeNode.new(statement_lines[0])
-	var node := root
-
-	for i in range(1, statement_lines.size()):
-		node.next = InstructionTree.TreeNode.new(statement_lines[i])
-		node = node.next
-
-	if bottom_snap:
-		var snapped_block: Block = bottom_snap.get_snapped_block()
-		if snapped_block:
-			node.next = snapped_block.get_instruction_node()
-
-	return root
-
-
 func format():
 	param_name_input_pairs = format_string(self, %HBoxContainer, block_format, defaults)
 
