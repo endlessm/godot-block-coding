@@ -1,17 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://bk2argmujy0kk"]
+[gd_scene load_steps=6 format=3 uid="uid://bk2argmujy0kk"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/control_block/control_block.gd" id="1_2hbir"]
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/gutter.gd" id="2_6o8pf"]
+[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_lpu3c"]
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/background.gd" id="2_tx0qr"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="3_nhryi"]
 
-[node name="ControlBlock" type="MarginContainer"]
+[node name="ControlBlock" type="MarginContainer" node_paths=PackedStringArray("bottom_snap", "child_snap")]
 size_flags_horizontal = 0
 focus_mode = 2
 mouse_filter = 2
 script = ExtResource("1_2hbir")
-block_name = &"control_block"
-label = "Control Block"
-color = Color(0.59979, 0.536348, 0.876215, 1)
-bottom_snap_path = NodePath("VBoxContainer/SnapPoint")
+bottom_snap = NodePath("VBoxContainer/SnapPoint")
+child_snap = NodePath("VBoxContainer/MarginContainer/Rows/SnapContainer/SnapPoint")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -24,9 +25,7 @@ mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer"]
 layout_mode = 2
-mouse_filter = 2
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_bottom = 30
+theme_override_constants/margin_top = 12
 
 [node name="Rows" type="VBoxContainer" parent="VBoxContainer/MarginContainer"]
 unique_name_in_owner = true
@@ -35,5 +34,65 @@ size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_constants/separation = 0
 
+[node name="Row" type="MarginContainer" parent="VBoxContainer/MarginContainer/Rows"]
+custom_minimum_size = Vector2(80, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="TopBackground" type="Control" parent="VBoxContainer/MarginContainer/Rows/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("2_tx0qr")
+color = Color(1, 1, 1, 1)
+shift_bottom = 20.0
+
+[node name="DragDropArea" parent="VBoxContainer/MarginContainer/Rows/Row" instance=ExtResource("2_lpu3c")]
+layout_mode = 2
+
+[node name="RowHBoxContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/Rows/Row"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 6
+
+[node name="RowHBox" type="HBoxContainer" parent="VBoxContainer/MarginContainer/Rows/Row/RowHBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="SnapContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/Rows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+
+[node name="SnapGutter" type="Control" parent="VBoxContainer/MarginContainer/Rows/SnapContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+script = ExtResource("2_6o8pf")
+color = Color(1, 1, 1, 1)
+
+[node name="SnapPoint" parent="VBoxContainer/MarginContainer/Rows/SnapContainer" instance=ExtResource("3_nhryi")]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 20
+
+[node name="BottomBackground" type="Control" parent="VBoxContainer/MarginContainer/Rows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+script = ExtResource("2_tx0qr")
+color = Color(1, 1, 1, 1)
+shift_top = 20.0
+
 [node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("3_nhryi")]
 layout_mode = 2
+
+[connection signal="mouse_down" from="VBoxContainer/MarginContainer/Rows/Row/DragDropArea" to="." method="_on_drag_drop_area_mouse_down"]
