@@ -60,18 +60,6 @@ func get_serialized_props() -> Array:
 	return props
 
 
-# Override this method to create custom parameter functionality
-func get_parameter_string() -> String:
-	var formatted_statement := statement
-
-	for pair in param_name_input_pairs:
-		formatted_statement = formatted_statement.replace("{%s}" % pair[0], pair[1].get_string())
-
-	formatted_statement = InstructionTree.IDHandler.make_unique(formatted_statement)
-
-	return formatted_statement
-
-
 static func get_block_class():
 	return "ParameterBlock"
 
