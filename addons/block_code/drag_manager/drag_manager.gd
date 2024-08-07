@@ -7,8 +7,8 @@ signal block_modified
 const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canvas.gd")
 const BlockTreeUtil = preload("res://addons/block_code/ui/block_tree_util.gd")
 const Drag = preload("res://addons/block_code/drag_manager/drag.gd")
-const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 const Picker = preload("res://addons/block_code/ui/picker/picker.gd")
+const Util = preload("res://addons/block_code/ui/util.gd")
 
 @export var picker_path: NodePath
 @export var block_canvas_path: NodePath
@@ -64,7 +64,9 @@ func drag_block(block: Block, copied_from: Block = null):
 
 
 func copy_block(block: Block) -> Block:
-	return block.duplicate(DUPLICATE_USE_INSTANTIATION)  # use instantiation
+	var new_block = Util.instantiate_block(block.definition)
+	new_block.color = block.color
+	return new_block
 
 
 func copy_picked_block_and_drag(block: Block):
