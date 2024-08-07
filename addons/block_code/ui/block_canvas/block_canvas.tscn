@@ -60,8 +60,8 @@ theme_override_constants/margin_bottom = 4
 
 [node name="ZoomLabel" type="Label" parent="WindowContainer/Overlay/MarginContainer"]
 unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.470588)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 0.196078)
 theme_override_font_sizes/font_size = 24
 text = "1x"
 horizontal_alignment = 2
