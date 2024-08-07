@@ -56,13 +56,15 @@ func set_raw_input(raw_input):
 			_color_input.color = raw_input
 			_update_panel_bg_color(raw_input)
 		TYPE_VECTOR2:
-			var split = raw_input.split(",")
-			_x_line_edit.text = split[0]
-			_y_line_edit.text = split[1]
+			# Rounding because floats are doubles by default but Vector2s have single components
+			_x_line_edit.text = ("%.4f" % raw_input.x).rstrip("0").rstrip(".")
+			_y_line_edit.text = ("%.4f" % raw_input.y).rstrip("0").rstrip(".")
 		TYPE_BOOL:
 			_bool_input_option.select(raw_input)
+		TYPE_NIL:
+			_line_edit.text = raw_input.trim_suffix("__nil__")
 		_:
-			_line_edit.text = raw_input
+			_line_edit.text = "" if raw_input == null else str(raw_input)
 
 
 func get_raw_input():
@@ -76,9 +78,15 @@ func get_raw_input():
 		TYPE_COLOR:
 			return _color_input.color
 		TYPE_VECTOR2:
-			return _x_line_edit.text + "," + _y_line_edit.text
+			return Vector2(float(_x_line_edit.text), float(_y_line_edit.text))
 		TYPE_BOOL:
 			return bool(_bool_input_option.selected)
+		TYPE_INT:
+			return null if _line_edit.text == "" else int(_line_edit.text)
+		TYPE_FLOAT:
+			return null if _line_edit.text == "" else float(_line_edit.text)
+		TYPE_NIL:
+			return _line_edit.text + "__nil__"
 		_:
 			return _line_edit.text
 
@@ -108,32 +116,6 @@ func get_snapped_block() -> Block:
 	return snap_point.get_snapped_block()
 
 
-func get_string() -> String:
-	var snapped_block: ParameterBlock = get_snapped_block() as ParameterBlock
-	if snapped_block:
-		var generated_string = snapped_block.get_parameter_string()
-		if Types.can_cast(snapped_block.variant_type, variant_type):
-			return Types.cast(generated_string, snapped_block.variant_type, variant_type)
-		else:
-			push_warning("No cast from %s to %s; using '%s' verbatim" % [snapped_block, variant_type, generated_string])
-			return generated_string
-
-	var input = get_raw_input()
-
-	if option:
-		return _option_input.get_item_text(_option_input.selected).to_snake_case()
-
-	match variant_type:
-		TYPE_STRING:
-			return "'%s'" % input.replace("\\", "\\\\").replace("'", "\\'")
-		TYPE_VECTOR2:
-			return "Vector2(%s)" % input
-		TYPE_COLOR:
-			return "Color%s" % str(input)
-		_:
-			return "%s" % input
-
-
 func _validate_and_submit_edit_text(line_edit: Node, type: Variant.Type):
 	if _last_submitted_text[line_edit] == line_edit.text:
 		return
@@ -147,6 +129,7 @@ func _validate_and_submit_edit_text(line_edit: Node, type: Variant.Type):
 				line_edit.text = _last_submitted_text[line_edit]
 				return
 	_last_submitted_text[line_edit] = line_edit.text
+
 	modified.emit()
 
 
