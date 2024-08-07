@@ -4,6 +4,7 @@ extends CharacterBody2D
 
 const CategoryFactory = preload("res://addons/block_code/ui/picker/categories/category_factory.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
+const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
 
 @export var texture: Texture2D:
 	set = _set_texture
@@ -111,35 +112,35 @@ func move_with_player_buttons(player: String, kind: String, delta: float):
 	move_and_slide()
 
 
-static func get_custom_blocks() -> Array[Block]:
-	var b: Block
-	var block_list: Array[Block] = []
+static func get_custom_blocks() -> Array[BlockDefinition]:
+	var bd: BlockDefinition
+	var block_definition_list: Array[BlockDefinition] = []
 
 	# Movement
-	b = CategoryFactory.BLOCKS["statement_block"].instantiate()
-	b.block_name = "simplecharacter_move"
-	b.block_type = Types.BlockType.STATEMENT
-	b.block_format = "Move with {player: OPTION} buttons as {kind: OPTION}"
+	bd = BlockDefinition.new()
+	bd.name = "simplecharacter_move"
+	bd.type = Types.BlockType.STATEMENT
+	bd.category = "Input"
+	bd.display_template = "Move with {player: OPTION} buttons as {kind: OPTION}"
+
 	# TODO: delta here is assumed to be the parameter name of
 	# the _process or _physics_process method:
-	b.statement = 'move_with_player_buttons("{player}", "{kind}", delta)'
-	b.defaults = {
+	bd.code_template = 'move_with_player_buttons("{player}", "{kind}", delta)'
+	bd.defaults = {
 		"player": OptionData.new(["player_1", "player_2"]),
 		"kind": OptionData.new(["top-down", "platformer", "spaceship"]),
 	}
-	b.category = "Input"
-	block_list.append(b)
+	block_definition_list.append(bd)
 
-	var property_blocks = (
-		CategoryFactory
-		. property_to_blocklist(
-			{
-				"name": "speed",
-				"type": TYPE_VECTOR2,
-				"category": "Physics | Velocity",
-			}
-		)
-	)
-	block_list.append_array(property_blocks)
+	var props = [
+		{
+			"name": "speed",
+			"type": TYPE_VECTOR2,
+			"category": "Physics | Velocity",
+		}
+	]
+	for prop in props:
+		var property_blocks = CategoryFactory.property_to_blocklist(prop)
+		block_definition_list.append_array(property_blocks)
 
-	return block_list
+	return block_definition_list
