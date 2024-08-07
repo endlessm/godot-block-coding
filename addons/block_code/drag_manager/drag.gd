@@ -5,7 +5,6 @@ const Background = preload("res://addons/block_code/ui/blocks/utilities/backgrou
 const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canvas.gd")
 const BlockTreeUtil = preload("res://addons/block_code/ui/block_tree_util.gd")
 const Constants = preload("res://addons/block_code/ui/constants.gd")
-const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
 enum DragAction { NONE, PLACE, REMOVE }
@@ -124,11 +123,12 @@ func _snaps_to(node: Node) -> bool:
 		# We only snap to blocks on the canvas:
 		return false
 
-	if _block.block_type != _snap_point.block_type:
-		# We only snap to the same block type:
-		return false
+	# We only snap to the same block type: (HACK: Control blocks can snap to statements)
+	if not (_block.definition.type == Types.BlockType.CONTROL and _snap_point.block_type == Types.BlockType.STATEMENT):
+		if _block.definition.type != _snap_point.block_type:
+			return false
 
-	if _block.block_type == Types.BlockType.VALUE and not Types.can_cast(_block.variant_type, _snap_point.variant_type):
+	if _block.definition.type == Types.BlockType.VALUE and not Types.can_cast(_block.definition.variant_type, _snap_point.variant_type):
 		# We only snap Value blocks to snaps that can cast to same variant:
 		return false
 
@@ -141,7 +141,7 @@ func _snaps_to(node: Node) -> bool:
 	# Check if scope is valid
 	if _block_scope != "":
 		if top_block is EntryBlock:
-			if _block_scope != top_block.get_entry_statement():
+			if _block_scope != top_block.definition.code_template:
 				return false
 		elif top_block:
 			var tree_scope := BlockTreeUtil.get_tree_scope(top_block)
