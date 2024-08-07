@@ -3,7 +3,6 @@ class_name Block
 extends MarginContainer
 
 const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
-const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
 signal drag_started(block: Block)
@@ -101,18 +100,6 @@ func disconnect_signals():
 	var connections: Array = drag_started.get_connections()
 	for c in connections:
 		drag_started.disconnect(c.callable)
-
-
-# Override this method to create custom block functionality
-func get_instruction_node() -> InstructionTree.TreeNode:
-	var node: InstructionTree.TreeNode = InstructionTree.TreeNode.new("")
-
-	if bottom_snap:
-		var snapped_block: Block = bottom_snap.get_snapped_block()
-		if snapped_block:
-			node.next = snapped_block.get_instruction_node()
-
-	return node
 
 
 func update_resources(undo_redo: EditorUndoRedoManager):

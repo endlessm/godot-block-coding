@@ -31,42 +31,6 @@ func _on_drag_drop_area_mouse_down():
 	_drag_started()
 
 
-# Override this method to create custom block functionality
-func get_instruction_node() -> InstructionTree.TreeNode:
-	var root: InstructionTree.TreeNode = InstructionTree.TreeNode.new("")
-	var node: InstructionTree.TreeNode
-
-	for i in snaps.size():
-		var snap: SnapPoint = snaps[i]
-		var formatted_statement: String = statements[i]
-
-		for pair in param_name_input_pairs_array[i]:
-			formatted_statement = formatted_statement.replace("{%s}" % pair[0], pair[1].get_string())
-
-		formatted_statement = InstructionTree.IDHandler.make_unique(formatted_statement)
-
-		var new_node := InstructionTree.TreeNode.new(formatted_statement)
-		if i == 0:
-			node = new_node
-			root = node
-		else:
-			node.next = new_node
-			node = node.next
-
-		var snapped_block: Block = snap.get_snapped_block()
-		if snapped_block:
-			node.add_child(snapped_block.get_instruction_node())
-		else:
-			node.add_child(InstructionTree.TreeNode.new("pass"))
-#
-	if bottom_snap:
-		var snapped_block: Block = bottom_snap.get_snapped_block()
-		if snapped_block:
-			node.next = snapped_block.get_instruction_node()
-
-	return root
-
-
 func get_serialized_props() -> Array:
 	var props := super()
 	props.append_array(serialize_props(["block_formats", "statements", "defaults"]))
