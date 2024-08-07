@@ -1,15 +1,59 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2fibflv3ojys"]
+[gd_scene load_steps=5 format=3 uid="uid://d2fibflv3ojys"]
 
-[ext_resource type="PackedScene" uid="uid://c84vmg3odrtxt" path="res://addons/block_code/ui/blocks/statement_block/statement_block.tscn" id="1_byjbb"]
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/entry_block/entry_block.gd" id="2_3ik8h"]
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/background.gd" id="2_yrw8l"]
+[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="3_v0qw8"]
+[ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="4_yj206"]
 
-[node name="EntryBlock" instance=ExtResource("1_byjbb")]
+[node name="EntryBlock" type="MarginContainer" node_paths=PackedStringArray("child_snap")]
+size_flags_horizontal = 0
 focus_mode = 2
+mouse_filter = 2
 script = ExtResource("2_3ik8h")
-signal_name = ""
-block_name = &"entry_block"
-label = "EntryBlock"
-block_type = 1
+child_snap = NodePath("VBoxContainer/SnapPoint")
 
-[node name="Background" parent="VBoxContainer/TopMarginContainer" index="0"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="TopMarginContainer" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Background" type="Control" parent="VBoxContainer/TopMarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("2_yrw8l")
+color = Color(1, 1, 1, 1)
 show_top = false
+
+[node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("3_v0qw8")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TopMarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopMarginContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("4_yj206")]
+layout_mode = 2
+
+[connection signal="mouse_down" from="VBoxContainer/TopMarginContainer/DragDropArea" to="." method="_on_drag_drop_area_mouse_down"]
