@@ -143,7 +143,7 @@ static func init_block_definition_dictionary():
 		block_definition_dictionary[block_definition.name] = block_definition
 
 
-static func get_files_in_dir_recursive(path: String, ext: String) -> Array:
+static func get_files_in_dir_recursive(path: String, extension: String) -> Array:
 	var files = []
 
 	var dir := DirAccess.open(path)
@@ -155,8 +155,8 @@ static func get_files_in_dir_recursive(path: String, ext: String) -> Array:
 		while file_name != "":
 			var file_path = path + "/" + file_name
 			if dir.current_is_dir():
-				files.append_array(get_files_in_dir_recursive(file_path, ext))
-			elif file_name.ends_with(".tres"):
+				files.append_array(get_files_in_dir_recursive(file_path, extension))
+			elif file_name.ends_with(extension):
 				files.append(file_path)
 
 			file_name = dir.get_next()
@@ -172,40 +172,36 @@ static func _category_cmp(a: BlockCategory, b: BlockCategory) -> bool:
 
 
 static func get_categories(blocks: Array[BlockDefinition], extra_categories: Array[BlockCategory] = []) -> Array[BlockCategory]:
-	var cat_map: Dictionary = {}
-	var extra_cat_map: Dictionary = {}
+	var category_map: Dictionary = {}
+	var extra_category_map: Dictionary = {}
 
-	for cat in extra_categories:
-		extra_cat_map[cat.name] = cat
+	for category in extra_categories:
+		extra_category_map[category.name] = category
 
 	for block in blocks:
-		var block_cat_name: String = block.category
-		var cat: BlockCategory = cat_map.get(block_cat_name)
-		if cat == null:
-			cat = extra_cat_map.get(block_cat_name)
-			if cat == null:
-				var props: Dictionary = BUILTIN_PROPS.get(block_cat_name, {})
+		var block_category_name: String = block.category
+		var category: BlockCategory = category_map.get(block_category_name)
+		if category == null:
+			category = extra_category_map.get(block_category_name)
+			if category == null:
+				var props: Dictionary = BUILTIN_PROPS.get(block_category_name, {})
 				var color: Color = props.get("color", Color.SLATE_GRAY)
 				var order: int = props.get("order", 0)
-				cat = BlockCategory.new(block_cat_name, color, order)
-			cat_map[block_cat_name] = cat
-		cat.block_list.append(block)
+				category = BlockCategory.new(block_category_name, color, order)
+			category_map[block_category_name] = category
+		category.block_list.append(block)
 
 	# Dictionary.values() returns an untyped Array and there's no way to
 	# convert an array type besides Array.assign().
-	var cats: Array[BlockCategory] = []
-	cats.assign(cat_map.values())
-
-	# Always add variables category (if no variable block built in)
-	#var variable_cat_props = CategoryFactory.BUILTIN_PROPS["Variables"]
-	#cats.append(BlockCategory.new("Variables", variable_cat_props.color, variable_cat_props.order))
+	var categories: Array[BlockCategory] = []
+	categories.assign(category_map.values())
 
 	# Accessing a static Callable from a static function fails in 4.2.1.
 	# Use the fully qualified name.
 	# https://github.com/godotengine/godot/issues/86032
-	cats.sort_custom(CategoryFactory._category_cmp)
+	categories.sort_custom(CategoryFactory._category_cmp)
 
-	return cats
+	return categories
 
 
 static func get_block_definition_from_name(block_name: String) -> BlockDefinition:
@@ -307,7 +303,7 @@ static func property_to_blocklist(property: Dictionary) -> Array[BlockDefinition
 		TYPE_INT: 0,
 		TYPE_FLOAT: 0.0,
 		TYPE_VECTOR2: Vector2(0, 0),
-		TYPE_COLOR: Color.SKY_BLUE,
+		TYPE_COLOR: Color.DARK_ORANGE,
 		TYPE_BOOL: true,
 	}
 
@@ -315,7 +311,7 @@ static func property_to_blocklist(property: Dictionary) -> Array[BlockDefinition
 		TYPE_INT: 1,
 		TYPE_FLOAT: 1.0,
 		TYPE_VECTOR2: Vector2(1, 1),
-		TYPE_COLOR: Color.SKY_BLUE,
+		TYPE_COLOR: Color.DARK_ORANGE,
 	}
 
 	if variant_type:
