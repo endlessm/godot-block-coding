@@ -949,7 +949,7 @@ version = 0
 
 [node name="Space" parent="." instance=ExtResource("1_y56ac")]
 
-[node name="PaddleLeft" type="CharacterBody2D" parent="." groups=["paddles"]]
+[node name="PaddleLeft" type="CharacterBody2D" parent="." groups=["affected_by_gravity", "paddles"]]
 modulate = Color(0.509804, 0.360784, 0.972549, 1)
 position = Vector2(64, 544)
 collision_mask = 5
@@ -960,7 +960,7 @@ texture = ExtResource("4_ra7bh")
 script = ExtResource("3_6jaq8")
 block_script = SubResource("Resource_m2svk")
 
-[node name="PaddleRight" type="CharacterBody2D" parent="." groups=["paddles"]]
+[node name="PaddleRight" type="CharacterBody2D" parent="." groups=["affected_by_gravity", "paddles"]]
 modulate = Color(0.509804, 0.360784, 0.972549, 1)
 position = Vector2(1856, 544)
 collision_mask = 5

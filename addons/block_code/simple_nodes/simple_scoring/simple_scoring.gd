@@ -11,10 +11,7 @@ const Types = preload("res://addons/block_code/types/types.gd")
 @export var score_right: int:
 	set = _set_score_right
 
-@onready var _score_labels = {
-	"left": %PlayerLeftScore,
-	"right": %PlayerRightScore,
-}
+var _score_labels: Dictionary
 
 const _POSITIONS_FOR_PLAYER = {
 	"1": "left",
@@ -22,14 +19,53 @@ const _POSITIONS_FOR_PLAYER = {
 }
 
 
-func _init():
-	if self.get_parent():
-		return
+func _create_score_label(player: String) -> Label:
+	var label := Label.new()
 
-	var node = preload("res://addons/block_code/simple_nodes/simple_scoring/_simple_scoring.tscn").instantiate() as Node
-	node.replace_by(self, true)
-	node.queue_free()
-	scene_file_path = ""
+	var x_pos: int
+	match player:
+		"left":
+			x_pos = 240
+		"right":
+			x_pos = 1200
+		_:
+			push_error('Unrecognized SimpleScoring player "%s"' % player)
+
+	label.name = &"Player%sScore" % player.capitalize()
+	label.set_size(Vector2(477, 1080))
+	label.set_position(Vector2(x_pos, 0))
+	label.pivot_offset = Vector2(240, 176)
+	label.size_flags_horizontal = Control.SizeFlags.SIZE_EXPAND_FILL
+	label.size_flags_vertical = Control.SizeFlags.SIZE_FILL
+	label.add_theme_font_size_override("font_size", 200)
+	label.text = "0"
+	label.horizontal_alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_CENTER
+
+	return label
+
+
+func _ready():
+	simple_setup()
+
+
+func simple_setup():
+	add_to_group("hud", true)
+
+	var left_label := _create_score_label("left")
+	_score_labels["left"] = left_label
+	_update_label("left", score_left)
+	add_child(left_label)
+
+	var right_label := _create_score_label("right")
+	_score_labels["right"] = right_label
+	_update_label("right", score_right)
+	add_child(right_label)
+
+
+func _exit_tree():
+	for label in _score_labels.values():
+		label.queue_free()
+	_score_labels.clear()
 
 
 func get_custom_class():
@@ -38,17 +74,13 @@ func get_custom_class():
 
 func _set_score_left(new_score_left):
 	score_left = new_score_left
-	if not is_node_ready():
-		await ready
-	if score_left:
+	if score_left and is_node_ready():
 		_update_label("left", score_left)
 
 
 func _set_score_right(new_score_right):
 	score_right = new_score_right
-	if not is_node_ready():
-		await ready
-	if score_right:
+	if score_right and is_node_ready():
 		_update_label("right", score_right)
 
 
