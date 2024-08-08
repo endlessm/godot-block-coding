@@ -58,13 +58,12 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="ZoomLabel" type="Label" parent="WindowContainer/Overlay/MarginContainer"]
+[node name="ZoomButton" type="Button" parent="WindowContainer/Overlay/MarginContainer"]
 unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.470588)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 0.196078)
+focus_mode = 0
 theme_override_font_sizes/font_size = 24
-text = "1x"
-horizontal_alignment = 2
 
 [node name="MouseOverride" type="MarginContainer" parent="."]
 unique_name_in_owner = true
@@ -139,6 +138,7 @@ theme_type_variation = &"InspectorActionButton"
 text = "Override Block Code"
 icon = ExtResource("2_710vn")
 
+[connection signal="pressed" from="WindowContainer/Overlay/MarginContainer/ZoomButton" to="." method="_on_zoom_button_pressed"]
 [connection signal="pressed" from="SelectedNodeBox/ButtonsBox/AddBlockCodeButton" to="." method="_on_add_block_code_button_pressed"]
 [connection signal="pressed" from="SelectedNodeWithBlockCodeBox/ButtonsBox/OpenSceneButton" to="." method="_on_open_scene_button_pressed"]
 [connection signal="pressed" from="SelectedNodeWithBlockCodeBox/ButtonsBox/ReplaceBlockCodeButton" to="." method="_on_replace_block_code_button_pressed"]

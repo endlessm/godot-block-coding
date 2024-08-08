@@ -31,7 +31,7 @@ const ZOOM_FACTOR: float = 1.1
 @onready var _open_scene_icon = _open_scene_button.get_theme_icon("Load", "EditorIcons")
 
 @onready var _mouse_override: Control = %MouseOverride
-@onready var _zoom_label: Label = %ZoomLabel
+@onready var _zoom_button: Button = %ZoomButton
 
 var _current_block_script: BlockScriptSerialization
 var _block_scenes_by_class = {}
@@ -39,7 +39,7 @@ var _panning := false
 var zoom: float:
 	set(value):
 		_window.scale = Vector2(value, value)
-		_zoom_label.text = "%.1fx" % value
+		_zoom_button.text = "%.1fx" % value
 	get:
 		return _window.scale.x
 
@@ -106,7 +106,7 @@ func block_script_selected(block_script: BlockScriptSerialization):
 		zoom = 1
 
 	_window.visible = false
-	_zoom_label.visible = false
+	_zoom_button.visible = false
 
 	_empty_box.visible = false
 	_selected_node_box.visible = false
@@ -118,7 +118,7 @@ func block_script_selected(block_script: BlockScriptSerialization):
 	if block_script != null:
 		_load_block_script(block_script)
 		_window.visible = true
-		_zoom_label.visible = true
+		_zoom_button.visible = true
 
 		if block_script != _current_block_script:
 			reset_window_position()
@@ -322,3 +322,8 @@ func set_mouse_override(override: bool):
 func generate_script_from_current_window(block_script: BlockScriptSerialization) -> String:
 	# TODO: implement multiple windows
 	return BlockTreeUtil.generate_script_from_nodes(_window.get_children(), block_script)
+
+
+func _on_zoom_button_pressed():
+	zoom = 1.0
+	reset_window_position()
