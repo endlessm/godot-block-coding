@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://srm0bee85n0d"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_junev"]
+
+[resource]
+script = ExtResource("1_junev")
+name = &"continue"
+type = 2
+variant_type = 0
+display_template = "Continue"
+code_template = "continue"
+description = ""
+category = "Loops"
+defaults = {}
+signal_name = ""
