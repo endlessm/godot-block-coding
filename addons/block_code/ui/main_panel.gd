@@ -53,11 +53,7 @@ func _ready():
 func _on_undo_redo_version_changed():
 	if _current_block_code_node == null:
 		return
-
-	var block_script: BlockScriptSerialization = _current_block_code_node.block_script
-	_picker.block_script_selected(block_script, _current_block_code_node.get_parent() if _current_block_code_node else null)
-	_title_bar.block_script_selected(block_script)
-	_block_canvas.block_script_selected(block_script)
+	_refresh_selected_block_script()
 
 
 func _on_show_script_button_pressed():
@@ -117,6 +113,11 @@ func switch_block_code_node(block_code_node: BlockCode):
 	_delete_node_button.disabled = _current_block_code_node == null
 	if _current_block_code_node != null:
 		_try_migration()
+	_refresh_selected_block_script()
+
+
+func _refresh_selected_block_script():
+	var block_script: BlockScriptSerialization = _current_block_code_node.block_script
 	_picker.block_script_selected(block_script, _current_block_code_node.get_parent() if _current_block_code_node else null)
 	_title_bar.block_script_selected(block_script)
 	_block_canvas.block_script_selected(block_script)
@@ -278,3 +279,8 @@ func _create_variable(variable: VariableResource):
 	undo_redo.commit_action()
 
 	_picker.reload_variables(new_variables)
+
+
+func _on_visibility_changed():
+	if visible:
+		_refresh_selected_block_script()

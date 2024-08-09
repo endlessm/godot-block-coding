@@ -117,6 +117,7 @@ mouse_filter = 2
 picker_path = NodePath("../PickerSplit/Picker")
 block_canvas_path = NodePath("../PickerSplit/MarginContainer/VBoxContainer/BlockCanvas")
 
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/ScriptVBox/HBoxContainer/ShowScriptButton" to="." method="_on_show_script_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/ScriptVBox/HBoxContainer/DeleteNodeButton" to="." method="_on_delete_node_button_pressed"]
 [connection signal="add_block_code" from="MarginContainer/HBoxContainer/ScriptVBox/MarginContainer/PickerSplit/MarginContainer/VBoxContainer/BlockCanvas" to="." method="_on_block_canvas_add_block_code"]
