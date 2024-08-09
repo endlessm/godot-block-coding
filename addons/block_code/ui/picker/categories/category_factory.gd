@@ -630,6 +630,18 @@ static func blocks_from_property_list(property_list: Array, selected_props: Dict
 
 static func get_blocks_for_object(object: Object) -> Array[Block]:
 	var blocks: Array[Block] = []
+
+	if object is AnimationPlayer:
+		var animation_player := object as AnimationPlayer
+		for animation_key in animation_player.get_animation_list():
+			var b = BLOCKS["parameter_block"].instantiate()
+			b.variant_type = TYPE_STRING
+			b.block_format = animation_key
+			b.statement = animation_key
+			b.tooltip_text = "The animation '%s' which is attached to this AnimationPlayer." % animation_key
+			b.category = "Graphics | Animation"
+			blocks.append(b)
+
 	return blocks
 
 
