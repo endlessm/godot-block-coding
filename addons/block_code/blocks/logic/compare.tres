@@ -1,0 +1,24 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://pr5wnn3ltkbo"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/option_data.gd" id="1_hcv2h"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_wp40r"]
+
+[sub_resource type="Resource" id="Resource_ie4sg"]
+script = ExtResource("1_hcv2h")
+selected = 0
+items = ["==", ">", "<", ">=", "<=", "!="]
+
+[resource]
+script = ExtResource("1_wp40r")
+name = &"compare"
+description = ""
+category = "Logic | Comparison"
+type = 3
+variant_type = 1
+display_template = "{float1: FLOAT} {op: OPTION} {float2: FLOAT}"
+code_template = "{float1} {op} {float2}"
+defaults = {
+"op": SubResource("Resource_ie4sg")
+}
+signal_name = ""
+scope = ""

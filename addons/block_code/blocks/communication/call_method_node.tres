@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c04j5flmimjvf"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_pg363"]
+
+[resource]
+script = ExtResource("1_pg363")
+name = &"call_method_node"
+type = 2
+variant_type = 0
+display_template = "Call method {method_name: STRING} on node {node: OBJECT}"
+code_template = "{node}.call({method_name})"
+description = "Calls the method/function of the given node"
+category = "Communication | Methods"
+defaults = {}
+signal_name = ""

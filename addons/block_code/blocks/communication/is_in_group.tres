@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://q4cnstftvsiu"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_tjyq5"]
+
+[resource]
+script = ExtResource("1_tjyq5")
+name = &"is_in_group"
+description = "Is this node in the group"
+category = "Communication | Groups"
+type = 3
+variant_type = 1
+display_template = "Is in group {group: STRING}"
+code_template = "is_in_group({group})"
+defaults = {}
+signal_name = ""

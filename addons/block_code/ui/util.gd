@@ -20,7 +20,7 @@ static func instantiate_block(block_name: StringName) -> Block:
 	var scene = SCENE_PER_TYPE[block_definition.type]
 	var b = scene.instantiate()
 	b.block_name = block_definition.name
-	b.block_format = block_definition.label_template
+	b.block_format = block_definition.display_template
 	b.statement = block_definition.code_template
 	b.defaults = block_definition.defaults
 	b.tooltip_text = block_definition.description

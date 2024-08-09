@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ccnjk5s5qb2xe"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_fxxh0"]
+
+[resource]
+script = ExtResource("1_fxxh0")
+name = &"while"
+type = 4
+variant_type = 0
+display_template = "While {condition: BOOL}"
+code_template = "while {condition}:"
+description = "Run the connected blocks as long as [i]condition[/i] is true.\\nHint: snap a [b]Comparison[/b] block into the condition."
+category = "Loops"
+defaults = {}
+signal_name = ""
