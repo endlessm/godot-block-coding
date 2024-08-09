@@ -1,25 +1,35 @@
-[gd_resource type="Resource" script_class="BlockScriptSerialization" load_steps=6 format=3 uid="uid://dit7fykhl3h48"]
+[gd_resource type="Resource" script_class="BlockScriptSerialization" load_steps=8 format=3 uid="uid://dit7fykhl3h48"]
 
-[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization.gd" id="1_barc5"]
-[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialized_properties.gd" id="2_cgfpx"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization_tree.gd" id="1_2v06i"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization.gd" id="1_s220r"]
 [ext_resource type="Script" path="res://addons/block_code/serialization/block_script_serialization.gd" id="4_cqq7x"]
 
-[sub_resource type="Resource" id="Resource_b0aen"]
-script = ExtResource("2_cgfpx")
-block_class = &"EntryBlock"
-serialized_props = [["color", Color(0.92549, 0.231373, 0.34902, 1)], ["scope", ""], ["param_input_strings", {}]]
+[sub_resource type="Resource" id="Resource_tor6h"]
+script = ExtResource("1_s220r")
+name = &"ready"
+children = Array[ExtResource("1_s220r")]([])
+arguments = {}
 
-[sub_resource type="Resource" id="Resource_1h6wi"]
-script = ExtResource("1_barc5")
-name = &"ready_block"
-position = Vector2(54, 47)
-path_child_pairs = []
-block_serialized_properties = SubResource("Resource_b0aen")
+[sub_resource type="Resource" id="Resource_3uwee"]
+script = ExtResource("1_2v06i")
+root = SubResource("Resource_tor6h")
+canvas_position = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_kk4nr"]
+script = ExtResource("1_s220r")
+name = &"process"
+children = Array[ExtResource("1_s220r")]([])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_ki8rq"]
+script = ExtResource("1_2v06i")
+root = SubResource("Resource_kk4nr")
+canvas_position = Vector2(325, 0)
 
 [resource]
 script = ExtResource("4_cqq7x")
 script_inherits = "INHERIT_DEFAULT"
-block_trees = Array[ExtResource("1_barc5")]([SubResource("Resource_1h6wi")])
+block_serialization_trees = Array[ExtResource("1_2v06i")]([SubResource("Resource_3uwee"), SubResource("Resource_ki8rq")])
 variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
 generated_script = "extends INHERIT_DEFAULT"
 version = 0
