@@ -62,8 +62,7 @@ func _on_undo_redo_version_changed():
 
 
 func _on_show_script_button_pressed():
-	var block_script: BlockScriptSerialization = _current_block_code_node.block_script
-	var script: String = _block_canvas.generate_script_from_current_window(block_script)
+	var script: String = _block_canvas.generate_script_from_current_window()
 
 	script_window_requested.emit(script)
 
@@ -149,8 +148,12 @@ func save_script():
 		block_script = block_script.duplicate(true)
 		undo_redo.add_do_property(_current_block_code_node, "block_script", block_script)
 
-	_block_canvas.rebuild_block_trees(undo_redo)
-	var generated_script = _block_canvas.generate_script_from_current_window(block_script)
+	undo_redo.add_undo_property(block_script, "block_serialization_trees", block_script.block_serialization_trees)
+	_block_canvas.rebuild_ast_list()
+	_block_canvas.rebuild_block_serialization_trees()
+	undo_redo.add_do_property(block_script, "block_serialization_trees", block_script.block_serialization_trees)
+
+	var generated_script = _block_canvas.generate_script_from_current_window()
 	if generated_script != block_script.generated_script:
 		undo_redo.add_undo_property(block_script, "generated_script", block_script.generated_script)
 		undo_redo.add_do_property(block_script, "generated_script", generated_script)
@@ -179,10 +182,8 @@ func _input(event):
 
 
 func _print_generated_script():
-	if _current_block_code_node == null:
-		return
-	var block_script: BlockScriptSerialization = _current_block_code_node.block_script
-	var script: String = _block_canvas.generate_script_from_current_window(block_script)
+	var script: String = _block_canvas.generate_script_from_current_window()
+
 	print(script)
 	print("Debug script! (not saved)")
 
