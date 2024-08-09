@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://yipjitb3p66q"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_c5vny"]
+
+[resource]
+script = ExtResource("1_c5vny")
+name = &"multiply"
+description = ""
+category = "Math"
+type = 3
+variant_type = 3
+display_template = "{a: FLOAT} * {b: FLOAT}"
+code_template = "{a} * {b}"
+defaults = {}
+signal_name = ""
+scope = ""

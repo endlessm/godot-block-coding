@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bpvefei72nh3a"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_5qal7"]
+
+[resource]
+script = ExtResource("1_5qal7")
+name = &"add_node_to_group"
+description = "Add the node into the group"
+category = "Communication | Groups"
+type = 2
+variant_type = 0
+display_template = "Add {node: OBJECT} to group {group: STRING}"
+code_template = "{node}.add_to_group({group})"
+defaults = {}
+signal_name = ""
+scope = ""

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b2dwk77hnri8y"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_pec24"]
+
+[resource]
+script = ExtResource("1_pec24")
+name = &"remove_node_from_group"
+type = 2
+variant_type = 0
+display_template = "Remove {node: OBJECT} from group {group: STRING}"
+code_template = "{node}.remove_from_group({group})"
+description = "Remove the node from the group"
+category = "Communication | Groups"
+defaults = {}
+signal_name = ""

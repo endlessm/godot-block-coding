@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cb6ux0amdhhlw"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_lstbo"]
+
+[resource]
+script = ExtResource("1_lstbo")
+name = &"concat"
+description = ""
+category = "Log"
+type = 3
+variant_type = 4
+display_template = "{string1: STRING} + {string2: STRING}"
+code_template = "{string1} + {string2}"
+defaults = {}
+signal_name = ""

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cxvoo3jassq8c"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_c6ly3"]
+
+[resource]
+script = ExtResource("1_c6ly3")
+name = &"if"
+type = 4
+variant_type = 0
+display_template = "If {condition: BOOL}"
+code_template = "if {condition}:"
+description = ""
+category = "Logic | Conditionals"
+defaults = {}
+signal_name = ""

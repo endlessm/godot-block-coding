@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://by53vmmn3wtny"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_kgjks"]
+
+[resource]
+script = ExtResource("1_kgjks")
+name = &"else_if"
+type = 4
+variant_type = 0
+display_template = "Else if {condition: BOOL}"
+code_template = "elif {condition}:"
+description = ""
+category = "Logic | Conditionals"
+defaults = {}
+signal_name = ""

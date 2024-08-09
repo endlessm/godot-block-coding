@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cyu2tntoqf85m"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_oets3"]
+
+[resource]
+script = ExtResource("1_oets3")
+name = &"or"
+description = ""
+category = "Logic | Boolean"
+type = 3
+variant_type = 1
+display_template = "{bool1: BOOL} or {bool2: BOOL}"
+code_template = "{bool1} or {bool2}"
+defaults = {}
+signal_name = ""
+scope = ""

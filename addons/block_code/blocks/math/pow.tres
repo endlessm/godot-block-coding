@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bib11ow5t44to"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_cx5g5"]
+
+[resource]
+script = ExtResource("1_cx5g5")
+name = &"pow"
+description = ""
+category = "Math"
+type = 3
+variant_type = 3
+display_template = "{base: FLOAT} ^ {exp: FLOAT}"
+code_template = "pow({base}, {exp})"
+defaults = {}
+signal_name = ""
+scope = ""
