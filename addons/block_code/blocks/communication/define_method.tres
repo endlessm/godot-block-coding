@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://7r2b2griss3i"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_6e473"]
+
+[resource]
+script = ExtResource("1_6e473")
+name = &"define_method"
+description = "Define a method/function with following code_templates"
+category = "Communication | Methods"
+type = 1
+variant_type = 0
+display_template = "Define method {method_name: NIL}"
+code_template = "func {method_name}():"
+defaults = {}
+signal_name = ""
+scope = ""

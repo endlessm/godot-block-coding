@@ -7,24 +7,8 @@ static var _catalog: Dictionary
 
 
 static func setup():
-	if _catalog:
-		return
-
-	_catalog = {}
-	var block_definition: BlockDefinition = BlockDefinition.new(&"ready_block", Types.BlockType.ENTRY)
-	block_definition.label_template = "On Ready"
-	block_definition.code_template = "func _ready():"
-	block_definition.description = 'Attached blocks will be executed once when the node is "ready"'
-	block_definition.category = "Lifecycle"
-	_catalog[&"ready_block"] = block_definition
-
-	block_definition = BlockDefinition.new(&"print", Types.BlockType.STATEMENT)
-	block_definition.label_template = "print {text: STRING}"
-	block_definition.code_template = "print({text})"
-	block_definition.defaults = {"text": "Hello"}
-	block_definition.description = "Print the text to output"
-	block_definition.category = "Log"
-	_catalog[&"print"] = block_definition
+	# Move dynamic block definitions here?
+	pass
 
 
 static func get_block(block_name: StringName):

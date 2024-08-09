@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dgenw5wyqorvq"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_cdwef"]
+
+[resource]
+script = ExtResource("1_cdwef")
+name = &"remove_from_group"
+type = 2
+variant_type = 0
+display_template = "Remove from group {group: STRING}"
+code_template = "remove_from_group({group})"
+description = "Remove this node from the group"
+category = "Communication | Groups"
+defaults = {}
+signal_name = ""
