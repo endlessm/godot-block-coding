@@ -20,7 +20,7 @@ var scroll_tween: Tween
 var _variable_category_display: VariableCategoryDisplay = null
 
 
-func block_script_selected(block_script: BlockScriptSerialization):
+func block_script_selected(block_script: BlockScriptSerialization, parent_node: Node):
 	if not block_script:
 		reset_picker()
 		return
@@ -41,6 +41,7 @@ func block_script_selected(block_script: BlockScriptSerialization):
 			break
 
 	blocks_to_add.append_array(CategoryFactory.get_inherited_blocks(parent_class))
+	blocks_to_add.append_array(CategoryFactory.get_blocks_for_object(parent_node))
 
 	init_picker(blocks_to_add, categories_to_add)
 	reload_variables(block_script.variables)

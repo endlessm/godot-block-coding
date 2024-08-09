@@ -628,6 +628,11 @@ static func blocks_from_property_list(property_list: Array, selected_props: Dict
 	return block_list
 
 
+static func get_blocks_for_object(object: Object) -> Array[Block]:
+	var blocks: Array[Block] = []
+	return blocks
+
+
 static func get_inherited_blocks(_class_name: String) -> Array[Block]:
 	var blocks: Array[Block] = []
 
