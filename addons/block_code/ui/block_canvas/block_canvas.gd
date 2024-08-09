@@ -2,6 +2,7 @@
 extends MarginContainer
 
 const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
+const BlockSerialization = preload("res://addons/block_code/serialization/block_serialization.gd")
 const BlockTreeUtil = preload("res://addons/block_code/ui/block_tree_util.gd")
 const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
 const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")

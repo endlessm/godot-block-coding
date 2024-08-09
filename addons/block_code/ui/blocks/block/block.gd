@@ -3,6 +3,7 @@ class_name Block
 extends MarginContainer
 
 const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
+const BlockSerialization = preload("res://addons/block_code/serialization/block_serialization.gd")
 const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 

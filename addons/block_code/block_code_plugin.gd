@@ -24,8 +24,6 @@ const DISABLED_CLASSES := [
 	"ParameterBlock",
 	"StatementBlock",
 	"SnapPoint",
-	"BlockSerialization",
-	"BlockSerializedProperties",
 	"BlockScriptSerialization",
 	"CategoryFactory",
 ]
