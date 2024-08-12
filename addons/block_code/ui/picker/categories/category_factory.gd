@@ -172,7 +172,7 @@ static func get_general_blocks() -> Array[Block]:
 
 #region Lifecycle
 
-	b = Util.instantiate_block(&"ready_block")
+	b = Util.instantiate_block(&"ready")
 	block_list.append(b)
 
 	b = BLOCKS["entry_block"].instantiate()
