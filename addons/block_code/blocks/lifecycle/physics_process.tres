@@ -5,11 +5,12 @@
 [resource]
 script = ExtResource("1_s0hq0")
 name = &"physics_process"
+description = "Attached blocks will be executed during the \"physics\" processing step of the main loop"
+category = "Lifecycle"
 type = 1
 variant_type = 0
 display_template = "On Physics Process"
 code_template = "func _physics_process(delta):"
-description = "The following will be executed during the \"physics\" processing step of the main loop"
-category = "Lifecycle"
 defaults = {}
 signal_name = ""
+scope = ""
