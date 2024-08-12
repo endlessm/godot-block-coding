@@ -5,14 +5,14 @@ extends Resource
 const Types = preload("res://addons/block_code/types/types.gd")
 
 @export var name: StringName
-@export var description: String
+@export_multiline var description: String
 @export var category: String
 
 @export var type: Types.BlockType
 @export var variant_type: Variant.Type
 
 @export var display_template: String
-@export var code_template: String
+@export_multiline var code_template: String
 @export var defaults: Dictionary
 
 ## Only for blocks of type Types.ENTRY. If non-empty, this block defines a
