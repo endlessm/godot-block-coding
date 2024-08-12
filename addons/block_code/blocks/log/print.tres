@@ -11,6 +11,8 @@ type = 2
 variant_type = 0
 display_template = "Print {text: STRING}"
 code_template = "print({text})"
-defaults = {}
+defaults = {
+"text": "Hello"
+}
 signal_name = ""
 scope = ""
