@@ -184,92 +184,15 @@ static func get_general_blocks() -> Array[Block]:
 	b = Util.instantiate_block(&"print")
 	block_list.append(b)
 
-#region Communication
+	# Communication
+	for block_name in [&"define_method", &"call_method_group", &"call_method_node"]:
+		b = Util.instantiate_block(block_name)
+		block_list.append(b)
 
-	b = BLOCKS["entry_block"].instantiate()
-	b.block_name = "define_method"
-	# HACK: make signals work with new entry nodes. NIL instead of STRING type allows
-	# plain text input for function name. Should revamp signals later
-	b.block_format = "Define method {method_name: NIL}"
-	b.statement = "func {method_name}():"
-	b.category = "Communication | Methods"
-	b.tooltip_text = "Define a method/function with following statements"
-	block_list.append(b)
+	for block_name in [&"add_to_group", &"add_node_to_group", &"remove_from_group", &"remove_node_from_group", &"is_in_group", &"is_node_in_group"]:
+		b = Util.instantiate_block(block_name)
+		block_list.append(b)
 
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "call_group_method"
-	b.block_format = "Call method {method_name: STRING} in group {group: STRING}"
-	b.statement = "get_tree().call_group({group}, {method_name})"
-	b.category = "Communication | Methods"
-	b.tooltip_text = "Calls the method/function on each member of the given group"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "call_node_method"
-	b.block_format = "Call method {method_name: STRING} in node {node_path: NODE_PATH}"
-	b.statement = (
-		"""
-		var node = get_node({node_path})
-		if node:
-			node.call({method_name})
-		"""
-		. dedent()
-	)
-	b.tooltip_text = "Calls the method/function of the given node"
-	b.category = "Communication | Methods"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "add_to_group"
-	b.block_format = "Add to group {group: STRING}"
-	b.statement = "add_to_group({group})"
-	b.category = "Communication | Groups"
-	b.tooltip_text = "Add this node into the group"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "add_node_to_group"
-	b.block_format = "Add {node: NODE_PATH} to group {group: STRING}"
-	b.statement = "get_node({node}).add_to_group({group})"
-	b.category = "Communication | Groups"
-	b.tooltip_text = "Add the node into the group"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "remove_from_group"
-	b.block_format = "Remove from group {group: STRING}"
-	b.statement = "remove_from_group({group})"
-	b.tooltip_text = "Remove this node from the group"
-	b.category = "Communication | Groups"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "remove_node_from_group"
-	b.block_format = "Remove {node: NODE_PATH} from group {group: STRING}"
-	b.statement = "get_node({node}).remove_from_group({group})"
-	b.tooltip_text = "Remove the node from the group"
-	b.category = "Communication | Groups"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "is_in_group"
-	b.variant_type = TYPE_BOOL
-	b.block_format = "Is in group {group: STRING}"
-	b.statement = "is_in_group({group})"
-	b.tooltip_text = "Is this node in the group"
-	b.category = "Communication | Groups"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "is_node_in_group"
-	b.variant_type = TYPE_BOOL
-	b.block_format = "Is {node: NODE_PATH} in group {group: STRING}"
-	b.statement = "get_node({node}).is_in_group({group})"
-	b.tooltip_text = "Is the node in the group"
-	b.category = "Communication | Groups"
-	block_list.append(b)
-
-#endregion
 #region Variables
 
 	b = BLOCKS["parameter_block"].instantiate()
