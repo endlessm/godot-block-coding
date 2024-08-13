@@ -176,22 +176,9 @@ static func get_general_blocks() -> Array[Block]:
 		block_list.append(b)
 
 	# Loops
-	for block_name in [&"for", &"while", &"break", &"continue"]:
+	for block_name in [&"for", &"while", &"break", &"continue", &"await_scene_ready"]:
 		b = Util.instantiate_block(block_name)
 		block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "await_scene_ready"
-	b.block_format = "Await scene ready"
-	b.statement = (
-		"""
-		if not get_tree().root.is_node_ready():
-			await get_tree().root.ready
-		"""
-		. dedent()
-	)
-	b.category = "Loops"
-	block_list.append(b)
 
 	# Logs
 	b = Util.instantiate_block(&"print")
