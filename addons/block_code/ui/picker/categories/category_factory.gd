@@ -404,6 +404,42 @@ static func get_general_blocks() -> Array[Block]:
 	b.category = "Math"
 	block_list.append(b)
 
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "randf"
+	b.variant_type = TYPE_FLOAT
+	b.block_format = "randf"
+	b.statement = "randf()"
+	b.defaults = {}
+	b.category = "Math"
+	block_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "randf_range"
+	b.variant_type = TYPE_FLOAT
+	b.block_format = "randf_range({from: FLOAT}, {to: FLOAT})"
+	b.statement = "(randf_range({from}, {to}))"
+	b.defaults = {"from": -1.0, "to": 1.0}
+	b.category = "Math"
+	block_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "randi"
+	b.variant_type = TYPE_INT
+	b.block_format = "randi"
+	b.statement = "randi()"
+	b.defaults = {}
+	b.category = "Math"
+	block_list.append(b)
+
+	b = BLOCKS["parameter_block"].instantiate()
+	b.block_name = "randi_range"
+	b.variant_type = TYPE_INT
+	b.block_format = "randi_range({from: INT}, {to: INT})"
+	b.statement = "(randi_range({from}, {to}))"
+	b.defaults = {"from": -1, "to": 1}
+	b.category = "Math"
+	block_list.append(b)
+
 #endregion
 #region Logic
 
