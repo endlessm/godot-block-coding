@@ -193,18 +193,10 @@ static func get_general_blocks() -> Array[Block]:
 		b = Util.instantiate_block(block_name)
 		block_list.append(b)
 
-#region Variables
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "vector2"
-	b.variant_type = TYPE_VECTOR2
-	b.block_format = "Vector2 x: {x: FLOAT} y: {y: FLOAT}"
-	b.statement = "Vector2({x}, {y})"
-	b.defaults = {"x": "0", "y": "0"}
-	b.category = "Variables"
+	# Variables
+	b = Util.instantiate_block(&"vector2")
 	block_list.append(b)
 
-#endregion
 #region Math
 
 	b = BLOCKS["parameter_block"].instantiate()
