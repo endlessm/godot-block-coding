@@ -69,7 +69,8 @@ func get_instruction_node() -> InstructionTree.TreeNode:
 
 func get_serialized_props() -> Array:
 	var props := super()
-	props.append_array(serialize_props(["block_formats", "statements", "defaults"]))
+	if not BlocksCatalog.has_block(block_name):
+		props.append_array(serialize_props(["block_formats", "statements", "defaults"]))
 
 	var _param_input_strings_array = []
 	for param_name_input_pairs in param_name_input_pairs_array:
