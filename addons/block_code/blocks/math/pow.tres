@@ -11,6 +11,9 @@ type = 3
 variant_type = 3
 display_template = "{base: FLOAT} ^ {exp: FLOAT}"
 code_template = "pow({base}, {exp})"
-defaults = {}
+defaults = {
+"base": 1.0,
+"exp": 1.0
+}
 signal_name = ""
 scope = ""

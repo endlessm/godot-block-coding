@@ -197,54 +197,11 @@ static func get_general_blocks() -> Array[Block]:
 	b = Util.instantiate_block(&"vector2")
 	block_list.append(b)
 
-#region Math
+	# Math
+	for block_name in [&"add", &"subtract", &"multiply", &"divide", &"pow"]:
+		b = Util.instantiate_block(block_name)
+		block_list.append(b)
 
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "add_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{a: INT} + {b: INT}"
-	b.statement = "({a} + {b})"
-	b.defaults = {"a": "1", "b": "1"}
-	b.category = "Math"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "subtract_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{a: INT} - {b: INT}"
-	b.statement = "({a} - {b})"
-	b.defaults = {"a": "1", "b": "1"}
-	b.category = "Math"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "multiply_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{a: INT} * {b: INT}"
-	b.statement = "({a} * {b})"
-	b.defaults = {"a": "1", "b": "1"}
-	b.category = "Math"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "divide_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{a: INT} / {b: INT}"
-	b.statement = "({a} / {b})"
-	b.defaults = {"a": "1", "b": "1"}
-	b.category = "Math"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "pow_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{base: INT} ^ {exp: INT}"
-	b.statement = "(pow({base}, {exp}))"
-	b.defaults = {"base": "1", "exp": "1"}
-	b.category = "Math"
-	block_list.append(b)
-
-#endregion
 #region Logic
 
 	b = BLOCKS["control_block"].instantiate()
