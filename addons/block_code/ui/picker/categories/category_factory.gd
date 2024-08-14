@@ -407,37 +407,41 @@ static func get_general_blocks() -> Array[Block]:
 	b = BLOCKS["parameter_block"].instantiate()
 	b.block_name = "randf"
 	b.variant_type = TYPE_FLOAT
-	b.block_format = "randf"
+	b.block_format = "Random number between 0.0 and 1.0"
 	b.statement = "randf()"
 	b.defaults = {}
 	b.category = "Math"
+	b.tooltip_text = "Generate a random floating point number between 0.0 and 1.0 inclusively ([0.0, 1.0])"
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.block_name = "randf_range"
 	b.variant_type = TYPE_FLOAT
-	b.block_format = "randf_range({from: FLOAT}, {to: FLOAT})"
+	b.block_format = "Random number between {from: FLOAT} and {to: FLOAT}"
 	b.statement = "(randf_range({from}, {to}))"
 	b.defaults = {"from": -1.0, "to": 1.0}
 	b.category = "Math"
+	b.tooltip_text = "Generate a random floating point number between [i]from[/i] and [i]to[/i] inclusively"
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.block_name = "randi"
 	b.variant_type = TYPE_INT
-	b.block_format = "randi"
+	b.block_format = "Random number between 0 and 4294967295"
 	b.statement = "randi()"
 	b.defaults = {}
 	b.category = "Math"
+	b.tooltip_text = "Generate a random unsigned 32-bits integer number between 0 and 2^32-1 inclusively ([0, 2^32-1])"
 	block_list.append(b)
 
 	b = BLOCKS["parameter_block"].instantiate()
 	b.block_name = "randi_range"
 	b.variant_type = TYPE_INT
-	b.block_format = "randi_range({from: INT}, {to: INT})"
+	b.block_format = "Random number between {from: INT} and {to: INT}"
 	b.statement = "(randi_range({from}, {to}))"
 	b.defaults = {"from": -1, "to": 1}
 	b.category = "Math"
+	b.tooltip_text = "Generate a random signed 32-bits integer number between [i]from[/i] and [i]to[/i] inclusively. [i]from[/i] and [i]to[/i] can be negative or positive number"
 	block_list.append(b)
 
 #endregion
