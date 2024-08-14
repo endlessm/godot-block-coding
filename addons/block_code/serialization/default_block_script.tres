@@ -11,7 +11,7 @@ serialized_props = [["color", Color(0.92549, 0.231373, 0.34902, 1)], ["scope", "
 
 [sub_resource type="Resource" id="Resource_1h6wi"]
 script = ExtResource("1_barc5")
-name = &"ready_block"
+name = &"ready"
 position = Vector2(54, 47)
 path_child_pairs = []
 block_serialized_properties = SubResource("Resource_b0aen")

@@ -123,7 +123,7 @@ func test_script_no_entry_blocks():
 
 
 func test_basic_script():
-	var ready_block: Block = dup_node(general_blocks["ready_block"])
+	var ready_block: Block = dup_node(general_blocks[&"ready"])
 
 	var print_block: Block = dup_node(general_blocks["print"])
 	# XXX: It seems like this should substitute {text} in the statement,
@@ -158,8 +158,8 @@ func test_basic_script():
 
 
 func test_multiple_entry_script():
-	var ready_block: Block = dup_node(general_blocks["ready_block"])
-	var print_block: Block = dup_node(general_blocks["print"])
+	var ready_block: Block = dup_node(general_blocks[&"ready"])
+	var print_block: Block = dup_node(general_blocks[&"print"])
 	ready_block.bottom_snap.insert_snapped_block(print_block)
 	ready_block.bottom_snap.snapped_block = print_block
 

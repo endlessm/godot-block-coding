@@ -35,7 +35,7 @@ serialized_props = [["color", Color(0.92549, 0.231373, 0.34902, 1)], ["scope", "
 
 [sub_resource type="Resource" id="Resource_yiq7s"]
 script = ExtResource("4_qtggh")
-name = &"ready_block"
+name = &"ready"
 position = Vector2(75, 175)
 path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_q65fe")]]
 block_serialized_properties = SubResource("Resource_q1vhx")
@@ -130,7 +130,7 @@ serialized_props = [["color", Color(0.92549, 0.231373, 0.34902, 1)], ["scope", "
 
 [sub_resource type="Resource" id="Resource_hrubs"]
 script = ExtResource("4_qtggh")
-name = &"ready_block"
+name = &"ready"
 position = Vector2(50, 175)
 path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_ttkrd")]]
 block_serialized_properties = SubResource("Resource_06s7w")
@@ -269,7 +269,7 @@ serialized_props = [["color", Color(0.92549, 0.231373, 0.34902, 1)], ["scope", "
 
 [sub_resource type="Resource" id="Resource_1h6wi"]
 script = ExtResource("4_qtggh")
-name = &"ready_block"
+name = &"ready"
 position = Vector2(54, 47)
 path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_gywyt")]]
 block_serialized_properties = SubResource("Resource_b0aen")
@@ -862,7 +862,7 @@ serialized_props = [["color", Color(0.92549, 0.231373, 0.34902, 1)], ["scope", "
 
 [sub_resource type="Resource" id="Resource_njwj4"]
 script = ExtResource("4_qtggh")
-name = &"ready_block"
+name = &"ready"
 position = Vector2(54, 47)
 path_child_pairs = [[NodePath("VBoxContainer/SnapPoint"), SubResource("Resource_8xxm3")]]
 block_serialized_properties = SubResource("Resource_g3mty")

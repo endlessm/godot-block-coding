@@ -170,60 +170,15 @@ static func get_general_blocks() -> Array[Block]:
 	var b: Block
 	var block_list: Array[Block] = []
 
-#region Lifecycle
+	# Lifecycle
+	for block_name in [&"ready", &"process", &"physics_process", &"queue_free"]:
+		b = Util.instantiate_block(block_name)
+		block_list.append(b)
 
-	b = Util.instantiate_block(&"ready_block")
-	block_list.append(b)
-
-	b = BLOCKS["entry_block"].instantiate()
-	b.block_name = "process_block"
-	b.block_format = "On Process"
-	b.statement = "func _process(delta):"
-	b.tooltip_text = "Attached blocks will be executed during the processing step of the main loop"
-	b.category = "Lifecycle"
-	block_list.append(b)
-
-	b = BLOCKS["entry_block"].instantiate()
-	b.block_name = "physics_process_block"
-	b.block_format = "On Physics Process"
-	b.statement = "func _physics_process(delta):"
-	b.tooltip_text = 'Attached blocks will be executed during the "physics" processing step of the main loop'
-	b.category = "Lifecycle"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "queue_free"
-	b.block_format = "Queue Free"
-	b.statement = "queue_free()"
-	b.tooltip_text = "Queues this node to be deleted at the end of the current frame"
-	b.category = "Lifecycle"
-	block_list.append(b)
-
-#endregion
-#region Loops
-
-	b = BLOCKS["control_block"].instantiate()
-	b.block_name = "for_loop"
-	b.block_formats = ["repeat {number: INT}"]
-	b.statements = ["for __i in {number}:"]
-	b.category = "Loops"
-	b.tooltip_text = "Run the connected blocks [i]number[/i] times"
-	block_list.append(b)
-
-	b = BLOCKS["control_block"].instantiate()
-	b.block_name = "while_loop"
-	b.block_formats = ["while {condition: BOOL}"]
-	b.statements = ["while {condition}:"]
-	b.category = "Loops"
-	b.tooltip_text = (
-		"""
-	Run the connected blocks as long as [i]condition[/i] is true.
-
-	Hint: snap a [b]Comparison[/b] block into the condition.
-	"""
-		. dedent()
-	)
-	block_list.append(b)
+	# Loops
+	for block_name in [&"for", &"while", &"break", &"continue"]:
+		b = Util.instantiate_block(block_name)
+		block_list.append(b)
 
 	b = BLOCKS["statement_block"].instantiate()
 	b.block_name = "await_scene_ready"
@@ -238,27 +193,10 @@ static func get_general_blocks() -> Array[Block]:
 	b.category = "Loops"
 	block_list.append(b)
 
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "break"
-	b.block_format = "Break"
-	b.statement = "break"
-	b.category = "Loops"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "continue"
-	b.block_format = "Continue"
-	b.statement = "continue"
-	b.category = "Loops"
-	block_list.append(b)
-
-#endregion
-#region Logs
-
+	# Logs
 	b = Util.instantiate_block(&"print")
 	block_list.append(b)
 
-#endregion
 #region Communication
 
 	b = BLOCKS["entry_block"].instantiate()
