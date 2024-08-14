@@ -18,6 +18,8 @@ variant_type = 1
 display_template = "{float1: FLOAT} {op: OPTION} {float2: FLOAT}"
 code_template = "{float1} {op} {float2}"
 defaults = {
+"float1": 1.0,
+"float2": 1.0,
 "op": SubResource("Resource_ie4sg")
 }
 signal_name = ""

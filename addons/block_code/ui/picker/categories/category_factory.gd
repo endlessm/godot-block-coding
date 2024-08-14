@@ -202,53 +202,11 @@ static func get_general_blocks() -> Array[Block]:
 		b = Util.instantiate_block(block_name)
 		block_list.append(b)
 
-#region Logic
-
-	b = BLOCKS["control_block"].instantiate()
-	b.block_name = "if"
-	b.block_formats = ["if {condition: BOOL}"]
-	b.statements = ["if {condition}:"]
-	b.category = "Logic | Conditionals"
-	block_list.append(b)
-
-	b = BLOCKS["control_block"].instantiate()
-	b.block_name = "if_else"
-	b.block_formats = ["if {condition: BOOL}", "else"]
-	b.statements = ["if {condition}:", "else:"]
-	b.category = "Logic | Conditionals"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "compare_int"
-	b.variant_type = TYPE_BOOL
-	b.block_format = "{int1: INT} {op: OPTION} {int2: INT}"
-	b.statement = "({int1} {op} {int2})"
-	b.defaults = {
-		"op": OptionData.new(["==", ">", "<", ">=", "<=", "!="]),
-		"int1": "1",
-		"int2": "1",
-	}
-	b.category = "Logic | Comparison"
-	block_list.append(b)
-
-	for op in ["and", "or"]:
-		b = BLOCKS["parameter_block"].instantiate()
-		b.block_name = op
-		b.variant_type = TYPE_BOOL
-		b.block_format = "{bool1: BOOL} %s {bool2: BOOL}" % op
-		b.statement = "({bool1} %s {bool2})" % op
-		b.category = "Logic | Boolean"
+	# Logic
+	for block_name in [&"if", &"else_if", &"else", &"compare", &"and", &"or", &"not"]:
+		b = Util.instantiate_block(block_name)
 		block_list.append(b)
 
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "not"
-	b.variant_type = TYPE_BOOL
-	b.block_format = "Not {bool: BOOL}"
-	b.statement = "(not {bool})"
-	b.category = "Logic | Boolean"
-	block_list.append(b)
-
-#endregion
 #region Input
 
 	block_list.append_array(_get_input_blocks())
