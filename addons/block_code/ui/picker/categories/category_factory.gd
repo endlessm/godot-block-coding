@@ -564,6 +564,7 @@ static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 	var variant_type = property.type
 
 	const FALLBACK_SET_FOR_TYPE = {
+		TYPE_BOOL: false,
 		TYPE_INT: "0",
 		TYPE_FLOAT: "0",
 		TYPE_VECTOR2: "0,0",
@@ -571,6 +572,7 @@ static func property_to_blocklist(property: Dictionary) -> Array[Block]:
 	}
 
 	const FALLBACK_CHANGE_FOR_TYPE = {
+		TYPE_BOOL: true,
 		TYPE_INT: "1",
 		TYPE_FLOAT: "1",
 		TYPE_VECTOR2: "1,1",
@@ -722,6 +724,31 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				"mass": {"category": "Physics | Mass"},
 				"linear_velocity": {"category": "Physics | Velocity"},
 				"angular_velocity": {"category": "Physics | Velocity"},
+			}
+
+		"AudioStreamPlayer":
+			var b = BLOCKS["statement_block"].instantiate()
+			b.block_name = "audiostreamplayer_play"
+			b.block_format = "Play"
+			b.statement = "play()"
+			b.tooltip_text = "Play the audio stream"
+			b.category = "Sounds"
+			block_list.append(b)
+
+			b = BLOCKS["statement_block"].instantiate()
+			b.block_name = "audiostreamplayer_stop"
+			b.block_format = "Stop"
+			b.statement = "stop()"
+			b.tooltip_text = "Stop the audio stream"
+			b.category = "Sounds"
+			block_list.append(b)
+
+			props = {
+				"stream_paused":
+				{
+					"category": "Sounds",
+					"has_change": false,
+				},
 			}
 
 		"AnimationPlayer":
