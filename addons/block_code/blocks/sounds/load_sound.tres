@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://coefocdmytg0j"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_4w4si"]
+
+[resource]
+script = ExtResource("1_4w4si")
+name = &"load_sound"
+description = "Load a resource file as the audio stream"
+category = "Sounds"
+type = 2
+variant_type = 0
+display_template = "Load file {file_path: STRING} as sound {name: STRING}"
+code_template = "var __sound = AudioStreamPlayer.new()
+__sound.name = {name}
+__sound.set_stream(load({file_path}))
+add_child(__sound)
+"
+defaults = {}
+signal_name = ""
+scope = ""

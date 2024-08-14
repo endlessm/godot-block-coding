@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://csg40u5awp1sy"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_rfujh"]
+
+[resource]
+script = ExtResource("1_rfujh")
+name = &"stop_sound"
+description = "Stop the audio stream"
+category = "Sounds"
+type = 2
+variant_type = 0
+display_template = "Stop the sound {name: STRING}"
+code_template = "var __sound_node = get_node({name})
+__sound_node.stop()
+"
+defaults = {
+"db": 0.0,
+"pitch": 1.0
+}
+signal_name = ""
+scope = ""
