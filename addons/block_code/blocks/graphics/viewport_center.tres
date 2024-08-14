@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://1536itmdu8yo"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_rc1so"]
+
+[resource]
+script = ExtResource("1_rc1so")
+name = &"viewport_center"
+description = ""
+category = "Graphics | Viewport"
+type = 3
+variant_type = 5
+display_template = "Viewport Center"
+code_template = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()"
+defaults = {}
+signal_name = ""
+scope = ""

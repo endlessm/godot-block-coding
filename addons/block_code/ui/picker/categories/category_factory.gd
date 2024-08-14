@@ -215,33 +215,10 @@ static func get_general_blocks() -> Array[Block]:
 		b = Util.instantiate_block(block_name)
 		block_list.append(b)
 
-#region Graphics
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "viewport_width"
-	b.variant_type = TYPE_FLOAT
-	b.block_format = "Viewport Width"
-	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.x / scale.x + get_viewport_rect().size.x / scale.x).call()"
-	b.category = "Graphics | Viewport"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "viewport_height"
-	b.variant_type = TYPE_FLOAT
-	b.block_format = "Viewport Height"
-	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.y / scale.y + get_viewport_rect().size.y / scale.y).call()"
-	b.category = "Graphics | Viewport"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "viewport_center"
-	b.variant_type = TYPE_VECTOR2
-	b.block_format = "Viewport Center"
-	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()"
-	b.category = "Graphics | Viewport"
-	block_list.append(b)
-
-#endregion
+	# Graphics
+	for block_name in [&"viewport_width", &"viewport_height", &"viewport_center"]:
+		b = Util.instantiate_block(block_name)
+		block_list.append(b)
 
 	return block_list
 
