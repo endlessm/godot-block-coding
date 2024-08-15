@@ -1,0 +1,19 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b3b1dyarh2hmo"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_hk574"]
+
+[resource]
+script = ExtResource("1_hk574")
+name = &"randi_range"
+description = "Generate a random signed 32-bits integer number between [i]from[/i] and [i]to[/i] inclusively. [i]from[/i] and [i]to[/i] can be a negative or positive number"
+category = "Math"
+type = 3
+variant_type = 2
+display_template = "Random integer number between {from: INT} and {to: INT}"
+code_template = "randi_range({from}, {to})"
+defaults = {
+"from": 0,
+"to": 100
+}
+signal_name = ""
+scope = ""
