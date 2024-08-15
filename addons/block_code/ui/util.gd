@@ -7,6 +7,7 @@ const Types = preload("res://addons/block_code/types/types.gd")
 const SCENE_PER_TYPE = {
 	Types.BlockType.ENTRY: preload("res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"),
 	Types.BlockType.STATEMENT: preload("res://addons/block_code/ui/blocks/statement_block/statement_block.tscn"),
+	Types.BlockType.VALUE: preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn"),
 	Types.BlockType.CONTROL: preload("res://addons/block_code/ui/blocks/control_block/control_block.tscn"),
 }
 
@@ -27,11 +28,14 @@ static func instantiate_block(block_name: StringName) -> Block:
 	else:
 		b.block_format = block_definition.display_template
 		b.statement = block_definition.code_template
+	if block_definition.type == Types.BlockType.VALUE:
+		b.variant_type = block_definition.variant_type
+	elif block_definition.type == Types.BlockType.ENTRY:
+		if block_definition.signal_name != "":
+			b.signal_name = block_definition.signal_name
 	b.defaults = block_definition.defaults
 	b.tooltip_text = block_definition.description
 	b.category = block_definition.category
-	if block_definition.type == Types.BlockType.ENTRY and block_definition.signal_name != "":
-		b.signal_name = block_definition.signal_name
 	return b
 
 

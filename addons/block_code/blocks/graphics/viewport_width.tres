@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bt78ajp56ga24"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_ll4rh"]
+
+[resource]
+script = ExtResource("1_ll4rh")
+name = &"viewport_width"
+description = ""
+category = "Graphics | Viewport"
+type = 3
+variant_type = 3
+display_template = "Viewport Width"
+code_template = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.x / scale.x + get_viewport_rect().size.x / scale.x).call()"
+defaults = {}
+signal_name = ""
+scope = ""

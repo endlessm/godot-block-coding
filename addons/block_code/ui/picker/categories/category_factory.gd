@@ -176,322 +176,49 @@ static func get_general_blocks() -> Array[Block]:
 		block_list.append(b)
 
 	# Loops
-	for block_name in [&"for", &"while", &"break", &"continue"]:
+	for block_name in [&"for", &"while", &"break", &"continue", &"await_scene_ready"]:
 		b = Util.instantiate_block(block_name)
 		block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "await_scene_ready"
-	b.block_format = "Await scene ready"
-	b.statement = (
-		"""
-		if not get_tree().root.is_node_ready():
-			await get_tree().root.ready
-		"""
-		. dedent()
-	)
-	b.category = "Loops"
-	block_list.append(b)
 
 	# Logs
 	b = Util.instantiate_block(&"print")
 	block_list.append(b)
 
-#region Communication
-
-	b = BLOCKS["entry_block"].instantiate()
-	b.block_name = "define_method"
-	# HACK: make signals work with new entry nodes. NIL instead of STRING type allows
-	# plain text input for function name. Should revamp signals later
-	b.block_format = "Define method {method_name: NIL}"
-	b.statement = "func {method_name}():"
-	b.category = "Communication | Methods"
-	b.tooltip_text = "Define a method/function with following statements"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "call_group_method"
-	b.block_format = "Call method {method_name: STRING} in group {group: STRING}"
-	b.statement = "get_tree().call_group({group}, {method_name})"
-	b.category = "Communication | Methods"
-	b.tooltip_text = "Calls the method/function on each member of the given group"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "call_node_method"
-	b.block_format = "Call method {method_name: STRING} in node {node_path: NODE_PATH}"
-	b.statement = (
-		"""
-		var node = get_node({node_path})
-		if node:
-			node.call({method_name})
-		"""
-		. dedent()
-	)
-	b.tooltip_text = "Calls the method/function of the given node"
-	b.category = "Communication | Methods"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "add_to_group"
-	b.block_format = "Add to group {group: STRING}"
-	b.statement = "add_to_group({group})"
-	b.category = "Communication | Groups"
-	b.tooltip_text = "Add this node into the group"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "add_node_to_group"
-	b.block_format = "Add {node: NODE_PATH} to group {group: STRING}"
-	b.statement = "get_node({node}).add_to_group({group})"
-	b.category = "Communication | Groups"
-	b.tooltip_text = "Add the node into the group"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "remove_from_group"
-	b.block_format = "Remove from group {group: STRING}"
-	b.statement = "remove_from_group({group})"
-	b.tooltip_text = "Remove this node from the group"
-	b.category = "Communication | Groups"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "remove_node_from_group"
-	b.block_format = "Remove {node: NODE_PATH} from group {group: STRING}"
-	b.statement = "get_node({node}).remove_from_group({group})"
-	b.tooltip_text = "Remove the node from the group"
-	b.category = "Communication | Groups"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "is_in_group"
-	b.variant_type = TYPE_BOOL
-	b.block_format = "Is in group {group: STRING}"
-	b.statement = "is_in_group({group})"
-	b.tooltip_text = "Is this node in the group"
-	b.category = "Communication | Groups"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "is_node_in_group"
-	b.variant_type = TYPE_BOOL
-	b.block_format = "Is {node: NODE_PATH} in group {group: STRING}"
-	b.statement = "get_node({node}).is_in_group({group})"
-	b.tooltip_text = "Is the node in the group"
-	b.category = "Communication | Groups"
-	block_list.append(b)
-
-#endregion
-#region Variables
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "vector2"
-	b.variant_type = TYPE_VECTOR2
-	b.block_format = "Vector2 x: {x: FLOAT} y: {y: FLOAT}"
-	b.statement = "Vector2({x}, {y})"
-	b.defaults = {"x": "0", "y": "0"}
-	b.category = "Variables"
-	block_list.append(b)
-
-#endregion
-#region Math
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "add_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{a: INT} + {b: INT}"
-	b.statement = "({a} + {b})"
-	b.defaults = {"a": "1", "b": "1"}
-	b.category = "Math"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "subtract_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{a: INT} - {b: INT}"
-	b.statement = "({a} - {b})"
-	b.defaults = {"a": "1", "b": "1"}
-	b.category = "Math"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "multiply_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{a: INT} * {b: INT}"
-	b.statement = "({a} * {b})"
-	b.defaults = {"a": "1", "b": "1"}
-	b.category = "Math"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "divide_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{a: INT} / {b: INT}"
-	b.statement = "({a} / {b})"
-	b.defaults = {"a": "1", "b": "1"}
-	b.category = "Math"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "pow_int"
-	b.variant_type = TYPE_INT
-	b.block_format = "{base: INT} ^ {exp: INT}"
-	b.statement = "(pow({base}, {exp}))"
-	b.defaults = {"base": "1", "exp": "1"}
-	b.category = "Math"
-	block_list.append(b)
-
-#endregion
-#region Logic
-
-	b = BLOCKS["control_block"].instantiate()
-	b.block_name = "if"
-	b.block_formats = ["if {condition: BOOL}"]
-	b.statements = ["if {condition}:"]
-	b.category = "Logic | Conditionals"
-	block_list.append(b)
-
-	b = BLOCKS["control_block"].instantiate()
-	b.block_name = "if_else"
-	b.block_formats = ["if {condition: BOOL}", "else"]
-	b.statements = ["if {condition}:", "else:"]
-	b.category = "Logic | Conditionals"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "compare_int"
-	b.variant_type = TYPE_BOOL
-	b.block_format = "{int1: INT} {op: OPTION} {int2: INT}"
-	b.statement = "({int1} {op} {int2})"
-	b.defaults = {
-		"op": OptionData.new(["==", ">", "<", ">=", "<=", "!="]),
-		"int1": "1",
-		"int2": "1",
-	}
-	b.category = "Logic | Comparison"
-	block_list.append(b)
-
-	for op in ["and", "or"]:
-		b = BLOCKS["parameter_block"].instantiate()
-		b.block_name = op
-		b.variant_type = TYPE_BOOL
-		b.block_format = "{bool1: BOOL} %s {bool2: BOOL}" % op
-		b.statement = "({bool1} %s {bool2})" % op
-		b.category = "Logic | Boolean"
+	# Communication
+	for block_name in [&"define_method", &"call_method_group", &"call_method_node"]:
+		b = Util.instantiate_block(block_name)
 		block_list.append(b)
 
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "not"
-	b.variant_type = TYPE_BOOL
-	b.block_format = "Not {bool: BOOL}"
-	b.statement = "(not {bool})"
-	b.category = "Logic | Boolean"
+	for block_name in [&"add_to_group", &"add_node_to_group", &"remove_from_group", &"remove_node_from_group", &"is_in_group", &"is_node_in_group"]:
+		b = Util.instantiate_block(block_name)
+		block_list.append(b)
+
+	# Variables
+	b = Util.instantiate_block(&"vector2")
 	block_list.append(b)
 
-#endregion
-#region Input
+	# Math
+	for block_name in [&"add", &"subtract", &"multiply", &"divide", &"pow"]:
+		b = Util.instantiate_block(block_name)
+		block_list.append(b)
 
+	# Logic
+	for block_name in [&"if", &"else_if", &"else", &"compare", &"and", &"or", &"not"]:
+		b = Util.instantiate_block(block_name)
+		block_list.append(b)
+
+	# Input
 	block_list.append_array(_get_input_blocks())
 
-#endregion
-#region Sounds
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "load_sound"
-	b.block_type = Types.BlockType.STATEMENT
-	b.block_format = "Load file {file_path: STRING} as sound {name: STRING}"
-	b.statement = (
-		"""
-		var __sound = AudioStreamPlayer.new()
-		__sound.name = {name}
-		__sound.set_stream(load({file_path}))
-		add_child(__sound)
-		"""
-		. dedent()
-	)
-	b.tooltip_text = "Load a resource file as the audio stream"
-	b.category = "Sounds"
-	block_list.append(b)
+	# Sounds
+	for block_name in [&"load_sound", &"play_sound", &"pause_continue_sound", &"stop_sound"]:
+		b = Util.instantiate_block(block_name)
+		block_list.append(b)
 
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "play_sound"
-	b.block_type = Types.BlockType.STATEMENT
-	b.block_format = "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"
-	b.statement = (
-		"""
-		var __sound_node = get_node({name})
-		__sound_node.volume_db = {db}
-		__sound_node.pitch_scale = {pitch}
-		__sound_node.play()
-		"""
-		. dedent()
-	)
-	b.defaults = {"db": "0.0", "pitch": "1.0"}
-	b.tooltip_text = "Play the audio stream with volume and pitch"
-	b.category = "Sounds"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "pause_continue_sound"
-	b.block_type = Types.BlockType.STATEMENT
-	b.block_format = "{pause: OPTION} the sound {name: STRING}"
-	b.statement = (
-		"""
-		var __sound_node = get_node({name})
-		if "{pause}" == "pause":
-			__sound_node.stream_paused = true
-		else:
-			__sound_node.stream_paused = false
-		"""
-		. dedent()
-	)
-	b.defaults = {"pause": OptionData.new(["Pause", "Continue"])}
-	b.tooltip_text = "Pause/Continue the audio stream"
-	b.category = "Sounds"
-	block_list.append(b)
-
-	b = BLOCKS["statement_block"].instantiate()
-	b.block_name = "stop_sound"
-	b.block_type = Types.BlockType.STATEMENT
-	b.block_format = "Stop the sound {name: STRING}"
-	b.statement = (
-		"""
-		var __sound_node = get_node({name})
-		__sound_node.stop()
-		"""
-		. dedent()
-	)
-	b.tooltip_text = "Stop the audio stream"
-	b.category = "Sounds"
-	block_list.append(b)
-#endregion
-#region Graphics
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "viewport_width"
-	b.variant_type = TYPE_FLOAT
-	b.block_format = "Viewport Width"
-	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.x / scale.x + get_viewport_rect().size.x / scale.x).call()"
-	b.category = "Graphics | Viewport"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "viewport_height"
-	b.variant_type = TYPE_FLOAT
-	b.block_format = "Viewport Height"
-	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.y / scale.y + get_viewport_rect().size.y / scale.y).call()"
-	b.category = "Graphics | Viewport"
-	block_list.append(b)
-
-	b = BLOCKS["parameter_block"].instantiate()
-	b.block_name = "viewport_center"
-	b.variant_type = TYPE_VECTOR2
-	b.block_format = "Viewport Center"
-	b.statement = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()"
-	b.category = "Graphics | Viewport"
-	block_list.append(b)
-
-#endregion
+	# Graphics
+	for block_name in [&"viewport_width", &"viewport_height", &"viewport_center"]:
+		b = Util.instantiate_block(block_name)
+		block_list.append(b)
 
 	return block_list
 

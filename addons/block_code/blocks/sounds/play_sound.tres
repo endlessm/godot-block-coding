@@ -1,0 +1,23 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dt022ilveapt5"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_llfp1"]
+
+[resource]
+script = ExtResource("1_llfp1")
+name = &"play_sound"
+description = "Play the audio stream with volume and pitch"
+category = "Sounds"
+type = 2
+variant_type = 0
+display_template = "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"
+code_template = "var __sound_node = get_node({name})
+__sound_node.volume_db = {db}
+__sound_node.pitch_scale = {pitch}
+__sound_node.play()
+"
+defaults = {
+"db": 0.0,
+"pitch": 1.0
+}
+signal_name = ""
+scope = ""

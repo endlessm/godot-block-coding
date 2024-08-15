@@ -11,6 +11,9 @@ type = 3
 variant_type = 3
 display_template = "{a: FLOAT} - {b: FLOAT}"
 code_template = "{a} - {b}"
-defaults = {}
+defaults = {
+"a": 1.0,
+"b": 1.0
+}
 signal_name = ""
 scope = ""

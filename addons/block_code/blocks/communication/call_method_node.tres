@@ -5,11 +5,12 @@
 [resource]
 script = ExtResource("1_pg363")
 name = &"call_method_node"
-type = 2
-variant_type = 0
-display_template = "Call method {method_name: STRING} on node {node: OBJECT}"
-code_template = "{node}.call({method_name})"
 description = "Calls the method/function of the given node"
 category = "Communication | Methods"
+type = 2
+variant_type = 0
+display_template = "Call method {method_name: STRING} in node {node: OBJECT}"
+code_template = "{node}.call({method_name})"
 defaults = {}
 signal_name = ""
+scope = ""
