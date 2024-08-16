@@ -25,6 +25,9 @@ jobs:
 
   tests:
     name: Tests
+    strategy:
+      matrix:
+        godot-version: [4.2.2, 4.3.0]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -32,7 +35,7 @@ jobs:
     - name: Setup Godot
       uses: chickensoft-games/setup-godot@v2.1.1
       with:
-        version: 4.2.2
+        version: ${{ matrix.godot-version }}
         use-dotnet: false
     - name: Initialize Godot
       run: |
