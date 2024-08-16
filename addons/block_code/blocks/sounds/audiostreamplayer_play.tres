@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bxjjml7u3rokv"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_vyl5w"]
+
+[resource]
+script = ExtResource("1_vyl5w")
+name = &"audiostreamplayer_play"
+target_node_class = "AudioStreamPlayer"
+description = "Play the audio stream"
+category = "Sounds"
+type = 2
+variant_type = 0
+display_template = "Play"
+code_template = "play()"
+defaults = {}
+signal_name = ""
+scope = ""

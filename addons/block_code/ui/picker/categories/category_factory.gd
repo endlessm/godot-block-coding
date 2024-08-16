@@ -394,22 +394,6 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			}
 
 		"AudioStreamPlayer":
-			var b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "audiostreamplayer_play"
-			b.block_format = "Play"
-			b.statement = "play()"
-			b.tooltip_text = "Play the audio stream"
-			b.category = "Sounds"
-			block_list.append(b)
-
-			b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "audiostreamplayer_stop"
-			b.block_format = "Stop"
-			b.statement = "stop()"
-			b.tooltip_text = "Stop the audio stream"
-			b.category = "Sounds"
-			block_list.append(b)
-
 			props = {
 				"stream_paused":
 				{
