@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c6g6ljp46lfrj"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_lxbvo"]
+
+[resource]
+script = ExtResource("1_lxbvo")
+name = &"cos"
+description = "Calculate the cosine of [i]angle[/i]"
+category = "Math"
+type = 3
+variant_type = 3
+display_template = "cos {angle: FLOAT}"
+code_template = "cos(deg_to_rad({angle}))"
+defaults = {
+"angle": 0.0
+}
+signal_name = ""
+scope = ""
