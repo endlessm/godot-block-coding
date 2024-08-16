@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b36nq4mau6lu6"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_21qth"]
+
+[resource]
+script = ExtResource("1_21qth")
+name = &"area2d_on_exited"
+target_node_class = "Area2D"
+description = ""
+category = "Communication | Methods"
+type = 1
+variant_type = 0
+display_template = "On [body: OBJECT] exited"
+code_template = "func _on_body_exited(body: Node2D):
+"
+defaults = {}
+signal_name = "body_entered"
+scope = ""
