@@ -12,13 +12,7 @@ const SCENE_PER_TYPE = {
 }
 
 
-static func instantiate_block(block_name: StringName) -> Block:
-	BlocksCatalog.setup()
-	var block_definition: BlockDefinition = BlocksCatalog.get_block(block_name)
-	if block_definition == null:
-		push_error("The block %s is not in the catalog yet!" % block_name)
-		return
-
+static func instantiate_block(block_definition: BlockDefinition) -> Block:
 	var scene = SCENE_PER_TYPE[block_definition.type]
 	var b = scene.instantiate()
 	b.block_name = block_definition.name
@@ -37,6 +31,57 @@ static func instantiate_block(block_name: StringName) -> Block:
 	b.tooltip_text = block_definition.description
 	b.category = block_definition.category
 	return b
+
+
+static func instantiate_block_by_name(block_name: StringName) -> Block:
+	BlocksCatalog.setup()
+	var block_definition: BlockDefinition = BlocksCatalog.get_block(block_name)
+	if block_definition == null:
+		push_error("The block %s is not in the catalog yet!" % block_name)
+		return
+	return instantiate_block(block_definition)
+
+
+static func _get_builtin_parents(_class_name: String) -> Array[String]:
+	var parents: Array[String] = []
+	var current = _class_name
+
+	while current != "":
+		parents.append(current)
+		current = ClassDB.get_parent_class(current)
+
+	return parents
+
+
+static func _get_custom_parent_class_name(_custom_class_name: String) -> String:
+	for class_dict in ProjectSettings.get_global_class_list():
+		if class_dict.class != _custom_class_name:
+			continue
+		var script = load(class_dict.path)
+		var builtin_class = script.get_instance_base_type()
+		return builtin_class
+	return "Node"
+
+
+static func _get_parents(_class_name: String) -> Array[String]:
+	if ClassDB.class_exists(_class_name):
+		return _get_builtin_parents(_class_name)
+	var parents: Array[String] = [_class_name]
+	var _parent_class_name = _get_custom_parent_class_name(_class_name)
+	parents.append_array(_get_builtin_parents(_parent_class_name))
+	return parents
+
+
+static func instantiate_blocks_for_class(_class_name: String) -> Array[Block]:
+	BlocksCatalog.setup()
+
+	var blocks: Array[Block] = []
+	for subclass in _get_parents(_class_name):
+		for block_definition in BlocksCatalog.get_blocks_by_class(subclass):
+			var b = instantiate_block(block_definition)
+			blocks.append(b)
+
+	return blocks
 
 
 ## Polyfill of Node.is_part_of_edited_scene(), available to GDScript in Godot 4.3+.

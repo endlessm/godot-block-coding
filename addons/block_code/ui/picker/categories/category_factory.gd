@@ -172,39 +172,39 @@ static func get_general_blocks() -> Array[Block]:
 
 	# Lifecycle
 	for block_name in [&"ready", &"process", &"physics_process", &"queue_free"]:
-		b = Util.instantiate_block(block_name)
+		b = Util.instantiate_block_by_name(block_name)
 		block_list.append(b)
 
 	# Loops
 	for block_name in [&"for", &"while", &"break", &"continue", &"await_scene_ready"]:
-		b = Util.instantiate_block(block_name)
+		b = Util.instantiate_block_by_name(block_name)
 		block_list.append(b)
 
 	# Logs
-	b = Util.instantiate_block(&"print")
+	b = Util.instantiate_block_by_name(&"print")
 	block_list.append(b)
 
 	# Communication
 	for block_name in [&"define_method", &"call_method_group", &"call_method_node"]:
-		b = Util.instantiate_block(block_name)
+		b = Util.instantiate_block_by_name(block_name)
 		block_list.append(b)
 
 	for block_name in [&"add_to_group", &"add_node_to_group", &"remove_from_group", &"remove_node_from_group", &"is_in_group", &"is_node_in_group"]:
-		b = Util.instantiate_block(block_name)
+		b = Util.instantiate_block_by_name(block_name)
 		block_list.append(b)
 
 	# Variables
-	b = Util.instantiate_block(&"vector2")
+	b = Util.instantiate_block_by_name(&"vector2")
 	block_list.append(b)
 
 	# Math
 	for block_name in [&"add", &"subtract", &"multiply", &"divide", &"pow", &"randf_range", &"randi_range", &"sin", &"cos", &"tan"]:
-		b = Util.instantiate_block(block_name)
+		b = Util.instantiate_block_by_name(block_name)
 		block_list.append(b)
 
 	# Logic
 	for block_name in [&"if", &"else_if", &"else", &"compare", &"and", &"or", &"not"]:
-		b = Util.instantiate_block(block_name)
+		b = Util.instantiate_block_by_name(block_name)
 		block_list.append(b)
 
 	# Input
@@ -212,12 +212,12 @@ static func get_general_blocks() -> Array[Block]:
 
 	# Sounds
 	for block_name in [&"load_sound", &"play_sound", &"pause_continue_sound", &"stop_sound"]:
-		b = Util.instantiate_block(block_name)
+		b = Util.instantiate_block_by_name(block_name)
 		block_list.append(b)
 
 	# Graphics
 	for block_name in [&"viewport_width", &"viewport_height", &"viewport_center"]:
-		b = Util.instantiate_block(block_name)
+		b = Util.instantiate_block_by_name(block_name)
 		block_list.append(b)
 
 	return block_list
@@ -297,6 +297,8 @@ static func blocks_from_property_list(property_list: Array, selected_props: Dict
 
 static func get_inherited_blocks(_class_name: String) -> Array[Block]:
 	var blocks: Array[Block] = []
+
+	blocks.append_array(Util.instantiate_blocks_for_class(_class_name))
 
 	var current: String = _class_name
 
