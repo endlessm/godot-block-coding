@@ -5,6 +5,11 @@ extends Resource
 const Types = preload("res://addons/block_code/types/types.gd")
 
 @export var name: StringName
+
+## The target node. Leaving this empty the block is considered a general block
+## (for any node).
+@export var target_node_class: String
+
 @export_multiline var description: String
 @export var category: String
 
@@ -25,6 +30,7 @@ const Types = preload("res://addons/block_code/types/types.gd")
 
 func _init(
 	p_name: StringName = &"",
+	p_target_node_class = "",
 	p_description: String = "",
 	p_category: String = "",
 	p_type: Types.BlockType = Types.BlockType.STATEMENT,
@@ -36,6 +42,7 @@ func _init(
 	p_scope: String = "",
 ):
 	name = p_name
+	target_node_class = p_target_node_class
 	description = p_description
 	category = p_category
 	type = p_type

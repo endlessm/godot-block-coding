@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_0lih2")
 name = &"print"
+target_node_class = ""
 description = "Print the text to output"
 category = "Log"
 type = 2

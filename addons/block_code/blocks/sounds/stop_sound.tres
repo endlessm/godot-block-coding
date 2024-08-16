@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_rfujh")
 name = &"stop_sound"
+target_node_class = ""
 description = "Stop the audio stream"
 category = "Sounds"
 type = 2

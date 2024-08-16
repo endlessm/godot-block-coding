@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_n0dmm")
 name = &"subtract"
+target_node_class = ""
 description = ""
 category = "Math"
 type = 3

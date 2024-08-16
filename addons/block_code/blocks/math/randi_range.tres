@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_hk574")
 name = &"randi_range"
+target_node_class = ""
 description = "Generate a random signed 32-bits integer number between [i]from[/i] and [i]to[/i] inclusively. [i]from[/i] and [i]to[/i] can be a negative or positive number"
 category = "Math"
 type = 3

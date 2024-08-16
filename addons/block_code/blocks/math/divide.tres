@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_rhh7v")
 name = &"divide"
+target_node_class = ""
 description = ""
 category = "Math"
 type = 3
