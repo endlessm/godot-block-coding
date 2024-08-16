@@ -1,0 +1,22 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ses5486g56q"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_72i54"]
+
+[resource]
+script = ExtResource("1_72i54")
+name = &"rigidbody2d_physics_position"
+target_node_class = "RigidBody2D"
+description = ""
+category = "Transform | Position"
+type = 2
+variant_type = 0
+display_template = "Set Physics Position {position: VECTOR2}"
+code_template = "PhysicsServer2D.body_set_state(
+	get_rid(),
+	PhysicsServer2D.BODY_STATE_TRANSFORM,
+	Transform2D.IDENTITY.translated({position})
+)
+"
+defaults = {}
+signal_name = ""
+scope = ""

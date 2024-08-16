@@ -351,42 +351,6 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 			}
 
 		"RigidBody2D":
-			for verb in ["entered", "exited"]:
-				var b = BLOCKS["entry_block"].instantiate()
-				b.block_name = "rigidbody2d_on_%s" % verb
-				b.block_format = "On [body: NODE_PATH] %s" % [verb]
-				# HACK: Blocks refer to nodes by path but the callback receives the node itself;
-				# convert to path
-				b.statement = (
-					(
-						"""
-						func _on_body_%s(_body: Node):
-							var body: NodePath = _body.get_path()
-						"""
-						. dedent()
-					)
-					% [verb]
-				)
-				b.signal_name = "body_%s" % [verb]
-				b.category = "Communication | Methods"
-				block_list.append(b)
-
-			var b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "rigidbody2d_physics_position"
-			b.block_format = "Set Physics Position {position: VECTOR2}"
-			b.statement = (
-				"""
-				PhysicsServer2D.body_set_state(
-					get_rid(),
-					PhysicsServer2D.BODY_STATE_TRANSFORM,
-					Transform2D.IDENTITY.translated({position})
-				)
-				"""
-				. dedent()
-			)
-			b.category = "Transform | Position"
-			block_list.append(b)
-
 			props = {
 				"mass": {"category": "Physics | Mass"},
 				"linear_velocity": {"category": "Physics | Velocity"},
