@@ -163,7 +163,10 @@ func test_multiple_entry_script():
 	ready_block.bottom_snap.insert_snapped_block(print_block)
 	ready_block.bottom_snap.snapped_block = print_block
 
-	var ready_block_2: Block = dup_node(ready_block)
+	var ready_block_2: Block = dup_node(general_blocks[&"ready"])
+	var print_block_2: Block = dup_node(general_blocks[&"print"])
+	ready_block_2.bottom_snap.insert_snapped_block(print_block_2)
+	ready_block_2.bottom_snap.snapped_block = print_block_2
 
 	var block_script := BlockScriptSerialization.new("Node2D")
 	var text_script := BlockTreeUtil.generate_script_from_nodes([ready_block, ready_block_2], block_script)
