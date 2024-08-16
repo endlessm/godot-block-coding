@@ -418,51 +418,6 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				},
 			}
 
-		"AnimationPlayer":
-			var b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "animationplayer_play"
-			b.block_format = "Play {animation: STRING} {direction: OPTION}"
-			b.statement = (
-				"""
-				if "{direction}" == "ahead":
-					play({animation})
-				else:
-					play_backwards({animation})
-				"""
-				. dedent()
-			)
-			b.defaults = {
-				"direction": OptionData.new(["ahead", "backwards"]),
-			}
-			b.tooltip_text = "Play the animation."
-			b.category = "Graphics | Animation"
-			block_list.append(b)
-
-			b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "animationplayer_pause"
-			b.block_format = "Pause"
-			b.statement = "pause()"
-			b.tooltip_text = "Pause the currently playing animation."
-			b.category = "Graphics | Animation"
-			block_list.append(b)
-
-			b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "animationplayer_stop"
-			b.block_format = "Stop"
-			b.statement = "stop()"
-			b.tooltip_text = "Stop the currently playing animation."
-			b.category = "Graphics | Animation"
-			block_list.append(b)
-
-			b = BLOCKS["parameter_block"].instantiate()
-			b.block_name = "animationplayer_is_playing"
-			b.variant_type = TYPE_BOOL
-			b.block_format = "Is playing"
-			b.statement = "is_playing()"
-			b.tooltip_text = "Check if an animation is currently playing."
-			b.category = "Graphics | Animation"
-			block_list.append(b)
-
 		"CharacterBody2D":
 			props = {
 				"velocity": {"category": "Physics | Velocity"},

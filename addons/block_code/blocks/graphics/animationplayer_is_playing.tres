@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://mg4y3o0rsqd5"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_xr50b"]
+
+[resource]
+script = ExtResource("1_xr50b")
+name = &"animationplayer_is_playing"
+target_node_class = "AnimationPlayer"
+description = "Check if an animation is currently playing."
+category = "Graphics | Animation"
+type = 3
+variant_type = 1
+display_template = "Is playing"
+code_template = "is_playing()"
+defaults = {}
+signal_name = ""
+scope = ""

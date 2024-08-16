@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://clopo7gmje5a"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_2enqv"]
+
+[resource]
+script = ExtResource("1_2enqv")
+name = &"animationplayer_pause"
+target_node_class = "AnimationPlayer"
+description = "Pause the currently playing animation."
+category = "Graphics | Animation"
+type = 2
+variant_type = 0
+display_template = "Pause"
+code_template = "pause()"
+defaults = {}
+signal_name = ""
+scope = ""
