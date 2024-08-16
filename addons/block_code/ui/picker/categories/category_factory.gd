@@ -485,37 +485,6 @@ static func get_built_in_blocks(_class_name: String) -> Array[Block]:
 				block_list.append(b)
 
 		"CharacterBody2D":
-			var b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "characterbody2d_move"
-			b.block_type = Types.BlockType.STATEMENT
-			b.block_format = "Move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} with speed {speed: VECTOR2}"
-			b.statement = (
-				"var dir = Vector2()\n"
-				+ "dir.x += float(Input.is_key_pressed(OS.find_keycode_from_string({right})))\n"
-				+ "dir.x -= float(Input.is_key_pressed(OS.find_keycode_from_string({left})))\n"
-				+ "dir.y += float(Input.is_key_pressed(OS.find_keycode_from_string({down})))\n"
-				+ "dir.y -= float(Input.is_key_pressed(OS.find_keycode_from_string({up})))\n"
-				+ "dir = dir.normalized()\n"
-				+ "velocity = dir*{speed}\n"
-				+ "move_and_slide()"
-			)
-			b.defaults = {
-				"up": "W",
-				"down": "S",
-				"left": "A",
-				"right": "D",
-			}
-			b.category = "Input"
-			block_list.append(b)
-
-			b = BLOCKS["statement_block"].instantiate()
-			b.block_name = "characterbody2d_move_and_slide"
-			b.block_type = Types.BlockType.STATEMENT
-			b.block_format = "Move and slide"
-			b.statement = "move_and_slide()"
-			b.category = "Physics | Velocity"
-			block_list.append(b)
-
 			props = {
 				"velocity": {"category": "Physics | Velocity"},
 			}
