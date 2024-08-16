@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b1r7f06rfci6o"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_dlr47"]
+
+[resource]
+script = ExtResource("1_dlr47")
+name = &"sin"
+description = "Calculate the sine of [i]angle[/i]"
+category = "Math"
+type = 3
+variant_type = 3
+display_template = "sin {angle: FLOAT}"
+code_template = "sin(deg_to_rad({angle}))"
+defaults = {
+"angle": 0.0
+}
+signal_name = ""
+scope = ""

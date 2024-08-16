@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://blpo01pjjheqb"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_e2566"]
+
+[resource]
+script = ExtResource("1_e2566")
+name = &"tan"
+description = "Calculate the tangent of [i]angle[/i]"
+category = "Math"
+type = 3
+variant_type = 3
+display_template = "tan {angle: FLOAT}"
+code_template = "tan(deg_to_rad({angle}))"
+defaults = {
+"angle": 0.0
+}
+signal_name = ""
+scope = ""
