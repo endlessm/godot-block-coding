@@ -52,3 +52,7 @@ func _init(
 	defaults = p_defaults
 	signal_name = p_signal_name
 	scope = p_scope
+
+
+func _to_string():
+	return "%s - %s" % [name, target_node_class]
