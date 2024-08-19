@@ -2,7 +2,8 @@
 class_name SimpleCharacter
 extends CharacterBody2D
 
-const CategoryFactory = preload("res://addons/block_code/ui/picker/categories/category_factory.gd")
+const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
+const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
 @export var texture: Texture2D:
@@ -117,35 +118,38 @@ func move_with_player_buttons(player: String, kind: String, delta: float):
 	move_and_slide()
 
 
-static func get_custom_blocks() -> Array[Block]:
-	var b: Block
-	var block_list: Array[Block] = []
+static func setup_custom_blocks():
+	var _class_name = "SimpleCharacter"
+	var block_list: Array[BlockDefinition] = []
 
 	# Movement
-	b = CategoryFactory.BLOCKS["statement_block"].instantiate()
-	b.block_name = "simplecharacter_move"
-	b.block_type = Types.BlockType.STATEMENT
-	b.block_format = "Move with {player: OPTION} buttons as {kind: OPTION}"
+	var block_definition: BlockDefinition = BlockDefinition.new()
+	block_definition.name = &"simplecharacter_move"
+	block_definition.target_node_class = _class_name
+	block_definition.category = "Input"
+	block_definition.type = Types.BlockType.STATEMENT
+	block_definition.display_template = "Move with {player: OPTION} buttons as {kind: OPTION}"
 	# TODO: delta here is assumed to be the parameter name of
 	# the _process or _physics_process method:
-	b.statement = 'move_with_player_buttons("{player}", "{kind}", delta)'
-	b.defaults = {
+	block_definition.code_template = 'move_with_player_buttons("{player}", "{kind}", delta)'
+	block_definition.defaults = {
 		"player": OptionData.new(["player_1", "player_2"]),
 		"kind": OptionData.new(["top-down", "platformer", "spaceship"]),
 	}
-	b.category = "Input"
-	block_list.append(b)
+	block_list.append(block_definition)
 
-	var property_blocks = (
-		CategoryFactory
-		. property_to_blocklist(
-			{
-				"name": "speed",
-				"type": TYPE_VECTOR2,
-				"category": "Physics | Velocity",
-			}
-		)
-	)
-	block_list.append_array(property_blocks)
+	var property_list: Array[Dictionary] = [
+		{
+			"name": "speed",
+			"type": TYPE_VECTOR2,
+		},
+	]
 
-	return block_list
+	var property_settings = {
+		"speed":
+		{
+			"category": "Physics | Velocity",
+		},
+	}
+
+	BlocksCatalog.add_custom_blocks(_class_name, block_list, property_list, property_settings)

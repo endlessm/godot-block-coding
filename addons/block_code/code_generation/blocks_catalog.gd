@@ -188,3 +188,21 @@ static func get_blocks_by_class(_class_name: String):
 		return []
 	var block_definitions = _by_class_name[_class_name] as Dictionary
 	return block_definitions.values()
+
+
+static func add_custom_blocks(
+	_class_name,
+	block_definitions: Array[BlockDefinition] = [],
+	property_list: Array[Dictionary] = [],
+	property_settings: Dictionary = {},
+):
+	setup()
+
+	if not _class_name in _by_class_name:
+		_by_class_name[_class_name] = {}
+
+	for block_definition in block_definitions:
+		_catalog[block_definition.name] = block_definition
+		_by_class_name[_class_name][block_definition.name] = block_definition
+
+	_add_property_definitions(_class_name, property_list, property_settings)

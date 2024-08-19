@@ -25,22 +25,19 @@ func block_script_selected(block_script: BlockScriptSerialization):
 		reset_picker()
 		return
 
-	var blocks_to_add: Array[Block] = []
 	var categories_to_add: Array[BlockCategory] = []
 
-	# By default, assume the class is built-in.
-	var parent_class: String = block_script.script_inherits
 	for class_dict in ProjectSettings.get_global_class_list():
 		if class_dict.class == block_script.script_inherits:
 			var script = load(class_dict.path)
 			if script.has_method("get_custom_categories"):
 				categories_to_add = script.get_custom_categories()
-			if script.has_method("get_custom_blocks"):
-				blocks_to_add = script.get_custom_blocks()
-				parent_class = str(script.get_instance_base_type())
+			if script.has_method("setup_custom_blocks"):
+				script.setup_custom_blocks()
 			break
 
-	blocks_to_add.append_array(CategoryFactory.get_inherited_blocks(parent_class))
+	var blocks_to_add: Array[Block] = []
+	blocks_to_add.append_array(CategoryFactory.get_inherited_blocks(block_script.script_inherits))
 
 	init_picker(blocks_to_add, categories_to_add)
 	reload_variables(block_script.variables)
