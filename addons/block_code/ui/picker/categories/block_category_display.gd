@@ -12,9 +12,5 @@ var category: BlockCategory
 func _ready():
 	_label.text = category.name
 
-	for _block in category.block_list:
-		var block: Block = _block as Block
-
-		block.color = category.color
-
+	for block: Block in category.block_list:
 		_blocks.add_child(block)

@@ -13,6 +13,11 @@ const SCENE_PER_TYPE = {
 }
 
 
+static func get_category_color(category: String) -> Color:
+	var category_props: Dictionary = Constants.BUILTIN_CATEGORIES_PROPS.get(category, {})
+	return category_props.get("color", Color.SLATE_GRAY)
+
+
 static func instantiate_block(block_definition: BlockDefinition) -> Block:
 	var scene = SCENE_PER_TYPE[block_definition.type]
 	var b = scene.instantiate()
@@ -31,6 +36,8 @@ static func instantiate_block(block_definition: BlockDefinition) -> Block:
 	b.defaults = block_definition.defaults
 	b.tooltip_text = block_definition.description
 	b.category = block_definition.category
+	b.color = get_category_color(block_definition.category)
+
 	return b
 
 
