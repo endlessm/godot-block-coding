@@ -159,11 +159,57 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 		_by_class_name[_class_name][block_definition.name] = block_definition
 
 
+static func _get_inputmap_actions() -> Array[StringName]:
+	var inputmap_actions: Array[StringName]
+
+	var editor_input_actions: Dictionary = {}
+	var editor_input_action_deadzones: Dictionary = {}
+	if Engine.is_editor_hint():
+		var actions := InputMap.get_actions()
+		for action in actions:
+			if action.begins_with("spatial_editor"):
+				var events := InputMap.action_get_events(action)
+				editor_input_actions[action] = events
+				editor_input_action_deadzones[action] = InputMap.action_get_deadzone(action)
+
+	InputMap.load_from_project_settings()
+
+	inputmap_actions = InputMap.get_actions()
+
+	if Engine.is_editor_hint():
+		for action in editor_input_actions.keys():
+			InputMap.add_action(action, editor_input_action_deadzones[action])
+			for event in editor_input_actions[action]:
+				InputMap.action_add_event(action, event)
+
+	return inputmap_actions
+
+
 static func _setup_properties_for_class():
 	for _class_name in _SETTINGS_FOR_CLASS_PROPERTY:
 		var property_list = ClassDB.class_get_property_list(_class_name, true)
 		var property_settings = _SETTINGS_FOR_CLASS_PROPERTY[_class_name]
 		_add_property_definitions(_class_name, property_list, property_settings)
+
+
+static func _setup_input_block():
+	var inputmap_actions = _get_inputmap_actions()
+
+	var block_definition: BlockDefinition = (
+		BlockDefinition
+		. new(
+			&"is_input_actioned",
+			"",
+			"",
+			"Input",
+			Types.BlockType.VALUE,
+			TYPE_BOOL,
+			"Is action {action_name: OPTION} {action: OPTION}",
+			'Input.is_action_{action}("{action_name}")',
+			{"action_name": OptionData.new(inputmap_actions), "action": OptionData.new(["pressed", "just_pressed", "just_released"])},
+		)
+	)
+	_catalog[block_definition.name] = block_definition
 
 
 static func setup():
@@ -173,6 +219,7 @@ static func setup():
 	_catalog = {}
 	_setup_definitions_from_files()
 	_setup_properties_for_class()
+	_setup_input_block()
 
 
 static func get_block(block_name: StringName):
