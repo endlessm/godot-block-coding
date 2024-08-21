@@ -45,59 +45,59 @@ static func get_categories(blocks: Array[Block], extra_categories: Array[BlockCa
 
 
 static func get_general_blocks() -> Array[Block]:
-	var b: Block
+	var block: Block
 	var block_list: Array[Block] = []
 
 	# Lifecycle
 	for block_name in [&"ready", &"process", &"physics_process", &"queue_free"]:
-		b = Util.instantiate_block_by_name(block_name)
-		block_list.append(b)
+		block = Util.instantiate_block_by_name(block_name)
+		block_list.append(block)
 
 	# Loops
 	for block_name in [&"for", &"while", &"break", &"continue", &"await_scene_ready"]:
-		b = Util.instantiate_block_by_name(block_name)
-		block_list.append(b)
+		block = Util.instantiate_block_by_name(block_name)
+		block_list.append(block)
 
 	# Logs
-	b = Util.instantiate_block_by_name(&"print")
-	block_list.append(b)
+	block = Util.instantiate_block_by_name(&"print")
+	block_list.append(block)
 
 	# Communication
 	for block_name in [&"define_method", &"call_method_group", &"call_method_node"]:
-		b = Util.instantiate_block_by_name(block_name)
-		block_list.append(b)
+		block = Util.instantiate_block_by_name(block_name)
+		block_list.append(block)
 
 	for block_name in [&"add_to_group", &"add_node_to_group", &"remove_from_group", &"remove_node_from_group", &"is_in_group", &"is_node_in_group"]:
-		b = Util.instantiate_block_by_name(block_name)
-		block_list.append(b)
+		block = Util.instantiate_block_by_name(block_name)
+		block_list.append(block)
 
 	# Variables
-	b = Util.instantiate_block_by_name(&"vector2")
-	block_list.append(b)
+	block = Util.instantiate_block_by_name(&"vector2")
+	block_list.append(block)
 
 	# Math
 	for block_name in [&"add", &"subtract", &"multiply", &"divide", &"pow", &"randf_range", &"randi_range", &"sin", &"cos", &"tan"]:
-		b = Util.instantiate_block_by_name(block_name)
-		block_list.append(b)
+		block = Util.instantiate_block_by_name(block_name)
+		block_list.append(block)
 
 	# Logic
 	for block_name in [&"if", &"else_if", &"else", &"compare", &"and", &"or", &"not"]:
-		b = Util.instantiate_block_by_name(block_name)
-		block_list.append(b)
+		block = Util.instantiate_block_by_name(block_name)
+		block_list.append(block)
 
 	# Input
-	b = Util.instantiate_block_by_name(&"is_input_actioned")
-	block_list.append(b)
+	block = Util.instantiate_block_by_name(&"is_input_actioned")
+	block_list.append(block)
 
 	# Sounds
 	for block_name in [&"load_sound", &"play_sound", &"pause_continue_sound", &"stop_sound"]:
-		b = Util.instantiate_block_by_name(block_name)
-		block_list.append(b)
+		block = Util.instantiate_block_by_name(block_name)
+		block_list.append(block)
 
 	# Graphics
 	for block_name in [&"viewport_width", &"viewport_height", &"viewport_center"]:
-		b = Util.instantiate_block_by_name(block_name)
-		block_list.append(b)
+		block = Util.instantiate_block_by_name(block_name)
+		block_list.append(block)
 
 	return block_list
 
