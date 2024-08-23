@@ -2,6 +2,7 @@
 extends MarginContainer
 
 const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
+const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
 const BlockTreeUtil = preload("res://addons/block_code/ui/block_tree_util.gd")
 const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
 const InstructionTree = preload("res://addons/block_code/instruction_tree/instruction_tree.gd")
@@ -53,6 +54,27 @@ func _ready():
 	if not _open_scene_button.icon and not Util.node_is_part_of_edited_scene(self):
 		_open_scene_button.icon = _open_scene_icon
 	_populate_block_scenes_by_class()
+
+
+func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
+	return true
+
+
+func _drop_data(at_position: Vector2, data: Variant) -> void:
+	if typeof(data) != TYPE_DICTIONARY:
+		return
+
+	data = data as Dictionary
+
+	if data.get("type") != "files":
+		return
+
+	for file in data.get("files", []):
+		var resource = load(file)
+		if resource is BlockDefinition:
+			var block = Util.instantiate_block(resource)
+			add_block(block, at_position)
+			reconnect_block.emit(block)
 
 
 func _populate_block_scenes_by_class():
