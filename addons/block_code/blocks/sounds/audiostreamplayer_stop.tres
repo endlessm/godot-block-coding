@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ib16grbtduab"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_db4g2"]
+
+[resource]
+script = ExtResource("1_db4g2")
+name = &"audiostreamplayer_stop"
+target_node_class = "AudioStreamPlayer"
+description = "Stop the audio stream"
+category = "Sounds"
+type = 2
+variant_type = 0
+display_template = "Stop"
+code_template = "stop()"
+defaults = {}
+signal_name = ""
+scope = ""

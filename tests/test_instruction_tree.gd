@@ -208,9 +208,7 @@ func test_signal_script():
 			extends Area2D
 
 
-
-			func _on_body_entered(_body: Node2D):
-				var body: NodePath = _body.get_path()
+			func _on_body_entered(body: Node2D):
 
 				print({text})
 

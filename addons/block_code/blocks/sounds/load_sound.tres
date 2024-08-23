@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_4w4si")
 name = &"load_sound"
+target_node_class = ""
 description = "Load a resource file as the audio stream"
 category = "Sounds"
 type = 2

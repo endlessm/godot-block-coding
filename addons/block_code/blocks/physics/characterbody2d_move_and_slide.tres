@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cp6ak6wea8ogh"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_e3r2r"]
+
+[resource]
+script = ExtResource("1_e3r2r")
+name = &"characterbody2d_move_and_slide"
+target_node_class = "CharacterBody2D"
+description = ""
+category = "Physics | Velocity"
+type = 2
+variant_type = 0
+display_template = "Move and slide"
+code_template = "move_and_slide()"
+defaults = {}
+signal_name = ""
+scope = ""

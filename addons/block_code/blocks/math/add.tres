@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_rks7c")
 name = &"add"
+target_node_class = ""
 description = ""
 category = "Math"
 type = 3

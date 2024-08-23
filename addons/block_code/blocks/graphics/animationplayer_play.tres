@@ -1,0 +1,29 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://c5e1byehtxwc0"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_emeuv"]
+[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/option_data.gd" id="1_xu43h"]
+
+[sub_resource type="Resource" id="Resource_vnp2w"]
+script = ExtResource("1_xu43h")
+selected = 0
+items = ["ahead", "backwards"]
+
+[resource]
+script = ExtResource("1_emeuv")
+name = &"animationplayer_play"
+target_node_class = "AnimationPlayer"
+description = "Play the animation."
+category = "Graphics | Animation"
+type = 2
+variant_type = 0
+display_template = "Play {animation: STRING} {direction: OPTION}"
+code_template = "if \"{direction}\" == \"ahead\":
+	play({animation})
+else:
+	play_backwards({animation})
+"
+defaults = {
+"direction": SubResource("Resource_vnp2w")
+}
+signal_name = ""
+scope = ""

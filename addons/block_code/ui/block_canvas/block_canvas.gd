@@ -154,7 +154,7 @@ func clear_canvas():
 
 
 func load_tree(parent: Node, node: BlockSerialization):
-	var scene: Block = Util.instantiate_block(node.name)
+	var scene: Block = Util.instantiate_block_by_name(node.name)
 
 	# TODO: Remove once the data/UI decouple is done.
 	if scene == null:

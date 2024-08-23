@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_cx5g5")
 name = &"pow"
+target_node_class = ""
 description = ""
 category = "Math"
 type = 3

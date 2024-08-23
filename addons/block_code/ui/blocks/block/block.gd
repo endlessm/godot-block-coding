@@ -138,9 +138,8 @@ func get_serialized_props() -> Array:
 		return serialize_props(["block_name", "label", "color", "block_type", "position", "scope"])
 
 	# TODO: Remove remaining serialization:
-	# - Derive color from category.
 	# - Handle scope in a different way?
-	return serialize_props(["color", "scope"])
+	return serialize_props(["scope"])
 
 
 func _to_string():

@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_llfp1")
 name = &"play_sound"
+target_node_class = ""
 description = "Play the audio stream with volume and pitch"
 category = "Sounds"
 type = 2

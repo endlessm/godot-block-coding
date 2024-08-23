@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_03jps")
 name = &"randf_range"
+target_node_class = ""
 description = "Generate a random floating point number between [i]from[/i] and [i]to[/i] inclusively"
 category = "Math"
 type = 3

@@ -11,6 +11,7 @@ items = ["Pause", "Continue"]
 [resource]
 script = ExtResource("1_q04gm")
 name = &"pause_continue_sound"
+target_node_class = ""
 description = "Pause/Continue the audio stream"
 category = "Sounds"
 type = 2

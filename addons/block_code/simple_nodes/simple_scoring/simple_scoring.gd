@@ -2,7 +2,8 @@
 class_name SimpleScoring
 extends CanvasLayer
 
-const CategoryFactory = preload("res://addons/block_code/ui/picker/categories/category_factory.gd")
+const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
+const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
 @export var score_left: int:
@@ -95,25 +96,27 @@ func set_player_score(player: String, score: int):
 		_score_labels[player].text = str(score)
 
 
-static func get_custom_blocks() -> Array[Block]:
-	var b: Block
-	var block_list: Array[Block] = []
+static func setup_custom_blocks():
+	var _class_name = "SimpleScoring"
+	var block_list: Array[BlockDefinition] = []
 
 	for player in _POSITIONS_FOR_PLAYER:
-		b = CategoryFactory.BLOCKS["statement_block"].instantiate()
-		b.block_name = "simplescoring_set_score"
-		b.block_type = Types.BlockType.STATEMENT
-		b.block_format = "Set player %s score to {score: INT}" % player
-		b.statement = "score_%s = {score}" % _POSITIONS_FOR_PLAYER[player]
-		b.category = "Info | Score"
-		block_list.append(b)
+		var block_definition: BlockDefinition = BlockDefinition.new()
+		block_definition.name = &"simplescoring_set_score_player_%s" % player
+		block_definition.target_node_class = _class_name
+		block_definition.category = "Info | Score"
+		block_definition.type = Types.BlockType.STATEMENT
+		block_definition.display_template = "Set player %s score to {score: INT}" % player
+		block_definition.code_template = "score_%s = {score}" % _POSITIONS_FOR_PLAYER[player]
+		block_list.append(block_definition)
 
-		b = CategoryFactory.BLOCKS["statement_block"].instantiate()
-		b.block_name = "simplescoring_change_score"
-		b.block_type = Types.BlockType.STATEMENT
-		b.block_format = "Change player %s score by {score: INT}" % player
-		b.statement = "score_%s += {score}" % _POSITIONS_FOR_PLAYER[player]
-		b.category = "Info | Score"
-		block_list.append(b)
+		block_definition = BlockDefinition.new()
+		block_definition.name = &"simplescoring_change_score_player_%s" % player
+		block_definition.target_node_class = _class_name
+		block_definition.category = "Info | Score"
+		block_definition.type = Types.BlockType.STATEMENT
+		block_definition.display_template = "Change player %s score by {score: INT}" % player
+		block_definition.code_template = "score_%s += {score}" % _POSITIONS_FOR_PLAYER[player]
+		block_list.append(block_definition)
 
-	return block_list
+	BlocksCatalog.add_custom_blocks(_class_name, block_list)
