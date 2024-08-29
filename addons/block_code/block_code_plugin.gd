@@ -145,7 +145,7 @@ func select_block_code_node(block_code: BlockCode):
 	if not is_block_code_editable(block_code):
 		block_code = null
 
-	if _selected_block_code:
+	if is_instance_valid(_selected_block_code):
 		_selected_block_code.tree_entered.disconnect(_on_selected_block_code_changed)
 		_selected_block_code.tree_exited.disconnect(_on_selected_block_code_changed)
 		_selected_block_code.property_list_changed.disconnect(_on_selected_block_code_changed)
@@ -153,7 +153,7 @@ func select_block_code_node(block_code: BlockCode):
 
 	_selected_block_code = block_code
 
-	if _selected_block_code:
+	if is_instance_valid(_selected_block_code):
 		_selected_block_code.tree_entered.connect(_on_selected_block_code_changed)
 		_selected_block_code.tree_exited.connect(_on_selected_block_code_changed)
 		_selected_block_code.property_list_changed.connect(_on_selected_block_code_changed)
