@@ -10,9 +10,6 @@ signal modified
 ## Color of block (optionally used to draw block color)
 @export var color: Color = Color(1., 1., 1.)
 
-## Category to add the block to
-@export var category: String
-
 # FIXME Note: This used to be a NodePath. There is a bug in Godot 4.2 that causes the
 # reference to not be set properly when the node is duplicated. Since we don't
 # use the Node duplicate function anymore, this is okay.

@@ -96,40 +96,6 @@ static func _setup_definitions_from_files():
 		_by_class_name[target][block_definition.name] = block_definition
 
 
-static func _add_output_definitions(definitions: Array[BlockDefinition]):
-	# Capture things of format [test]
-	var _output_regex := RegEx.create_from_string("\\[([^\\]]+)\\]")
-
-	for definition in definitions:
-		if definition.type != Types.BlockType.ENTRY:
-			continue
-
-		for reg_match in _output_regex.search_all(definition.display_template):
-			var parts := reg_match.get_string(1).split(": ")
-			var param_name := parts[0]
-			var param_type: Variant.Type = Types.STRING_TO_VARIANT_TYPE[parts[1]]
-
-			var output_def := BlockDefinition.new()
-			output_def.name = &"%s_%s" % [definition.name, param_name]
-			output_def.target_node_class = definition.target_node_class
-			output_def.category = definition.category
-			output_def.type = Types.BlockType.VALUE
-			output_def.variant_type = param_type
-			output_def.display_template = param_name
-			output_def.code_template = param_name
-			output_def.scope = definition.code_template
-
-			# Note that these are not added to the _by_class_name dict
-			# because they only make sense within the entry block scope.
-			_catalog[output_def.name] = output_def
-
-
-static func _setup_output_definitions():
-	var definitions: Array[BlockDefinition]
-	definitions.assign(_catalog.values())
-	_add_output_definitions(definitions)
-
-
 static func _add_property_definitions(_class_name: String, property_list: Array[Dictionary], property_settings: Dictionary):
 	for property in property_list:
 		if not property.name in property_settings:
@@ -256,7 +222,6 @@ static func setup():
 
 	_catalog = {}
 	_setup_definitions_from_files()
-	_setup_output_definitions()
 	_setup_properties_for_class()
 	_setup_input_block()
 
@@ -330,7 +295,6 @@ static func add_custom_blocks(
 		_catalog[block_definition.name] = block_definition
 		_by_class_name[_class_name][block_definition.name] = block_definition
 
-	_add_output_definitions(block_definitions)
 	_add_property_definitions(_class_name, property_list, property_settings)
 
 

@@ -1,27 +1,36 @@
 extends GutTest
-## Tests for CategoryFactory
+## Tests for BlockFactory
 
 const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
 const BlockCategory = preload("res://addons/block_code/ui/picker/categories/block_category.gd")
 const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
 
+var block_script: BlockScriptSerialization
+
 
 func get_category_names(categories: Array[BlockCategory]) -> Array[String]:
-	var names: Array[String] = []
-	for category in categories:
-		names.append(category.name)
-	return names
+	var categories_sorted: Array[BlockCategory]
+	categories_sorted.assign(categories)
+	categories_sorted.sort_custom(BlockCategory.sort_by_order)
+	var result: Array[String]
+	result.assign(categories_sorted.map(func(category): return category.name))
+	return result
 
 
 func get_class_category_names(_class_name: String) -> Array[String]:
 	var blocks: Array[BlockDefinition] = BlocksCatalog.get_inherited_blocks(_class_name)
-	var names: Array[String] = get_category_names(CategoryFactory.get_categories(blocks))
-	return names
+	var categories: Array[BlockCategory] = block_script._categories.filter(func(category): return blocks.any(func(block): return block.category == category.name))
+	return get_category_names(categories)
+
+
+func before_each():
+	block_script = BlockScriptSerialization.new()
+	block_script.initialize()
 
 
 func test_general_category_names():
-	var blocks: Array[BlockDefinition] = CategoryFactory.get_general_blocks()
-	var names: Array[String] = get_category_names(CategoryFactory.get_categories(blocks))
+	var blocks: Array[BlockDefinition] = block_script.get_available_blocks()
+	var names: Array[String] = get_category_names(block_script.get_available_categories())
 	assert_eq(
 		names,
 		[
@@ -55,7 +64,7 @@ func test_inherited_category_names(params = use_parameters(class_category_names)
 
 
 func test_unique_block_names():
-	var blocks: Array[BlockDefinition] = CategoryFactory.get_general_blocks()
+	var blocks: Array[BlockDefinition] = block_script.get_available_blocks()
 	var block_names: Dictionary
 	for block in blocks:
 		assert_does_not_have(block_names, block.name, "Block name %s is duplicated" % block.name)

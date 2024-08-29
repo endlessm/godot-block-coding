@@ -15,6 +15,8 @@ const DEFAULT_WINDOW_MARGIN: Vector2 = Vector2(25, 25)
 const SNAP_GRID: Vector2 = Vector2(25, 25)
 const ZOOM_FACTOR: float = 1.1
 
+@onready var _context := BlockEditorContext.get_default()
+
 @onready var _window: Control = %Window
 @onready var _empty_box: BoxContainer = %EmptyBox
 
@@ -52,6 +54,8 @@ signal replace_block_code
 
 
 func _ready():
+	_context.changed.connect(_on_context_changed)
+
 	if not _open_scene_button.icon and not Util.node_is_part_of_edited_scene(self):
 		_open_scene_button.icon = _open_scene_icon
 
@@ -87,12 +91,12 @@ func set_child(n: Node):
 		set_child(c)
 
 
-func block_script_selected(block_script: BlockScriptSerialization):
+func _on_context_changed():
 	clear_canvas()
 
 	var edited_node = EditorInterface.get_inspector().get_edited_object() as Node
 
-	if block_script != _current_block_script:
+	if _context.block_script != _current_block_script:
 		_window.position = Vector2(0, 0)
 		zoom = 1
 
@@ -106,12 +110,12 @@ func block_script_selected(block_script: BlockScriptSerialization):
 	_open_scene_button.disabled = true
 	_replace_block_code_button.disabled = true
 
-	if block_script != null:
-		_load_block_script(block_script)
+	if _context.block_script != null:
+		_load_block_script(_context.block_script)
 		_window.visible = true
 		_zoom_button.visible = true
 
-		if block_script != _current_block_script:
+		if _context.block_script != _current_block_script:
 			reset_window_position()
 	elif edited_node == null:
 		_empty_box.visible = true
@@ -130,7 +134,7 @@ func block_script_selected(block_script: BlockScriptSerialization):
 		_selected_node_label.text = _selected_node_label_format.format({"node": edited_node.name})
 		_add_block_code_button.disabled = false
 
-	_current_block_script = block_script
+	_current_block_script = _context.block_script
 
 
 func _load_block_script(block_script: BlockScriptSerialization):
@@ -146,8 +150,8 @@ func reload_ui_from_ast_list():
 
 
 func ui_tree_from_ast_node(ast_node: BlockAST.ASTNode) -> Block:
-	var block: Block = Util.instantiate_block(ast_node.data)
-	block.color = Util.get_category_color(ast_node.data.category)
+	var block: Block = _context.block_script.instantiate_block(ast_node.data)
+
 	# Args
 	for arg_name in ast_node.arguments:
 		var argument = ast_node.arguments[arg_name]
@@ -177,8 +181,8 @@ func ui_tree_from_ast_node(ast_node: BlockAST.ASTNode) -> Block:
 
 
 func ui_tree_from_ast_value_node(ast_value_node: BlockAST.ASTValueNode) -> Block:
-	var block: Block = Util.instantiate_block(ast_value_node.data)
-	block.color = Util.get_category_color(ast_value_node.data.category)
+	var block: Block = _context.block_script.instantiate_block(ast_value_node.data)
+
 	# Args
 	for arg_name in ast_value_node.arguments:
 		var argument = ast_value_node.arguments[arg_name]
@@ -259,7 +263,7 @@ func build_value_ast(block: ParameterBlock) -> BlockAST.ASTValueNode:
 
 
 func rebuild_block_serialization_trees():
-	_current_block_script.update_from_ast_list(_current_ast_list)
+	_context.block_script.update_from_ast_list(_current_ast_list)
 
 
 func find_snaps(node: Node) -> Array[SnapPoint]:
@@ -383,7 +387,7 @@ func set_mouse_override(override: bool):
 
 
 func generate_script_from_current_window() -> String:
-	return ScriptGenerator.generate_script(_current_ast_list, _current_block_script)
+	return ScriptGenerator.generate_script(_current_ast_list, _context.block_script)
 
 
 func _on_zoom_button_pressed():

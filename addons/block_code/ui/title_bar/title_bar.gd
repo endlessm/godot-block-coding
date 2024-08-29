@@ -5,6 +5,8 @@ const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
 
 signal node_name_changed(node_name: String)
 
+@onready var _context := BlockEditorContext.get_default()
+
 @onready var _block_code_icon = load("res://addons/block_code/block_code_node/block_code_node.svg") as Texture2D
 @onready var _editor_inspector: EditorInspector = EditorInterface.get_inspector()
 @onready var _editor_selection: EditorSelection = EditorInterface.get_selection()
@@ -12,17 +14,11 @@ signal node_name_changed(node_name: String)
 
 
 func _ready():
+	_context.changed.connect(_on_context_changed)
 	_node_option_button.connect("item_selected", _on_node_option_button_item_selected)
 
 
-func scene_selected(scene_root: Node):
-	_update_node_option_button_items()
-	var current_block_code = _editor_inspector.get_edited_object() as BlockCode
-	if not current_block_code:
-		block_script_selected(null)
-
-
-func block_script_selected(block_script: BlockScriptSerialization):
+func _on_context_changed():
 	# TODO: We should listen for property changes in all BlockCode nodes and
 	#       their parents. As a workaround for the UI displaying stale data,
 	#       we'll crudely update the list of BlockCode nodes whenever the
@@ -30,7 +26,7 @@ func block_script_selected(block_script: BlockScriptSerialization):
 
 	_update_node_option_button_items()
 
-	var select_index = _get_block_script_index(block_script)
+	var select_index = _get_block_script_index(_context.block_script)
 	if _node_option_button.selected != select_index:
 		_node_option_button.select(select_index)
 
@@ -52,6 +48,8 @@ func _update_node_option_button_items():
 		_node_option_button.add_item(node_label)
 		_node_option_button.set_item_icon(node_item_index, _block_code_icon)
 		_node_option_button.set_item_metadata(node_item_index, block_code)
+
+	_node_option_button.disabled = _node_option_button.item_count == 0
 
 
 func _get_block_script_index(block_script: BlockScriptSerialization) -> int:
