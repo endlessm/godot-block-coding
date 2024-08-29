@@ -64,5 +64,15 @@ func _init(
 	extension_script = p_extension_script
 
 
+func get_defaults_for_node(parent_node: Node) -> Dictionary:
+	if not _extension:
+		return defaults
+
+	# Use Dictionary.merge instead of Dictionary.merged for Godot 4.2 compatibility
+	var new_defaults := _extension.get_defaults_for_node(parent_node)
+	new_defaults.merge(defaults)
+	return new_defaults
+
+
 func _to_string():
 	return "%s - %s" % [name, target_node_class]
