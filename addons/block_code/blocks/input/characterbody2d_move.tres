@@ -6,7 +6,7 @@
 script = ExtResource("1_btxic")
 name = &"characterbody2d_move"
 target_node_class = "CharacterBody2D"
-description = ""
+description = "Move the node up, down, left, and right with the keyboard. Speed is in the format x, y (left/right, up/down)."
 category = "Input"
 type = 2
 variant_type = 0
