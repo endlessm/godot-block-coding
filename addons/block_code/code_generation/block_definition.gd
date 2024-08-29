@@ -27,6 +27,14 @@ const Types = preload("res://addons/block_code/types/types.gd")
 ## Empty except for blocks that have a defined scope
 @export var scope: String
 
+@export var extension_script: GDScript
+
+var _extension: BlockExtension:
+	get:
+		if _extension == null and extension_script and extension_script.can_instantiate():
+			_extension = extension_script.new()
+		return _extension as BlockExtension
+
 
 func _init(
 	p_name: StringName = &"",
@@ -40,6 +48,7 @@ func _init(
 	p_defaults = {},
 	p_signal_name: String = "",
 	p_scope: String = "",
+	p_extension_script: GDScript = null,
 ):
 	name = p_name
 	target_node_class = p_target_node_class
@@ -52,6 +61,7 @@ func _init(
 	defaults = p_defaults
 	signal_name = p_signal_name
 	scope = p_scope
+	extension_script = p_extension_script
 
 
 func _to_string():
