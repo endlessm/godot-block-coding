@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_ll4rh")
 name = &"viewport_width"
-description = ""
+description = "How wide the viewable screen is when playing."
 category = "Graphics | Viewport"
 type = 3
 variant_type = 3
