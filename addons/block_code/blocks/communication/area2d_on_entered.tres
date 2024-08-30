@@ -10,9 +10,9 @@ description = ""
 category = "Communication | Methods"
 type = 1
 variant_type = 0
-display_template = "On [body: OBJECT] entered"
-code_template = "func _on_body_entered(body: Node2D):
+display_template = "On [area: OBJECT] entered"
+code_template = "func _on_area_entered(area: Node2D):
 "
 defaults = {}
-signal_name = "body_entered"
+signal_name = "area_entered"
 scope = ""
