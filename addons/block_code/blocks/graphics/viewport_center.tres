@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_rc1so")
 name = &"viewport_center"
-description = ""
+description = "Coordinates of the middle of the viewable screen when playing."
 category = "Graphics | Viewport"
 type = 3
 variant_type = 5

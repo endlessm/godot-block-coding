@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_1debb")
 name = &"viewport_height"
-description = ""
+description = "How tall the viewable screen is when playing."
 category = "Graphics | Viewport"
 type = 3
 variant_type = 3
