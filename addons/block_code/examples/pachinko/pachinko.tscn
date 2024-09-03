@@ -1,0 +1,147 @@
+[gd_scene load_steps=6 format=3 uid="uid://dljet5kjeyges"]
+
+[ext_resource type="Texture2D" uid="uid://bcgr5amsq3jfl" path="res://addons/block_code/examples/pong_game/assets/ball.png" id="2_lbcac"]
+[ext_resource type="PackedScene" uid="uid://bhm5m83v3fsjs" path="res://addons/block_code/examples/pachinko/pin.tscn" id="10_pofwk"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_pg3to"]
+bounce = 0.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h15jc"]
+radius = 32.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gmvwg"]
+resource_local_to_scene = true
+size = Vector2(600, 1024)
+
+[node name="Pachinko" type="Node2D"]
+
+[node name="Pins" type="Node" parent="."]
+
+[node name="Pin 1x1" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(100, 100)
+
+[node name="Pin 1x2" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(200, 100)
+
+[node name="Pin 1x3" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(300, 100)
+
+[node name="Pin 1x4" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(400, 100)
+
+[node name="Pin 1x5" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(500, 100)
+
+[node name="Pin 2x1" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(50, 200)
+
+[node name="Pin 2x2" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(150, 200)
+
+[node name="Pin 2x3" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(250, 200)
+
+[node name="Pin 2x4" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(350, 200)
+
+[node name="Pin 2x5" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(450, 200)
+
+[node name="Pin 2x6" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(550, 200)
+
+[node name="Pin 3x1" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(100, 300)
+
+[node name="Pin 3x2" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(200, 300)
+
+[node name="Pin 3x3" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(300, 300)
+
+[node name="Pin 3x4" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(400, 300)
+
+[node name="Pin 3x5" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(500, 300)
+
+[node name="Pin 5x1" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(100, 500)
+
+[node name="Pin 5x2" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(200, 500)
+
+[node name="Pin 5x3" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(300, 500)
+
+[node name="Pin 5x4" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(400, 500)
+
+[node name="Pin 5x5" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(500, 500)
+
+[node name="Pin 4x1" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(50, 400)
+
+[node name="Pin 4x2" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(150, 400)
+
+[node name="Pin 4x3" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(250, 400)
+
+[node name="Pin 4x4" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(350, 400)
+
+[node name="Pin 4x5" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(450, 400)
+
+[node name="Pin 4x6" parent="Pins" instance=ExtResource("10_pofwk")]
+position = Vector2(550, 400)
+
+[node name="Ball" type="RigidBody2D" parent="."]
+position = Vector2(301, 0)
+mass = 0.002
+physics_material_override = SubResource("PhysicsMaterial_pg3to")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_h15jc")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_lbcac")
+
+[node name="Boundaries" type="Node" parent="."]
+
+[node name="Left Wall" type="StaticBody2D" parent="Boundaries"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Left Wall"]
+position = Vector2(-300, 512)
+shape = SubResource("RectangleShape2D_gmvwg")
+
+[node name="Right Wall" type="StaticBody2D" parent="Boundaries"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Right Wall"]
+position = Vector2(900, 512)
+shape = SubResource("RectangleShape2D_gmvwg")
+
+[node name="Floor" type="StaticBody2D" parent="Boundaries"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Floor"]
+position = Vector2(300, 1536)
+shape = SubResource("RectangleShape2D_gmvwg")
+
+[node name="Ceiling" type="StaticBody2D" parent="Boundaries"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Ceiling"]
+position = Vector2(300, -512)
+shape = SubResource("RectangleShape2D_gmvwg")
+
+[node name="Instructions" type="Label" parent="."]
+offset_left = 17.0
+offset_top = 931.0
+offset_right = 340.0
+offset_bottom = 1006.0
+text = "←/→: set starting position
+Space/Enter: drop ball
+Space/Enter again: bump… but be careful!"
+vertical_alignment = 2
