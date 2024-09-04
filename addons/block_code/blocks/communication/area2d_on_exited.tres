@@ -14,5 +14,5 @@ display_template = "On [body: OBJECT] exited"
 code_template = "func _on_body_exited(body: Node2D):
 "
 defaults = {}
-signal_name = "body_entered"
+signal_name = "body_exited"
 scope = ""
