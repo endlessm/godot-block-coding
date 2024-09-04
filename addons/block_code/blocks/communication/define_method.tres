@@ -5,11 +5,12 @@
 [resource]
 script = ExtResource("1_6e473")
 name = &"define_method"
+target_node_class = ""
 description = "Define a method/function with following statements"
 category = "Communication | Methods"
 type = 1
 variant_type = 0
-display_template = "Define method {method_name: NIL}"
+display_template = "Define method {method_name: STRING_NAME}"
 code_template = "func {method_name}():"
 defaults = {}
 signal_name = ""

@@ -85,6 +85,8 @@ func get_raw_input():
 			return null if _line_edit.text == "" else int(_line_edit.text)
 		TYPE_FLOAT:
 			return null if _line_edit.text == "" else float(_line_edit.text)
+		TYPE_STRING_NAME:
+			return StringName(_line_edit.text)
 		TYPE_NIL:
 			return _line_edit.text
 		_:
