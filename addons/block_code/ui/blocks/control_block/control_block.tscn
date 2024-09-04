@@ -1,18 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://bk2argmujy0kk"]
+[gd_scene load_steps=7 format=3 uid="uid://bk2argmujy0kk"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/control_block/control_block.gd" id="1_2hbir"]
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/gutter.gd" id="2_6o8pf"]
 [ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_lpu3c"]
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/background.gd" id="2_tx0qr"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="3_nhryi"]
+[ext_resource type="PackedScene" uid="uid://b1xvp3u11h41s" path="res://addons/block_code/ui/blocks/utilities/template_editor/template_editor.tscn" id="4_6uktl"]
 
-[node name="ControlBlock" type="MarginContainer" node_paths=PackedStringArray("bottom_snap", "child_snap")]
+[node name="ControlBlock" type="MarginContainer" node_paths=PackedStringArray("bottom_snap", "child_snap", "template_editor")]
 size_flags_horizontal = 0
 focus_mode = 2
 mouse_filter = 2
 script = ExtResource("1_2hbir")
 bottom_snap = NodePath("VBoxContainer/SnapPoint")
 child_snap = NodePath("VBoxContainer/MarginContainer/Rows/SnapContainer/SnapPoint")
+template_editor = NodePath("VBoxContainer/MarginContainer/Rows/Row/RowHBoxContainer/TemplateEditor")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -57,11 +59,9 @@ theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 6
 
-[node name="RowHBox" type="HBoxContainer" parent="VBoxContainer/MarginContainer/Rows/Row/RowHBoxContainer"]
+[node name="TemplateEditor" parent="VBoxContainer/MarginContainer/Rows/Row/RowHBoxContainer" instance=ExtResource("4_6uktl")]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 0
 
 [node name="SnapContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/Rows"]
 unique_name_in_owner = true
@@ -95,4 +95,5 @@ shift_top = 20.0
 [node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("3_nhryi")]
 layout_mode = 2
 
+[connection signal="modified" from="." to="." method="_modified"]
 [connection signal="mouse_down" from="VBoxContainer/MarginContainer/Rows/Row/DragDropArea" to="." method="_on_drag_drop_area_mouse_down"]

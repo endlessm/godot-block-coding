@@ -1,16 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2fibflv3ojys"]
+[gd_scene load_steps=6 format=3 uid="uid://d2fibflv3ojys"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/entry_block/entry_block.gd" id="2_3ik8h"]
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/background.gd" id="2_yrw8l"]
 [ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="3_v0qw8"]
+[ext_resource type="PackedScene" uid="uid://b1xvp3u11h41s" path="res://addons/block_code/ui/blocks/utilities/template_editor/template_editor.tscn" id="4_1gwsm"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="4_yj206"]
 
-[node name="EntryBlock" type="MarginContainer" node_paths=PackedStringArray("child_snap")]
+[node name="EntryBlock" type="MarginContainer" node_paths=PackedStringArray("child_snap", "template_editor")]
 size_flags_horizontal = 0
 focus_mode = 2
 mouse_filter = 2
 script = ExtResource("2_3ik8h")
 child_snap = NodePath("VBoxContainer/SnapPoint")
+template_editor = NodePath("VBoxContainer/TopMarginContainer/MarginContainer/TemplateEditor")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -46,14 +48,12 @@ theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 6
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopMarginContainer/MarginContainer"]
+[node name="TemplateEditor" parent="VBoxContainer/TopMarginContainer/MarginContainer" instance=ExtResource("4_1gwsm")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 0
 
 [node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("4_yj206")]
 layout_mode = 2
 
 [connection signal="mouse_down" from="VBoxContainer/TopMarginContainer/DragDropArea" to="." method="_on_drag_drop_area_mouse_down"]
+[connection signal="modified" from="VBoxContainer/TopMarginContainer/MarginContainer/TemplateEditor" to="." method="_modified"]

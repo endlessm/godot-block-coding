@@ -20,6 +20,9 @@ signal modified
 ## Snap point that holds blocks that should be nested under this block
 @export var child_snap: SnapPoint = null
 
+## The resource containing the definition of the block
+@export var template_editor: TemplateEditor = null
+
 ## The scope of the block (statement of matching entry block)
 @export var scope: String = ""
 
@@ -29,10 +32,34 @@ signal modified
 ## Whether the block can be deleted by the Delete key.
 var can_delete: bool = true
 
+@onready var _context := BlockEditorContext.get_default()
+
 
 func _ready():
 	focus_mode = FocusMode.FOCUS_ALL
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_update_template_editor()
+
+
+func set_parameter_values_on_ready(raw_values: Dictionary):
+	await ready
+	set_parameter_values(raw_values)
+
+
+func set_parameter_values(raw_values: Dictionary):
+	template_editor.set_parameter_values(raw_values)
+
+
+func get_parameter_values() -> Dictionary:
+	return template_editor.get_parameter_values()
+
+
+func _update_template_editor():
+	if template_editor == null:
+		return
+
+	template_editor.format_string = definition.display_template if definition else ""
+	template_editor.parameter_defaults = definition.get_defaults_for_node(_context.parent_node) if definition else {}
 
 
 func _gui_input(event):
@@ -55,6 +82,10 @@ func _gui_input(event):
 				dialog.dialog_text = "Delete block?"
 			dialog.confirmed.connect(remove_from_tree)
 			EditorInterface.popup_dialog_centered(dialog)
+
+
+func _modified():
+	modified.emit()
 
 
 func remove_from_tree():
@@ -84,7 +115,7 @@ func disconnect_signals():
 
 
 func _to_string():
-	return "<{block_class}:{block_name}#{rid}>".format({"block_name": definition.name, "block_class": get_block_class(), "rid": get_instance_id()})
+	return "<{block_class}:{block_name}#{rid}>".format({"block_name": definition.name if definition else "", "block_class": get_block_class(), "rid": get_instance_id()})
 
 
 func _make_custom_tooltip(for_text) -> Control:

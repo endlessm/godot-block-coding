@@ -1,11 +1,13 @@
 @tool
-class_name ParameterOutput
 extends MarginContainer
 
 const Types = preload("res://addons/block_code/types/types.gd")
+const ParameterBlock = preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.gd")
+const ParameterBlockScene = preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn")
 
 var block: Block
 var parameter_name: String
+var output_block: Block
 var _block_name: String:
 	get:
 		return block.definition.name if block else ""
@@ -18,12 +20,13 @@ var _block_name: String:
 
 
 func _ready():
-	_snap_point.block_type = Types.BlockType.NONE
-
 	_update_parameter_block.call_deferred()
 
 
 func _update_parameter_block():
+	if _snap_point == null:
+		return
+
 	if _snap_point.has_snapped_block():
 		return
 

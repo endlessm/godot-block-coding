@@ -1,7 +1,6 @@
 @tool
 extends MarginContainer
 
-const OptionData = preload("res://addons/block_code/code_generation/option_data.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
 signal modified
@@ -13,6 +12,7 @@ signal modified
 @export var block_type: Types.BlockType = Types.BlockType.VALUE
 var option: bool = false:
 	set = _set_option
+var default_value: Variant
 
 @onready var _panel := %Panel
 @onready var snap_point := %SnapPoint
@@ -36,22 +36,20 @@ var option: bool = false:
 
 # Used to submit the text when losing focus:
 @onready var _last_submitted_text = {
-	_line_edit: _line_edit.text,
-	_x_line_edit: _x_line_edit.text,
-	_y_line_edit: _y_line_edit.text,
+	_line_edit: "",
+	_x_line_edit: "",
+	_y_line_edit: "",
 }
 
 
-func set_raw_input(raw_input):
-	if option:
-		_panel.visible = false
-		_option_input.clear()
-		var option_data: OptionData = raw_input as OptionData
-		for item in option_data.items:
-			_option_input.add_item(item.capitalize())
-		_option_input.select(option_data.selected)
-
-		return
+## Sets the value using [param raw_input], which could be one of a variety of types
+## depending on [member variant_type]. The value could also be a [Block], in which
+## case the block will be snapped to the control, replacing its editor.
+func set_raw_input(raw_input: Variant):
+	if raw_input is Block:
+		snap_point.replace_snapped_block(raw_input)
+		# Continue from here to reset the editor to default values
+		raw_input = null
 
 	match variant_type:
 		TYPE_COLOR:
@@ -59,22 +57,28 @@ func set_raw_input(raw_input):
 			_update_panel_bg_color(raw_input)
 		TYPE_VECTOR2:
 			# Rounding because floats are doubles by default but Vector2s have single components
-			_x_line_edit.text = ("%.4f" % raw_input.x).rstrip("0").rstrip(".")
-			_y_line_edit.text = ("%.4f" % raw_input.y).rstrip("0").rstrip(".")
+			_x_line_edit.text = ("%.4f" % raw_input.x).rstrip("0").rstrip(".") if raw_input != null else ""
+			_y_line_edit.text = ("%.4f" % raw_input.y).rstrip("0").rstrip(".") if raw_input != null else ""
 		TYPE_BOOL:
 			_bool_input_option.select(raw_input)
 		TYPE_NIL:
-			_line_edit.text = raw_input
+			_line_edit.text = raw_input if raw_input != null else ""
 		_:
-			_line_edit.text = "" if raw_input == null else str(raw_input)
+			_line_edit.text = str(raw_input) if raw_input != null else ""
+
+	_last_submitted_text[_line_edit] = _line_edit.text
+	_last_submitted_text[_x_line_edit] = _x_line_edit.text
+	_last_submitted_text[_y_line_edit] = _y_line_edit.text
 
 
-func get_raw_input():
-	if option:
-		var options: Array = []
-		for i in _option_input.item_count:
-			options.append(_option_input.get_item_text(i).to_snake_case())
-		return OptionData.new(options, _option_input.selected)
+## Gets the value, which could be one of a variety of types depending on
+## [member variant_type]. The value could also be a [Block], if one was previously
+## snapped to the control.
+func get_raw_input() -> Variant:
+	var snapped_block = snap_point.get_snapped_block()
+
+	if snapped_block:
+		return snapped_block
 
 	match variant_type:
 		TYPE_COLOR:
@@ -125,6 +129,9 @@ func _ready():
 	snap_point.variant_type = variant_type
 
 	_update_visible_input()
+
+	if default_value:
+		set_raw_input(default_value)
 
 
 func get_snapped_block() -> Block:

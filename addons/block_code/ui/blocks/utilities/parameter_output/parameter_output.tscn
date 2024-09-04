@@ -27,12 +27,10 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_tn6h4")
 
-[node name="SnapPoint" parent="." node_paths=PackedStringArray("snapped_block") instance=ExtResource("2_ngr7c")]
+[node name="SnapPoint" parent="." instance=ExtResource("2_ngr7c")]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 block_type = 0
-snapped_block = NodePath("ParameterBlock")
 variant_type = 4
 
 [connection signal="child_exiting_tree" from="." to="SnapPoint" method="_on_parameter_output_child_exiting_tree"]

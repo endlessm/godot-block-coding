@@ -153,13 +153,17 @@ func ui_tree_from_ast_node(ast_node: BlockAST.ASTNode) -> Block:
 	var block: Block = _context.block_script.instantiate_block(ast_node.data)
 
 	# Args
+	var parameter_values: Dictionary
+
 	for arg_name in ast_node.arguments:
 		var argument = ast_node.arguments[arg_name]
 		if argument is BlockAST.ASTValueNode:
 			var value_block = ui_tree_from_ast_value_node(argument)
-			block.args_to_add_after_format[arg_name] = value_block
+			parameter_values[arg_name] = value_block
 		else:  # Argument is not a node, but a user input value
-			block.args_to_add_after_format[arg_name] = argument
+			parameter_values[arg_name] = argument
+
+	block.set_parameter_values_on_ready(parameter_values)
 
 	# Children
 	var current_block: Block = block
@@ -184,13 +188,17 @@ func ui_tree_from_ast_value_node(ast_value_node: BlockAST.ASTValueNode) -> Block
 	var block: Block = _context.block_script.instantiate_block(ast_value_node.data)
 
 	# Args
+	var parameter_values: Dictionary
+
 	for arg_name in ast_value_node.arguments:
 		var argument = ast_value_node.arguments[arg_name]
 		if argument is BlockAST.ASTValueNode:
 			var value_block = ui_tree_from_ast_value_node(argument)
-			block.args_to_add_after_format[arg_name] = value_block
+			parameter_values[arg_name] = value_block
 		else:  # Argument is not a node, but a user input value
-			block.args_to_add_after_format[arg_name] = argument
+			parameter_values[arg_name] = argument
+
+	block.set_parameter_values_on_ready(parameter_values)
 
 	reconnect_block.emit(block)
 	return block
@@ -217,14 +225,14 @@ func build_ast(block: Block) -> BlockAST.ASTNode:
 	var ast_node := BlockAST.ASTNode.new()
 	ast_node.data = block.definition
 
-	for arg_name in block.arg_name_to_param_input_dict:
-		var param_input = block.arg_name_to_param_input_dict[arg_name]
-		var snap_point = param_input.snap_point
-		var snapped_block = snap_point.get_snapped_block()
-		if snapped_block:
-			ast_node.arguments[arg_name] = build_value_ast(snapped_block)
+	var parameter_values := block.get_parameter_values()
+
+	for arg_name in parameter_values:
+		var arg_value = parameter_values[arg_name]
+		if arg_value is Block:
+			ast_node.arguments[arg_name] = build_value_ast(arg_value)
 		else:
-			ast_node.arguments[arg_name] = param_input.get_raw_input()
+			ast_node.arguments[arg_name] = arg_value
 
 	var children: Array[BlockAST.ASTNode] = []
 
@@ -250,14 +258,14 @@ func build_value_ast(block: ParameterBlock) -> BlockAST.ASTValueNode:
 	var ast_node := BlockAST.ASTValueNode.new()
 	ast_node.data = block.definition
 
-	for arg_name in block.arg_name_to_param_input_dict:
-		var param_input = block.arg_name_to_param_input_dict[arg_name]
-		var snap_point = param_input.snap_point
-		var snapped_block = snap_point.get_snapped_block()
-		if snapped_block:
-			ast_node.arguments[arg_name] = build_value_ast(snapped_block)
+	var parameter_values := block.get_parameter_values()
+
+	for arg_name in parameter_values:
+		var arg_value = parameter_values[arg_name]
+		if arg_value is Block:
+			ast_node.arguments[arg_name] = build_value_ast(arg_value)
 		else:
-			ast_node.arguments[arg_name] = param_input.get_raw_input()
+			ast_node.arguments[arg_name] = arg_value
 
 	return ast_node
 
