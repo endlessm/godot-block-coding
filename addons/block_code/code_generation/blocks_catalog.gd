@@ -4,6 +4,7 @@ const BlockDefinition = preload("res://addons/block_code/code_generation/block_d
 const OptionData = preload("res://addons/block_code/code_generation/option_data.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 const Util = preload("res://addons/block_code/code_generation/util.gd")
+const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
 
 const _BLOCKS_PATH = "res://addons/block_code/blocks/"
 
@@ -273,6 +274,45 @@ static func get_blocks_by_class(_class_name: String):
 	return block_definitions.values()
 
 
+static func _get_builtin_parents(_class_name: String) -> Array[String]:
+	var parents: Array[String] = []
+	var current = _class_name
+
+	while current != "":
+		parents.append(current)
+		current = ClassDB.get_parent_class(current)
+
+	return parents
+
+
+static func _get_custom_parent_class_name(_custom_class_name: String) -> String:
+	for class_dict in ProjectSettings.get_global_class_list():
+		if class_dict.class != _custom_class_name:
+			continue
+		var script = load(class_dict.path)
+		var builtin_class = script.get_instance_base_type()
+		return builtin_class
+	return "Node"
+
+
+static func _get_parents(_class_name: String) -> Array[String]:
+	if ClassDB.class_exists(_class_name):
+		return _get_builtin_parents(_class_name)
+	var parents: Array[String] = [_class_name]
+	var _parent_class_name = _get_custom_parent_class_name(_class_name)
+	parents.append_array(_get_builtin_parents(_parent_class_name))
+	return parents
+
+
+static func get_inherited_blocks(_class_name: String) -> Array[BlockDefinition]:
+	setup()
+
+	var definitions: Array[BlockDefinition] = []
+	for _parent_class_name in _get_parents(_class_name):
+		definitions.append_array(get_blocks_by_class(_parent_class_name))
+	return definitions
+
+
 static func add_custom_blocks(
 	_class_name,
 	block_definitions: Array[BlockDefinition] = [],
@@ -290,3 +330,30 @@ static func add_custom_blocks(
 
 	_add_output_definitions(block_definitions)
 	_add_property_definitions(_class_name, property_list, property_settings)
+
+
+static func get_variable_block_definitions(variables: Array[VariableDefinition]) -> Array[BlockDefinition]:
+	var block_definitions: Array[BlockDefinition] = []
+	for variable: VariableDefinition in variables:
+		var type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
+
+		# Getter
+		var block_def = BlockDefinition.new()
+		block_def.name = "get_var_%s" % variable.var_name
+		block_def.category = "Variables"
+		block_def.type = Types.BlockType.VALUE
+		block_def.variant_type = variable.var_type
+		block_def.display_template = variable.var_name
+		block_def.code_template = variable.var_name
+		block_definitions.append(block_def)
+
+		# Setter
+		block_def = BlockDefinition.new()
+		block_def.name = "set_var_%s" % variable.var_name
+		block_def.category = "Variables"
+		block_def.type = Types.BlockType.STATEMENT
+		block_def.display_template = "Set %s to {value: %s}" % [variable.var_name, type_string]
+		block_def.code_template = "%s = {value}" % [variable.var_name]
+		block_definitions.append(block_def)
+
+	return block_definitions
