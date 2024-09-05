@@ -72,16 +72,6 @@ func simple_setup():
 	_texture_updated()
 
 
-func _exit_tree():
-	if collision:
-		collision.queue_free()
-		collision = null
-
-	if sprite:
-		sprite.queue_free()
-		sprite = null
-
-
 func get_custom_class():
 	return "SimpleCharacter"
 
