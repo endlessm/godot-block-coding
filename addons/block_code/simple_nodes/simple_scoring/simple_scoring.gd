@@ -63,12 +63,6 @@ func simple_setup():
 	add_child(right_label)
 
 
-func _exit_tree():
-	for label in _score_labels.values():
-		label.queue_free()
-	_score_labels.clear()
-
-
 func get_custom_class():
 	return "SimpleScoring"
 
