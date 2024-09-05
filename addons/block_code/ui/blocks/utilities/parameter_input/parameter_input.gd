@@ -1,6 +1,7 @@
 @tool
 extends MarginContainer
 
+const OptionData = preload("res://addons/block_code/code_generation/option_data.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
 signal modified

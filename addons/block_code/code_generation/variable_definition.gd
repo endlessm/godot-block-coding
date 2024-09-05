@@ -1,4 +1,3 @@
-class_name VariableResource
 extends Resource
 
 @export var var_name: String

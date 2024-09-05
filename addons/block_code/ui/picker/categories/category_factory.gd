@@ -5,6 +5,7 @@ const BlockCategory = preload("res://addons/block_code/ui/picker/categories/bloc
 const Types = preload("res://addons/block_code/types/types.gd")
 const Util = preload("res://addons/block_code/ui/util.gd")
 const Constants = preload("res://addons/block_code/ui/constants.gd")
+const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
 
 
 ## Compare block categories for sorting. Compare by order then name.
@@ -106,5 +107,5 @@ static func get_inherited_blocks(_class_name: String) -> Array[Block]:
 	return Util.instantiate_blocks_for_class(_class_name)
 
 
-static func get_variable_blocks(variables: Array[VariableResource]):
+static func get_variable_blocks(variables: Array[VariableDefinition]):
 	return Util.instantiate_variable_blocks(variables)

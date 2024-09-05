@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=4 format=3 uid="uid://wpdspamg3f6g"]
 
-[ext_resource type="Script" path="res://addons/block_code/ui/block_canvas/option_data.gd" id="1_ilhdq"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="1_ilhdq"]
 [ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_q04gm"]
 
 [sub_resource type="Resource" id="Resource_lalgp"]

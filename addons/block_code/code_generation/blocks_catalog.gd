@@ -1,6 +1,7 @@
 extends Object
 
 const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
+const OptionData = preload("res://addons/block_code/code_generation/option_data.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 const Util = preload("res://addons/block_code/code_generation/util.gd")
 

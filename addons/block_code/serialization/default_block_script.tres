@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization.gd" id="1_barc5"]
 [ext_resource type="Script" path="res://addons/block_code/serialization/block_serialized_properties.gd" id="2_cgfpx"]
 [ext_resource type="Script" path="res://addons/block_code/serialization/block_script_serialization.gd" id="4_cqq7x"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/variable_definition.gd" id="3_wb2fg"]
 
 [sub_resource type="Resource" id="Resource_b0aen"]
 script = ExtResource("2_cgfpx")
@@ -20,6 +21,6 @@ block_serialized_properties = SubResource("Resource_b0aen")
 script = ExtResource("4_cqq7x")
 script_inherits = "INHERIT_DEFAULT"
 block_trees = Array[ExtResource("1_barc5")]([SubResource("Resource_1h6wi")])
-variables = Array[Resource("res://addons/block_code/ui/block_canvas/variable_resource.gd")]([])
+variables = Array[ExtResource("3_wb2fg")]([])
 generated_script = "extends INHERIT_DEFAULT"
 version = 0

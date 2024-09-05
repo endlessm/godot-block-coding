@@ -4,6 +4,7 @@ const BlockDefinition = preload("res://addons/block_code/code_generation/block_d
 const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 const Constants = preload("res://addons/block_code/ui/constants.gd")
+const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
 
 const SCENE_PER_TYPE = {
 	Types.BlockType.ENTRY: preload("res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"),
@@ -92,9 +93,9 @@ static func instantiate_blocks_for_class(_class_name: String) -> Array[Block]:
 	return blocks
 
 
-static func get_variable_block_definitions(variables: Array[VariableResource]) -> Array[BlockDefinition]:
+static func get_variable_block_definitions(variables: Array[VariableDefinition]) -> Array[BlockDefinition]:
 	var block_definitions: Array[BlockDefinition] = []
-	for variable: VariableResource in variables:
+	for variable: VariableDefinition in variables:
 		var type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
 
 		var b = BlockDefinition.new()
@@ -115,7 +116,7 @@ static func get_variable_block_definitions(variables: Array[VariableResource]) -
 	return block_definitions
 
 
-static func instantiate_variable_blocks(variables: Array[VariableResource]) -> Array[Block]:
+static func instantiate_variable_blocks(variables: Array[VariableDefinition]) -> Array[Block]:
 	var blocks: Array[Block] = []
 	for block_definition in get_variable_block_definitions(variables):
 		var b = instantiate_block(block_definition)

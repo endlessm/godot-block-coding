@@ -7,9 +7,10 @@ const BlockCategoryButton = preload("res://addons/block_code/ui/picker/categorie
 const BlockCategoryDisplay = preload("res://addons/block_code/ui/picker/categories/block_category_display.gd")
 const CategoryFactory = preload("res://addons/block_code/ui/picker/categories/category_factory.gd")
 const VariableCategoryDisplay = preload("res://addons/block_code/ui/picker/categories/variable_category/variable_category_display.gd")
+const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
 
 signal block_picked(block: Block)
-signal variable_created(variable: VariableResource)
+signal variable_created(variable: VariableDefinition)
 
 @onready var _block_list := %BlockList
 @onready var _block_scroll := %BlockScroll
@@ -110,7 +111,7 @@ func set_collapsed(collapsed: bool):
 	_widget_container.visible = not collapsed
 
 
-func reload_variables(variables: Array[VariableResource]):
+func reload_variables(variables: Array[VariableDefinition]):
 	if _variable_category_display:
 		for c in _variable_category_display.variable_blocks.get_children():
 			c.queue_free()
