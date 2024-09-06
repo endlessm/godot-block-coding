@@ -492,7 +492,7 @@ func _on_body_entered(body: Node2D):
 "
 version = 0
 
-[sub_resource type="Resource" id="Resource_hyh0v"]
+[sub_resource type="Resource" id="Resource_o7ugj"]
 script = ExtResource("4_qtggh")
 name = &"simplescoring_set_score_player_1"
 children = Array[ExtResource("4_qtggh")]([])
@@ -500,7 +500,7 @@ arguments = {
 "score": 0
 }
 
-[sub_resource type="Resource" id="Resource_nnat8"]
+[sub_resource type="Resource" id="Resource_spykn"]
 script = ExtResource("4_qtggh")
 name = &"simplescoring_set_score_player_2"
 children = Array[ExtResource("4_qtggh")]([])
@@ -508,7 +508,7 @@ arguments = {
 "score": 0
 }
 
-[sub_resource type="Resource" id="Resource_qf8bl"]
+[sub_resource type="Resource" id="Resource_nucg0"]
 script = ExtResource("4_qtggh")
 name = &"add_to_group"
 children = Array[ExtResource("4_qtggh")]([])
@@ -516,18 +516,18 @@ arguments = {
 "group": "scoring"
 }
 
-[sub_resource type="Resource" id="Resource_7dyjv"]
+[sub_resource type="Resource" id="Resource_6brri"]
 script = ExtResource("4_qtggh")
 name = &"ready"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_hyh0v"), SubResource("Resource_nnat8"), SubResource("Resource_qf8bl")])
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_o7ugj"), SubResource("Resource_spykn"), SubResource("Resource_nucg0")])
 arguments = {}
 
-[sub_resource type="Resource" id="Resource_g0f0k"]
+[sub_resource type="Resource" id="Resource_v71gd"]
 script = ExtResource("5_omlge")
-root = SubResource("Resource_7dyjv")
+root = SubResource("Resource_6brri")
 canvas_position = Vector2(25, 0)
 
-[sub_resource type="Resource" id="Resource_0ak1s"]
+[sub_resource type="Resource" id="Resource_4y2px"]
 script = ExtResource("4_qtggh")
 name = &"simplescoring_change_score_player_1"
 children = Array[ExtResource("4_qtggh")]([])
@@ -535,20 +535,20 @@ arguments = {
 "score": 1
 }
 
-[sub_resource type="Resource" id="Resource_7rjjw"]
+[sub_resource type="Resource" id="Resource_ilawr"]
 script = ExtResource("4_qtggh")
 name = &"define_method"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_0ak1s")])
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_4y2px")])
 arguments = {
-"method_name": "goal_right"
+"method_name": &"goal_right"
 }
 
-[sub_resource type="Resource" id="Resource_hiqld"]
+[sub_resource type="Resource" id="Resource_8e220"]
 script = ExtResource("5_omlge")
-root = SubResource("Resource_7rjjw")
+root = SubResource("Resource_ilawr")
 canvas_position = Vector2(25, 250)
 
-[sub_resource type="Resource" id="Resource_e7bsf"]
+[sub_resource type="Resource" id="Resource_1fx1n"]
 script = ExtResource("4_qtggh")
 name = &"simplescoring_change_score_player_2"
 children = Array[ExtResource("4_qtggh")]([])
@@ -556,23 +556,23 @@ arguments = {
 "score": 1
 }
 
-[sub_resource type="Resource" id="Resource_8gvgu"]
+[sub_resource type="Resource" id="Resource_mef5h"]
 script = ExtResource("4_qtggh")
 name = &"define_method"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_e7bsf")])
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_1fx1n")])
 arguments = {
-"method_name": "goal_left"
+"method_name": &"goal_left"
 }
 
-[sub_resource type="Resource" id="Resource_3kxo7"]
+[sub_resource type="Resource" id="Resource_uty0f"]
 script = ExtResource("5_omlge")
-root = SubResource("Resource_8gvgu")
+root = SubResource("Resource_mef5h")
 canvas_position = Vector2(25, 400)
 
 [sub_resource type="Resource" id="Resource_q418f"]
 script = ExtResource("7_uuuue")
 script_inherits = "SimpleScoring"
-block_serialization_trees = Array[ExtResource("5_omlge")]([SubResource("Resource_g0f0k"), SubResource("Resource_hiqld"), SubResource("Resource_3kxo7")])
+block_serialization_trees = Array[ExtResource("5_omlge")]([SubResource("Resource_v71gd"), SubResource("Resource_8e220"), SubResource("Resource_uty0f")])
 variables = Array[ExtResource("9_lo3p1")]([])
 generated_script = "extends SimpleScoring
 
@@ -582,10 +582,10 @@ func _ready():
 	score_right = 0
 	add_to_group('scoring')
 
-func 'goal_right'():
+func goal_right():
 	score_left += 1
 
-func 'goal_left'():
+func goal_left():
 	score_right += 1
 
 "
