@@ -244,7 +244,18 @@ func _update_option_input(current_value: Variant = null):
 		if item == current_value:
 			selected_item_index = item_index
 
-	if _option_input.item_count == 0:
+	if selected_item_index == -1 and current_value:
+		# If the current value is not in the default list of options, add it
+		# and select it.
+		if _option_input.item_count > 0:
+			_option_input.add_separator()
+		var item_index = _option_input.item_count
+		var option_label = current_value.capitalize() if current_value is String else str(current_value)
+		_option_input.add_item(option_label)
+		_option_input.set_item_tooltip(item_index, current_value)
+		_option_input.set_item_metadata(item_index, current_value)
+		selected_item_index = item_index
+	elif _option_input.item_count == 0:
 		var item_index = _option_input.item_count
 		_option_input.add_item("<%s>" % placeholder)
 		_option_input.set_item_disabled(item_index, true)
