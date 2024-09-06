@@ -6,6 +6,8 @@ const BlockDefinition = preload("res://addons/block_code/code_generation/block_d
 const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
+## A texture can be provided for simple setup. If provided, the character will have a collision box
+## that matches the size of the texture.
 @export var texture: Texture2D:
 	set = _set_texture
 
@@ -44,8 +46,28 @@ func _set_texture(new_texture):
 
 
 func _texture_updated():
+	if not texture:
+		if sprite:
+			sprite.queue_free()
+			sprite = null
+		if collision:
+			collision.queue_free()
+			collision = null
+		return
+
+	if not sprite:
+		sprite = Sprite2D.new()
+		sprite.name = &"Sprite2D"
+		add_child(sprite)
+
+	if not collision:
+		collision = CollisionShape2D.new()
+		collision.name = &"CollisionShape2D"
+		collision.shape = RectangleShape2D.new()
+		add_child(collision)
+
 	sprite.texture = texture
-	collision.shape.size = Vector2(100, 100) if texture == null else texture.get_size()
+	collision.shape.size = texture.get_size()
 
 
 ## Nodes in the "affected_by_gravity" group will receive gravity changes:
@@ -59,16 +81,6 @@ func _ready():
 
 func simple_setup():
 	add_to_group("affected_by_gravity", true)
-
-	sprite = Sprite2D.new()
-	sprite.name = &"Sprite2D"
-	add_child(sprite)
-
-	collision = CollisionShape2D.new()
-	collision.name = &"CollisionShape2D"
-	collision.shape = RectangleShape2D.new()
-	add_child(collision)
-
 	_texture_updated()
 
 
