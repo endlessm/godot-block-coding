@@ -42,6 +42,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_tn6h4")
 [node name="InputSwitcher" type="MarginContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Parameter"
 mouse_filter = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
@@ -84,6 +85,7 @@ unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
+tooltip_text = "Parameter"
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fjquj")
 
 [node name="Vector2Input" type="MarginContainer" parent="InputSwitcher"]

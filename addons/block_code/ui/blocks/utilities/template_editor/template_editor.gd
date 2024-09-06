@@ -113,8 +113,16 @@ func _append_input_parameter(parameter: Dictionary, id: int):
 	parameter_input.name = "ParameterInput%d" % id
 	parameter_input.placeholder = parameter["name"]
 	parameter_input.variant_type = parameter["type"]
-	parameter_input.option = parameter["is_option"]
-	parameter_input.default_value = default_value
+
+	if parameter["is_option"] and default_value is OptionData:
+		var option_data := default_value as OptionData
+		parameter_input.option_data = option_data
+		if option_data.selected < option_data.items.size():
+			parameter_input.default_value = option_data.items[option_data.selected]
+	elif parameter["is_option"]:
+		push_warning("The block parameter %s in %s appears to be an option, but no option data is provided" % [parameter_format, parent_block])
+	else:
+		parameter_input.default_value = default_value
 
 	parameter_input.modified.connect(func(): modified.emit())
 
