@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="Resource_lalgp"]
 script = ExtResource("1_ilhdq")
 selected = 0
-items = ["Pause", "Continue"]
+items = ["pause", "continue"]
 
 [resource]
 script = ExtResource("1_q04gm")
@@ -16,9 +16,9 @@ description = "Pause/Continue the audio stream"
 category = "Sounds"
 type = 2
 variant_type = 0
-display_template = "{pause: OPTION} the sound {name: STRING}"
+display_template = "{pause: NIL} the sound {name: STRING}"
 code_template = "var __sound_node = get_node({name})
-if \"{pause}\" == \"pause\":
+if {pause} == \"pause\":
 	__sound_node.stream_paused = true
 else:
 	__sound_node.stream_paused = false

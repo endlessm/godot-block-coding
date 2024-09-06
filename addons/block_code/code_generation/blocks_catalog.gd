@@ -198,8 +198,8 @@ static func _setup_input_block():
 			"Input",
 			Types.BlockType.VALUE,
 			TYPE_BOOL,
-			"Is action {action_name: OPTION} {action: OPTION}",
-			'Input.is_action_{action}("{action_name}")',
+			"Is action {action_name: STRING_NAME} {action: NIL}",
+			"Input.is_action_{{action}}('{{action_name}}')",
 			{"action_name": OptionData.new(inputmap_actions), "action": OptionData.new(["pressed", "just_pressed", "just_released"])},
 		)
 	)

@@ -16,8 +16,8 @@ description = ""
 category = "Logic | Comparison"
 type = 3
 variant_type = 1
-display_template = "{float1: FLOAT} {op: OPTION} {float2: FLOAT}"
-code_template = "{float1} {op} {float2}"
+display_template = "{float1: FLOAT} {op: NIL} {float2: FLOAT}"
+code_template = "{float1} {{op}} {float2}"
 defaults = {
 "float1": 1.0,
 "float2": 1.0,

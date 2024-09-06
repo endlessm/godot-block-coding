@@ -55,11 +55,15 @@ class ASTNode:
 			# Use parentheses to be safe
 			var argument = arguments[arg_name]
 			var code_string: String
+			var raw_string: String
 			if argument is ASTValueNode:
 				code_string = argument.get_code()
+				raw_string = code_string
 			else:
 				code_string = BlockAST.raw_input_to_code_string(argument)
+				raw_string = str(argument)
 
+			code_block = code_block.replace("{{%s}}" % arg_name, raw_string)
 			code_block = code_block.replace("{%s}" % arg_name, code_string)
 
 		return IDHandler.make_unique(code_block)
@@ -99,11 +103,15 @@ class ASTValueNode:
 			# Use parentheses to be safe
 			var argument = arguments[arg_name]
 			var code_string: String
+			var raw_string: String
 			if argument is ASTValueNode:
 				code_string = argument.get_code()
+				raw_string = code_string
 			else:
 				code_string = BlockAST.raw_input_to_code_string(argument)
+				raw_string = str(argument)
 
+			code = code.replace("{{%s}}" % arg_name, raw_string)
 			code = code.replace("{%s}" % arg_name, code_string)
 
 		return IDHandler.make_unique("(%s)" % code)
@@ -130,15 +138,11 @@ func to_string_recursive(node: ASTNode, depth: int) -> String:
 static func raw_input_to_code_string(input) -> String:
 	match typeof(input):
 		TYPE_STRING:
-			return "'%s'" % input.replace("\\", "\\\\").replace("'", "\\'")
+			return "'%s'" % input.c_escape()
 		TYPE_VECTOR2:
 			return "Vector2%s" % str(input)
 		TYPE_COLOR:
 			return "Color%s" % str(input)
-		TYPE_OBJECT:
-			if input is OptionData:
-				var option_data := input as OptionData
-				return option_data.items[option_data.selected]
 		_:
 			return "%s" % input
 
