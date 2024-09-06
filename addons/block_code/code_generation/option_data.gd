@@ -1,4 +1,3 @@
-class_name OptionData
 extends Resource
 
 @export var selected: int

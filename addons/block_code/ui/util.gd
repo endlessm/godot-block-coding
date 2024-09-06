@@ -4,6 +4,7 @@ const BlockDefinition = preload("res://addons/block_code/code_generation/block_d
 const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 const Constants = preload("res://addons/block_code/ui/constants.gd")
+const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
 
 const SCENE_PER_TYPE = {
 	Types.BlockType.ENTRY: preload("res://addons/block_code/ui/blocks/entry_block/entry_block.tscn"),
@@ -19,109 +20,26 @@ static func get_category_color(category: String) -> Color:
 
 
 static func instantiate_block(block_definition: BlockDefinition) -> Block:
-	var scene = SCENE_PER_TYPE[block_definition.type]
-	var b = scene.instantiate()
-	b.block_name = block_definition.name
-	if block_definition.type == Types.BlockType.CONTROL:
-		b.block_formats = [block_definition.display_template]
-		b.statements = [block_definition.code_template]
-	else:
-		b.block_format = block_definition.display_template
-		b.statement = block_definition.code_template
-	if block_definition.type == Types.BlockType.VALUE:
-		b.variant_type = block_definition.variant_type
-	elif block_definition.type == Types.BlockType.ENTRY:
-		if block_definition.signal_name != "":
-			b.signal_name = block_definition.signal_name
-	b.defaults = block_definition.defaults
-	b.tooltip_text = block_definition.description
-	b.category = block_definition.category
-	b.color = get_category_color(block_definition.category)
-
-	return b
-
-
-static func instantiate_block_by_name(block_name: StringName) -> Block:
-	BlocksCatalog.setup()
-	var block_definition: BlockDefinition = BlocksCatalog.get_block(block_name)
 	if block_definition == null:
-		push_error("The block %s is not in the catalog yet!" % block_name)
-		return
-	return instantiate_block(block_definition)
+		push_error("Cannot construct block from null block definition.")
+		return null
+
+	var scene = SCENE_PER_TYPE.get(block_definition.type)
+	if scene == null:
+		push_error("Cannot instantiate Block from type %s" % block_definition.type)
+		return null
+
+	var block = scene.instantiate()
+	block.definition = block_definition
+	return block
 
 
-static func _get_builtin_parents(_class_name: String) -> Array[String]:
-	var parents: Array[String] = []
-	var current = _class_name
-
-	while current != "":
-		parents.append(current)
-		current = ClassDB.get_parent_class(current)
-
-	return parents
-
-
-static func _get_custom_parent_class_name(_custom_class_name: String) -> String:
-	for class_dict in ProjectSettings.get_global_class_list():
-		if class_dict.class != _custom_class_name:
-			continue
-		var script = load(class_dict.path)
-		var builtin_class = script.get_instance_base_type()
-		return builtin_class
-	return "Node"
-
-
-static func _get_parents(_class_name: String) -> Array[String]:
-	if ClassDB.class_exists(_class_name):
-		return _get_builtin_parents(_class_name)
-	var parents: Array[String] = [_class_name]
-	var _parent_class_name = _get_custom_parent_class_name(_class_name)
-	parents.append_array(_get_builtin_parents(_parent_class_name))
-	return parents
-
-
-static func instantiate_blocks_for_class(_class_name: String) -> Array[Block]:
-	BlocksCatalog.setup()
-
+static func instantiate_variable_blocks(variables: Array[VariableDefinition]) -> Array[Block]:
 	var blocks: Array[Block] = []
-	for subclass in _get_parents(_class_name):
-		for block_definition in BlocksCatalog.get_blocks_by_class(subclass):
-			var b = instantiate_block(block_definition)
-			blocks.append(b)
-
-	return blocks
-
-
-static func get_variable_block_definitions(variables: Array[VariableResource]) -> Array[BlockDefinition]:
-	var block_definitions: Array[BlockDefinition] = []
-	for variable: VariableResource in variables:
-		var type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
-
-		var b = BlockDefinition.new()
-		b.name = "get_var_%s" % variable.var_name
-		b.type = Types.BlockType.VALUE
-		b.variant_type = variable.var_type
-		b.display_template = variable.var_name
-		b.code_template = variable.var_name
-		block_definitions.append(b)
-
-		b = BlockDefinition.new()
-		b.name = "set_var_%s" % variable.var_name
-		b.type = Types.BlockType.STATEMENT
-		b.display_template = "Set %s to {value: %s}" % [variable.var_name, type_string]
-		b.code_template = "%s = {value}" % [variable.var_name]
-		block_definitions.append(b)
-
-	return block_definitions
-
-
-static func instantiate_variable_blocks(variables: Array[VariableResource]) -> Array[Block]:
-	var blocks: Array[Block] = []
-	for block_definition in get_variable_block_definitions(variables):
-		var b = instantiate_block(block_definition)
-		# HACK: Color the blocks since they are outside of the normal picker system
-		b.color = Constants.BUILTIN_CATEGORIES_PROPS["Variables"].color
-		blocks.append(b)
+	for block_definition in BlocksCatalog.get_variable_block_definitions(variables):
+		var block = instantiate_block(block_definition)
+		block.color = get_category_color(block_definition.category)
+		blocks.append(block)
 
 	return blocks
 

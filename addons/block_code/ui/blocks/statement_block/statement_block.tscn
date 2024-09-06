@@ -5,14 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_owgdx"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="3_5vaov"]
 
-[node name="StatementBlock" type="MarginContainer"]
+[node name="StatementBlock" type="MarginContainer" node_paths=PackedStringArray("bottom_snap")]
 size_flags_horizontal = 0
 focus_mode = 2
 mouse_filter = 2
 script = ExtResource("1_6wvlf")
-block_name = &"statement_block"
-label = "StatementBlock"
-bottom_snap_path = NodePath("VBoxContainer/SnapPoint")
+bottom_snap = NodePath("VBoxContainer/SnapPoint")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2

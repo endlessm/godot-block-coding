@@ -1,8 +1,10 @@
 extends Object
 
 const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
+const OptionData = preload("res://addons/block_code/code_generation/option_data.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 const Util = preload("res://addons/block_code/code_generation/util.gd")
+const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
 
 const _BLOCKS_PATH = "res://addons/block_code/blocks/"
 
@@ -92,6 +94,40 @@ static func _setup_definitions_from_files():
 		if not target in _by_class_name:
 			_by_class_name[target] = {}
 		_by_class_name[target][block_definition.name] = block_definition
+
+
+static func _add_output_definitions(definitions: Array[BlockDefinition]):
+	# Capture things of format [test]
+	var _output_regex := RegEx.create_from_string("\\[([^\\]]+)\\]")
+
+	for definition in definitions:
+		if definition.type != Types.BlockType.ENTRY:
+			continue
+
+		for reg_match in _output_regex.search_all(definition.display_template):
+			var parts := reg_match.get_string(1).split(": ")
+			var param_name := parts[0]
+			var param_type: Variant.Type = Types.STRING_TO_VARIANT_TYPE[parts[1]]
+
+			var output_def := BlockDefinition.new()
+			output_def.name = &"%s_%s" % [definition.name, param_name]
+			output_def.target_node_class = definition.target_node_class
+			output_def.category = definition.category
+			output_def.type = Types.BlockType.VALUE
+			output_def.variant_type = param_type
+			output_def.display_template = param_name
+			output_def.code_template = param_name
+			output_def.scope = definition.code_template
+
+			# Note that these are not added to the _by_class_name dict
+			# because they only make sense within the entry block scope.
+			_catalog[output_def.name] = output_def
+
+
+static func _setup_output_definitions():
+	var definitions: Array[BlockDefinition]
+	definitions.assign(_catalog.values())
+	_add_output_definitions(definitions)
 
 
 static func _add_property_definitions(_class_name: String, property_list: Array[Dictionary], property_settings: Dictionary):
@@ -218,6 +254,7 @@ static func setup():
 
 	_catalog = {}
 	_setup_definitions_from_files()
+	_setup_output_definitions()
 	_setup_properties_for_class()
 	_setup_input_block()
 
@@ -237,6 +274,45 @@ static func get_blocks_by_class(_class_name: String):
 	return block_definitions.values()
 
 
+static func _get_builtin_parents(_class_name: String) -> Array[String]:
+	var parents: Array[String] = []
+	var current = _class_name
+
+	while current != "":
+		parents.append(current)
+		current = ClassDB.get_parent_class(current)
+
+	return parents
+
+
+static func _get_custom_parent_class_name(_custom_class_name: String) -> String:
+	for class_dict in ProjectSettings.get_global_class_list():
+		if class_dict.class != _custom_class_name:
+			continue
+		var script = load(class_dict.path)
+		var builtin_class = script.get_instance_base_type()
+		return builtin_class
+	return "Node"
+
+
+static func _get_parents(_class_name: String) -> Array[String]:
+	if ClassDB.class_exists(_class_name):
+		return _get_builtin_parents(_class_name)
+	var parents: Array[String] = [_class_name]
+	var _parent_class_name = _get_custom_parent_class_name(_class_name)
+	parents.append_array(_get_builtin_parents(_parent_class_name))
+	return parents
+
+
+static func get_inherited_blocks(_class_name: String) -> Array[BlockDefinition]:
+	setup()
+
+	var definitions: Array[BlockDefinition] = []
+	for _parent_class_name in _get_parents(_class_name):
+		definitions.append_array(get_blocks_by_class(_parent_class_name))
+	return definitions
+
+
 static func add_custom_blocks(
 	_class_name,
 	block_definitions: Array[BlockDefinition] = [],
@@ -252,4 +328,32 @@ static func add_custom_blocks(
 		_catalog[block_definition.name] = block_definition
 		_by_class_name[_class_name][block_definition.name] = block_definition
 
+	_add_output_definitions(block_definitions)
 	_add_property_definitions(_class_name, property_list, property_settings)
+
+
+static func get_variable_block_definitions(variables: Array[VariableDefinition]) -> Array[BlockDefinition]:
+	var block_definitions: Array[BlockDefinition] = []
+	for variable: VariableDefinition in variables:
+		var type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
+
+		# Getter
+		var block_def = BlockDefinition.new()
+		block_def.name = "get_var_%s" % variable.var_name
+		block_def.category = "Variables"
+		block_def.type = Types.BlockType.VALUE
+		block_def.variant_type = variable.var_type
+		block_def.display_template = variable.var_name
+		block_def.code_template = variable.var_name
+		block_definitions.append(block_def)
+
+		# Setter
+		block_def = BlockDefinition.new()
+		block_def.name = "set_var_%s" % variable.var_name
+		block_def.category = "Variables"
+		block_def.type = Types.BlockType.STATEMENT
+		block_def.display_template = "Set %s to {value: %s}" % [variable.var_name, type_string]
+		block_def.code_template = "%s = {value}" % [variable.var_name]
+		block_definitions.append(block_def)
+
+	return block_definitions

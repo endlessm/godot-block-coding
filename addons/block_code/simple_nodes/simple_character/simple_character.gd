@@ -4,6 +4,7 @@ extends CharacterBody2D
 
 const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
 const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
+const OptionData = preload("res://addons/block_code/code_generation/option_data.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
 ## A texture can be provided for simple setup. If provided, the character will have a collision box

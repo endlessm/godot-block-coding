@@ -1,6 +1,7 @@
 @tool
 extends MarginContainer
 
+const OptionData = preload("res://addons/block_code/code_generation/option_data.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
 signal modified
@@ -85,6 +86,8 @@ func get_raw_input():
 			return null if _line_edit.text == "" else int(_line_edit.text)
 		TYPE_FLOAT:
 			return null if _line_edit.text == "" else float(_line_edit.text)
+		TYPE_STRING_NAME:
+			return StringName(_line_edit.text)
 		TYPE_NIL:
 			return _line_edit.text
 		_:
@@ -116,37 +119,6 @@ func get_snapped_block() -> Block:
 	return snap_point.get_snapped_block()
 
 
-func get_string() -> String:
-	var snapped_block: ParameterBlock = get_snapped_block() as ParameterBlock
-	if snapped_block:
-		var generated_string = snapped_block.get_parameter_string()
-		if Types.can_cast(snapped_block.variant_type, variant_type):
-			return Types.cast(generated_string, snapped_block.variant_type, variant_type)
-		else:
-			push_warning("No cast from %s to %s; using '%s' verbatim" % [snapped_block, variant_type, generated_string])
-			return generated_string
-
-	var input = get_raw_input()
-
-	if option:
-		return _option_input.get_item_text(_option_input.selected).to_snake_case()
-
-	match variant_type:
-		TYPE_STRING:
-			return "'%s'" % input.replace("\\", "\\\\").replace("'", "\\'")
-		TYPE_VECTOR2:
-			return "Vector2%s" % str(input)
-		TYPE_COLOR:
-			return "Color%s" % str(input)
-		TYPE_OBJECT:
-			if input is OptionData:
-				var option_data := input as OptionData
-				return option_data.items[option_data.selected]
-		_:
-			return "%s" % input
-	return ""
-
-
 func _validate_and_submit_edit_text(line_edit: Node, type: Variant.Type):
 	if _last_submitted_text[line_edit] == line_edit.text:
 		return
@@ -160,6 +132,7 @@ func _validate_and_submit_edit_text(line_edit: Node, type: Variant.Type):
 				line_edit.text = _last_submitted_text[line_edit]
 				return
 	_last_submitted_text[line_edit] = line_edit.text
+
 	modified.emit()
 
 

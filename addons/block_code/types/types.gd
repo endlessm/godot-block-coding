@@ -18,6 +18,7 @@ const VARIANT_TYPE_TO_STRING: Dictionary = {
 	TYPE_NODE_PATH: "NODE_PATH",
 	TYPE_OBJECT: "OBJECT",
 	TYPE_NIL: "NIL",
+	TYPE_STRING_NAME: "STRING_NAME",
 }
 
 const STRING_TO_VARIANT_TYPE: Dictionary = {
@@ -30,6 +31,7 @@ const STRING_TO_VARIANT_TYPE: Dictionary = {
 	"NODE_PATH": TYPE_NODE_PATH,
 	"OBJECT": TYPE_OBJECT,
 	"NIL": TYPE_NIL,
+	"STRING_NAME": TYPE_STRING_NAME,
 }
 
 const cast_relationships = [

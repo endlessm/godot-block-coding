@@ -1,15 +1,18 @@
 @tool
 extends MarginContainer
 
+const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
 const BlockCategory = preload("res://addons/block_code/ui/picker/categories/block_category.gd")
 const BlockCategoryButtonScene = preload("res://addons/block_code/ui/picker/categories/block_category_button.tscn")
 const BlockCategoryButton = preload("res://addons/block_code/ui/picker/categories/block_category_button.gd")
 const BlockCategoryDisplay = preload("res://addons/block_code/ui/picker/categories/block_category_display.gd")
 const CategoryFactory = preload("res://addons/block_code/ui/picker/categories/category_factory.gd")
+const Util = preload("res://addons/block_code/ui/util.gd")
 const VariableCategoryDisplay = preload("res://addons/block_code/ui/picker/categories/variable_category/variable_category_display.gd")
+const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
 
 signal block_picked(block: Block)
-signal variable_created(variable: VariableResource)
+signal variable_created(variable: VariableDefinition)
 
 @onready var _block_list := %BlockList
 @onready var _block_scroll := %BlockScroll
@@ -25,19 +28,8 @@ func block_script_selected(block_script: BlockScriptSerialization):
 		reset_picker()
 		return
 
-	var categories_to_add: Array[BlockCategory] = []
-
-	for class_dict in ProjectSettings.get_global_class_list():
-		if class_dict.class == block_script.script_inherits:
-			var script = load(class_dict.path)
-			if script.has_method("get_custom_categories"):
-				categories_to_add = script.get_custom_categories()
-			if script.has_method("setup_custom_blocks"):
-				script.setup_custom_blocks()
-			break
-
-	var blocks_to_add: Array[Block] = []
-	blocks_to_add.append_array(CategoryFactory.get_inherited_blocks(block_script.script_inherits))
+	var blocks_to_add: Array[BlockDefinition] = block_script.get_definitions()
+	var categories_to_add: Array[BlockCategory] = block_script.get_categories()
 
 	init_picker(blocks_to_add, categories_to_add)
 	reload_variables(block_script.variables)
@@ -51,7 +43,7 @@ func reset_picker():
 		c.queue_free()
 
 
-func init_picker(extra_blocks: Array[Block] = [], extra_categories: Array[BlockCategory] = []):
+func init_picker(extra_blocks: Array[BlockDefinition] = [], extra_categories: Array[BlockCategory] = []):
 	reset_picker()
 
 	var blocks := CategoryFactory.get_general_blocks() + extra_blocks
@@ -75,21 +67,11 @@ func init_picker(extra_blocks: Array[Block] = [], extra_categories: Array[BlockC
 			_variable_category_display = block_category_display
 
 		block_category_display.category = category
+		block_category_display.block_picked.connect(func(block: Block): block_picked.emit(block))
 
 		_block_list.add_child(block_category_display)
 
-		for _block in category.block_list:
-			var block: Block = _block as Block
-			block.drag_started.connect(_block_picked)
-
-			# Don't allow the block to be deleted while in the picker.
-			block.can_delete = false
-
 		_block_scroll.scroll_vertical = 0
-
-
-func _block_picked(block: Block):
-	block_picked.emit(block)
 
 
 func scroll_to(y: float):
@@ -110,15 +92,15 @@ func set_collapsed(collapsed: bool):
 	_widget_container.visible = not collapsed
 
 
-func reload_variables(variables: Array[VariableResource]):
+func reload_variables(variables: Array[VariableDefinition]):
 	if _variable_category_display:
 		for c in _variable_category_display.variable_blocks.get_children():
 			c.queue_free()
 
 		var i := 1
-		for block in CategoryFactory.get_variable_blocks(variables):
+		for block in Util.instantiate_variable_blocks(variables):
 			_variable_category_display.variable_blocks.add_child(block)
-			block.drag_started.connect(_block_picked)
+			block.drag_started.connect(func(block: Block): block_picked.emit(block))
 			if i % 2 == 0:
 				var spacer := Control.new()
 				spacer.custom_minimum_size.y = 12
