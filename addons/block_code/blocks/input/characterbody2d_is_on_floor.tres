@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cbpicqif1ddro"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_btxic"]
+
+[resource]
+script = ExtResource("1_btxic")
+name = &"characterbody2d_is_on_floor"
+target_node_class = "CharacterBody2D"
+description = "True if the character is on the floor."
+category = "Physics | Velocity"
+type = 3
+variant_type = 1
+display_template = "Is on floor"
+code_template = "is_on_floor()"
+defaults = {}
+signal_name = ""
+scope = ""
