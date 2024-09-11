@@ -11,7 +11,8 @@ signal modified
 
 @export var variant_type: Variant.Type = TYPE_STRING
 @export var block_type: Types.BlockType = Types.BlockType.VALUE
-var option: bool = false
+var option: bool = false:
+	set = _set_option
 
 @onready var _panel := %Panel
 @onready var snap_point := %SnapPoint
@@ -103,11 +104,22 @@ func _set_placeholder(new_placeholder: String) -> void:
 	_line_edit.placeholder_text = placeholder
 
 
+func _set_option(value: bool) -> void:
+	option = value
+
+	if not is_node_ready():
+		return
+
+	# If options are being provided, you can't snap blocks.
+	snap_point.visible = not option
+
+
 func _ready():
 	var stylebox = _panel.get_theme_stylebox("panel")
 	stylebox.bg_color = Color.WHITE
 
 	_set_placeholder(placeholder)
+	_set_option(option)
 
 	snap_point.block_type = block_type
 	snap_point.variant_type = variant_type
