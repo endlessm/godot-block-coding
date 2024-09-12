@@ -90,3 +90,18 @@ There are several other GUT command line options for running specific tests.
 For example, `-gtest=path/to/test_script_1.gd,path/to/test_script_2.gd` can be
 used to run specific test scripts. A specific test function can be specified
 with `-gunit_test_name=test_to_run`.
+
+### Using the Development Version of the Plugin
+
+1. If your project already has the BlockCode plugin installed:
+    1. Ensure you have committed your project to Git, including the `addons/block_code` directory.
+       At this stage of development, **block code programs written for an older plugin version will
+       likely not work with a newer version of the plugin**, so it is essential that you take a
+       snapshot of your project before changing the plugin version.
+    2. Under *Project* → *Project Settings…* → *Plugins*, disable the BlockCode plugin
+    3. In the *FileSystem* sidebar, delete the `res://addons/block_code` directory
+2. Download
+   [a development snapshot](https://github.com/endlessm/godot-block-coding/archive/main.zip)
+3. Under *AssetLib*, click *Import…*, and browse to the `main.zip` file you just downloaded
+4. Check the *☑ Ignore assert root* option, and click *Install*
+5. Under *Project* → *Project Settings…* → *Plugins*, enable the BlockCode plugin
