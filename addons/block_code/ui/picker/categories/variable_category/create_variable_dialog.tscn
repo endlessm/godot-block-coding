@@ -8,6 +8,7 @@ initial_position = 1
 size = Vector2i(300, 183)
 visible = true
 ok_button_text = "Create"
+dialog_hide_on_ok = false
 script = ExtResource("1_b52me")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -27,6 +28,8 @@ text = "Name "
 [node name="VariableInput" type="LineEdit" parent="VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../TypeOption")
+focus_next = NodePath("../TypeOption")
 
 [node name="Label2" type="Label" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -36,10 +39,11 @@ text = "Type "
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-item_count = 6
+focus_neighbor_top = NodePath("../VariableInput")
+focus_previous = NodePath("../VariableInput")
 selected = 0
+item_count = 6
 popup/item_0/text = "STRING"
-popup/item_0/id = 0
 popup/item_1/text = "BOOL"
 popup/item_1/id = 1
 popup/item_2/text = "INT"
@@ -63,6 +67,9 @@ layout_mode = 2
 theme_override_constants/line_separation = 4
 fit_content = true
 
+[connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
 [connection signal="canceled" from="." to="." method="_on_canceled"]
 [connection signal="confirmed" from="." to="." method="_on_confirmed"]
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="text_changed" from="VBoxContainer/GridContainer/VariableInput" to="." method="_on_variable_input_text_changed"]
+[connection signal="text_submitted" from="VBoxContainer/GridContainer/VariableInput" to="." method="_on_variable_input_text_submitted"]

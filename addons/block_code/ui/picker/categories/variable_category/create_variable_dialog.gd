@@ -14,16 +14,20 @@ const available_types = ["STRING", "BOOL", "INT", "FLOAT", "VECTOR2", "COLOR"]
 
 func _ready():
 	_type_option.clear()
+	_type_option.focus_next = get_cancel_button().get_path()
+	get_cancel_button().focus_previous = _type_option.get_path()
+	get_ok_button().focus_next = _variable_input.get_path()
+	_variable_input.focus_previous = get_ok_button().get_path()
 
 	for type in available_types:
 		_type_option.add_item(type)
 
-	check_errors(_variable_input.text)
+	_clear()
 
 
 func _clear():
 	_variable_input.text = ""
-	check_errors(_variable_input.text)
+	get_ok_button().disabled = check_errors(_variable_input.text)
 	_type_option.select(0)
 
 
@@ -93,10 +97,25 @@ func check_errors(new_var_name: String) -> bool:
 
 
 func _on_confirmed():
-	if not check_errors(_variable_input.text):
-		create_variable.emit(_variable_input.text, _type_option.get_item_text(_type_option.selected))
+	if check_errors(_variable_input.text):
+		return
+
+	create_variable.emit(_variable_input.text, _type_option.get_item_text(_type_option.selected))
+	hide()
 	_clear()
 
 
 func _on_canceled():
 	_clear()
+
+
+func _on_about_to_popup() -> void:
+	_variable_input.grab_focus()
+
+
+func _on_focus_entered() -> void:
+	_variable_input.grab_focus()
+
+
+func _on_variable_input_text_submitted(new_text: String) -> void:
+	_on_confirmed()
