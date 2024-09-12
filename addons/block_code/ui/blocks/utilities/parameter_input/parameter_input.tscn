@@ -87,6 +87,7 @@ custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 tooltip_text = "Parameter"
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fjquj")
+fit_to_longest_item = false
 
 [node name="Vector2Input" type="MarginContainer" parent="InputSwitcher"]
 unique_name_in_owner = true
