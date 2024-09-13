@@ -7,7 +7,7 @@ signal create_variable(var_name: String, var_type: String)
 
 
 func _on_create_button_pressed():
-	_create_variable_dialog.visible = true
+	_create_variable_dialog.popup()
 
 
 func _on_create_variable_dialog_create_variable(var_name, var_type):
