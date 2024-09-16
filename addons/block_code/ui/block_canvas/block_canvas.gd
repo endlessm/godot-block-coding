@@ -56,6 +56,14 @@ func _ready():
 		_open_scene_button.icon = _open_scene_icon
 
 
+func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
+	return true
+
+
+func _drop_data(at_position: Vector2, data: Variant) -> void:
+	print(data)
+
+
 func add_block(block: Block, position: Vector2 = Vector2.ZERO) -> void:
 	if block is EntryBlock:
 		block.position = canvas_to_window(position).snapped(SNAP_GRID)
