@@ -80,7 +80,6 @@ const _SETTINGS_FOR_CLASS_PROPERTY = {
 }
 
 static var _catalog: Dictionary
-static var _by_class_name: Dictionary
 
 
 static func _setup_definitions_from_files():
@@ -91,9 +90,6 @@ static func _setup_definitions_from_files():
 		var target = block_definition.target_node_class
 		if not target:
 			continue
-		if not target in _by_class_name:
-			_by_class_name[target] = {}
-		_by_class_name[target][block_definition.name] = block_definition
 
 
 static func _add_property_definitions(_class_name: String, property_list: Array[Dictionary], property_settings: Dictionary):
@@ -102,9 +98,6 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 			continue
 		var block_settings = property_settings[property.name]
 		var type_string: String = Types.VARIANT_TYPE_TO_STRING[property.type]
-
-		if not _class_name in _by_class_name:
-			_by_class_name[_class_name] = {}
 
 		# Setter
 		var block_definition: BlockDefinition
@@ -124,7 +117,6 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 				)
 			)
 			_catalog[block_definition.name] = block_definition
-			_by_class_name[_class_name][block_definition.name] = block_definition
 
 		# Changer
 		if block_settings.get("has_change", true):
@@ -143,7 +135,6 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 				)
 			)
 			_catalog[block_definition.name] = block_definition
-			_by_class_name[_class_name][block_definition.name] = block_definition
 
 		# Getter
 		block_definition = (
@@ -160,7 +151,6 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 			)
 		)
 		_catalog[block_definition.name] = block_definition
-		_by_class_name[_class_name][block_definition.name] = block_definition
 
 
 static func _get_inputmap_actions() -> Array[StringName]:
@@ -234,11 +224,19 @@ static func has_block(block_name: StringName):
 	return block_name in _catalog
 
 
-static func get_blocks_by_class(_class_name: String):
-	if not _class_name in _by_class_name:
-		return []
-	var block_definitions = _by_class_name[_class_name] as Dictionary
-	return block_definitions.values()
+static func get_blocks_by_class(_class_name: String) -> Array[BlockDefinition]:
+	var result: Array[BlockDefinition]
+
+	if not _class_name:
+		return result
+
+	result.assign(_catalog.values().filter(_block_definition_has_class_name.bind(_class_name)))
+
+	return result
+
+
+static func _block_definition_has_class_name(block_definition: BlockDefinition, _class_name: String) -> bool:
+	return block_definition.target_node_class == _class_name
 
 
 static func _get_builtin_parents(_class_name: String) -> Array[String]:
@@ -288,12 +286,8 @@ static func add_custom_blocks(
 ):
 	setup()
 
-	if not _class_name in _by_class_name:
-		_by_class_name[_class_name] = {}
-
 	for block_definition in block_definitions:
 		_catalog[block_definition.name] = block_definition
-		_by_class_name[_class_name][block_definition.name] = block_definition
 
 	_add_property_definitions(_class_name, property_list, property_settings)
 
