@@ -39,6 +39,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var _jumping = false
 var direction_x: int = 0
+var direction_y: int = 0
 
 
 func _set_texture(new_texture):
@@ -102,6 +103,7 @@ func _player_input_to_direction(player: String):
 func move_with_player_buttons(player: String, kind: String, delta: float):
 	var direction = _player_input_to_direction(player)
 	direction_x = direction.x
+	direction_y = direction.y
 
 	if kind == "top-down":
 		velocity = direction * speed
@@ -159,6 +161,10 @@ static func setup_custom_blocks():
 			"name": "direction_x",
 			"type": TYPE_INT,
 		},
+		{
+			"name": "direction_y",
+			"type": TYPE_INT,
+		},
 	]
 
 	var property_settings = {
@@ -167,6 +173,11 @@ static func setup_custom_blocks():
 			"category": "Physics | Velocity",
 		},
 		"direction_x":
+		{
+			"category": "Physics | Velocity",
+			"has_setter": false,
+		},
+		"direction_y":
 		{
 			"category": "Physics | Velocity",
 			"has_setter": false,
