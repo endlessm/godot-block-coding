@@ -18,13 +18,12 @@ const VariableDefinition = preload("res://addons/block_code/code_generation/vari
 @onready var _drag_manager: DragManager = %DragManager
 @onready var _title_bar: TitleBar = %TitleBar
 @onready var _delete_node_button: Button = %DeleteNodeButton
-@onready var _editor_inspector: EditorInspector = EditorInterface.get_inspector()
 @onready var _picker_split: HSplitContainer = %PickerSplit
 @onready var _collapse_button: Button = %CollapseButton
 
-@onready var _icon_delete := EditorInterface.get_editor_theme().get_icon("Remove", "EditorIcons")
-@onready var _icon_collapse := EditorInterface.get_editor_theme().get_icon("Back", "EditorIcons")
-@onready var _icon_expand := EditorInterface.get_editor_theme().get_icon("Forward", "EditorIcons")
+@onready var _icon_delete := EditorInterface.get_editor_theme().get_icon("Remove", "EditorIcons") if Engine.is_editor_hint() else null
+@onready var _icon_collapse := EditorInterface.get_editor_theme().get_icon("Back", "EditorIcons") if Engine.is_editor_hint() else null
+@onready var _icon_expand := EditorInterface.get_editor_theme().get_icon("Forward", "EditorIcons") if Engine.is_editor_hint() else null
 
 const Constants = preload("res://addons/block_code/ui/constants.gd")
 
@@ -66,7 +65,10 @@ func _on_show_script_button_pressed():
 
 
 func _on_delete_node_button_pressed():
-	var scene_root = EditorInterface.get_edited_scene_root()
+	var scene_root: Node
+
+	if Engine.is_editor_hint():
+		scene_root = EditorInterface.get_edited_scene_root()
 
 	if not scene_root:
 		return
@@ -128,6 +130,9 @@ func _on_context_changed():
 func save_script():
 	if _context.block_code_node == null:
 		print("No script loaded to save.")
+		return
+
+	if not Engine.is_editor_hint():
 		return
 
 	var scene_node = EditorInterface.get_edited_scene_root()

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Block Coding Plugin"
-run/main_scene="res://addons/block_code/examples/pong_game/pong_game.tscn"
+run/main_scene="res://block_code_demo.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
