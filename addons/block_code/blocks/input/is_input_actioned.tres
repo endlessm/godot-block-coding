@@ -1,0 +1,27 @@
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://86j17le5e58u"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="1_d8i05"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_rprh7"]
+[ext_resource type="Script" path="res://addons/block_code/blocks/input/is_input_actioned.gd" id="2_h11b7"]
+
+[sub_resource type="Resource" id="Resource_ai5in"]
+script = ExtResource("1_d8i05")
+selected = 0
+items = ["pressed", "just_pressed", "just_released"]
+
+[resource]
+script = ExtResource("1_rprh7")
+name = &"is_input_actioned"
+target_node_class = ""
+description = "True if the specified input action has been pressed or released."
+category = "Input"
+type = 3
+variant_type = 1
+display_template = "Is action {action_name: STRING_NAME} {action: NIL}"
+code_template = "Input.is_action_{{action}}('{{action_name}}')"
+defaults = {
+"action": SubResource("Resource_ai5in")
+}
+signal_name = ""
+scope = ""
+extension_script = ExtResource("2_h11b7")
