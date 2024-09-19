@@ -48,4 +48,3 @@ theme_override_constants/margin_bottom = 8
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
 [connection signal="mouse_down" from="DragDropArea" to="." method="_on_drag_drop_area_mouse_down"]
-[connection signal="modified" from="MarginContainer/TemplateEditor" to="." method="_modified"]

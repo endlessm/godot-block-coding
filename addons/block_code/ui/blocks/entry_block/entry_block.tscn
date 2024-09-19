@@ -56,4 +56,3 @@ layout_mode = 2
 layout_mode = 2
 
 [connection signal="mouse_down" from="VBoxContainer/TopMarginContainer/DragDropArea" to="." method="_on_drag_drop_area_mouse_down"]
-[connection signal="modified" from="VBoxContainer/TopMarginContainer/MarginContainer/TemplateEditor" to="." method="_modified"]

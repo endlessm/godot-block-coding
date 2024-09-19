@@ -60,6 +60,12 @@ func _update_template_editor():
 
 	template_editor.format_string = definition.display_template if definition else ""
 	template_editor.parameter_defaults = definition.get_defaults_for_node(_context.parent_node) if definition else {}
+	if not template_editor.modified.is_connected(_on_template_editor_modified):
+		template_editor.modified.connect(_on_template_editor_modified)
+
+
+func _on_template_editor_modified():
+	modified.emit()
 
 
 func _gui_input(event):
@@ -82,10 +88,6 @@ func _gui_input(event):
 				dialog.dialog_text = "Delete block?"
 			dialog.confirmed.connect(remove_from_tree)
 			EditorInterface.popup_dialog_centered(dialog)
-
-
-func _modified():
-	modified.emit()
 
 
 func remove_from_tree():

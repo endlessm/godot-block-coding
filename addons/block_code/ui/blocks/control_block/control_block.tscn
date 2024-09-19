@@ -95,5 +95,4 @@ shift_top = 20.0
 [node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("3_nhryi")]
 layout_mode = 2
 
-[connection signal="modified" from="." to="." method="_modified"]
 [connection signal="mouse_down" from="VBoxContainer/MarginContainer/Rows/Row/DragDropArea" to="." method="_on_drag_drop_area_mouse_down"]
