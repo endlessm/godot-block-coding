@@ -104,6 +104,14 @@ static func format_code_template(code_template: String, arguments: Dictionary) -
 		var code_string: String
 		var raw_string: String
 
+		if argument_value is OptionData:
+			# Temporary hack: previously, the value was stored as an OptionData
+			# object with a list of items and a "selected" property. If we are
+			# using an older block script where that is the case, convert the
+			# value to the value of its selected item.
+			# See also, ParameterInput._update_option_input.
+			argument_value = argument_value.items[argument_value.selected]
+
 		if argument_value is ASTValueNode:
 			code_string = argument_value.get_code()
 			raw_string = code_string
