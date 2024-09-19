@@ -1,45 +1,60 @@
 extends GutTest
-## Tests for CategoryFactory
+## Tests for BlockFactory
 
 const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
 const BlockCategory = preload("res://addons/block_code/ui/picker/categories/block_category.gd")
 const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
 
+var block_script: BlockScriptSerialization
+
+
+func assert_set_eq(set_a: Array, set_b: Array, text: String = ""):
+	var set_a_sorted := set_a.duplicate()
+	var set_b_sorted := set_b.duplicate()
+	set_a_sorted.sort()
+	set_b_sorted.sort()
+	assert_eq(set_a_sorted, set_b_sorted, text)
+
 
 func get_category_names(categories: Array[BlockCategory]) -> Array[String]:
-	var names: Array[String] = []
-	for category in categories:
-		names.append(category.name)
-	return names
+	var category_names: Array[String]
+	category_names.assign(categories.map(func(category): return category.name))
+	category_names.sort()
+	return category_names
 
 
 func get_class_category_names(_class_name: String) -> Array[String]:
 	var blocks: Array[BlockDefinition] = BlocksCatalog.get_inherited_blocks(_class_name)
-	var names: Array[String] = get_category_names(CategoryFactory.get_categories(blocks))
-	return names
+	var categories: Array[BlockCategory] = block_script._categories.filter(func(category): return blocks.any(func(block): return block.category == category.name))
+	return get_category_names(categories)
+
+
+func before_each():
+	block_script = BlockScriptSerialization.new()
+	block_script.initialize()
+
+
+const default_category_names = [
+	"Communication | Groups",
+	"Communication | Methods",
+	"Graphics | Viewport",
+	"Input",
+	"Lifecycle",
+	"Log",
+	"Logic | Boolean",
+	"Logic | Comparison",
+	"Logic | Conditionals",
+	"Loops",
+	"Math",
+	"Sounds",
+	"Variables",
+]
 
 
 func test_general_category_names():
-	var blocks: Array[BlockDefinition] = CategoryFactory.get_general_blocks()
-	var names: Array[String] = get_category_names(CategoryFactory.get_categories(blocks))
-	assert_eq(
-		names,
-		[
-			"Lifecycle",
-			"Graphics | Viewport",
-			"Sounds",
-			"Input",
-			"Communication | Methods",
-			"Communication | Groups",
-			"Loops",
-			"Logic | Conditionals",
-			"Logic | Comparison",
-			"Logic | Boolean",
-			"Variables",
-			"Math",
-			"Log",
-		]
-	)
+	var blocks: Array[BlockDefinition] = block_script.get_available_blocks()
+	var names: Array[String] = get_category_names(block_script.get_available_categories())
+	assert_set_eq(names, default_category_names)
 
 
 const class_category_names = [
@@ -51,11 +66,11 @@ const class_category_names = [
 
 
 func test_inherited_category_names(params = use_parameters(class_category_names)):
-	assert_eq(get_class_category_names(params[0]), params[1])
+	assert_set_eq(get_class_category_names(params[0]), default_category_names + params[1])
 
 
 func test_unique_block_names():
-	var blocks: Array[BlockDefinition] = CategoryFactory.get_general_blocks()
+	var blocks: Array[BlockDefinition] = block_script.get_available_blocks()
 	var block_names: Dictionary
 	for block in blocks:
 		assert_does_not_have(block_names, block.name, "Block name %s is duplicated" % block.name)

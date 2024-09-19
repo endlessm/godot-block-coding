@@ -1,16 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://c84vmg3odrtxt"]
+[gd_scene load_steps=6 format=3 uid="uid://c84vmg3odrtxt"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/statement_block/statement_block.gd" id="1_6wvlf"]
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/background.gd" id="2_lctqt"]
 [ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_owgdx"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="3_5vaov"]
+[ext_resource type="PackedScene" uid="uid://b1xvp3u11h41s" path="res://addons/block_code/ui/blocks/utilities/template_editor/template_editor.tscn" id="4_vky23"]
 
-[node name="StatementBlock" type="MarginContainer" node_paths=PackedStringArray("bottom_snap")]
+[node name="StatementBlock" type="MarginContainer" node_paths=PackedStringArray("bottom_snap", "template_editor")]
 size_flags_horizontal = 0
 focus_mode = 2
 mouse_filter = 2
 script = ExtResource("1_6wvlf")
 bottom_snap = NodePath("VBoxContainer/SnapPoint")
+template_editor = NodePath("VBoxContainer/TopMarginContainer/MarginContainer/TemplateEditor")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -45,12 +47,9 @@ theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 6
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopMarginContainer/MarginContainer"]
+[node name="TemplateEditor" parent="VBoxContainer/TopMarginContainer/MarginContainer" instance=ExtResource("4_vky23")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 0
 
 [node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("3_5vaov")]
 layout_mode = 2

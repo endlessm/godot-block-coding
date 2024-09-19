@@ -9,6 +9,7 @@ const BlockDefinition = preload("res://addons/block_code/code_generation/block_d
 const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
 
 var general_blocks: Dictionary
+var block_script: BlockScriptSerialization
 
 
 func build_block_map(block_map: Dictionary, blocks: Array[BlockDefinition]):
@@ -24,7 +25,9 @@ func free_block_map(block_map: Dictionary):
 
 
 func before_each():
-	build_block_map(general_blocks, CategoryFactory.get_general_blocks())
+	block_script = BlockScriptSerialization.new()
+	block_script.initialize()
+	build_block_map(general_blocks, block_script.get_available_blocks())
 
 
 func after_each():

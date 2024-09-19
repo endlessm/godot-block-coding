@@ -11,8 +11,10 @@ signal modified
 
 @export var variant_type: Variant.Type = TYPE_STRING
 @export var block_type: Types.BlockType = Types.BlockType.VALUE
-var option: bool = false:
-	set = _set_option
+@export var option_data: OptionData:
+	set = _set_option_data
+
+var default_value: Variant
 
 @onready var _panel := %Panel
 @onready var snap_point := %SnapPoint
@@ -36,22 +38,27 @@ var option: bool = false:
 
 # Used to submit the text when losing focus:
 @onready var _last_submitted_text = {
-	_line_edit: _line_edit.text,
-	_x_line_edit: _x_line_edit.text,
-	_y_line_edit: _y_line_edit.text,
+	_line_edit: "",
+	_x_line_edit: "",
+	_y_line_edit: "",
 }
 
 
-func set_raw_input(raw_input):
-	if option:
-		_panel.visible = false
-		_option_input.clear()
-		var option_data: OptionData = raw_input as OptionData
-		for item in option_data.items:
-			_option_input.add_item(item.capitalize())
-		_option_input.select(option_data.selected)
+## Sets the value using [param raw_input], which could be one of a variety of types
+## depending on [member variant_type]. The value could also be a [Block], in which
+## case the block will be snapped to the control, replacing its editor.
+func set_raw_input(raw_input: Variant):
+	if raw_input is Block:
+		snap_point.replace_snapped_block(raw_input)
+		# Continue from here to reset the editor to default values
+		raw_input = null
 
+	if option_data:
+		_update_option_input(raw_input)
 		return
+
+	if raw_input == null:
+		raw_input = default_value
 
 	match variant_type:
 		TYPE_COLOR:
@@ -59,22 +66,31 @@ func set_raw_input(raw_input):
 			_update_panel_bg_color(raw_input)
 		TYPE_VECTOR2:
 			# Rounding because floats are doubles by default but Vector2s have single components
-			_x_line_edit.text = ("%.4f" % raw_input.x).rstrip("0").rstrip(".")
-			_y_line_edit.text = ("%.4f" % raw_input.y).rstrip("0").rstrip(".")
+			_x_line_edit.text = ("%.4f" % raw_input.x).rstrip("0").rstrip(".") if raw_input != null else ""
+			_y_line_edit.text = ("%.4f" % raw_input.y).rstrip("0").rstrip(".") if raw_input != null else ""
 		TYPE_BOOL:
-			_bool_input_option.select(raw_input)
+			_bool_input_option.select(1 if raw_input else 0)
 		TYPE_NIL:
-			_line_edit.text = raw_input
+			_line_edit.text = raw_input if raw_input != null else ""
 		_:
-			_line_edit.text = "" if raw_input == null else str(raw_input)
+			_line_edit.text = str(raw_input) if raw_input != null else ""
+
+	_last_submitted_text[_line_edit] = _line_edit.text
+	_last_submitted_text[_x_line_edit] = _x_line_edit.text
+	_last_submitted_text[_y_line_edit] = _y_line_edit.text
 
 
-func get_raw_input():
-	if option:
-		var options: Array = []
-		for i in _option_input.item_count:
-			options.append(_option_input.get_item_text(i).to_snake_case())
-		return OptionData.new(options, _option_input.selected)
+## Gets the value, which could be one of a variety of types depending on
+## [member variant_type]. The value could also be a [Block], if one was previously
+## snapped to the control.
+func get_raw_input() -> Variant:
+	var snapped_block = snap_point.get_snapped_block()
+
+	if snapped_block:
+		return snapped_block
+
+	if option_data:
+		return _option_input.get_selected_metadata()
 
 	match variant_type:
 		TYPE_COLOR:
@@ -95,6 +111,18 @@ func get_raw_input():
 			return _line_edit.text
 
 
+func _set_option_data(new_option_data: OptionData) -> void:
+	option_data = new_option_data
+
+	if not is_node_ready():
+		return
+
+	# If options are being provided, you can't snap blocks.
+	snap_point.visible = not option_data
+
+	_update_option_input()
+
+
 func _set_placeholder(new_placeholder: String) -> void:
 	placeholder = new_placeholder
 
@@ -102,16 +130,8 @@ func _set_placeholder(new_placeholder: String) -> void:
 		return
 
 	_line_edit.placeholder_text = placeholder
-
-
-func _set_option(value: bool) -> void:
-	option = value
-
-	if not is_node_ready():
-		return
-
-	# If options are being provided, you can't snap blocks.
-	snap_point.visible = not option
+	_input_switcher.tooltip_text = placeholder
+	_option_input.tooltip_text = placeholder
 
 
 func _ready():
@@ -119,12 +139,15 @@ func _ready():
 	stylebox.bg_color = Color.WHITE
 
 	_set_placeholder(placeholder)
-	_set_option(option)
+	_set_option_data(option_data)
 
 	snap_point.block_type = block_type
 	snap_point.variant_type = variant_type
 
 	_update_visible_input()
+
+	if default_value:
+		set_raw_input(default_value)
 
 
 func get_snapped_block() -> Block:
@@ -175,7 +198,7 @@ func _on_y_line_edit_focus_exited():
 func _update_visible_input():
 	if snap_point.has_snapped_block():
 		_switch_input(null)
-	elif option:
+	elif option_data:
 		_switch_input(_option_input)
 	else:
 		match variant_type:
@@ -192,6 +215,55 @@ func _update_visible_input():
 func _switch_input(node: Node):
 	for c in _input_switcher.get_children():
 		c.visible = c == node
+	_panel.visible = node not in [_option_input]
+
+
+func _update_option_input(current_value: Variant = null):
+	if not option_data:
+		return
+
+	if current_value is OptionData:
+		# Temporary hack: previously, the value was stored as an OptionData
+		# object with a list of items and a "selected" property. Instead,
+		# convert that value to the corresponding item.
+		current_value = current_value.items[current_value.selected]
+
+	if current_value == null:
+		current_value = _option_input.get_selected_metadata()
+
+	_option_input.clear()
+
+	var selected_item_index: int = -1
+
+	for item in option_data.items:
+		var item_index = _option_input.item_count
+		var option_label = item.capitalize() if item is String else str(item)
+		_option_input.add_item(option_label)
+		_option_input.set_item_tooltip(item_index, item)
+		_option_input.set_item_metadata(item_index, item)
+		if item == current_value:
+			selected_item_index = item_index
+
+	if selected_item_index == -1 and current_value:
+		# If the current value is not in the default list of options, add it
+		# and select it.
+		if _option_input.item_count > 0:
+			_option_input.add_separator()
+		var item_index = _option_input.item_count
+		var option_label = current_value.capitalize() if current_value is String else str(current_value)
+		_option_input.add_item(option_label)
+		_option_input.set_item_tooltip(item_index, current_value)
+		_option_input.set_item_metadata(item_index, current_value)
+		selected_item_index = item_index
+	elif _option_input.item_count == 0:
+		var item_index = _option_input.item_count
+		_option_input.add_item("<%s>" % placeholder)
+		_option_input.set_item_disabled(item_index, true)
+		selected_item_index = item_index
+	elif selected_item_index == -1:
+		selected_item_index = option_data.selected
+
+	_option_input.select(selected_item_index)
 
 
 func _on_color_input_color_changed(color):

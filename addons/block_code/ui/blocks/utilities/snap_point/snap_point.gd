@@ -49,6 +49,16 @@ func has_snapped_block() -> bool:
 	return snapped_block != null
 
 
+func replace_snapped_block(new_block: Block):
+	var old_block = get_snapped_block()
+
+	if old_block:
+		remove_child(old_block)
+
+	if new_block:
+		add_child(new_block)
+
+
 func insert_snapped_block(new_block: Block) -> Block:
 	var old_block = get_snapped_block()
 

@@ -1,5 +1,6 @@
 @tool
 extends EditorPlugin
+
 const MainPanelScene := preload("res://addons/block_code/ui/main_panel.tscn")
 const MainPanel = preload("res://addons/block_code/ui/main_panel.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
@@ -93,14 +94,8 @@ func _exit_tree():
 
 
 func _ready():
-	connect("scene_changed", _on_scene_changed)
 	editor_inspector.connect("edited_object_changed", _on_editor_inspector_edited_object_changed)
-	_on_scene_changed(EditorInterface.get_edited_scene_root())
 	_on_editor_inspector_edited_object_changed()
-
-
-func _on_scene_changed(scene_root: Node):
-	main_panel.switch_scene(scene_root)
 
 
 func _on_editor_inspector_edited_object_changed():

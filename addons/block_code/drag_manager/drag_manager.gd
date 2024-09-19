@@ -15,6 +15,8 @@ const Util = preload("res://addons/block_code/ui/util.gd")
 
 const Constants = preload("res://addons/block_code/ui/constants.gd")
 
+@onready var _context := BlockEditorContext.get_default()
+
 var _picker: Picker
 var _block_canvas: BlockCanvas
 
@@ -64,9 +66,9 @@ func drag_block(block: Block, copied_from: Block = null):
 
 
 func copy_block(block: Block) -> Block:
-	var new_block = Util.instantiate_block(block.definition)
-	new_block.color = block.color
-	return new_block
+	if _context.block_script == null:
+		return null
+	return _context.block_script.instantiate_block(block.definition)
 
 
 func copy_picked_block_and_drag(block: Block):

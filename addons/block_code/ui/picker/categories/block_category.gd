@@ -1,15 +1,18 @@
 extends RefCounted
 
-const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
-
 var name: String
-var block_list: Array[BlockDefinition]
 var color: Color
 var order: int
 
 
-func _init(p_name: String = "", p_color: Color = Color.WHITE, p_order: int = 0, p_block_list: Array[BlockDefinition] = []):
+func _init(p_name: String = "", p_color: Color = Color.WHITE, p_order: int = 0):
 	name = p_name
-	block_list = p_block_list
 	color = p_color
 	order = p_order
+
+
+## Compare block categories for sorting. Compare by order then name.
+static func sort_by_order(a, b) -> bool:
+	if a.order != b.order:
+		return a.order < b.order
+	return a.name.naturalcasecmp_to(b.name) < 0

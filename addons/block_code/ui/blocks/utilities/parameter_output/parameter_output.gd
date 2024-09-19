@@ -1,31 +1,46 @@
 @tool
-class_name ParameterOutput
 extends MarginContainer
 
 const Types = preload("res://addons/block_code/types/types.gd")
+const ParameterBlock = preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.gd")
+const ParameterBlockScene = preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn")
 
 var block: Block
+var parameter_name: String
 var output_block: Block
+var _block_name: String:
+	get:
+		return block.definition.name if block else ""
 
 @export var block_params: Dictionary
+
+@onready var _context := BlockEditorContext.get_default()
 
 @onready var _snap_point := %SnapPoint
 
 
 func _ready():
-	_snap_point.block_type = Types.BlockType.NONE
-
 	_update_parameter_block.call_deferred()
 
 
 func _update_parameter_block():
+	if _snap_point == null:
+		return
+
 	if _snap_point.has_snapped_block():
 		return
 
-	var parameter_block = preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn").instantiate()
-	for key in block_params:
-		parameter_block[key] = block_params[key]
-	parameter_block.spawned_by = self
+	if _context.block_script == null:
+		return
+
+	var block_name = &"%s:%s" % [_block_name, parameter_name]
+	var parameter_block: ParameterBlock = _context.block_script.instantiate_block_by_name(block_name)
+
+	if parameter_block == null:
+		# FIXME: This sometimes occurs when a script is loaded but it is unclear why
+		#push_error("Unable to create output block %s." % block_name)
+		return
+
 	_snap_point.add_child.call_deferred(parameter_block)
 
 

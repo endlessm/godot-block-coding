@@ -5,6 +5,8 @@ const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
 
 signal create_variable(var_name: String, var_type: String)
 
+@onready var _context := BlockEditorContext.get_default()
+
 @onready var _variable_input := %VariableInput
 @onready var _type_option := %TypeOption
 @onready var _messages := %Messages
@@ -60,14 +62,11 @@ func check_errors(new_var_name: String) -> bool:
 		errors.append("Variable name cannot contain special characters")
 
 	var duplicate_variable_name := false
-	var current_block_code = BlockCodePlugin.main_panel._current_block_code_node
-	if current_block_code:
-		var current_block_script = current_block_code.block_script
-		if current_block_script:
-			for variable in current_block_script.variables:
-				if variable.var_name == new_var_name:
-					duplicate_variable_name = true
-					break
+	if _context.block_script:
+		for variable in _context.block_script.variables:
+			if variable.var_name == new_var_name:
+				duplicate_variable_name = true
+				break
 
 	if duplicate_variable_name:
 		errors.append("Variable already exists")
