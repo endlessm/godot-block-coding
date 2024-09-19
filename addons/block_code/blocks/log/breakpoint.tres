@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bddy0d4xdv20c"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_xva04"]
+
+[resource]
+script = ExtResource("1_xva04")
+name = &"breakpoint"
+target_node_class = ""
+description = "Pause execution and show the current line of code in the debugger."
+category = "Log"
+type = 2
+variant_type = 0
+display_template = "Breakpoint"
+code_template = "breakpoint"
+defaults = {}
+signal_name = ""
+scope = ""
