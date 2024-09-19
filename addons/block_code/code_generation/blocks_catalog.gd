@@ -224,14 +224,9 @@ static func has_block(block_name: StringName):
 	return block_name in _catalog
 
 
-static func get_blocks_by_class(_class_name: String) -> Array[BlockDefinition]:
+static func _get_blocks_by_class(_class_name: String) -> Array[BlockDefinition]:
 	var result: Array[BlockDefinition]
-
-	if not _class_name:
-		return result
-
 	result.assign(_catalog.values().filter(_block_definition_has_class_name.bind(_class_name)))
-
 	return result
 
 
@@ -263,7 +258,9 @@ static func _get_custom_parent_class_name(_custom_class_name: String) -> String:
 static func _get_parents(_class_name: String) -> Array[String]:
 	if ClassDB.class_exists(_class_name):
 		return _get_builtin_parents(_class_name)
-	var parents: Array[String] = [_class_name]
+	var parents: Array[String] = []
+	if _class_name != "":
+		parents.append(_class_name)
 	var _parent_class_name = _get_custom_parent_class_name(_class_name)
 	parents.append_array(_get_builtin_parents(_parent_class_name))
 	return parents
@@ -274,7 +271,8 @@ static func get_inherited_blocks(_class_name: String) -> Array[BlockDefinition]:
 
 	var definitions: Array[BlockDefinition] = []
 	for _parent_class_name in _get_parents(_class_name):
-		definitions.append_array(get_blocks_by_class(_parent_class_name))
+		definitions.append_array(_get_blocks_by_class(_parent_class_name))
+	definitions.append_array(_get_blocks_by_class(""))
 	return definitions
 
 
