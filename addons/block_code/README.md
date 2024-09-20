@@ -50,6 +50,18 @@ We will now seek feedback from learners, educators and game makers, as well as r
 
 There is no language or data format stability implemented or expected in these early stages. If you upgrade the block coding plugin within an existing project, expect any existing block scripts to stop working and need reimplementing from scratch. For now, you probably want to avoid updating the plugin within your project if it's meeting your needs, or only doing that very sporadically. We will consider offering stability guarantees in future stages of development.
 
+## General user guidance
+
+Block scripts run against the node where you created them. The "Queue Free" block is going to free that node, not any other.
+
+The selection of available blocks varies based on the node type. For example, create a block script on an `Area2D` and you will notice that you have an `On body entered` signal handling block available. Create a node script on an `AnimationPlayer` node and you will observe blocks for starting and stopping animations.
+
+If you wish to switch context to another node, you need to define a function in that other node, and then call it. Once execution jumps into that function, blocks will now act against that other node, and you'll have access to type-specific blocks belonging to that other node. You'll need do this kind of thing if you want to trigger the freeing of another node, or trigger an animation to start playing. This is both strong in conveying the concepts of objects and encapsulation, while also a bit tedious - we may revisit in future!
+
+We have some high level blocks for simplifying common game elements. Add a SimpleCharacter node to get a game element that can be connected to keyboard input with just one type-specific block. Add a SimpleScoring node to display a score on-screen, accompanied by simple blocks for adjusting that score.
+
+Lean into animations! Godot's animations functionality goes beyond just simple animations of graphics. You can do so much by combining block coding with Godot's powerful animations editor.
+
 ## Feedback
 
 Please share feedback in the [Godot Forum Block Coding thread](https://forum.godotengine.org/t/block-coding-high-level-block-based-visual-programming/68941).
