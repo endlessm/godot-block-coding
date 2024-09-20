@@ -48,6 +48,8 @@ We will now seek feedback from learners, educators and game makers, as well as r
 - Should this be a plugin or an extension?
 - Should blocks generate GDScript or be dynamically executed?
 
+There is no language or data format stability implemented or expected in these early stages. If you upgrade the block coding plugin within an existing project, expect any existing block scripts to stop working and need reimplementing from scratch. For now, you probably want to avoid updating the plugin within your project if it's meeting your needs, or only doing that very sporadically. We will consider offering stability guarantees in future stages of development.
+
 ## Feedback
 
 Please share feedback in the [Godot Forum Block Coding thread](https://forum.godotengine.org/t/block-coding-high-level-block-based-visual-programming/68941).
