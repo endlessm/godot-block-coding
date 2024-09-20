@@ -13,7 +13,6 @@ const BlockInspectorPlugin := preload("res://addons/block_code/inspector_plugin/
 var block_inspector_plugin: BlockInspectorPlugin
 
 var editor_inspector: EditorInspector
-var editor_selection: EditorSelection
 
 var _selected_block_code: BlockCode
 
@@ -34,7 +33,6 @@ func _enter_tree():
 	Types.init_cast_graph()
 
 	editor_inspector = EditorInterface.get_inspector()
-	editor_selection = EditorInterface.get_selection()
 
 	main_panel = MainPanelScene.instantiate()
 	main_panel.script_window_requested.connect(script_window_requested)
@@ -100,31 +98,14 @@ func _ready():
 
 func _on_editor_inspector_edited_object_changed():
 	var edited_object = editor_inspector.get_edited_object()
-	#var edited_node = edited_object as Node
-	var selected_nodes = editor_selection.get_selected_nodes()
-
-	if edited_object is BlockCode:
+	var block_code_node = edited_object as BlockCode
+	if block_code_node:
+		# If a block code node was explicitly selected, activate the
+		# Block Code panel.
 		make_bottom_panel_item_visible(main_panel)
-
-	if edited_object is BlockCode and selected_nodes.size() == 1 and edited_object.owner and edited_object != _selected_block_code:
-		# If a BlockCode node is being edited, and it was explicitly selected
-		# (as opposed to edited in the Inspector alone), select its parent node
-		# as well. This provides a clearer indication of what is being edited.
-		# Changing the selection will cause edited_object_changed to fire again,
-		# so we will return early to avoid duplicate work.
-		var parent_node = edited_object.get_parent()
-		if parent_node:
-			editor_selection.add_node.call_deferred(parent_node)
-		return
-
-	if edited_object and edited_object.get_class() == "MultiNodeEdit":
-		# If multiple nodes are shown in the inspector, we will find the first
-		# BlockCode node in the list of selected nodes and use that. This
-		# occurs when the user selects multiple items in the Scene panel, or
-		# when we select the parent of a BlockCode node.
-		edited_object = selected_nodes.filter(func(node): return node is BlockCode).pop_front()
-
-	var block_code_node = list_block_code_nodes_for_node(edited_object as Node).pop_front()
+	else:
+		# Find the first block code child.
+		block_code_node = list_block_code_nodes_for_node(edited_object as Node).pop_front()
 	select_block_code_node(block_code_node)
 
 

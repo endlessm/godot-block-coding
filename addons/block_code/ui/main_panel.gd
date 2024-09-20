@@ -217,7 +217,7 @@ func _on_block_canvas_add_block_code():
 
 	undo_redo.add_do_method(edited_node, "add_child", block_code, true)
 	undo_redo.add_do_property(block_code, "owner", scene_root)
-	undo_redo.add_do_method(self, "_select_block_code_node", edited_node)
+	undo_redo.add_do_property(_context, "block_code_node", block_code)
 	undo_redo.add_do_reference(block_code)
 	undo_redo.add_undo_method(edited_node, "remove_child", block_code)
 	undo_redo.add_undo_property(block_code, "owner", null)
@@ -246,24 +246,9 @@ func _on_block_canvas_replace_block_code():
 	#        Ideally this should fix itself in a future version of Godot.
 
 	undo_redo.add_do_method(scene_root, "set_editable_instance", edited_node, true)
-	undo_redo.add_do_method(self, "_select_block_code_node", edited_node)
 	undo_redo.add_undo_method(scene_root, "set_editable_instance", edited_node, false)
 
 	undo_redo.commit_action()
-
-
-func _select_block_code_node(edited_node: Node):
-	var block_code_nodes = BlockCodePlugin.list_block_code_nodes_for_node(edited_node)
-	if block_code_nodes.size() > 0:
-		_set_selection([block_code_nodes.pop_front()])
-	else:
-		_set_selection([edited_node])
-
-
-func _set_selection(nodes: Array[Node]):
-	EditorInterface.get_selection().clear()
-	for node in nodes:
-		EditorInterface.get_selection().add_node(node)
 
 
 func _create_variable(variable: VariableDefinition):

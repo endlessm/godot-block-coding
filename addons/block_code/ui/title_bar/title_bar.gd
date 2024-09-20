@@ -9,7 +9,6 @@ signal node_name_changed(node_name: String)
 
 @onready var _block_code_icon = load("res://addons/block_code/block_code_node/block_code_node.svg") as Texture2D
 @onready var _editor_inspector: EditorInspector = EditorInterface.get_inspector()
-@onready var _editor_selection: EditorSelection = EditorInterface.get_selection()
 @onready var _node_option_button: OptionButton = %NodeOptionButton
 
 
@@ -62,8 +61,4 @@ func _get_block_script_index(block_script: BlockScriptSerialization) -> int:
 
 func _on_node_option_button_item_selected(index):
 	var block_code_node = _node_option_button.get_item_metadata(index) as BlockCode
-	var parent_node = block_code_node.get_parent() as Node
-	_editor_selection.clear()
-	_editor_selection.add_node(block_code_node)
-	if parent_node:
-		_editor_selection.add_node(parent_node)
+	_context.block_code_node = block_code_node
