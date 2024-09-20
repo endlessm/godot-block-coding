@@ -11,13 +11,11 @@ Our aim is to reduce the learning curve faced by learners who are on the early p
 
 With this project, we aim to reduce the height of the mountain that such learners have to climb. Specifically, we aim to eliminate the requirement of learners having to simultaneously learn to code while building their first games. Instead of writing GDScript to implement games, this plugin enables learners use block coding. Tools like [Scratch](https://scratch.mit.edu/), [Blockly](https://developers.google.com/blockly), and [MakeCode](https://www.microsoft.com/en-us/makecode) have demonstrated that block coding can be much more accessible and intuitive to beginners than textual programming—we are bringing those concepts into Godot to help learners become familiar with some aspects of Godot itself while simplifying the creation of their first games.
 
-### Constraints
-
-In order to be learner-friendly, we have to implement blocks at a suitable level of abstraction. For example, in GDScript you would typically move a sprite around the screen by examining input events and adjusting a sprite's movement vector accordingly—but we do not wish to express this level of detail in blocks. Instead, we lean much more towards the kinds of blocks you can find in MakeCode Arcade, such as having a single block for "move mySprite with buttons".
-
-Expressing an appropriate layer of abstraction is perhaps the most challenging aspect of this project, and will likely place limits upon what can be achieved with this tool. We do not aim to express the full power of Godot & GDScript with this block coding plugin, but rather, our objective is to provide a gentler introduction to Godot for learners, such that they can get familiar with other aspects of the Godot Editor and learn programming concepts while creating basic games. We envision that learners would use block coding as a stepping stone and then later progress onto learning GDScript.
+In order to be learner-friendly, we implement blocks at a suitable level of abstraction. For example, we have blocks that allow the user to trivially connect keyboard input to the movement of a particular game element, and to make the score show up on-screen. That abstraction does place limits on what can be achieved with this tool, while still allowing us to provide a gentler introduction to Godot for learners, such that they can get familiar with other aspects of the Godot Editor and learn programming concepts while creating basic games. We envision that learners would use block coding as a stepping stone and then later progress onto learning GDScript.
 
 That said, we are in no way opposed to having this project grow to be able to create more complex games, as long as it does not negatively affect the experience for early stage learners.
+
+See our [pedagogy and audience documentation](docs/PEDAGOGY.md) for more info.
 
 ## Getting Started
 
@@ -32,11 +30,11 @@ That said, we are in no way opposed to having this project grow to be able to cr
 
 2. Make sure to enable the plugin in **Project** → **Project Settings** → **Plugins**.
 
-3. You're ready to get started! Open a scene, and add a **BlockCode** child node to any node in the scene using the **Add Child Node** menu dialog.
+3. You're ready to get started! Open a scene, select a node, and observe that there's a **Block Code** section within the lower central pane of the Godot editor, where you usually find debugging, animation and shader functionality. Click **Block Code** and then use the **Add Block Code** button to create a block canvas.
 
-4. The **Block Code** editor will open in a new tab. Drag blocks from the picker and snap them together to create a script. You can switch to other Block Code scripts by selecting the respective BlockCode node in the scene tree.
+4. Drag blocks from the picker and snap them together to create a script. You can switch to other Block Code scripts by selecting the respective node from the scene tree.
 
-5. **Run** the scene to see your Block Code scripts in action. Block Code scripts are attached to the BlockCode node's parent, and are saved to the scene.
+5. **Run** the scene to see your Block Code scripts in action. Block Code scripts are saved within the scene.
 
 If you clone the plugin's git repository and open it in Godot, you will be presented with a block-built Pong game as an example.
 
