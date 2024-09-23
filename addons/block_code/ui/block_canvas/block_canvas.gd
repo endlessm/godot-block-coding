@@ -60,6 +60,45 @@ func _ready():
 		_open_scene_button.icon = _open_scene_icon
 
 
+func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
+	if _context.block_code_node == null or _context.parent_node == null:
+		return false
+	if typeof(data) != TYPE_DICTIONARY:
+		return false
+
+	var nodes: Array = data.get("nodes", [])
+	if nodes.size() != 1:
+		return false
+	var abs_path: NodePath = nodes[0]
+
+	# Don't allow dropping BlockCode nodes or nodes that aren't part of the
+	# edited scene.
+	var node := get_tree().root.get_node(abs_path)
+	if node is BlockCode or not Util.node_is_part_of_edited_scene(node):
+		return false
+
+	# Don't allow dropping the BlockCode node's parent as that's already self.
+	var parent_path: NodePath = _context.parent_node.get_path()
+	return abs_path != parent_path
+
+
+func _drop_data(at_position: Vector2, data: Variant) -> void:
+	var abs_path: NodePath = data.get("nodes", []).pop_back()
+	if abs_path == null:
+		return
+
+	# Figure out the best path to the node.
+	var node := get_tree().root.get_node(abs_path)
+	var node_path: NodePath = Util.node_scene_path(node, _context.parent_node)
+	if node_path in [^"", ^"."]:
+		return
+
+	var block = _context.block_script.instantiate_block_by_name(&"get_node")
+	block.set_parameter_values_on_ready({"path": node_path})
+	add_block(block, at_position)
+	reconnect_block.emit(block)
+
+
 func add_block(block: Block, position: Vector2 = Vector2.ZERO) -> void:
 	if block is EntryBlock:
 		block.position = canvas_to_window(position).snapped(SNAP_GRID)

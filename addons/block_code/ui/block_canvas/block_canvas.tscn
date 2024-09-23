@@ -15,10 +15,12 @@ script = ExtResource("1_tk8h2")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="WindowContainer" type="Control" parent="."]
 clip_contents = true
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Window" type="Control" parent="WindowContainer"]
 unique_name_in_owner = true
