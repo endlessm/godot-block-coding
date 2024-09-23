@@ -1,0 +1,27 @@
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://canpdkahokjqs"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="1_bk47y"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_d60g7"]
+[ext_resource type="Script" path="res://addons/block_code/blocks/communication/get_node.gd" id="1_we5wl"]
+
+[sub_resource type="Resource" id="Resource_esr4a"]
+script = ExtResource("1_bk47y")
+selected = 0
+items = []
+
+[resource]
+script = ExtResource("1_d60g7")
+name = &"get_node"
+target_node_class = ""
+description = "Get the node at the given path"
+category = "Communication | Nodes"
+type = 3
+variant_type = 24
+display_template = "{path: NIL}"
+code_template = "get_node(\"{path}\")"
+defaults = {
+"path": SubResource("Resource_esr4a")
+}
+signal_name = ""
+scope = ""
+extension_script = ExtResource("1_we5wl")
