@@ -33,6 +33,5 @@ layout_mode = 2
 block_type = 0
 variant_type = 4
 
-[connection signal="child_exiting_tree" from="." to="SnapPoint" method="_on_parameter_output_child_exiting_tree"]
 [connection signal="snapped_block_changed" from="SnapPoint" to="." method="_on_snap_point_snapped_block_changed"]
 [connection signal="snapped_block_removed" from="SnapPoint" to="." method="_on_snap_point_snapped_block_removed"]
