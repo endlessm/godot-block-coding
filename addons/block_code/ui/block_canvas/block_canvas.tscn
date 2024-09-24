@@ -22,6 +22,7 @@ layout_mode = 2
 
 [node name="Window" type="Control" parent="WindowContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 anchors_preset = 0
 offset_right = 1152.0
@@ -60,10 +61,12 @@ theme_override_constants/margin_bottom = 4
 
 [node name="ZoomButton" type="Button" parent="WindowContainer/Overlay/MarginContainer"]
 unique_name_in_owner = true
+visible = false
 modulate = Color(1, 1, 1, 0.470588)
 layout_mode = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 24
+text = "1.0x"
 
 [node name="MouseOverride" type="MarginContainer" parent="."]
 unique_name_in_owner = true
@@ -72,7 +75,6 @@ mouse_filter = 2
 
 [node name="EmptyBox" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_vertical = 4
 
@@ -90,7 +92,7 @@ size_flags_vertical = 4
 [node name="Label" type="Label" parent="SelectedNodeBox"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "Use block coding to create custom behavior and game mechanics for \"{node}\"."
+text = "Use block coding to create custom behavior and game mechanics for \"BlockCanvas\"."
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -103,6 +105,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_type_variation = &"InspectorActionButton"
+disabled = true
 text = "Add Block Code"
 icon = ExtResource("2_710vn")
 
@@ -128,6 +131,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_type_variation = &"InspectorActionButton"
+disabled = true
 text = "Open in Editor"
 
 [node name="ReplaceBlockCodeButton" type="Button" parent="SelectedNodeWithBlockCodeBox/ButtonsBox"]
@@ -135,6 +139,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_type_variation = &"InspectorActionButton"
+disabled = true
 text = "Override Block Code"
 icon = ExtResource("2_710vn")
 
