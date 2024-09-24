@@ -27,7 +27,16 @@ signal modified
 @export var scope: String = ""
 
 ## The resource containing the definition of the block
-@export var definition: BlockDefinition
+@export var definition: BlockDefinition:
+	set(value):
+		var is_changed := definition != value
+		if definition and is_changed:
+			definition.changed.disconnect(_on_definition_changed)
+		definition = value
+		if definition and is_changed:
+			definition.changed.connect(_on_definition_changed)
+		if is_changed:
+			_on_definition_changed()
 
 ## Whether the block can be deleted by the Delete key.
 var can_delete: bool = true
@@ -38,6 +47,10 @@ var can_delete: bool = true
 func _ready():
 	focus_mode = FocusMode.FOCUS_ALL
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_on_definition_changed()
+
+
+func _on_definition_changed():
 	_update_template_editor()
 
 
