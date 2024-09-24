@@ -122,7 +122,13 @@ func _get_or_create_block_extension() -> BlockExtension:
 		return null
 
 	_block_extension.context_node = _context.parent_node
+	_block_extension.changed.connect(_on_block_extension_changed)
+
 	return _block_extension
+
+
+func _on_block_extension_changed():
+	_update_template_editor()
 
 
 func _gui_input(event):
