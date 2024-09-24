@@ -25,10 +25,8 @@ theme_override_constants/margin_bottom = 4
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "Example Category
-"
 
-[node name="Blocks" type="VBoxContainer" parent="VBoxContainer"]
+[node name="BlocksContainer" type="VBoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 14

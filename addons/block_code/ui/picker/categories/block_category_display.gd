@@ -21,36 +21,74 @@ const CATEGORY_ORDER_OVERRIDE = {
 	]
 }
 
-var category: BlockCategory
+@export var title: String:
+	set = _set_title
+@export var block_definitions: Array[BlockDefinition]:
+	set = _set_block_definitions
 
 @onready var _context := BlockEditorContext.get_default()
 
 @onready var _label := %Label
-@onready var _blocks := %Blocks
+@onready var _blocks_container := %BlocksContainer
+
+var _blocks: Dictionary  # String, Block
 
 
 func _ready():
-	_label.text = category.name if category != null else ""
+	_label.text = title  # category.name if category != null else ""
+	_update_label()
+	_update_blocks()
 
-	if _context.block_script == null:
-		return
 
-	if category == null:
-		return
+func _set_title(value):
+	title = value
+	_update_label()
 
-	var category_order = CATEGORY_ORDER_OVERRIDE.get(category.name)
-	var block_definitions = _context.block_script.get_blocks_in_category(category)
+
+func _set_block_definitions(value):
+	block_definitions = value
+	var category_order = CATEGORY_ORDER_OVERRIDE.get(title)
 	if category_order:
 		block_definitions.sort_custom(_sort_blocks_by_list_order.bind(category_order))
+	_update_blocks()
+
+
+func _update_label():
+	if not _label:
+		return
+
+	_label.text = title
+
+
+func _update_blocks():
+	if not _blocks_container:
+		return
+
+	if not _context:
+		return
+
+	for block in _blocks.values():
+		block.hide()
 
 	for block_definition in block_definitions:
-		var block: Block = _context.block_script.instantiate_block(block_definition)
+		var block = _get_or_create_block(block_definition)
+		_blocks_container.move_child(block, -1)
+		block.show()
 
-		block.color = category.color
+	_blocks_container.visible = not block_definitions.is_empty()
+
+
+func _get_or_create_block(block_definition: BlockDefinition) -> Block:
+	var block: Block = _blocks.get(block_definition.name)
+
+	if block == null:
+		block = _context.block_script.instantiate_block(block_definition)
 		block.can_delete = false
 		block.drag_started.connect(func(block: Block): block_picked.emit(block))
+		_blocks_container.add_child(block)
+		_blocks[block_definition.name] = block
 
-		_blocks.add_child(block)
+	return block
 
 
 static func _sort_blocks_by_list_order(block_definition_a, block_definition_b, name_order: Array) -> bool:

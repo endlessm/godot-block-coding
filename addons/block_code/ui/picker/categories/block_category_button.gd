@@ -25,4 +25,4 @@ func _ready():
 
 
 func _on_button_pressed():
-	selected.emit(category)
+	selected.emit()
