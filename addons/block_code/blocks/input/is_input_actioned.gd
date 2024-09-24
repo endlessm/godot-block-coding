@@ -4,7 +4,7 @@ extends BlockExtension
 const OptionData = preload("res://addons/block_code/code_generation/option_data.gd")
 
 
-func get_defaults_for_node(_context_node: Node) -> Dictionary:
+func get_defaults() -> Dictionary:
 	var inputmap_actions = _get_inputmap_actions()
 	return {"action_name": OptionData.new(inputmap_actions)}
 

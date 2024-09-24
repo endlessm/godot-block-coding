@@ -4,7 +4,7 @@ extends BlockExtension
 const OptionData = preload("res://addons/block_code/code_generation/option_data.gd")
 
 
-func get_defaults_for_node(context_node: Node) -> Dictionary:
+func get_defaults() -> Dictionary:
 	var animation_player = context_node as AnimationPlayer
 
 	if not animation_player:
