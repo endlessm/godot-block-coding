@@ -3,9 +3,6 @@ class_name ControlBlock
 extends Block
 
 const Constants = preload("res://addons/block_code/ui/constants.gd")
-const DragDropArea = preload("res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.gd")
-const DragDropAreaScene = preload("res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn")
-const Gutter = preload("res://addons/block_code/ui/blocks/utilities/background/gutter.gd")
 
 
 func _ready():

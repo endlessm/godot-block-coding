@@ -2,10 +2,6 @@
 class_name StatementBlock
 extends Block
 
-const ParameterInput = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.gd")
-const ParameterInputScene = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn")
-const ParameterOutput = preload("res://addons/block_code/ui/blocks/utilities/parameter_output/parameter_output.gd")
-const ParameterOutputScene = preload("res://addons/block_code/ui/blocks/utilities/parameter_output/parameter_output.tscn")
 const Types = preload("res://addons/block_code/types/types.gd")
 
 @onready var _background := %Background

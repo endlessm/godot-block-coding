@@ -3,7 +3,6 @@ extends MarginContainer
 
 const Types = preload("res://addons/block_code/types/types.gd")
 const ParameterBlock = preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.gd")
-const ParameterBlockScene = preload("res://addons/block_code/ui/blocks/parameter_block/parameter_block.tscn")
 
 var block: Block
 var parameter_name: String
