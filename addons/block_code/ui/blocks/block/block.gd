@@ -78,10 +78,16 @@ func _update_template_editor():
 	template_editor.parameter_defaults = _get_parameter_defaults()
 	if not template_editor.modified.is_connected(_on_template_editor_modified):
 		template_editor.modified.connect(_on_template_editor_modified)
+	if not template_editor.drag_started.is_connected(_on_template_editor_drag_started):
+		template_editor.drag_started.connect(_on_template_editor_drag_started)
 
 
 func _on_template_editor_modified():
 	modified.emit()
+
+
+func _on_template_editor_drag_started():
+	_drag_started()
 
 
 func _get_format_string() -> String:
