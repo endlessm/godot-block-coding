@@ -231,7 +231,7 @@ func test_signal_script():
 			func _init():
 				body_entered.connect(_on_body_entered)
 
-			func _on_body_entered(body: Node2D):
+			func _on_body_entered(something: Node2D):
 
 				print('Body entered!')
 
