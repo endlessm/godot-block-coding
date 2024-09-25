@@ -21,6 +21,11 @@ const BUILTIN_CATEGORIES_PROPS: Dictionary = {
 		"color": Color("ec3b59"),
 		"order": 10,
 	},
+	"Lifecycle | Spawn":
+	{
+		"color": Color("ec3b59"),
+		"order": 15,
+	},
 	"Transform | Position":
 	{
 		"color": Color("4b6584"),
