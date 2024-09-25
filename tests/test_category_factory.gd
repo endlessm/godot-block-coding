@@ -37,6 +37,7 @@ func before_each():
 const default_category_names = [
 	"Communication | Groups",
 	"Communication | Methods",
+	"Communication | Nodes",
 	"Graphics | Viewport",
 	"Input",
 	"Lifecycle",
