@@ -1,5 +1,4 @@
 @tool
-
 extends Resource
 
 const Types = preload("res://addons/block_code/types/types.gd")
@@ -33,12 +32,6 @@ const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{(?<in_paramete
 
 static var _display_template_regex := RegEx.create_from_string(FORMAT_STRING_PATTERN)
 
-var _extension: BlockExtension:
-	get:
-		if _extension == null and extension_script and extension_script.can_instantiate():
-			_extension = extension_script.new()
-		return _extension as BlockExtension
-
 
 func _init(
 	p_name: StringName = &"",
@@ -68,14 +61,20 @@ func _init(
 	extension_script = p_extension_script
 
 
-func get_defaults_for_node(parent_node: Node) -> Dictionary:
-	if not _extension:
-		return defaults
+func create_block_extension() -> BlockExtension:
+	if not extension_script:
+		return null
 
-	# Use Dictionary.merge instead of Dictionary.merged for Godot 4.2 compatibility
-	var new_defaults := _extension.get_defaults_for_node(parent_node)
-	new_defaults.merge(defaults)
-	return new_defaults
+	if not extension_script.can_instantiate():
+		return null
+
+	var extension := extension_script.new() as BlockExtension
+
+	if not extension:
+		push_warning("Error initializing block extension for %s.", self)
+		return null
+
+	return extension
 
 
 func _to_string():

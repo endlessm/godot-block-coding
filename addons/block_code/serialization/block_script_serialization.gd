@@ -157,10 +157,13 @@ func get_available_blocks() -> Array[BlockDefinition]:
 
 
 func get_available_categories() -> Array[BlockCategory]:
-	return _categories.filter(func(category): return _available_blocks.any(BlockDefinition.has_category.bind(category.name)))
+	# As a special case, the Variables category is always available.
+	return _categories.filter(func(category): return category.name == "Variables" or _available_blocks.any(BlockDefinition.has_category.bind(category.name)))
 
 
 func get_blocks_in_category(category: BlockCategory) -> Array[BlockDefinition]:
+	if not category:
+		return []
 	return _available_blocks.filter(BlockDefinition.has_category.bind(category.name))
 
 

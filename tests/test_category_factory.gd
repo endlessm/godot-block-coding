@@ -25,7 +25,7 @@ func get_category_names(categories: Array[BlockCategory]) -> Array[String]:
 
 func get_class_category_names(_class_name: String) -> Array[String]:
 	var blocks: Array[BlockDefinition] = BlocksCatalog.get_inherited_blocks(_class_name)
-	var categories: Array[BlockCategory] = block_script._categories.filter(func(category): return blocks.any(func(block): return block.category == category.name))
+	var categories: Array[BlockCategory] = block_script._categories.filter(func(category): return blocks.any(func(block): return category.name == block.category or category.name == "Variables"))
 	return get_category_names(categories)
 
 

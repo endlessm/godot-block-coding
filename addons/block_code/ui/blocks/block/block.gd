@@ -27,10 +27,21 @@ signal modified
 @export var scope: String = ""
 
 ## The resource containing the definition of the block
-@export var definition: BlockDefinition
+@export var definition: BlockDefinition:
+	set(value):
+		var is_changed := definition != value
+		if definition and is_changed:
+			definition.changed.disconnect(_on_definition_changed)
+		definition = value
+		if definition and is_changed:
+			definition.changed.connect(_on_definition_changed)
+		if is_changed:
+			_on_definition_changed()
 
 ## Whether the block can be deleted by the Delete key.
 var can_delete: bool = true
+
+var _block_extension: BlockExtension
 
 @onready var _context := BlockEditorContext.get_default()
 
@@ -38,6 +49,11 @@ var can_delete: bool = true
 func _ready():
 	focus_mode = FocusMode.FOCUS_ALL
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_on_definition_changed()
+
+
+func _on_definition_changed():
+	_block_extension = null
 	_update_template_editor()
 
 
@@ -58,14 +74,61 @@ func _update_template_editor():
 	if template_editor == null:
 		return
 
-	template_editor.format_string = definition.display_template if definition else ""
-	template_editor.parameter_defaults = definition.get_defaults_for_node(_context.parent_node) if definition else {}
+	template_editor.format_string = _get_format_string()
+	template_editor.parameter_defaults = _get_parameter_defaults()
 	if not template_editor.modified.is_connected(_on_template_editor_modified):
 		template_editor.modified.connect(_on_template_editor_modified)
 
 
 func _on_template_editor_modified():
 	modified.emit()
+
+
+func _get_format_string() -> String:
+	if not definition:
+		return ""
+
+	return definition.display_template
+
+
+func _get_parameter_defaults() -> Dictionary:
+	if not definition:
+		return {}
+
+	var block_extension := _get_or_create_block_extension()
+
+	if not block_extension:
+		return definition.defaults
+
+	# Use Dictionary.merge instead of Dictionary.merged for Godot 4.2 compatibility
+	var new_defaults := block_extension.get_defaults()
+	new_defaults.merge(definition.defaults)
+	return new_defaults
+
+
+func _get_or_create_block_extension() -> BlockExtension:
+	if _block_extension:
+		return _block_extension
+
+	if not definition:
+		return null
+
+	if not _context:
+		return null
+
+	_block_extension = definition.create_block_extension()
+
+	if not _block_extension:
+		return null
+
+	_block_extension.context_node = _context.parent_node
+	_block_extension.changed.connect(_on_block_extension_changed)
+
+	return _block_extension
+
+
+func _on_block_extension_changed():
+	_update_template_editor()
 
 
 func _gui_input(event):

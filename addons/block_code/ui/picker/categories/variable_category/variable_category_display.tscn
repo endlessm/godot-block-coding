@@ -1,22 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://byne4g2yvdf3"]
+[gd_scene load_steps=5 format=3 uid="uid://byne4g2yvdf3"]
 
 [ext_resource type="PackedScene" uid="uid://duhpwtfo3k0sk" path="res://addons/block_code/ui/picker/categories/block_category_display.tscn" id="1_vermd"]
 [ext_resource type="Script" path="res://addons/block_code/ui/picker/categories/variable_category/variable_category_display.gd" id="2_ggvi7"]
 [ext_resource type="PackedScene" uid="uid://t0eoc4ekvjr1" path="res://addons/block_code/ui/picker/categories/variable_category/create_variable_button.tscn" id="3_gjvnq"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0m6vh"]
+
 [node name="VariableCategoryDisplay" instance=ExtResource("1_vermd")]
 script = ExtResource("2_ggvi7")
 
-[node name="CreateVariableButton" parent="VBoxContainer" index="1" instance=ExtResource("3_gjvnq")]
-layout_mode = 2
+[node name="BlocksContainer" parent="VBoxContainer" index="1"]
+visible = false
 
-[node name="VariableBlocks" type="VBoxContainer" parent="VBoxContainer" index="2"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" index="2"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 30
+theme_override_styles/separator = SubResource("StyleBoxEmpty_0m6vh")
 
-[node name="Spacer" type="Control" parent="VBoxContainer" index="3"]
-custom_minimum_size = Vector2(0, 30)
+[node name="CreateVariableButton" parent="VBoxContainer" index="3" instance=ExtResource("3_gjvnq")]
 layout_mode = 2
 
 [connection signal="create_variable" from="VBoxContainer/CreateVariableButton" to="." method="_on_create_variable"]

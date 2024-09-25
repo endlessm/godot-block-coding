@@ -9,7 +9,9 @@ theme_override_constants/margin_bottom = 12
 script = ExtResource("1_cw6c3")
 
 [node name="CreateButton" type="Button" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"InspectorActionButton"
 text = "Create New Variable"
 
 [node name="CreateVariableDialog" parent="." instance=ExtResource("2_udpg5")]
