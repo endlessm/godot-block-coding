@@ -1,0 +1,269 @@
+[gd_scene load_steps=37 format=3 uid="uid://cbgxxdewi6gld"]
+
+[ext_resource type="Script" path="res://addons/block_code/simple_spawner/simple_spawner.gd" id="1_g2l2s"]
+[ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://addons/block_code/examples/spawner/ball.tscn" id="2_d0h86"]
+[ext_resource type="PackedScene" uid="uid://c8hrliwojohal" path="res://addons/block_code/examples/spawner/volatile_ball.tscn" id="3_tt12o"]
+[ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="4_e0fbh"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization_tree.gd" id="5_g4h7g"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization.gd" id="6_dv2kl"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/value_block_serialization.gd" id="7_cykhe"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_script_serialization.gd" id="8_tovvd"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/variable_definition.gd" id="9_m8g1j"]
+
+[sub_resource type="Resource" id="Resource_1x252"]
+script = ExtResource("6_dv2kl")
+name = &"simplespawner_start_spawning"
+children = Array[ExtResource("6_dv2kl")]([])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_1j04f"]
+script = ExtResource("6_dv2kl")
+name = &"ready"
+children = Array[ExtResource("6_dv2kl")]([SubResource("Resource_1x252")])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_jiosv"]
+script = ExtResource("5_g4h7g")
+root = SubResource("Resource_1j04f")
+canvas_position = Vector2(54, 47)
+
+[sub_resource type="Resource" id="Resource_uan44"]
+script = ExtResource("7_cykhe")
+name = &"is_input_actioned"
+arguments = {
+"action": "just_pressed",
+"action_name": &"ui_right"
+}
+
+[sub_resource type="Resource" id="Resource_uv0fo"]
+script = ExtResource("7_cykhe")
+name = &"simplespawner_get_spawn_frequency"
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_l45hk"]
+script = ExtResource("7_cykhe")
+name = &"subtract"
+arguments = {
+"a": SubResource("Resource_uv0fo"),
+"b": 0.1
+}
+
+[sub_resource type="Resource" id="Resource_6g0ng"]
+script = ExtResource("6_dv2kl")
+name = &"simplespawner_set_spawn_frequency"
+children = Array[ExtResource("6_dv2kl")]([])
+arguments = {
+"new_frequency": SubResource("Resource_l45hk")
+}
+
+[sub_resource type="Resource" id="Resource_ke4bk"]
+script = ExtResource("6_dv2kl")
+name = &"if"
+children = Array[ExtResource("6_dv2kl")]([SubResource("Resource_6g0ng")])
+arguments = {
+"condition": SubResource("Resource_uan44")
+}
+
+[sub_resource type="Resource" id="Resource_67w0v"]
+script = ExtResource("7_cykhe")
+name = &"is_input_actioned"
+arguments = {
+"action": "just_pressed",
+"action_name": &"ui_left"
+}
+
+[sub_resource type="Resource" id="Resource_ih8lj"]
+script = ExtResource("7_cykhe")
+name = &"simplespawner_get_spawn_frequency"
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_rfxul"]
+script = ExtResource("7_cykhe")
+name = &"add"
+arguments = {
+"a": SubResource("Resource_ih8lj"),
+"b": 0.1
+}
+
+[sub_resource type="Resource" id="Resource_2rqfa"]
+script = ExtResource("6_dv2kl")
+name = &"simplespawner_set_spawn_frequency"
+children = Array[ExtResource("6_dv2kl")]([])
+arguments = {
+"new_frequency": SubResource("Resource_rfxul")
+}
+
+[sub_resource type="Resource" id="Resource_movu5"]
+script = ExtResource("6_dv2kl")
+name = &"else_if"
+children = Array[ExtResource("6_dv2kl")]([SubResource("Resource_2rqfa")])
+arguments = {
+"condition": SubResource("Resource_67w0v")
+}
+
+[sub_resource type="Resource" id="Resource_aoehr"]
+script = ExtResource("7_cykhe")
+name = &"is_input_actioned"
+arguments = {
+"action": "just_pressed",
+"action_name": &"ui_up"
+}
+
+[sub_resource type="Resource" id="Resource_tuny8"]
+script = ExtResource("7_cykhe")
+name = &"simplespawner_is_spawning"
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_v1c1o"]
+script = ExtResource("6_dv2kl")
+name = &"simplespawner_stop_spawning"
+children = Array[ExtResource("6_dv2kl")]([])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_6dkv5"]
+script = ExtResource("6_dv2kl")
+name = &"if"
+children = Array[ExtResource("6_dv2kl")]([SubResource("Resource_v1c1o")])
+arguments = {
+"condition": SubResource("Resource_tuny8")
+}
+
+[sub_resource type="Resource" id="Resource_xtxo1"]
+script = ExtResource("6_dv2kl")
+name = &"simplespawner_start_spawning"
+children = Array[ExtResource("6_dv2kl")]([])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_0f8d8"]
+script = ExtResource("6_dv2kl")
+name = &"else"
+children = Array[ExtResource("6_dv2kl")]([SubResource("Resource_xtxo1")])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_ecrx1"]
+script = ExtResource("6_dv2kl")
+name = &"else_if"
+children = Array[ExtResource("6_dv2kl")]([SubResource("Resource_6dkv5"), SubResource("Resource_0f8d8")])
+arguments = {
+"condition": SubResource("Resource_aoehr")
+}
+
+[sub_resource type="Resource" id="Resource_5s4db"]
+script = ExtResource("7_cykhe")
+name = &"is_input_actioned"
+arguments = {
+"action": "just_pressed",
+"action_name": &"ui_down"
+}
+
+[sub_resource type="Resource" id="Resource_umo5i"]
+script = ExtResource("6_dv2kl")
+name = &"simplespawner_spawn_once"
+children = Array[ExtResource("6_dv2kl")]([])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_xar12"]
+script = ExtResource("6_dv2kl")
+name = &"else_if"
+children = Array[ExtResource("6_dv2kl")]([SubResource("Resource_umo5i")])
+arguments = {
+"condition": SubResource("Resource_5s4db")
+}
+
+[sub_resource type="Resource" id="Resource_psdqc"]
+script = ExtResource("6_dv2kl")
+name = &"process"
+children = Array[ExtResource("6_dv2kl")]([SubResource("Resource_ke4bk"), SubResource("Resource_movu5"), SubResource("Resource_ecrx1"), SubResource("Resource_xar12")])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_0lc7n"]
+script = ExtResource("5_g4h7g")
+root = SubResource("Resource_psdqc")
+canvas_position = Vector2(50, 200)
+
+[sub_resource type="Resource" id="Resource_trjwk"]
+script = ExtResource("8_tovvd")
+script_inherits = "SimpleSpawner"
+block_serialization_trees = Array[ExtResource("5_g4h7g")]([SubResource("Resource_jiosv"), SubResource("Resource_0lc7n")])
+variables = Array[ExtResource("9_m8g1j")]([])
+generated_script = "extends SimpleSpawner
+
+
+func _ready():
+	spawn_start()
+
+func _process(delta):
+	if (Input.is_action_just_pressed('ui_right')):
+		do_set_spawn_frequency(((spawn_frequency) - 0.1))
+	elif (Input.is_action_just_pressed('ui_left')):
+		do_set_spawn_frequency(((spawn_frequency) + 0.1))
+	elif (Input.is_action_just_pressed('ui_up')):
+		if (is_spawning()):
+			spawn_stop()
+		else:
+			spawn_start()
+	elif (Input.is_action_just_pressed('ui_down')):
+		spawn_once()
+
+"
+version = 0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_c5n1h"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="SimpleSpawner" type="Node2D" parent="."]
+position = Vector2(103, 128)
+script = ExtResource("1_g2l2s")
+scenes = Array[PackedScene]([ExtResource("2_d0h86"), ExtResource("3_tt12o")])
+spawn_frequency = 0.6
+spawn_limit = 5
+
+[node name="BlockCode" type="Node" parent="SimpleSpawner"]
+script = ExtResource("4_e0fbh")
+block_script = SubResource("Resource_trjwk")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(64, 648)
+shape = SubResource("WorldBoundaryShape2D_c5n1h")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(24, 0)
+rotation = -3.14159
+shape = SubResource("WorldBoundaryShape2D_c5n1h")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 128)
+rotation = -4.71238
+shape = SubResource("WorldBoundaryShape2D_c5n1h")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1152, 320)
+rotation = -7.85397
+shape = SubResource("WorldBoundaryShape2D_c5n1h")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -781.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Up arrow:[/b] Start/stop spawning.
+[b]Down arrow:[/b] Spawn once.
+[b]Left arrow:[/b] Reduce spawn frequency.
+[b]Right arrow:[/b] Increase spawn frequency.
+
+From the Inspector: Try changing spawn limit and spawn limit behavior.
+
+Color balls remove themselves after 3 seconds. While uncolored balls are only removed by the SimpleSpawner node according to the limit setings."
