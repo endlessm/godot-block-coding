@@ -1,0 +1,135 @@
+[gd_scene load_steps=7 format=3 uid="uid://c8hrliwojohal"]
+
+[ext_resource type="Texture2D" uid="uid://bcgr5amsq3jfl" path="res://addons/block_code/examples/pong_game/assets/ball.png" id="1_8te7j"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_c3m63"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sntrn"]
+radius = 64.0
+
+[sub_resource type="Animation" id="Animation_ns1nj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.14351, 0.463194, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_a6uuf"]
+resource_name = "new_animation"
+length = 3.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.13333, 1.7, 2.63333, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.616405, 0.834547, 1, 1), Color(0.634942, 0.868182, 0.624881, 1), Color(1, 0.643546, 0.423438, 1), Color(0.919535, 0, 0.297312, 1), Color(0.562397, 0.00248586, 0.821534, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2.6, 3),
+"transitions": PackedFloat32Array(2, 2),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.86698, 1.86698)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2.6, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.207843)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4ng7g"]
+_data = {
+"RESET": SubResource("Animation_ns1nj"),
+"new_animation": SubResource("Animation_a6uuf")
+}
+
+[node name="Ball" type="RigidBody2D" groups=["balls"]]
+modulate = Color(0.14351, 0.463194, 1, 1)
+collision_layer = 2
+collision_mask = 15
+physics_material_override = SubResource("PhysicsMaterial_c3m63")
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 1
+linear_velocity = Vector2(353.553, 353.553)
+linear_damp_mode = 1
+angular_damp_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("CircleShape2D_sntrn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = ExtResource("1_8te7j")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4ng7g")
+}
+autoplay = "new_animation"
