@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://clipm2dd28jde"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/parameter_block/parameter_block.gd" id="1_0hajy"]
-[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_gy5co"]
+[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_0eadx"]
 [ext_resource type="PackedScene" uid="uid://b1xvp3u11h41s" path="res://addons/block_code/ui/blocks/utilities/template_editor/template_editor.tscn" id="3_shl1a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dbera"]
@@ -29,8 +29,9 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dbera")
 
-[node name="DragDropArea" parent="." instance=ExtResource("2_gy5co")]
+[node name="DragDropArea" parent="." instance=ExtResource("2_0eadx")]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -47,4 +48,4 @@ theme_override_constants/margin_bottom = 8
 
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
-[connection signal="mouse_down" from="DragDropArea" to="." method="_on_drag_drop_area_mouse_down"]
+[connection signal="drag_started" from="DragDropArea" to="." method="_on_drag_drop_area_drag_started"]

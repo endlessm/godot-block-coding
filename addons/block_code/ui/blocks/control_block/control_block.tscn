@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/control_block/control_block.gd" id="1_2hbir"]
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/gutter.gd" id="2_6o8pf"]
-[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_lpu3c"]
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/background.gd" id="2_tx0qr"]
+[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="3_21e8n"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="3_nhryi"]
 [ext_resource type="PackedScene" uid="uid://b1xvp3u11h41s" path="res://addons/block_code/ui/blocks/utilities/template_editor/template_editor.tscn" id="4_6uktl"]
 
@@ -48,8 +48,9 @@ script = ExtResource("2_tx0qr")
 color = Color(1, 1, 1, 1)
 shift_bottom = 20.0
 
-[node name="DragDropArea" parent="VBoxContainer/MarginContainer/Rows/Row" instance=ExtResource("2_lpu3c")]
+[node name="DragDropArea" parent="VBoxContainer/MarginContainer/Rows/Row" instance=ExtResource("3_21e8n")]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 
 [node name="RowHBoxContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/Rows/Row"]
 layout_mode = 2
@@ -95,4 +96,4 @@ shift_top = 20.0
 [node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("3_nhryi")]
 layout_mode = 2
 
-[connection signal="mouse_down" from="VBoxContainer/MarginContainer/Rows/Row/DragDropArea" to="." method="_on_drag_drop_area_mouse_down"]
+[connection signal="drag_started" from="VBoxContainer/MarginContainer/Rows/Row/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
