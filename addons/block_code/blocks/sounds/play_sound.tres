@@ -10,7 +10,7 @@ description = "Play the audio stream with volume and pitch"
 category = "Sounds"
 type = 2
 variant_type = 0
-display_template = "Play the sound {name: STRING} with Volume dB {db: FLOAT} and Pitch Scale {pitch: FLOAT}"
+display_template = "play the sound {name: STRING} with volume {db: FLOAT} dB and pitch scale {pitch: FLOAT}"
 code_template = "var __sound_node = get_node({name})
 __sound_node.volume_db = {db}
 __sound_node.pitch_scale = {pitch}

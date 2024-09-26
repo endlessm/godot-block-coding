@@ -10,7 +10,7 @@ description = ""
 category = "Transform | Position"
 type = 2
 variant_type = 0
-display_template = "Set Physics Position {position: VECTOR2}"
+display_template = "set physics position {position: VECTOR2}"
 code_template = "PhysicsServer2D.body_set_state(
 	get_rid(),
 	PhysicsServer2D.BODY_STATE_TRANSFORM,

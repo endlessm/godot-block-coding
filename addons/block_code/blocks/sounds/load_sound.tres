@@ -10,7 +10,7 @@ description = "Load a resource file as the audio stream"
 category = "Sounds"
 type = 2
 variant_type = 0
-display_template = "Load file {file_path: STRING} as sound {name: STRING}"
+display_template = "load file {file_path: STRING} as sound {name: STRING}"
 code_template = "var __sound = AudioStreamPlayer.new()
 __sound.name = {name}
 __sound.set_stream(load({file_path}))

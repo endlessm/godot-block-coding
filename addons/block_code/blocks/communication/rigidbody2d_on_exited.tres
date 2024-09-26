@@ -10,8 +10,8 @@ description = ""
 category = "Communication | Methods"
 type = 1
 variant_type = 0
-display_template = "On [body: OBJECT] exited"
-code_template = "func _on_body_exited(body: Node2D):
+display_template = "when this node stops colliding with [something: OBJECT]"
+code_template = "func _on_body_exited(something: Node2D):
 "
 defaults = {}
 signal_name = "body_exited"

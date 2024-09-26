@@ -133,7 +133,7 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Input"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "Move with {player: NIL} buttons as {kind: NIL}"
+	block_definition.display_template = "move with {player: NIL} buttons as {kind: NIL}"
 	block_definition.description = """Move the character using the “Player 1” or “Player 2” controls as configured in Godot.
 
 “Top-down” enables the character to move in both x (vertical) and y (horizontal) dimensions, as if the camera is above the character, looking down. No gravity is added.

@@ -5,11 +5,12 @@
 [resource]
 script = ExtResource("1_pmina")
 name = &"process"
+target_node_class = ""
 description = "Attached blocks will be executed during the processing step of the main loop"
 category = "Lifecycle"
 type = 1
 variant_type = 0
-display_template = "On Process"
+display_template = "every frame"
 code_template = "func _process(delta):"
 defaults = {}
 signal_name = ""

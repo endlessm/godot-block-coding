@@ -5,11 +5,12 @@
 [resource]
 script = ExtResource("1_vk0xk")
 name = &"ready"
+target_node_class = ""
 description = "Attached blocks will be executed once when the node is \"ready\""
 category = "Lifecycle"
 type = 1
 variant_type = 0
-display_template = "On Ready"
+display_template = "when starting"
 code_template = "func _ready():"
 defaults = {}
 signal_name = ""

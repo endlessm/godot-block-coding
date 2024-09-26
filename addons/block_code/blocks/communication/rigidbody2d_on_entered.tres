@@ -10,8 +10,8 @@ description = ""
 category = "Communication | Methods"
 type = 1
 variant_type = 0
-display_template = "On [body: OBJECT] entered"
-code_template = "func _on_body_entered(body: Node2D):
+display_template = "when this node collides with [something: OBJECT]"
+code_template = "func _on_body_entered(something: Node2D):
 "
 defaults = {}
 signal_name = "body_entered"

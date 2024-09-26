@@ -11,7 +11,7 @@ const VariableCategoryDisplayScene = preload("res://addons/block_code/ui/picker/
 const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
 
 const CATEGORY_ORDER_OVERRIDE = {
-	"Lifecycle": [&"ready", &"process", &"physics_process", &"queue_free"],
+	"Lifecycle": [&"ready", &"process", &"queue_free"],
 	"Loops": [&"for", &"while", &"break", &"continue", &"await_scene_ready"],
 	"Log": [&"print"],
 	"Communication | Methods": [&"define_method", &"call_method_group", &"call_method_node"],

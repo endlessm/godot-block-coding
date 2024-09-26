@@ -5,11 +5,12 @@
 [resource]
 script = ExtResource("1_ll4rh")
 name = &"viewport_width"
+target_node_class = ""
 description = "How wide the viewable screen is when playing."
 category = "Graphics | Viewport"
 type = 3
 variant_type = 3
-display_template = "Viewport Width"
+display_template = "viewport width"
 code_template = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.x / scale.x + get_viewport_rect().size.x / scale.x).call()"
 defaults = {}
 signal_name = ""

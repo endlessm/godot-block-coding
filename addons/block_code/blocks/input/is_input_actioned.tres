@@ -17,7 +17,7 @@ description = "True if the specified input action has been pressed or released."
 category = "Input"
 type = 3
 variant_type = 1
-display_template = "Is action {action_name: STRING_NAME} {action: NIL}"
+display_template = "action {action_name: STRING_NAME} is {action: NIL}"
 code_template = "Input.is_action_{{action}}('{{action_name}}')"
 defaults = {
 "action": SubResource("Resource_ai5in")

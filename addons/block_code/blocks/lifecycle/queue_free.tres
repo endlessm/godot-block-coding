@@ -5,11 +5,13 @@
 [resource]
 script = ExtResource("1_75fle")
 name = &"queue_free"
-type = 2
-variant_type = 0
-display_template = "Queue Free"
-code_template = "queue_free()"
+target_node_class = ""
 description = "Queues this node to be deleted at the end of the current frame"
 category = "Lifecycle"
+type = 2
+variant_type = 0
+display_template = "remove"
+code_template = "queue_free()"
 defaults = {}
 signal_name = ""
+scope = ""

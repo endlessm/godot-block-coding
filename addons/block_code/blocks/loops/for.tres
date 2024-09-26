@@ -5,11 +5,12 @@
 [resource]
 script = ExtResource("1_u01bi")
 name = &"for"
+target_node_class = ""
 description = "Run the connected blocks [i]number[/i] times"
 category = "Loops"
 type = 4
 variant_type = 0
-display_template = "Repeat {number: INT}"
+display_template = "repeat {number: INT}"
 code_template = "for __i in {number}:"
 defaults = {}
 signal_name = ""

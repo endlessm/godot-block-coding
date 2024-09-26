@@ -5,11 +5,12 @@
 [resource]
 script = ExtResource("1_qy2t4")
 name = &"await_scene_ready"
+target_node_class = ""
 description = ""
 category = "Loops"
 type = 2
 variant_type = 0
-display_template = "Await scene ready"
+display_template = "wait for the scene to be ready"
 code_template = "if not get_tree().root.is_node_ready():
 	await get_tree().root.ready"
 defaults = {}

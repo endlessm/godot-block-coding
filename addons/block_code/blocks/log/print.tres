@@ -10,7 +10,7 @@ description = "Print the text to output"
 category = "Log"
 type = 2
 variant_type = 0
-display_template = "Print {text: STRING}"
+display_template = "log text {text: STRING}"
 code_template = "print({text})"
 defaults = {
 "text": "Hello"
