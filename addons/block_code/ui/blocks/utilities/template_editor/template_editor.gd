@@ -2,6 +2,7 @@
 class_name TemplateEditor
 extends Container
 
+signal drag_started
 signal modified
 
 const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
@@ -113,6 +114,7 @@ func _append_input_parameter(parameter: Dictionary, id: int):
 	parameter_input.name = "ParameterInput%d" % id
 	parameter_input.placeholder = parameter["name"]
 	parameter_input.variant_type = parameter["type"]
+	parameter_input.drag_started.connect(_on_parameter_input_drag_started)
 
 	if default_value is OptionData:
 		var option_data := default_value as OptionData
@@ -136,3 +138,7 @@ func _append_output_parameter(parameter: Dictionary, id: int):
 	parameter_output.block = parent_block
 	parameter_output.parameter_name = parameter["name"]
 	_container.add_child(parameter_output)
+
+
+func _on_parameter_input_drag_started():
+	drag_started.emit()

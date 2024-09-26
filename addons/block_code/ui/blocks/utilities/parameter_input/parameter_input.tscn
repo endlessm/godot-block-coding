@@ -87,6 +87,7 @@ custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 tooltip_text = "Parameter"
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fjquj")
+action_mode = 1
 fit_to_longest_item = false
 
 [node name="Vector2Input" type="MarginContainer" parent="InputSwitcher"]
@@ -171,6 +172,7 @@ theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_styles/focus = SubResource("StyleBoxEmpty_e7f0k")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fjquj")
+action_mode = 1
 selected = 0
 item_count = 2
 popup/item_0/text = "False"
