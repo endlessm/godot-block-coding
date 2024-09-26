@@ -10,7 +10,7 @@ description = ""
 category = "Communication | Methods"
 type = 1
 variant_type = 0
-display_template = "When entering collision with [something: OBJECT]"
+display_template = "When this node collides with [something: OBJECT]"
 code_template = "func _on_body_entered(something: Node2D):
 "
 defaults = {}
