@@ -10,7 +10,7 @@ description = ""
 category = "Loops"
 type = 2
 variant_type = 0
-display_template = "await scene ready"
+display_template = "wait for the scene to be ready"
 code_template = "if not get_tree().root.is_node_ready():
 	await get_tree().root.ready"
 defaults = {}
