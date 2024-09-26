@@ -49,7 +49,25 @@ var _block_extension: BlockExtension
 func _ready():
 	focus_mode = FocusMode.FOCUS_ALL
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	focus_entered.connect(_block_on_focus_entered)
+	focus_exited.connect(_block_on_focus_exited)
 	_on_definition_changed()
+
+
+func _block_on_focus_entered():
+	z_index = 1
+	if bottom_snap:
+		bottom_snap.z_index = -1
+	if child_snap:
+		child_snap.z_index = -1
+
+
+func _block_on_focus_exited():
+	z_index = 0
+	if bottom_snap:
+		bottom_snap.z_index = 0
+	if child_snap:
+		child_snap.z_index = 0
 
 
 func _on_definition_changed():
