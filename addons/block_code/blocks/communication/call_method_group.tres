@@ -5,11 +5,13 @@
 [resource]
 script = ExtResource("1_mlm68")
 name = &"call_method_group"
-type = 2
-variant_type = 0
-display_template = "Call method {method_name: STRING} in group {group: STRING}"
-code_template = "get_tree().call_group({group}, {method_name})"
+target_node_class = ""
 description = "Calls the method/function on each member of the given group"
 category = "Communication | Methods"
+type = 2
+variant_type = 0
+display_template = "call method {method_name: STRING} in group {group: STRING}"
+code_template = "get_tree().call_group({group}, {method_name})"
 defaults = {}
 signal_name = ""
+scope = ""

@@ -22,7 +22,7 @@ description = "Play the animation."
 category = "Graphics | Animation"
 type = 2
 variant_type = 0
-display_template = "Play {animation: STRING} {direction: NIL}"
+display_template = "play {animation: STRING} {direction: NIL}"
 code_template = "if {direction} == \"ahead\":
 	play({animation})
 else:

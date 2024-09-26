@@ -173,8 +173,8 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_e7f0k")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fjquj")
 selected = 0
 item_count = 2
-popup/item_0/text = "False"
-popup/item_1/text = "True"
+popup/item_0/text = "false"
+popup/item_1/text = "true"
 popup/item_1/id = 1
 
 [node name="SnapPoint" parent="." instance=ExtResource("2_6esp3")]

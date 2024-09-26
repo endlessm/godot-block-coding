@@ -5,11 +5,12 @@
 [resource]
 script = ExtResource("1_6igv6")
 name = &"not"
+target_node_class = ""
 description = ""
 category = "Logic | Boolean"
 type = 3
 variant_type = 1
-display_template = "Not {bool: BOOL}"
+display_template = "not {bool: BOOL}"
 code_template = "not {bool}"
 defaults = {}
 signal_name = ""

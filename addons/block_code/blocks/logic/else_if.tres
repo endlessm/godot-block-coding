@@ -5,11 +5,13 @@
 [resource]
 script = ExtResource("1_kgjks")
 name = &"else_if"
-type = 4
-variant_type = 0
-display_template = "Else if {condition: BOOL}"
-code_template = "elif {condition}:"
+target_node_class = ""
 description = ""
 category = "Logic | Conditionals"
+type = 4
+variant_type = 0
+display_template = "else if {condition: BOOL}"
+code_template = "elif {condition}:"
 defaults = {}
 signal_name = ""
+scope = ""

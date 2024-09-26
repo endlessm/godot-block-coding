@@ -10,7 +10,7 @@ description = "Generate a random floating point number between [i]from[/i] and [
 category = "Math"
 type = 3
 variant_type = 3
-display_template = "Random floating point number between {from: FLOAT} and {to: FLOAT}"
+display_template = "random floating point number between {from: FLOAT} and {to: FLOAT}"
 code_template = "randf_range({from}, {to})"
 defaults = {
 "from": -1.0,

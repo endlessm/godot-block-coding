@@ -5,11 +5,13 @@
 [resource]
 script = ExtResource("1_x816c")
 name = &"else"
-type = 4
-variant_type = 0
-display_template = "Else"
-code_template = "else:"
+target_node_class = ""
 description = ""
 category = "Logic | Conditionals"
+type = 4
+variant_type = 0
+display_template = "else"
+code_template = "else:"
 defaults = {}
 signal_name = ""
+scope = ""

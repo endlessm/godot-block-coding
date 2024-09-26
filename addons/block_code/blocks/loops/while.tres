@@ -5,13 +5,14 @@
 [resource]
 script = ExtResource("1_fxxh0")
 name = &"while"
+target_node_class = ""
 description = "Run the connected blocks as long as [i]condition[/i] is true.
 
 Hint: snap a [b]Comparison[/b] block into the condition."
 category = "Loops"
 type = 4
 variant_type = 0
-display_template = "While {condition: BOOL}"
+display_template = "while {condition: BOOL}"
 code_template = "while {condition}:"
 defaults = {}
 signal_name = ""

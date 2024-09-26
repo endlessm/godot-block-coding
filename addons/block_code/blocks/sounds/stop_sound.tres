@@ -10,7 +10,7 @@ description = "Stop the audio stream"
 category = "Sounds"
 type = 2
 variant_type = 0
-display_template = "Stop the sound {name: STRING}"
+display_template = "stop the sound {name: STRING}"
 code_template = "var __sound_node = get_node({name})
 __sound_node.stop()
 "

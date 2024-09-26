@@ -10,7 +10,7 @@ description = ""
 category = "Math"
 type = 3
 variant_type = 5
-display_template = "Vector2 x: {x: FLOAT} y: {y: FLOAT}"
+display_template = "vector2 x: {x: FLOAT} y: {y: FLOAT}"
 code_template = "Vector2({x}, {y})"
 defaults = {
 "x": 0.0,

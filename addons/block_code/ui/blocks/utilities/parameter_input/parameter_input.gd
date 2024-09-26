@@ -237,7 +237,7 @@ func _update_option_input(current_value: Variant = null):
 
 	for item in option_data.items:
 		var item_index = _option_input.item_count
-		var option_label = item.capitalize() if item is String else str(item)
+		var option_label = item.to_lower() if item is String else str(item)
 		_option_input.add_item(option_label)
 		_option_input.set_item_tooltip(item_index, item)
 		_option_input.set_item_metadata(item_index, item)
@@ -250,7 +250,7 @@ func _update_option_input(current_value: Variant = null):
 		if _option_input.item_count > 0:
 			_option_input.add_separator()
 		var item_index = _option_input.item_count
-		var option_label = current_value.capitalize() if current_value is String else str(current_value)
+		var option_label = current_value.to_lower() if current_value is String else str(current_value)
 		_option_input.add_item(option_label)
 		_option_input.set_item_tooltip(item_index, current_value)
 		_option_input.set_item_metadata(item_index, current_value)

@@ -5,11 +5,13 @@
 [resource]
 script = ExtResource("1_tjyq5")
 name = &"is_in_group"
+target_node_class = ""
 description = "Is this node in the group"
 category = "Communication | Groups"
 type = 3
 variant_type = 1
-display_template = "Is in group {group: STRING}"
+display_template = "is in group {group: STRING}"
 code_template = "is_in_group({group})"
 defaults = {}
 signal_name = ""
+scope = ""

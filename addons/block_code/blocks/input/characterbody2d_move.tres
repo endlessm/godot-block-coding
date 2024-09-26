@@ -10,7 +10,7 @@ description = "Move the character up, down, left, and right with the keyboard us
 category = "Input"
 type = 2
 variant_type = 0
-display_template = "Move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} with speed {speed: VECTOR2}"
+display_template = "move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} with speed {speed: VECTOR2}"
 code_template = "var dir = Vector2()
 dir.x += float(Input.is_key_pressed(OS.find_keycode_from_string({right})))
 dir.x -= float(Input.is_key_pressed(OS.find_keycode_from_string({left})))

@@ -5,11 +5,12 @@
 [resource]
 script = ExtResource("1_1debb")
 name = &"viewport_height"
+target_node_class = ""
 description = "How tall the viewable screen is when playing."
 category = "Graphics | Viewport"
 type = 3
 variant_type = 3
-display_template = "Viewport Height"
+display_template = "viewport height"
 code_template = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin.y / scale.y + get_viewport_rect().size.y / scale.y).call()"
 defaults = {}
 signal_name = ""

@@ -5,11 +5,13 @@
 [resource]
 script = ExtResource("1_pec24")
 name = &"remove_node_from_group"
-type = 2
-variant_type = 0
-display_template = "Remove {node: OBJECT} from group {group: STRING}"
-code_template = "{node}.remove_from_group({group})"
+target_node_class = ""
 description = "Remove the node from the group"
 category = "Communication | Groups"
+type = 2
+variant_type = 0
+display_template = "remove {node: OBJECT} from group {group: STRING}"
+code_template = "{node}.remove_from_group({group})"
 defaults = {}
 signal_name = ""
+scope = ""

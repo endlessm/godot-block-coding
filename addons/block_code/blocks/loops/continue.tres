@@ -5,11 +5,13 @@
 [resource]
 script = ExtResource("1_junev")
 name = &"continue"
-type = 2
-variant_type = 0
-display_template = "Continue"
-code_template = "continue"
+target_node_class = ""
 description = ""
 category = "Loops"
+type = 2
+variant_type = 0
+display_template = "continue"
+code_template = "continue"
 defaults = {}
 signal_name = ""
+scope = ""

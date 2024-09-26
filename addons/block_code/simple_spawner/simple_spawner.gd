@@ -106,7 +106,7 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "Spawn once"
+	block_definition.display_template = "spawn once"
 	block_definition.code_template = "spawn_once()"
 	block_list.append(block_definition)
 
@@ -115,7 +115,7 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "Start spawning"
+	block_definition.display_template = "start spawning"
 	block_definition.code_template = "spawn_start()"
 	block_list.append(block_definition)
 
@@ -124,7 +124,7 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "Stop spawning"
+	block_definition.display_template = "stop spawning"
 	block_definition.code_template = "spawn_stop()"
 	block_list.append(block_definition)
 
@@ -134,7 +134,7 @@ static func setup_custom_blocks():
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.VALUE
 	block_definition.variant_type = TYPE_BOOL
-	block_definition.display_template = "Is spawning"
+	block_definition.display_template = "is spawning"
 	block_definition.code_template = "is_spawning()"
 	block_list.append(block_definition)
 
@@ -143,7 +143,7 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "Set spawn frequency to {new_frequency: FLOAT}"
+	block_definition.display_template = "set spawn frequency to {new_frequency: FLOAT}"
 	block_definition.code_template = "do_set_spawn_frequency({new_frequency})"
 	block_list.append(block_definition)
 
@@ -153,7 +153,7 @@ static func setup_custom_blocks():
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.VALUE
 	block_definition.variant_type = TYPE_FLOAT
-	block_definition.display_template = "Spawn frequency"
+	block_definition.display_template = "spawn frequency"
 	block_definition.code_template = "spawn_frequency"
 	block_list.append(block_definition)
 

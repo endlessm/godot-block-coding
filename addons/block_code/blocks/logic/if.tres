@@ -5,11 +5,13 @@
 [resource]
 script = ExtResource("1_c6ly3")
 name = &"if"
-type = 4
-variant_type = 0
-display_template = "If {condition: BOOL}"
-code_template = "if {condition}:"
+target_node_class = ""
 description = ""
 category = "Logic | Conditionals"
+type = 4
+variant_type = 0
+display_template = "if {condition: BOOL}"
+code_template = "if {condition}:"
 defaults = {}
 signal_name = ""
+scope = ""

@@ -5,11 +5,12 @@
 [resource]
 script = ExtResource("1_rc1so")
 name = &"viewport_center"
+target_node_class = ""
 description = "Coordinates of the middle of the viewable screen when playing."
 category = "Graphics | Viewport"
 type = 3
 variant_type = 5
-display_template = "Viewport Center"
+display_template = "viewport center"
 code_template = "(func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()"
 defaults = {}
 signal_name = ""

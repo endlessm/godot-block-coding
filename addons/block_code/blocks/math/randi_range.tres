@@ -10,7 +10,7 @@ description = "Generate a random signed 32-bits integer number between [i]from[/
 category = "Math"
 type = 3
 variant_type = 2
-display_template = "Random integer number between {from: INT} and {to: INT}"
+display_template = "random integer number between {from: INT} and {to: INT}"
 code_template = "randi_range({from}, {to})"
 defaults = {
 "from": 0,

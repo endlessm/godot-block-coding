@@ -5,11 +5,13 @@
 [resource]
 script = ExtResource("1_4rhsl")
 name = &"break"
-type = 2
-variant_type = 0
-display_template = "Break"
-code_template = "break"
+target_node_class = ""
 description = ""
 category = "Loops"
+type = 2
+variant_type = 0
+display_template = "break"
+code_template = "break"
 defaults = {}
 signal_name = ""
+scope = ""
