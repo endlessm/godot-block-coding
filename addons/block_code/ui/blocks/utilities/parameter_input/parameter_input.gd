@@ -20,7 +20,6 @@ signal modified
 var default_value: Variant
 
 var _drag_start: Vector2 = Vector2.INF
-var _is_dragging: bool = false
 
 @onready var _panel := %Panel
 @onready var snap_point := %SnapPoint
@@ -156,6 +155,10 @@ func _ready():
 		set_raw_input(default_value)
 
 
+func _on_drag_drop_area_drag_started():
+	drag_started.emit()
+
+
 func get_snapped_block() -> Block:
 	return snap_point.get_snapped_block()
 
@@ -289,32 +292,3 @@ func _on_option_input_item_selected(index):
 
 func _on_snap_point_snapped_block_changed(block):
 	_update_visible_input()
-
-
-func _input(event: InputEvent) -> void:
-	if snap_point.has_snapped_block():
-		return
-
-	if event is InputEventMouseButton:
-		var button_event: InputEventMouseButton = event as InputEventMouseButton
-
-		if button_event.button_index != MOUSE_BUTTON_LEFT:
-			return
-
-		if button_event.double_click:
-			# Double click event (with the mouse released) has both pressed=true
-			# and double_click=true, so ignore it as a special case.
-			pass
-		elif button_event.pressed and get_global_rect().has_point(button_event.global_position):
-			# Keep track of where the mouse click originated, but allow this
-			# event to propagate to other nodes.
-			_drag_start = event.global_position
-		else:
-			_drag_start = Vector2.INF
-	elif _drag_start != Vector2.INF and event is InputEventMouseMotion:
-		var motion_event: InputEventMouseMotion = event as InputEventMouseMotion
-
-		if not get_global_rect().has_point(event.global_position) and _drag_start.distance_to(event.global_position) > Constants.MINIMUM_DRAG_THRESHOLD:
-			get_viewport().set_input_as_handled()
-			drag_started.emit()
-			_drag_start = Vector2.INF
