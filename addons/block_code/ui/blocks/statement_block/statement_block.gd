@@ -18,8 +18,8 @@ func _ready():
 	_background.color = color
 
 
-func _on_drag_drop_area_drag_started() -> void:
-	_drag_started()
+func _on_drag_drop_area_drag_started(offset: Vector2) -> void:
+	_drag_started(offset)
 
 
 static func get_block_class():

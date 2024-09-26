@@ -33,15 +33,11 @@ func _process(_delta):
 		drag.update_drag_state()
 
 
-func drag_block(block: Block, copied_from: Block = null):
-	var offset: Vector2
-
+func drag_block(block: Block, copied_from: Block = null, offset: Vector2 = Vector2.ZERO):
 	if copied_from and copied_from.is_inside_tree():
-		offset = get_global_mouse_position() - copied_from.global_position
+		offset += get_global_mouse_position() - copied_from.global_position
 	elif block.is_inside_tree():
-		offset = get_global_mouse_position() - block.global_position
-	else:
-		offset = Vector2.ZERO
+		offset += get_global_mouse_position() - block.global_position
 
 	if _block_canvas.is_ancestor_of(block):
 		offset /= _block_canvas.zoom
@@ -71,9 +67,9 @@ func copy_block(block: Block) -> Block:
 	return _context.block_script.instantiate_block(block.definition)
 
 
-func copy_picked_block_and_drag(block: Block):
+func copy_picked_block_and_drag(block: Block, offset: Vector2):
 	var new_block: Block = copy_block(block)
-	drag_block(new_block, block)
+	drag_block(new_block, block, offset)
 
 
 func drag_ended():
@@ -99,6 +95,10 @@ func drag_ended():
 
 func connect_block_canvas_signals(block: Block):
 	if block.drag_started.get_connections().size() == 0:
-		block.drag_started.connect(drag_block)
+		block.drag_started.connect(_on_block_drag_started)
 	if block.modified.get_connections().size() == 0:
 		block.modified.connect(func(): block_modified.emit())
+
+
+func _on_block_drag_started(block: Block, offset: Vector2):
+	drag_block(block, null, offset)

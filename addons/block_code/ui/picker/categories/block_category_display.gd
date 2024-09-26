@@ -1,7 +1,7 @@
 @tool
 extends MarginContainer
 
-signal block_picked(block: Block)
+signal block_picked(block: Block, offset: Vector2)
 
 const BlockCategory = preload("res://addons/block_code/ui/picker/categories/block_category.gd")
 const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
@@ -67,7 +67,7 @@ func _get_or_create_block(block_definition: BlockDefinition) -> Block:
 	if block == null:
 		block = _context.block_script.instantiate_block(block_definition)
 		block.can_delete = false
-		block.drag_started.connect(func(block: Block): block_picked.emit(block))
+		block.drag_started.connect(func(block: Block, offset: Vector2): block_picked.emit(block, offset))
 		_blocks_container.add_child(block)
 		_blocks[block_definition.name] = block
 

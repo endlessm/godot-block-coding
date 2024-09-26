@@ -4,7 +4,7 @@ extends MarginContainer
 
 const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
 
-signal drag_started(block: Block)
+signal drag_started(block: Block, offset: Vector2)
 signal modified
 
 ## Color of block (optionally used to draw block color)
@@ -104,8 +104,8 @@ func _on_template_editor_modified():
 	modified.emit()
 
 
-func _on_template_editor_drag_started():
-	_drag_started()
+func _on_template_editor_drag_started(offset: Vector2):
+	_drag_started(offset)
 
 
 func _get_format_string() -> String:
@@ -193,8 +193,8 @@ static func get_scene_path():
 	push_error("Unimplemented.")
 
 
-func _drag_started():
-	drag_started.emit(self)
+func _drag_started(offset: Vector2 = Vector2.ZERO):
+	drag_started.emit(self, offset)
 
 
 func disconnect_signals():

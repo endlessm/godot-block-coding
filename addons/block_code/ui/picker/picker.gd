@@ -24,7 +24,7 @@ const CATEGORY_ORDER_OVERRIDE = {
 	"Graphics | Viewport": [&"viewport_width", &"viewport_height", &"viewport_center"],
 }
 
-signal block_picked(block: Block)
+signal block_picked(block: Block, offset: Vector2)
 signal variable_created(variable: VariableDefinition)
 
 @onready var _context := BlockEditorContext.get_default()
@@ -113,7 +113,7 @@ func _get_or_create_block_category_display(category: BlockCategory) -> BlockCate
 			block_category_display = VariableCategoryDisplayScene.instantiate()
 			block_category_display.variable_created.connect(func(variable): variable_created.emit(variable))
 		block_category_display.title = category.name if category else ""
-		block_category_display.block_picked.connect(func(block: Block): block_picked.emit(block))
+		block_category_display.block_picked.connect(func(block: Block, offset: Vector2): block_picked.emit(block, offset))
 
 		_block_list.add_child(block_category_display)
 		_category_displays[category.name] = block_category_display

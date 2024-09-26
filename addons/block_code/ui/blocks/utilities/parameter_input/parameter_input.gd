@@ -1,7 +1,7 @@
 @tool
 extends MarginContainer
 
-signal drag_started
+signal drag_started(offset: Vector2)
 
 const Constants = preload("res://addons/block_code/ui/constants.gd")
 const OptionData = preload("res://addons/block_code/code_generation/option_data.gd")
@@ -155,8 +155,8 @@ func _ready():
 		set_raw_input(default_value)
 
 
-func _on_drag_drop_area_drag_started():
-	drag_started.emit()
+func _on_drag_drop_area_drag_started(offset: Vector2):
+	drag_started.emit(offset)
 
 
 func get_snapped_block() -> Block:

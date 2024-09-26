@@ -9,7 +9,7 @@ extends Control
 
 const Constants = preload("res://addons/block_code/ui/constants.gd")
 
-signal drag_started
+signal drag_started(offset: Vector2)
 
 ## True to require that the mouse move outside of the component before
 ## [signal drag_started] is emitted.
@@ -61,5 +61,5 @@ func _input(event: InputEvent) -> void:
 		return
 
 	get_viewport().set_input_as_handled()
-	drag_started.emit()
+	drag_started.emit(_drag_start_position - motion_event.global_position)
 	_drag_start_position = Vector2.INF
