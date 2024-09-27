@@ -207,6 +207,10 @@ func _to_string():
 	return "<{block_class}:{block_name}#{rid}>".format({"block_name": definition.name if definition else "", "block_class": get_block_class(), "rid": get_instance_id()})
 
 
+func _get_tooltip(at_position: Vector2) -> String:
+	return definition.description if definition else ""
+
+
 func _make_custom_tooltip(for_text) -> Control:
 	var tooltip = preload("res://addons/block_code/ui/tooltip/tooltip.tscn").instantiate()
 	tooltip.text = for_text
