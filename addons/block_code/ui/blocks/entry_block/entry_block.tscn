@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/entry_block/entry_block.gd" id="2_3ik8h"]
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/background.gd" id="2_yrw8l"]
-[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="3_v0qw8"]
+[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="3_swkpp"]
 [ext_resource type="PackedScene" uid="uid://b1xvp3u11h41s" path="res://addons/block_code/ui/blocks/utilities/template_editor/template_editor.tscn" id="4_1gwsm"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="4_yj206"]
 
@@ -37,8 +37,9 @@ script = ExtResource("2_yrw8l")
 color = Color(1, 1, 1, 1)
 show_top = false
 
-[node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("3_v0qw8")]
+[node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("3_swkpp")]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TopMarginContainer"]
 layout_mode = 2
@@ -55,4 +56,4 @@ layout_mode = 2
 [node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("4_yj206")]
 layout_mode = 2
 
-[connection signal="mouse_down" from="VBoxContainer/TopMarginContainer/DragDropArea" to="." method="_on_drag_drop_area_mouse_down"]
+[connection signal="drag_started" from="VBoxContainer/TopMarginContainer/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]

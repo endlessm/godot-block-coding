@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://cjvxs6euc6xbm"]
+[gd_scene load_steps=11 format=3 uid="uid://cjvxs6euc6xbm"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.gd" id="1_rgmxn"]
+[ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_05gck"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="2_6esp3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tn6h4"]
@@ -71,6 +72,10 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_6oowp")
 placeholder_text = "Parameter"
 expand_to_text_length = true
 
+[node name="DragDropArea" parent="InputSwitcher/TextInput/LineEdit" instance=ExtResource("2_05gck")]
+layout_mode = 1
+drag_outside = true
+
 [node name="ColorInput" type="ColorPickerButton" parent="InputSwitcher"]
 unique_name_in_owner = true
 visible = false
@@ -79,6 +84,10 @@ custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_5hq7f")
+
+[node name="DragDropArea" parent="InputSwitcher/ColorInput" instance=ExtResource("2_05gck")]
+layout_mode = 1
+drag_outside = true
 
 [node name="OptionInput" type="OptionButton" parent="InputSwitcher"]
 unique_name_in_owner = true
@@ -89,6 +98,10 @@ tooltip_text = "Parameter"
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fjquj")
 action_mode = 1
 fit_to_longest_item = false
+
+[node name="DragDropArea" parent="InputSwitcher/OptionInput" instance=ExtResource("2_05gck")]
+layout_mode = 1
+drag_outside = true
 
 [node name="Vector2Input" type="MarginContainer" parent="InputSwitcher"]
 unique_name_in_owner = true
@@ -121,6 +134,10 @@ placeholder_text = "x"
 alignment = 1
 expand_to_text_length = true
 
+[node name="DragDropArea" parent="InputSwitcher/Vector2Input/HBoxContainer/XLineEdit" instance=ExtResource("2_05gck")]
+layout_mode = 1
+drag_outside = true
+
 [node name="Control3" type="Control" parent="InputSwitcher/Vector2Input/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -134,6 +151,10 @@ custom_minimum_size = Vector2(2, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 color = Color(0.804743, 0.804743, 0.804743, 1)
+
+[node name="DragDropArea" parent="InputSwitcher/Vector2Input/HBoxContainer/CenterContainer/ColorRect" instance=ExtResource("2_05gck")]
+layout_mode = 1
+drag_outside = true
 
 [node name="Control4" type="Control" parent="InputSwitcher/Vector2Input/HBoxContainer"]
 layout_mode = 2
@@ -153,6 +174,10 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_6oowp")
 placeholder_text = "y"
 alignment = 1
 expand_to_text_length = true
+
+[node name="DragDropArea" parent="InputSwitcher/Vector2Input/HBoxContainer/YLineEdit" instance=ExtResource("2_05gck")]
+layout_mode = 1
+drag_outside = true
 
 [node name="Control2" type="Control" parent="InputSwitcher/Vector2Input/HBoxContainer"]
 layout_mode = 2
@@ -179,6 +204,10 @@ popup/item_0/text = "false"
 popup/item_1/text = "true"
 popup/item_1/id = 1
 
+[node name="DragDropArea" parent="InputSwitcher/BoolInput/BoolInputOption" instance=ExtResource("2_05gck")]
+layout_mode = 1
+drag_outside = true
+
 [node name="SnapPoint" parent="." instance=ExtResource("2_6esp3")]
 unique_name_in_owner = true
 layout_mode = 2
@@ -187,11 +216,18 @@ variant_type = 4
 
 [connection signal="focus_exited" from="InputSwitcher/TextInput/LineEdit" to="." method="_on_line_edit_focus_exited"]
 [connection signal="text_submitted" from="InputSwitcher/TextInput/LineEdit" to="." method="_on_line_edit_text_submitted"]
+[connection signal="drag_started" from="InputSwitcher/TextInput/LineEdit/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
 [connection signal="color_changed" from="InputSwitcher/ColorInput" to="." method="_on_color_input_color_changed"]
+[connection signal="drag_started" from="InputSwitcher/ColorInput/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
 [connection signal="item_selected" from="InputSwitcher/OptionInput" to="." method="_on_option_input_item_selected"]
+[connection signal="drag_started" from="InputSwitcher/OptionInput/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
 [connection signal="focus_exited" from="InputSwitcher/Vector2Input/HBoxContainer/XLineEdit" to="." method="_on_x_line_edit_focus_exited"]
 [connection signal="text_submitted" from="InputSwitcher/Vector2Input/HBoxContainer/XLineEdit" to="." method="_on_x_line_edit_text_submitted"]
+[connection signal="drag_started" from="InputSwitcher/Vector2Input/HBoxContainer/XLineEdit/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
+[connection signal="drag_started" from="InputSwitcher/Vector2Input/HBoxContainer/CenterContainer/ColorRect/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
 [connection signal="focus_exited" from="InputSwitcher/Vector2Input/HBoxContainer/YLineEdit" to="." method="_on_y_line_edit_focus_exited"]
 [connection signal="text_submitted" from="InputSwitcher/Vector2Input/HBoxContainer/YLineEdit" to="." method="_on_y_line_edit_text_submitted"]
+[connection signal="drag_started" from="InputSwitcher/Vector2Input/HBoxContainer/YLineEdit/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
 [connection signal="item_selected" from="InputSwitcher/BoolInput/BoolInputOption" to="." method="_on_option_input_item_selected"]
+[connection signal="drag_started" from="InputSwitcher/BoolInput/BoolInputOption/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
 [connection signal="snapped_block_changed" from="SnapPoint" to="." method="_on_snap_point_snapped_block_changed"]

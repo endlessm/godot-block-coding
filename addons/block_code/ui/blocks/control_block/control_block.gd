@@ -17,7 +17,7 @@ func _ready():
 	%SnapGutter.custom_minimum_size.x = Constants.CONTROL_MARGIN
 
 
-func _on_drag_drop_area_mouse_down():
+func _on_drag_drop_area_drag_started() -> void:
 	_drag_started()
 
 

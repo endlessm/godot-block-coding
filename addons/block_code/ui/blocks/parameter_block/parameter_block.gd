@@ -30,7 +30,7 @@ func _ready():
 		_panel.add_theme_stylebox_override("panel", _panel_normal)
 
 
-func _on_drag_drop_area_mouse_down():
+func _on_drag_drop_area_drag_started() -> void:
 	_drag_started()
 
 
