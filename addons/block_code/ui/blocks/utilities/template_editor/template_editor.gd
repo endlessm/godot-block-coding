@@ -2,7 +2,7 @@
 class_name TemplateEditor
 extends Container
 
-signal drag_started
+signal drag_started(offset: Vector2)
 signal modified
 
 const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
@@ -140,5 +140,5 @@ func _append_output_parameter(parameter: Dictionary, id: int):
 	_container.add_child(parameter_output)
 
 
-func _on_parameter_input_drag_started():
-	drag_started.emit()
+func _on_parameter_input_drag_started(offset: Vector2):
+	drag_started.emit(offset)

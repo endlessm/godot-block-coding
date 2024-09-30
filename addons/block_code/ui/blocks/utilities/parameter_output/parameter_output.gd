@@ -6,7 +6,6 @@ const ParameterBlock = preload("res://addons/block_code/ui/blocks/parameter_bloc
 
 var block: Block
 var parameter_name: String
-var output_block: Block
 var _block_name: String:
 	get:
 		return block.definition.name if block else ""
@@ -43,8 +42,8 @@ func _update_parameter_block():
 	_snap_point.add_child.call_deferred(parameter_block)
 
 
-func _on_parameter_block_drag_started(drag_block: Block):
-	block.drag_started.emit(drag_block)
+func _on_parameter_block_drag_started(drag_block: Block, offset: Vector2):
+	block.drag_started.emit(drag_block, offset)
 
 
 func _on_snap_point_snapped_block_changed(snap_block: Block):
