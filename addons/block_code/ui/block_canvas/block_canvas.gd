@@ -364,7 +364,7 @@ func _on_replace_block_code_button_pressed():
 	replace_block_code.emit()
 
 
-func _input(event):
+func _gui_input(event):
 	if event is InputEventKey:
 		if event.keycode == KEY_SHIFT:
 			set_mouse_override(event.pressed)
