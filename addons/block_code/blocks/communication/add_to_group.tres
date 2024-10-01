@@ -1,6 +1,13 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bvrmau8atjx1x"]
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://bvrmau8atjx1x"]
 
+[ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="1_aom4j"]
 [ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_bcm71"]
+[ext_resource type="Script" path="res://addons/block_code/blocks/communication/groups.gd" id="2_42ixf"]
+
+[sub_resource type="Resource" id="Resource_fk0wa"]
+script = ExtResource("1_aom4j")
+selected = 0
+items = []
 
 [resource]
 script = ExtResource("1_bcm71")
@@ -10,8 +17,11 @@ description = "Add this node into the group"
 category = "Communication | Groups"
 type = 2
 variant_type = 0
-display_template = "add to group {group: STRING}"
-code_template = "add_to_group({group})"
-defaults = {}
+display_template = "add to group {group: NIL}"
+code_template = "add_to_group(\\\"{group}\\\")"
+defaults = {
+"group": SubResource("Resource_fk0wa")
+}
 signal_name = ""
 scope = ""
+extension_script = ExtResource("2_42ixf")

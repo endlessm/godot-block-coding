@@ -1,6 +1,13 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dgenw5wyqorvq"]
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://dgenw5wyqorvq"]
 
 [ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_cdwef"]
+[ext_resource type="Script" path="res://addons/block_code/blocks/communication/groups.gd" id="1_i50fw"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="1_mnxp7"]
+
+[sub_resource type="Resource" id="Resource_45b71"]
+script = ExtResource("1_mnxp7")
+selected = 0
+items = []
 
 [resource]
 script = ExtResource("1_cdwef")
@@ -10,8 +17,11 @@ description = "Remove this node from the group"
 category = "Communication | Groups"
 type = 2
 variant_type = 0
-display_template = "remove from group {group: STRING}"
-code_template = "remove_from_group({group})"
-defaults = {}
+display_template = "remove from group {group: NIL}"
+code_template = "remove_from_group(\\\"{group}\\\")"
+defaults = {
+"group": SubResource("Resource_45b71")
+}
 signal_name = ""
 scope = ""
+extension_script = ExtResource("1_i50fw")
