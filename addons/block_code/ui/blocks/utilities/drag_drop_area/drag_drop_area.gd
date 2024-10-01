@@ -44,7 +44,8 @@ func _gui_input(event: InputEvent) -> void:
 
 func _input(event: InputEvent) -> void:
 	# Watch for mouse movements using _input. This way, we receive mouse
-	# movement events that occur outside of the component.
+	# motion events that occur outside of the component before the GUI system
+	# does.
 
 	if not event is InputEventMouseMotion:
 		return
