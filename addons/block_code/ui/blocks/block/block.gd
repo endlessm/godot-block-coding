@@ -88,6 +88,12 @@ func get_parameter_values() -> Dictionary:
 	return template_editor.get_parameter_values()
 
 
+## Use the current BlockEditorContext components
+func refresh_context():
+	if _context and _block_extension:
+		_block_extension.context_node = _context.parent_node
+
+
 func _update_template_editor():
 	if template_editor == null:
 		return
