@@ -79,7 +79,7 @@ func spawn_once():
 	if scenes.size() == 0:
 		return
 
-	_spawned_scenes = _spawned_scenes.filter(is_instance_valid)
+	_spawned_scenes = _spawned_scenes.filter(func(instance): return is_instance_valid(instance))
 
 	if spawn_limit != 0 and _spawned_scenes.size() >= spawn_limit:
 		if limit_behavior == LimitBehavior.NO_SPAWN:
