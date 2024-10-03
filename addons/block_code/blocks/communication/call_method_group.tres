@@ -1,6 +1,13 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c15vtdfihdxb8"]
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://c15vtdfihdxb8"]
 
+[ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="1_3nuts"]
 [ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_mlm68"]
+[ext_resource type="Script" path="res://addons/block_code/blocks/communication/groups.gd" id="1_of577"]
+
+[sub_resource type="Resource" id="Resource_f4ctg"]
+script = ExtResource("1_3nuts")
+selected = 0
+items = []
 
 [resource]
 script = ExtResource("1_mlm68")
@@ -10,8 +17,11 @@ description = "Calls the method/function on each member of the given group"
 category = "Communication | Methods"
 type = 2
 variant_type = 0
-display_template = "call method {method_name: STRING} in group {group: STRING}"
-code_template = "get_tree().call_group({group}, {method_name})"
-defaults = {}
+display_template = "call method {method_name: STRING} in group {group: NIL}"
+code_template = "get_tree().call_group(\\\"{group\\\"}, {method_name})"
+defaults = {
+"group": SubResource("Resource_f4ctg")
+}
 signal_name = ""
 scope = ""
+extension_script = ExtResource("1_of577")

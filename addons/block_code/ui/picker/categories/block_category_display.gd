@@ -70,5 +70,9 @@ func _get_or_create_block(block_definition: BlockDefinition) -> Block:
 		block.drag_started.connect(func(block: Block, offset: Vector2): block_picked.emit(block, offset))
 		_blocks_container.add_child(block)
 		_blocks[block_definition.name] = block
+	else:
+		# If the block is being reused, make sure the context corresponds to
+		# the current BlockCode node.
+		block.refresh_context()
 
 	return block

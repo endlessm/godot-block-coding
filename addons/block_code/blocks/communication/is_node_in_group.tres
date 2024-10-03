@@ -1,6 +1,13 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bbtdxeey74x67"]
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://bbtdxeey74x67"]
 
 [ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_5krrs"]
+[ext_resource type="Script" path="res://addons/block_code/blocks/communication/groups.gd" id="1_r4prw"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="1_y4j0k"]
+
+[sub_resource type="Resource" id="Resource_o38ym"]
+script = ExtResource("1_y4j0k")
+selected = 0
+items = []
 
 [resource]
 script = ExtResource("1_5krrs")
@@ -10,8 +17,11 @@ description = "Is the node in the group"
 category = "Communication | Groups"
 type = 3
 variant_type = 1
-display_template = "{node: OBJECT} is in group {group: STRING}"
-code_template = "{node}.is_in_group({group})"
-defaults = {}
+display_template = "{node: OBJECT} is in group {group: NIL}"
+code_template = "{node}.is_in_group(\\\"{group}\\\")"
+defaults = {
+"group": SubResource("Resource_o38ym")
+}
 signal_name = ""
 scope = ""
+extension_script = ExtResource("1_r4prw")
