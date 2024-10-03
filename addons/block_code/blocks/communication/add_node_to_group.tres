@@ -17,8 +17,8 @@ description = "Add the node into the group"
 category = "Communication | Groups"
 type = 2
 variant_type = 0
-display_template = "add {node: OBJECT} to group {group: NIL}"
-code_template = "{node}.add_to_group(\\\"{group}\\\")"
+display_template = "add {node: OBJECT} to group {group: STRING}"
+code_template = "{node}.add_to_group({group})"
 defaults = {
 "group": SubResource("Resource_sus0f")
 }

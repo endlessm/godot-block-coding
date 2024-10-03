@@ -17,8 +17,8 @@ description = "Is this node in the group"
 category = "Communication | Groups"
 type = 3
 variant_type = 1
-display_template = "is in group {group: NIL}"
-code_template = "is_in_group(\\\"{group}\\\")"
+display_template = "is in group {group: STRING}"
+code_template = "is_in_group({group})"
 defaults = {
 "group": SubResource("Resource_d0v0d")
 }
