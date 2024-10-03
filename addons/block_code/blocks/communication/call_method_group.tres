@@ -17,8 +17,8 @@ description = "Calls the method/function on each member of the given group"
 category = "Communication | Methods"
 type = 2
 variant_type = 0
-display_template = "call method {method_name: STRING} in group {group: NIL}"
-code_template = "get_tree().call_group(\\\"{group\\\"}, {method_name})"
+display_template = "call method {method_name: STRING} in group {group: STRING}"
+code_template = "get_tree().call_group({group}, {method_name})"
 defaults = {
 "group": SubResource("Resource_f4ctg")
 }
