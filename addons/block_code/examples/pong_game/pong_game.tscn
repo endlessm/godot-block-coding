@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://tf7b8c64ecc0"]
+[gd_scene load_steps=77 format=3 uid="uid://tf7b8c64ecc0"]
 
 [ext_resource type="PackedScene" uid="uid://cg8ibi18um3vg" path="res://addons/block_code/examples/pong_game/space.tscn" id="1_y56ac"]
 [ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="3_6jaq8"]
@@ -9,7 +9,8 @@
 [ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="7_3q6bj"]
 [ext_resource type="Script" path="res://addons/block_code/serialization/block_script_serialization.gd" id="7_uuuue"]
 [ext_resource type="Script" path="res://addons/block_code/code_generation/variable_definition.gd" id="9_lo3p1"]
-[ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://addons/block_code/examples/spawner/ball.tscn" id="9_xrqll"]
+[ext_resource type="Script" path="res://addons/block_code/simple_spawner/simple_spawner.gd" id="10_40lyb"]
+[ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://addons/block_code/examples/pong_game/ball.tscn" id="11_kyly2"]
 [ext_resource type="Script" path="res://addons/block_code/serialization/value_block_serialization.gd" id="11_yafka"]
 [ext_resource type="PackedScene" uid="uid://fhoapg3anjsu" path="res://addons/block_code/examples/pong_game/goal_area.tscn" id="12_nqmxu"]
 [ext_resource type="Script" path="res://addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd" id="13_tg3yk"]
@@ -80,7 +81,7 @@ func _process(delta):
 "
 version = 0
 
-[sub_resource type="Resource" id="Resource_qmwe2"]
+[sub_resource type="Resource" id="Resource_7v42o"]
 script = ExtResource("4_qtggh")
 name = &"SimpleCharacter_set_speed"
 children = Array[ExtResource("4_qtggh")]([])
@@ -88,51 +89,41 @@ arguments = {
 "value": Vector2(0, 1000)
 }
 
-[sub_resource type="Resource" id="Resource_ehp62"]
+[sub_resource type="Resource" id="Resource_tk0mo"]
 script = ExtResource("4_qtggh")
 name = &"ready"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_qmwe2")])
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_7v42o")])
 arguments = {}
 
-[sub_resource type="Resource" id="Resource_sgmlh"]
+[sub_resource type="Resource" id="Resource_smo3e"]
 script = ExtResource("5_omlge")
-root = SubResource("Resource_ehp62")
+root = SubResource("Resource_tk0mo")
 canvas_position = Vector2(25, 0)
 
-[sub_resource type="Resource" id="Resource_6cn1w"]
-script = ExtResource("7_3q6bj")
-selected = 0
-items = ["top-down", "platformer", "spaceship"]
-
-[sub_resource type="Resource" id="Resource_i3nv8"]
-script = ExtResource("7_3q6bj")
-selected = 1
-items = ["player_1", "player_2"]
-
-[sub_resource type="Resource" id="Resource_im4n0"]
+[sub_resource type="Resource" id="Resource_lkqin"]
 script = ExtResource("4_qtggh")
 name = &"simplecharacter_move"
 children = Array[ExtResource("4_qtggh")]([])
 arguments = {
-"kind": SubResource("Resource_6cn1w"),
-"player": SubResource("Resource_i3nv8")
+"kind": "top-down",
+"player": "player_2"
 }
 
-[sub_resource type="Resource" id="Resource_plb5i"]
+[sub_resource type="Resource" id="Resource_fsajo"]
 script = ExtResource("4_qtggh")
 name = &"process"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_im4n0")])
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_lkqin")])
 arguments = {}
 
-[sub_resource type="Resource" id="Resource_xbg8g"]
+[sub_resource type="Resource" id="Resource_k0kbk"]
 script = ExtResource("5_omlge")
-root = SubResource("Resource_plb5i")
-canvas_position = Vector2(25, 175)
+root = SubResource("Resource_fsajo")
+canvas_position = Vector2(25, 150)
 
 [sub_resource type="Resource" id="Resource_ysbi4"]
 script = ExtResource("7_uuuue")
 script_inherits = "SimpleCharacter"
-block_serialization_trees = Array[ExtResource("5_omlge")]([SubResource("Resource_sgmlh"), SubResource("Resource_xbg8g")])
+block_serialization_trees = Array[ExtResource("5_omlge")]([SubResource("Resource_smo3e"), SubResource("Resource_k0kbk")])
 variables = Array[ExtResource("9_lo3p1")]([])
 generated_script = "extends SimpleCharacter
 
@@ -141,164 +132,290 @@ func _ready():
 	speed = Vector2(0, 1000)
 
 func _process(delta):
-	move_with_player_buttons(\"player_2\", \"top-down\", delta)
+	move_with_player_buttons('player_2', 'top-down', delta)
 
 "
 version = 0
 
-[sub_resource type="Resource" id="Resource_cu3t3"]
+[sub_resource type="Resource" id="Resource_a5xld"]
 script = ExtResource("4_qtggh")
-name = &"load_sound"
+name = &"simplespawner_spawn_once"
 children = Array[ExtResource("4_qtggh")]([])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_x0045"]
+script = ExtResource("4_qtggh")
+name = &"define_method"
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_a5xld")])
 arguments = {
-"file_path": "res://addons/block_code/examples/pong_game/assets/paddle_hit.ogg",
-"name": "paddle_hit"
+"method_name": &"spawn_ball"
 }
 
-[sub_resource type="Resource" id="Resource_edygh"]
+[sub_resource type="Resource" id="Resource_sgyym"]
+script = ExtResource("5_omlge")
+root = SubResource("Resource_x0045")
+canvas_position = Vector2(50, 50)
+
+[sub_resource type="Resource" id="Resource_x8x0c"]
 script = ExtResource("4_qtggh")
-name = &"load_sound"
+name = &"simplespawner_spawn_once"
 children = Array[ExtResource("4_qtggh")]([])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_b7jxp"]
+script = ExtResource("4_qtggh")
+name = &"ready"
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_x8x0c")])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_c54s5"]
+script = ExtResource("5_omlge")
+root = SubResource("Resource_b7jxp")
+canvas_position = Vector2(375, 50)
+
+[sub_resource type="Resource" id="Resource_t0m8b"]
+script = ExtResource("7_uuuue")
+script_inherits = "SimpleSpawner"
+block_serialization_trees = Array[ExtResource("5_omlge")]([SubResource("Resource_sgyym"), SubResource("Resource_c54s5")])
+variables = Array[ExtResource("9_lo3p1")]([])
+generated_script = "extends SimpleSpawner
+
+
+func spawn_ball():
+	spawn_once()
+
+func _ready():
+	spawn_once()
+
+"
+version = 0
+
+[sub_resource type="Resource" id="Resource_bsaaj"]
+script = ExtResource("11_yafka")
+name = &"area2d_on_entered:something"
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_ceomj"]
+script = ExtResource("11_yafka")
+name = &"is_node_in_group"
 arguments = {
-"file_path": "res://addons/block_code/examples/pong_game/assets/wall_hit.ogg",
-"name": "wall_hit"
+"group": "balls",
+"node": SubResource("Resource_bsaaj")
 }
 
-[sub_resource type="Resource" id="Resource_aonac"]
+[sub_resource type="Resource" id="Resource_6oomn"]
+script = ExtResource("4_qtggh")
+name = &"play_sound"
+children = Array[ExtResource("4_qtggh")]([])
+arguments = {
+"db": 0.0,
+"name": "goal_sound",
+"pitch": 1.0
+}
+
+[sub_resource type="Resource" id="Resource_jn8tf"]
+script = ExtResource("11_yafka")
+name = &"get_node"
+arguments = {
+"path": NodePath("../SimpleScoring")
+}
+
+[sub_resource type="Resource" id="Resource_yg2gh"]
+script = ExtResource("4_qtggh")
+name = &"call_method_node"
+children = Array[ExtResource("4_qtggh")]([])
+arguments = {
+"method_name": "goal_left",
+"node": SubResource("Resource_jn8tf")
+}
+
+[sub_resource type="Resource" id="Resource_dyf88"]
+script = ExtResource("11_yafka")
+name = &"get_node"
+arguments = {
+"path": NodePath("../BallSpawner")
+}
+
+[sub_resource type="Resource" id="Resource_jw4y3"]
+script = ExtResource("4_qtggh")
+name = &"call_method_node"
+children = Array[ExtResource("4_qtggh")]([])
+arguments = {
+"method_name": "spawn_ball",
+"node": SubResource("Resource_dyf88")
+}
+
+[sub_resource type="Resource" id="Resource_5nj3f"]
+script = ExtResource("4_qtggh")
+name = &"if"
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_6oomn"), SubResource("Resource_yg2gh"), SubResource("Resource_jw4y3")])
+arguments = {
+"condition": SubResource("Resource_ceomj")
+}
+
+[sub_resource type="Resource" id="Resource_e4tu3"]
+script = ExtResource("4_qtggh")
+name = &"area2d_on_entered"
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_5nj3f")])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_tflx0"]
+script = ExtResource("5_omlge")
+root = SubResource("Resource_e4tu3")
+canvas_position = Vector2(0, 25)
+
+[sub_resource type="Resource" id="Resource_vact5"]
 script = ExtResource("4_qtggh")
 name = &"load_sound"
 children = Array[ExtResource("4_qtggh")]([])
 arguments = {
 "file_path": "res://addons/block_code/examples/pong_game/assets/score.ogg",
-"name": "score_sound"
+"name": "goal_sound"
 }
 
-[sub_resource type="Resource" id="Resource_ktt3i"]
+[sub_resource type="Resource" id="Resource_tma4s"]
 script = ExtResource("4_qtggh")
 name = &"ready"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_cu3t3"), SubResource("Resource_edygh"), SubResource("Resource_aonac")])
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_vact5")])
 arguments = {}
 
-[sub_resource type="Resource" id="Resource_m68k1"]
+[sub_resource type="Resource" id="Resource_3ye3u"]
 script = ExtResource("5_omlge")
-root = SubResource("Resource_ktt3i")
-canvas_position = Vector2(25, 0)
+root = SubResource("Resource_tma4s")
+canvas_position = Vector2(0, -100)
 
-[sub_resource type="Resource" id="Resource_gg8gb"]
-script = ExtResource("11_yafka")
-name = &"viewport_center"
-arguments = {}
-
-[sub_resource type="Resource" id="Resource_e8670"]
-script = ExtResource("4_qtggh")
-name = &"rigidbody2d_physics_position"
-children = Array[ExtResource("4_qtggh")]([])
-arguments = {
-"position": SubResource("Resource_gg8gb")
-}
-
-[sub_resource type="Resource" id="Resource_06t6x"]
-script = ExtResource("4_qtggh")
-name = &"play_sound"
-children = Array[ExtResource("4_qtggh")]([])
-arguments = {
-"db": 0.0,
-"name": "score_sound",
-"pitch": 1.0
-}
-
-[sub_resource type="Resource" id="Resource_ym15d"]
-script = ExtResource("4_qtggh")
-name = &"define_method"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_e8670"), SubResource("Resource_06t6x")])
-arguments = {
-"method_name": &"reset"
-}
-
-[sub_resource type="Resource" id="Resource_ibkru"]
-script = ExtResource("5_omlge")
-root = SubResource("Resource_ym15d")
-canvas_position = Vector2(25, 250)
-
-[sub_resource type="Resource" id="Resource_huint"]
-script = ExtResource("11_yafka")
-name = &"rigidbody2d_on_entered:something"
-arguments = {}
-
-[sub_resource type="Resource" id="Resource_ss0pf"]
-script = ExtResource("11_yafka")
-name = &"is_node_in_group"
-arguments = {
-"group": "paddles",
-"node": SubResource("Resource_huint")
-}
-
-[sub_resource type="Resource" id="Resource_x4ohp"]
-script = ExtResource("4_qtggh")
-name = &"play_sound"
-children = Array[ExtResource("4_qtggh")]([])
-arguments = {
-"db": 0.0,
-"name": "paddle_hit",
-"pitch": 1.0
-}
-
-[sub_resource type="Resource" id="Resource_0icvv"]
-script = ExtResource("4_qtggh")
-name = &"if"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_x4ohp")])
-arguments = {
-"condition": SubResource("Resource_ss0pf")
-}
-
-[sub_resource type="Resource" id="Resource_eanhn"]
-script = ExtResource("11_yafka")
-name = &"rigidbody2d_on_entered:something"
-arguments = {}
-
-[sub_resource type="Resource" id="Resource_bhuca"]
-script = ExtResource("11_yafka")
-name = &"is_node_in_group"
-arguments = {
-"group": "walls",
-"node": SubResource("Resource_eanhn")
-}
-
-[sub_resource type="Resource" id="Resource_3l1pb"]
-script = ExtResource("4_qtggh")
-name = &"play_sound"
-children = Array[ExtResource("4_qtggh")]([])
-arguments = {
-"db": 0.0,
-"name": "wall_hit",
-"pitch": 1.0
-}
-
-[sub_resource type="Resource" id="Resource_l6cf3"]
-script = ExtResource("4_qtggh")
-name = &"if"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_3l1pb")])
-arguments = {
-"condition": SubResource("Resource_bhuca")
-}
-
-[sub_resource type="Resource" id="Resource_h2wbg"]
-script = ExtResource("4_qtggh")
-name = &"rigidbody2d_on_entered"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_0icvv"), SubResource("Resource_l6cf3")])
-arguments = {}
-
-[sub_resource type="Resource" id="Resource_wej53"]
-script = ExtResource("5_omlge")
-root = SubResource("Resource_h2wbg")
-canvas_position = Vector2(25, 450)
-
-[sub_resource type="Resource" id="Resource_6m2mk"]
+[sub_resource type="Resource" id="Resource_4xylj"]
 script = ExtResource("7_uuuue")
-script_inherits = "RigidBody2D"
-block_serialization_trees = Array[ExtResource("5_omlge")]([SubResource("Resource_m68k1"), SubResource("Resource_ibkru"), SubResource("Resource_wej53")])
+script_inherits = "Area2D"
+block_serialization_trees = Array[ExtResource("5_omlge")]([SubResource("Resource_tflx0"), SubResource("Resource_3ye3u")])
 variables = Array[ExtResource("9_lo3p1")]([])
-generated_script = "extends RigidBody2D
+generated_script = "extends Area2D
+
+
+func _init():
+	body_entered.connect(_on_body_entered)
+
+func _on_body_entered(something: Node2D):
+
+	if ((something).is_in_group('balls')):
+		var __sound_node_1 = get_node('goal_sound')
+		__sound_node_1.volume_db = 0
+		__sound_node_1.pitch_scale = 1
+		__sound_node_1.play()
+
+		(get_node(\"../SimpleScoring\")).call('goal_left')
+		(get_node(\"../BallSpawner\")).call('spawn_ball')
+
+func _ready():
+	var __sound_1 = AudioStreamPlayer.new()
+	__sound_1.name = 'goal_sound'
+	__sound_1.set_stream(load('res://addons/block_code/examples/pong_game/assets/score.ogg'))
+	add_child(__sound_1)
+
+
+"
+version = 0
+
+[sub_resource type="Resource" id="Resource_ncoev"]
+script = ExtResource("4_qtggh")
+name = &"load_sound"
+children = Array[ExtResource("4_qtggh")]([])
+arguments = {
+"file_path": "res://addons/block_code/examples/pong_game/assets/score.ogg",
+"name": "goal_sound"
+}
+
+[sub_resource type="Resource" id="Resource_wtkeq"]
+script = ExtResource("4_qtggh")
+name = &"ready"
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_ncoev")])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_br5g5"]
+script = ExtResource("5_omlge")
+root = SubResource("Resource_wtkeq")
+canvas_position = Vector2(50, -150)
+
+[sub_resource type="Resource" id="Resource_docpm"]
+script = ExtResource("11_yafka")
+name = &"area2d_on_entered:something"
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_n05w5"]
+script = ExtResource("11_yafka")
+name = &"is_node_in_group"
+arguments = {
+"group": "balls",
+"node": SubResource("Resource_docpm")
+}
+
+[sub_resource type="Resource" id="Resource_44ufy"]
+script = ExtResource("4_qtggh")
+name = &"play_sound"
+children = Array[ExtResource("4_qtggh")]([])
+arguments = {
+"db": 0.0,
+"name": "goal_sound",
+"pitch": 1.0
+}
+
+[sub_resource type="Resource" id="Resource_7fx5x"]
+script = ExtResource("11_yafka")
+name = &"get_node"
+arguments = {
+"path": NodePath("../SimpleScoring")
+}
+
+[sub_resource type="Resource" id="Resource_rrhoy"]
+script = ExtResource("4_qtggh")
+name = &"call_method_node"
+children = Array[ExtResource("4_qtggh")]([])
+arguments = {
+"method_name": "goal_right",
+"node": SubResource("Resource_7fx5x")
+}
+
+[sub_resource type="Resource" id="Resource_5l7se"]
+script = ExtResource("11_yafka")
+name = &"get_node"
+arguments = {
+"path": NodePath("../BallSpawner")
+}
+
+[sub_resource type="Resource" id="Resource_q014r"]
+script = ExtResource("4_qtggh")
+name = &"call_method_node"
+children = Array[ExtResource("4_qtggh")]([])
+arguments = {
+"method_name": "spawn_ball",
+"node": SubResource("Resource_5l7se")
+}
+
+[sub_resource type="Resource" id="Resource_jgxuh"]
+script = ExtResource("4_qtggh")
+name = &"if"
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_44ufy"), SubResource("Resource_rrhoy"), SubResource("Resource_q014r")])
+arguments = {
+"condition": SubResource("Resource_n05w5")
+}
+
+[sub_resource type="Resource" id="Resource_vjnc0"]
+script = ExtResource("4_qtggh")
+name = &"area2d_on_entered"
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_jgxuh")])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_ts84n"]
+script = ExtResource("5_omlge")
+root = SubResource("Resource_vjnc0")
+canvas_position = Vector2(50, -25)
+
+[sub_resource type="Resource" id="Resource_xoc8a"]
+script = ExtResource("7_uuuue")
+script_inherits = "Area2D"
+block_serialization_trees = Array[ExtResource("5_omlge")]([SubResource("Resource_br5g5"), SubResource("Resource_ts84n")])
+variables = Array[ExtResource("9_lo3p1")]([])
+generated_script = "extends Area2D
 
 
 func _init():
@@ -306,202 +423,21 @@ func _init():
 
 func _ready():
 	var __sound_1 = AudioStreamPlayer.new()
-	__sound_1.name = 'paddle_hit'
-	__sound_1.set_stream(load('res://addons/block_code/examples/pong_game/assets/paddle_hit.ogg'))
+	__sound_1.name = 'goal_sound'
+	__sound_1.set_stream(load('res://addons/block_code/examples/pong_game/assets/score.ogg'))
 	add_child(__sound_1)
-
-	var __sound_2 = AudioStreamPlayer.new()
-	__sound_2.name = 'wall_hit'
-	__sound_2.set_stream(load('res://addons/block_code/examples/pong_game/assets/wall_hit.ogg'))
-	add_child(__sound_2)
-
-	var __sound_3 = AudioStreamPlayer.new()
-	__sound_3.name = 'score_sound'
-	__sound_3.set_stream(load('res://addons/block_code/examples/pong_game/assets/score.ogg'))
-	add_child(__sound_3)
-
-
-func reset():
-	PhysicsServer2D.body_set_state(
-		get_rid(),
-		PhysicsServer2D.BODY_STATE_TRANSFORM,
-		Transform2D.IDENTITY.translated(((func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()))
-	)
-
-	var __sound_node_1 = get_node('score_sound')
-	__sound_node_1.volume_db = 0
-	__sound_node_1.pitch_scale = 1
-	__sound_node_1.play()
 
 
 func _on_body_entered(something: Node2D):
 
-	if ((something).is_in_group('paddles')):
-		var __sound_node_1 = get_node('paddle_hit')
+	if ((something).is_in_group('balls')):
+		var __sound_node_1 = get_node('goal_sound')
 		__sound_node_1.volume_db = 0
 		__sound_node_1.pitch_scale = 1
 		__sound_node_1.play()
 
-	if ((something).is_in_group('walls')):
-		var __sound_node_2 = get_node('wall_hit')
-		__sound_node_2.volume_db = 0
-		__sound_node_2.pitch_scale = 1
-		__sound_node_2.play()
-
-
-"
-version = 0
-
-[sub_resource type="Resource" id="Resource_2j063"]
-script = ExtResource("11_yafka")
-name = &"area2d_on_entered:something"
-arguments = {}
-
-[sub_resource type="Resource" id="Resource_ar2nl"]
-script = ExtResource("11_yafka")
-name = &"is_node_in_group"
-arguments = {
-"group": "balls",
-"node": SubResource("Resource_2j063")
-}
-
-[sub_resource type="Resource" id="Resource_53g7x"]
-script = ExtResource("11_yafka")
-name = &"get_node"
-arguments = {
-"path": NodePath("../SimpleScoring")
-}
-
-[sub_resource type="Resource" id="Resource_stgye"]
-script = ExtResource("4_qtggh")
-name = &"call_method_node"
-children = Array[ExtResource("4_qtggh")]([])
-arguments = {
-"method_name": "goal_left",
-"node": SubResource("Resource_53g7x")
-}
-
-[sub_resource type="Resource" id="Resource_p10a0"]
-script = ExtResource("4_qtggh")
-name = &"call_method_group"
-children = Array[ExtResource("4_qtggh")]([])
-arguments = {
-"group": "balls",
-"method_name": "reset"
-}
-
-[sub_resource type="Resource" id="Resource_3wwda"]
-script = ExtResource("4_qtggh")
-name = &"if"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_stgye"), SubResource("Resource_p10a0")])
-arguments = {
-"condition": SubResource("Resource_ar2nl")
-}
-
-[sub_resource type="Resource" id="Resource_w0w2g"]
-script = ExtResource("4_qtggh")
-name = &"area2d_on_entered"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_3wwda")])
-arguments = {}
-
-[sub_resource type="Resource" id="Resource_xwspv"]
-script = ExtResource("5_omlge")
-root = SubResource("Resource_w0w2g")
-canvas_position = Vector2(0, 25)
-
-[sub_resource type="Resource" id="Resource_4xylj"]
-script = ExtResource("7_uuuue")
-script_inherits = "Area2D"
-block_serialization_trees = Array[ExtResource("5_omlge")]([SubResource("Resource_xwspv")])
-variables = Array[ExtResource("9_lo3p1")]([])
-generated_script = "extends Area2D
-
-
-func _init():
-	body_entered.connect(_on_body_entered)
-
-func _on_body_entered(something: Node2D):
-
-	if ((something).is_in_group('balls')):
-		(get_node(\"../SimpleScoring\")).call('goal_left')
-		get_tree().call_group('balls', 'reset')
-
-"
-version = 0
-
-[sub_resource type="Resource" id="Resource_turid"]
-script = ExtResource("11_yafka")
-name = &"area2d_on_entered:something"
-arguments = {}
-
-[sub_resource type="Resource" id="Resource_d1w0q"]
-script = ExtResource("11_yafka")
-name = &"is_node_in_group"
-arguments = {
-"group": "balls",
-"node": SubResource("Resource_turid")
-}
-
-[sub_resource type="Resource" id="Resource_0c6ok"]
-script = ExtResource("11_yafka")
-name = &"get_node"
-arguments = {
-"path": NodePath("../SimpleScoring")
-}
-
-[sub_resource type="Resource" id="Resource_wwo85"]
-script = ExtResource("4_qtggh")
-name = &"call_method_node"
-children = Array[ExtResource("4_qtggh")]([])
-arguments = {
-"method_name": "goal_right",
-"node": SubResource("Resource_0c6ok")
-}
-
-[sub_resource type="Resource" id="Resource_tb1lq"]
-script = ExtResource("4_qtggh")
-name = &"call_method_group"
-children = Array[ExtResource("4_qtggh")]([])
-arguments = {
-"group": "balls",
-"method_name": "reset"
-}
-
-[sub_resource type="Resource" id="Resource_u8yle"]
-script = ExtResource("4_qtggh")
-name = &"if"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_wwo85"), SubResource("Resource_tb1lq")])
-arguments = {
-"condition": SubResource("Resource_d1w0q")
-}
-
-[sub_resource type="Resource" id="Resource_37m3y"]
-script = ExtResource("4_qtggh")
-name = &"area2d_on_entered"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_u8yle")])
-arguments = {}
-
-[sub_resource type="Resource" id="Resource_xxs51"]
-script = ExtResource("5_omlge")
-root = SubResource("Resource_37m3y")
-canvas_position = Vector2(50, 25)
-
-[sub_resource type="Resource" id="Resource_xoc8a"]
-script = ExtResource("7_uuuue")
-script_inherits = "Area2D"
-block_serialization_trees = Array[ExtResource("5_omlge")]([SubResource("Resource_xxs51")])
-variables = Array[ExtResource("9_lo3p1")]([])
-generated_script = "extends Area2D
-
-
-func _init():
-	body_entered.connect(_on_body_entered)
-
-func _on_body_entered(something: Node2D):
-
-	if ((something).is_in_group('balls')):
 		(get_node(\"../SimpleScoring\")).call('goal_right')
-		get_tree().call_group('balls', 'reset')
+		(get_node(\"../BallSpawner\")).call('spawn_ball')
 
 "
 version = 0
@@ -622,14 +558,15 @@ texture = ExtResource("4_ra7bh")
 script = ExtResource("3_6jaq8")
 block_script = SubResource("Resource_ysbi4")
 
-[node name="Ball" parent="." instance=ExtResource("9_xrqll")]
-modulate = Color(0.511, 0.362, 0.972, 1)
+[node name="BallSpawner" type="Node2D" parent="."]
 position = Vector2(960, 544)
-gravity_scale = 0.0
+script = ExtResource("10_40lyb")
+scenes = Array[PackedScene]([ExtResource("11_kyly2")])
+spawn_limit = 1
 
-[node name="BlockCode" type="Node" parent="Ball"]
+[node name="BlockCode" type="Node" parent="BallSpawner"]
 script = ExtResource("3_6jaq8")
-block_script = SubResource("Resource_6m2mk")
+block_script = SubResource("Resource_t0m8b")
 
 [node name="GoalAreaLeft" parent="." groups=["goal", "goal_left"] instance=ExtResource("12_nqmxu")]
 position = Vector2(-64, 544)

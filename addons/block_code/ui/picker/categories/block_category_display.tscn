@@ -28,5 +28,6 @@ theme_override_font_sizes/font_size = 18
 
 [node name="BlocksContainer" type="VBoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 14

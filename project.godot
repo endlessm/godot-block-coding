@@ -19,6 +19,12 @@ config/icon="res://icon.svg"
 
 enabled=PackedStringArray("res://addons/block_code/plugin.cfg", "res://addons/gut/plugin.cfg", "res://addons/plugin_refresher/plugin.cfg")
 
+[global_group]
+
+walls=""
+paddles=""
+balls=""
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
