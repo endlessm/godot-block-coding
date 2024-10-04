@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cjvxs6euc6xbm"]
+[gd_scene load_steps=12 format=3 uid="uid://cjvxs6euc6xbm"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.gd" id="1_rgmxn"]
 [ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_05gck"]
@@ -19,9 +19,16 @@ corner_radius_bottom_left = 40
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5hq7f"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fjquj"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7m75r"]
+bg_color = Color(1, 1, 1, 0.501961)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e7f0k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fjquj"]
 
 [node name="ParameterInput" type="MarginContainer"]
 anchors_preset = 15
@@ -95,7 +102,15 @@ visible = false
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 tooltip_text = "Parameter"
-theme_override_styles/normal = SubResource("StyleBoxEmpty_fjquj")
+theme_override_colors/font_hover_pressed_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_colors/font_hover_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_colors/font_pressed_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_colors/font_focus_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_colors/font_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_7m75r")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7m75r")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7m75r")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7m75r")
 action_mode = 1
 fit_to_longest_item = false
 
@@ -193,9 +208,14 @@ theme_override_constants/margin_left = 8
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_colors/font_hover_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_colors/font_pressed_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_colors/font_focus_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_colors/font_color = Color(0.117647, 0.117647, 0.117647, 1)
 theme_override_styles/focus = SubResource("StyleBoxEmpty_e7f0k")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6oowp")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_6oowp")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fjquj")
 action_mode = 1
 selected = 0
