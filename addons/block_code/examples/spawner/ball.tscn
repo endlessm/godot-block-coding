@@ -1,6 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://c7l70grmkauij"]
+[gd_scene load_steps=28 format=3 uid="uid://c7l70grmkauij"]
 
+[ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="2_cvurb"]
 [ext_resource type="Texture2D" uid="uid://bcgr5amsq3jfl" path="res://addons/block_code/examples/pong_game/assets/ball.png" id="2_xkrmm"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization_tree.gd" id="3_lwmpg"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization.gd" id="4_335r5"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/value_block_serialization.gd" id="5_delo5"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_script_serialization.gd" id="6_drrtj"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/variable_definition.gd" id="7_0cr2b"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_c3m63"]
 friction = 0.0
@@ -9,10 +15,176 @@ bounce = 1.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_sntrn"]
 radius = 64.0
 
+[sub_resource type="Resource" id="Resource_t1ip8"]
+script = ExtResource("4_335r5")
+name = &"load_sound"
+children = Array[ExtResource("4_335r5")]([])
+arguments = {
+"file_path": "res://addons/block_code/examples/pong_game/assets/paddle_hit.ogg",
+"name": "paddle_hit"
+}
+
+[sub_resource type="Resource" id="Resource_8s4i3"]
+script = ExtResource("4_335r5")
+name = &"load_sound"
+children = Array[ExtResource("4_335r5")]([])
+arguments = {
+"file_path": "res://addons/block_code/examples/pong_game/assets/wall_hit.ogg",
+"name": "wall_hit"
+}
+
+[sub_resource type="Resource" id="Resource_k3of4"]
+script = ExtResource("4_335r5")
+name = &"ready"
+children = Array[ExtResource("4_335r5")]([SubResource("Resource_t1ip8"), SubResource("Resource_8s4i3")])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_nccut"]
+script = ExtResource("3_lwmpg")
+root = SubResource("Resource_k3of4")
+canvas_position = Vector2(25, 0)
+
+[sub_resource type="Resource" id="Resource_3qkgh"]
+script = ExtResource("4_335r5")
+name = &"queue_free"
+children = Array[ExtResource("4_335r5")]([])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_eircl"]
+script = ExtResource("4_335r5")
+name = &"define_method"
+children = Array[ExtResource("4_335r5")]([SubResource("Resource_3qkgh")])
+arguments = {
+"method_name": &"remove"
+}
+
+[sub_resource type="Resource" id="Resource_jxywk"]
+script = ExtResource("3_lwmpg")
+root = SubResource("Resource_eircl")
+canvas_position = Vector2(25, 175)
+
+[sub_resource type="Resource" id="Resource_xvdpd"]
+script = ExtResource("5_delo5")
+name = &"rigidbody2d_on_entered:something"
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_l8h03"]
+script = ExtResource("5_delo5")
+name = &"is_node_in_group"
+arguments = {
+"group": "paddles",
+"node": SubResource("Resource_xvdpd")
+}
+
+[sub_resource type="Resource" id="Resource_l4aao"]
+script = ExtResource("4_335r5")
+name = &"play_sound"
+children = Array[ExtResource("4_335r5")]([])
+arguments = {
+"db": 0.0,
+"name": "paddle_hit",
+"pitch": 1.0
+}
+
+[sub_resource type="Resource" id="Resource_17su2"]
+script = ExtResource("4_335r5")
+name = &"if"
+children = Array[ExtResource("4_335r5")]([SubResource("Resource_l4aao")])
+arguments = {
+"condition": SubResource("Resource_l8h03")
+}
+
+[sub_resource type="Resource" id="Resource_cmyy4"]
+script = ExtResource("5_delo5")
+name = &"rigidbody2d_on_entered:something"
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_54mju"]
+script = ExtResource("5_delo5")
+name = &"is_node_in_group"
+arguments = {
+"group": "walls",
+"node": SubResource("Resource_cmyy4")
+}
+
+[sub_resource type="Resource" id="Resource_ow0od"]
+script = ExtResource("4_335r5")
+name = &"play_sound"
+children = Array[ExtResource("4_335r5")]([])
+arguments = {
+"db": 0.0,
+"name": "wall_hit",
+"pitch": 1.0
+}
+
+[sub_resource type="Resource" id="Resource_pjqkc"]
+script = ExtResource("4_335r5")
+name = &"if"
+children = Array[ExtResource("4_335r5")]([SubResource("Resource_ow0od")])
+arguments = {
+"condition": SubResource("Resource_54mju")
+}
+
+[sub_resource type="Resource" id="Resource_7w78m"]
+script = ExtResource("4_335r5")
+name = &"rigidbody2d_on_entered"
+children = Array[ExtResource("4_335r5")]([SubResource("Resource_17su2"), SubResource("Resource_pjqkc")])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_ouhuk"]
+script = ExtResource("3_lwmpg")
+root = SubResource("Resource_7w78m")
+canvas_position = Vector2(25, 300)
+
+[sub_resource type="Resource" id="Resource_vndc3"]
+script = ExtResource("6_drrtj")
+script_inherits = "RigidBody2D"
+block_serialization_trees = Array[ExtResource("3_lwmpg")]([SubResource("Resource_nccut"), SubResource("Resource_jxywk"), SubResource("Resource_ouhuk")])
+variables = Array[ExtResource("7_0cr2b")]([])
+generated_script = "extends RigidBody2D
+
+
+func _init():
+	body_entered.connect(_on_body_entered)
+
+func _ready():
+	var __sound_1 = AudioStreamPlayer.new()
+	__sound_1.name = 'paddle_hit'
+	__sound_1.set_stream(load('res://addons/block_code/examples/pong_game/assets/paddle_hit.ogg'))
+	add_child(__sound_1)
+
+	var __sound_2 = AudioStreamPlayer.new()
+	__sound_2.name = 'wall_hit'
+	__sound_2.set_stream(load('res://addons/block_code/examples/pong_game/assets/wall_hit.ogg'))
+	add_child(__sound_2)
+
+
+func remove():
+	queue_free()
+
+func _on_body_entered(something: Node2D):
+
+	if ((something).is_in_group('paddles')):
+		var __sound_node_1 = get_node('paddle_hit')
+		__sound_node_1.volume_db = 0
+		__sound_node_1.pitch_scale = 1
+		__sound_node_1.play()
+
+	if ((something).is_in_group('walls')):
+		var __sound_node_2 = get_node('wall_hit')
+		__sound_node_2.volume_db = 0
+		__sound_node_2.pitch_scale = 1
+		__sound_node_2.play()
+
+
+"
+version = 0
+
 [node name="Ball" type="RigidBody2D" groups=["balls"]]
 collision_layer = 2
 collision_mask = 15
 physics_material_override = SubResource("PhysicsMaterial_c3m63")
+gravity_scale = 0.0
 continuous_cd = 1
 contact_monitor = true
 max_contacts_reported = 1
@@ -27,3 +199,7 @@ shape = SubResource("CircleShape2D_sntrn")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 texture = ExtResource("2_xkrmm")
+
+[node name="BlockCode" type="Node" parent="."]
+script = ExtResource("2_cvurb")
+block_script = SubResource("Resource_vndc3")
