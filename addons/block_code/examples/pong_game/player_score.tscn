@@ -1,0 +1,51 @@
+[gd_scene load_steps=11 format=3 uid="uid://djmtbm15n2wqq"]
+
+[ext_resource type="Script" path="res://addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd" id="1_eafo0"]
+[ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="2_4mu48"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization_tree.gd" id="3_kpcgt"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization.gd" id="4_ph8ne"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_script_serialization.gd" id="6_k7up7"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/variable_definition.gd" id="7_x0rr3"]
+
+[sub_resource type="Resource" id="Resource_paaek"]
+script = ExtResource("4_ph8ne")
+name = &"simplescoring_change_score"
+children = Array[ExtResource("4_ph8ne")]([])
+arguments = {
+"score": 1
+}
+
+[sub_resource type="Resource" id="Resource_brrr0"]
+script = ExtResource("4_ph8ne")
+name = &"define_method"
+children = Array[ExtResource("4_ph8ne")]([SubResource("Resource_paaek")])
+arguments = {
+"method_name": &"goal"
+}
+
+[sub_resource type="Resource" id="Resource_ohja8"]
+script = ExtResource("3_kpcgt")
+root = SubResource("Resource_brrr0")
+canvas_position = Vector2(50, 50)
+
+[sub_resource type="Resource" id="Resource_l2yhu"]
+script = ExtResource("6_k7up7")
+script_inherits = "SimpleScoring"
+block_serialization_trees = Array[ExtResource("3_kpcgt")]([SubResource("Resource_ohja8")])
+variables = Array[ExtResource("7_x0rr3")]([])
+generated_script = "extends SimpleScoring
+
+
+func goal():
+	score += 1
+
+"
+version = 0
+
+[node name="PlayerScore" type="Node2D" groups=["hud"]]
+script = ExtResource("1_eafo0")
+score = null
+
+[node name="BlockCode" type="Node" parent="."]
+script = ExtResource("2_4mu48")
+block_script = SubResource("Resource_l2yhu")
