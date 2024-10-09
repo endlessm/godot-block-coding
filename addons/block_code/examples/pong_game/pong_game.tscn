@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://tf7b8c64ecc0"]
+[gd_scene load_steps=86 format=3 uid="uid://tf7b8c64ecc0"]
 
 [ext_resource type="PackedScene" uid="uid://cg8ibi18um3vg" path="res://addons/block_code/examples/pong_game/space.tscn" id="1_y56ac"]
 [ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="3_6jaq8"]
@@ -146,7 +146,7 @@ func _process(delta):
 "
 version = 0
 
-[sub_resource type="Resource" id="Resource_cu3t3"]
+[sub_resource type="Resource" id="Resource_6jqfj"]
 script = ExtResource("4_qtggh")
 name = &"load_sound"
 children = Array[ExtResource("4_qtggh")]([])
@@ -155,7 +155,7 @@ arguments = {
 "name": "paddle_hit"
 }
 
-[sub_resource type="Resource" id="Resource_edygh"]
+[sub_resource type="Resource" id="Resource_27m4u"]
 script = ExtResource("4_qtggh")
 name = &"load_sound"
 children = Array[ExtResource("4_qtggh")]([])
@@ -164,7 +164,7 @@ arguments = {
 "name": "wall_hit"
 }
 
-[sub_resource type="Resource" id="Resource_aonac"]
+[sub_resource type="Resource" id="Resource_avkfr"]
 script = ExtResource("4_qtggh")
 name = &"load_sound"
 children = Array[ExtResource("4_qtggh")]([])
@@ -173,67 +173,31 @@ arguments = {
 "name": "score_sound"
 }
 
-[sub_resource type="Resource" id="Resource_ktt3i"]
+[sub_resource type="Resource" id="Resource_l70er"]
 script = ExtResource("4_qtggh")
 name = &"ready"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_cu3t3"), SubResource("Resource_edygh"), SubResource("Resource_aonac")])
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_6jqfj"), SubResource("Resource_27m4u"), SubResource("Resource_avkfr")])
 arguments = {}
 
-[sub_resource type="Resource" id="Resource_m68k1"]
+[sub_resource type="Resource" id="Resource_w8omx"]
 script = ExtResource("5_omlge")
-root = SubResource("Resource_ktt3i")
+root = SubResource("Resource_l70er")
 canvas_position = Vector2(25, 0)
 
-[sub_resource type="Resource" id="Resource_gg8gb"]
-script = ExtResource("11_yafka")
-name = &"viewport_center"
-arguments = {}
-
-[sub_resource type="Resource" id="Resource_e8670"]
-script = ExtResource("4_qtggh")
-name = &"rigidbody2d_physics_position"
-children = Array[ExtResource("4_qtggh")]([])
-arguments = {
-"position": SubResource("Resource_gg8gb")
-}
-
-[sub_resource type="Resource" id="Resource_06t6x"]
-script = ExtResource("4_qtggh")
-name = &"play_sound"
-children = Array[ExtResource("4_qtggh")]([])
-arguments = {
-"db": 0.0,
-"name": "score_sound",
-"pitch": 1.0
-}
-
-[sub_resource type="Resource" id="Resource_ym15d"]
-script = ExtResource("4_qtggh")
-name = &"define_method"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_e8670"), SubResource("Resource_06t6x")])
-arguments = {
-"method_name": &"reset"
-}
-
-[sub_resource type="Resource" id="Resource_ibkru"]
-script = ExtResource("5_omlge")
-root = SubResource("Resource_ym15d")
-canvas_position = Vector2(25, 250)
-
-[sub_resource type="Resource" id="Resource_huint"]
+[sub_resource type="Resource" id="Resource_evnyh"]
 script = ExtResource("11_yafka")
 name = &"rigidbody2d_on_entered:something"
 arguments = {}
 
-[sub_resource type="Resource" id="Resource_ss0pf"]
+[sub_resource type="Resource" id="Resource_u6uv2"]
 script = ExtResource("11_yafka")
 name = &"is_node_in_group"
 arguments = {
 "group": "paddles",
-"node": SubResource("Resource_huint")
+"node": SubResource("Resource_evnyh")
 }
 
-[sub_resource type="Resource" id="Resource_x4ohp"]
+[sub_resource type="Resource" id="Resource_wiphk"]
 script = ExtResource("4_qtggh")
 name = &"play_sound"
 children = Array[ExtResource("4_qtggh")]([])
@@ -243,28 +207,28 @@ arguments = {
 "pitch": 1.0
 }
 
-[sub_resource type="Resource" id="Resource_0icvv"]
+[sub_resource type="Resource" id="Resource_nma3q"]
 script = ExtResource("4_qtggh")
 name = &"if"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_x4ohp")])
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_wiphk")])
 arguments = {
-"condition": SubResource("Resource_ss0pf")
+"condition": SubResource("Resource_u6uv2")
 }
 
-[sub_resource type="Resource" id="Resource_eanhn"]
+[sub_resource type="Resource" id="Resource_yt6ib"]
 script = ExtResource("11_yafka")
 name = &"rigidbody2d_on_entered:something"
 arguments = {}
 
-[sub_resource type="Resource" id="Resource_bhuca"]
+[sub_resource type="Resource" id="Resource_ywck6"]
 script = ExtResource("11_yafka")
 name = &"is_node_in_group"
 arguments = {
 "group": "walls",
-"node": SubResource("Resource_eanhn")
+"node": SubResource("Resource_yt6ib")
 }
 
-[sub_resource type="Resource" id="Resource_3l1pb"]
+[sub_resource type="Resource" id="Resource_ai74x"]
 script = ExtResource("4_qtggh")
 name = &"play_sound"
 children = Array[ExtResource("4_qtggh")]([])
@@ -274,29 +238,96 @@ arguments = {
 "pitch": 1.0
 }
 
-[sub_resource type="Resource" id="Resource_l6cf3"]
+[sub_resource type="Resource" id="Resource_rfg43"]
 script = ExtResource("4_qtggh")
 name = &"if"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_3l1pb")])
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_ai74x")])
 arguments = {
-"condition": SubResource("Resource_bhuca")
+"condition": SubResource("Resource_ywck6")
 }
 
-[sub_resource type="Resource" id="Resource_h2wbg"]
+[sub_resource type="Resource" id="Resource_0yy2j"]
 script = ExtResource("4_qtggh")
 name = &"rigidbody2d_on_entered"
-children = Array[ExtResource("4_qtggh")]([SubResource("Resource_0icvv"), SubResource("Resource_l6cf3")])
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_nma3q"), SubResource("Resource_rfg43")])
 arguments = {}
 
-[sub_resource type="Resource" id="Resource_wej53"]
+[sub_resource type="Resource" id="Resource_121qg"]
 script = ExtResource("5_omlge")
-root = SubResource("Resource_h2wbg")
+root = SubResource("Resource_0yy2j")
 canvas_position = Vector2(25, 450)
+
+[sub_resource type="Resource" id="Resource_iwf5j"]
+script = ExtResource("11_yafka")
+name = &"viewport_center"
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_ck8x6"]
+script = ExtResource("4_qtggh")
+name = &"rigidbody2d_physics_position"
+children = Array[ExtResource("4_qtggh")]([])
+arguments = {
+"position": SubResource("Resource_iwf5j")
+}
+
+[sub_resource type="Resource" id="Resource_pxfyd"]
+script = ExtResource("11_yafka")
+name = &"randf_range"
+arguments = {
+"from": 0.0,
+"to": 6.28
+}
+
+[sub_resource type="Resource" id="Resource_3p8ft"]
+script = ExtResource("11_yafka")
+name = &"from_angle"
+arguments = {
+"angle": SubResource("Resource_pxfyd")
+}
+
+[sub_resource type="Resource" id="Resource_fqd50"]
+script = ExtResource("11_yafka")
+name = &"vector_multiply"
+arguments = {
+"number": 600.0,
+"vector": SubResource("Resource_3p8ft")
+}
+
+[sub_resource type="Resource" id="Resource_wm52c"]
+script = ExtResource("4_qtggh")
+name = &"RigidBody2D_set_linear_velocity"
+children = Array[ExtResource("4_qtggh")]([])
+arguments = {
+"value": SubResource("Resource_fqd50")
+}
+
+[sub_resource type="Resource" id="Resource_jnqks"]
+script = ExtResource("4_qtggh")
+name = &"play_sound"
+children = Array[ExtResource("4_qtggh")]([])
+arguments = {
+"db": 0.0,
+"name": "score_sound",
+"pitch": 1.0
+}
+
+[sub_resource type="Resource" id="Resource_hy3qr"]
+script = ExtResource("4_qtggh")
+name = &"define_method"
+children = Array[ExtResource("4_qtggh")]([SubResource("Resource_ck8x6"), SubResource("Resource_wm52c"), SubResource("Resource_jnqks")])
+arguments = {
+"method_name": &"reset"
+}
+
+[sub_resource type="Resource" id="Resource_7gd06"]
+script = ExtResource("5_omlge")
+root = SubResource("Resource_hy3qr")
+canvas_position = Vector2(25, 225)
 
 [sub_resource type="Resource" id="Resource_6m2mk"]
 script = ExtResource("7_uuuue")
 script_inherits = "RigidBody2D"
-block_serialization_trees = Array[ExtResource("5_omlge")]([SubResource("Resource_m68k1"), SubResource("Resource_ibkru"), SubResource("Resource_wej53")])
+block_serialization_trees = Array[ExtResource("5_omlge")]([SubResource("Resource_w8omx"), SubResource("Resource_121qg"), SubResource("Resource_7gd06")])
 variables = Array[ExtResource("9_lo3p1")]([])
 generated_script = "extends RigidBody2D
 
@@ -321,19 +352,6 @@ func _ready():
 	add_child(__sound_3)
 
 
-func reset():
-	PhysicsServer2D.body_set_state(
-		get_rid(),
-		PhysicsServer2D.BODY_STATE_TRANSFORM,
-		Transform2D.IDENTITY.translated(((func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()))
-	)
-
-	var __sound_node_1 = get_node('score_sound')
-	__sound_node_1.volume_db = 0
-	__sound_node_1.pitch_scale = 1
-	__sound_node_1.play()
-
-
 func _on_body_entered(something: Node2D):
 
 	if ((something).is_in_group('paddles')):
@@ -347,6 +365,20 @@ func _on_body_entered(something: Node2D):
 		__sound_node_2.volume_db = 0
 		__sound_node_2.pitch_scale = 1
 		__sound_node_2.play()
+
+
+func reset():
+	PhysicsServer2D.body_set_state(
+		get_rid(),
+		PhysicsServer2D.BODY_STATE_TRANSFORM,
+		Transform2D.IDENTITY.translated(((func (): var transform: Transform2D = get_viewport_transform(); var scale: Vector2 = transform.get_scale(); return -transform.origin / scale + get_viewport_rect().size / scale / 2).call()))
+	)
+
+	linear_velocity = ((Vector2.from_angle((randf_range(0, 6.28)))) * 600)
+	var __sound_node_1 = get_node('score_sound')
+	__sound_node_1.volume_db = 0
+	__sound_node_1.pitch_scale = 1
+	__sound_node_1.play()
 
 
 "
