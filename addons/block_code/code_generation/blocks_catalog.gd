@@ -76,6 +76,14 @@ const _SETTINGS_FOR_CLASS_PROPERTY = {
 	{
 		"velocity": {"category": "Physics | Velocity"},
 	},
+	"CPUParticles2D":
+	{
+		"emitting":
+		{
+			"category": "Lifecycle | Spawn",
+			"has_change": false,
+		},
+	},
 }
 
 static var _catalog: Dictionary
