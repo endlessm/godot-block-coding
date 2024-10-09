@@ -7,10 +7,19 @@ const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_ca
 const OptionData = preload("res://addons/block_code/code_generation/option_data.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
 
+enum SpawnParent {
+	THIS,  ## Spawned scenes are children of this node
+	SCENE,  ## Spawned scenes are children of the scene
+}
 enum LimitBehavior { REPLACE, NO_SPAWN }
 
 ## The scenes to spawn. If more than one are provided, they will be picked randomly.
 @export var scenes: Array[PackedScene] = []
+
+## The node that the spawned scenes should be a child of. If you want to move
+## the SimpleSpawner without moving the scenes it has already spawned, choose
+## SCENE.
+@export var spawn_parent: SpawnParent
 
 ## The period of time in seconds to spawn another component. If zero, they won't spawn
 ## automatically. Use the "Spawn" block.
@@ -41,7 +50,7 @@ func get_custom_class():
 func _remove_oldest_spawned():
 	var spawned = _spawned_scenes.pop_front()
 	if is_instance_valid(spawned):
-		remove_child(spawned)
+		spawned.get_parent().remove_child(spawned)
 
 
 func _set_spawn_fraquency(new_frequency: float):
@@ -60,7 +69,7 @@ func spawn_start():
 		_timer.wait_time = spawn_frequency
 		_timer.timeout.connect(spawn_once)
 	_timer.start()
-	spawn_once()
+	spawn_once.call_deferred()
 
 
 func spawn_stop():
@@ -90,7 +99,12 @@ func spawn_once():
 	var scene: PackedScene = scenes.pick_random()
 	var spawned = scene.instantiate()
 	_spawned_scenes.push_back(spawned)
-	add_child(spawned)
+	match spawn_parent:
+		SpawnParent.THIS:
+			add_child(spawned)
+		SpawnParent.SCENE:
+			get_tree().current_scene.add_child(spawned)
+			spawned.position = global_position
 
 
 func do_set_spawn_frequency(new_frequency: float):
