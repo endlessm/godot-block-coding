@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bff7cwmpisihj"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_52jwf"]
+
+[resource]
+script = ExtResource("1_52jwf")
+name = &"vector_multiply"
+target_node_class = ""
+description = "Multiplies a vector with a number. Use this, for example, to get a point some distance away along an angle."
+category = "Math"
+type = 3
+variant_type = 5
+display_template = "multiply {vector: VECTOR2} by {number: FLOAT}"
+code_template = "{vector} * {number}"
+defaults = {
+"number": 1.0,
+"vector": Vector2(1, 1)
+}
+signal_name = ""
+scope = ""
