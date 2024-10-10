@@ -1,0 +1,19 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ccbrbp4lee3wt"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_wuold"]
+
+[resource]
+script = ExtResource("1_wuold")
+name = &"vector2_y"
+target_node_class = ""
+description = "Gives the y of a [i]Vector2[/i]"
+category = "Math"
+type = 3
+variant_type = 3
+display_template = "y of {vector2: VECTOR2}"
+code_template = "{vector2}.y"
+defaults = {
+"vector2": Vector2(0, 0)
+}
+signal_name = ""
+scope = ""
