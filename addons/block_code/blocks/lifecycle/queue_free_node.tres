@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://d31lkxkm5lww7"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_75fle"]
+
+[resource]
+script = ExtResource("1_75fle")
+name = &"queue_free_node"
+target_node_class = ""
+description = "Queues the given node to be deleted at the end of the current frame"
+category = "Lifecycle"
+type = 2
+variant_type = 0
+display_template = "remove {node: OBJECT}"
+code_template = "{node}.queue_free()"
+defaults = {}
+signal_name = ""
+scope = ""
