@@ -39,11 +39,6 @@ static func node_scene_path(node: Node, reference: Node, path_root: Node = null)
 	if node.unique_name_in_owner:
 		# With unique_name_in_owner, just use the % prefixed name.
 		return NodePath("%%%s" % node.name)
-	elif node.is_ancestor_of(reference):
-		# If the node is an ancestor of the reference, it would begin
-		# with an ugly ../. Use an absolute path where /root is the
-		# path_root node.
-		return NodePath("/root/%s" % path_root.get_path_to(node))
 	else:
 		# The node is reference or a child of it. Use a relative path.
 		return reference.get_path_to(node)
