@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ciqkywxdk4uht"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_bofov"]
+
+[resource]
+script = ExtResource("1_bofov")
+name = &"label_set_text"
+target_node_class = "Label"
+description = "Set the text for the label."
+category = "UI"
+type = 2
+variant_type = 0
+display_template = "set text to {text: STRING}"
+code_template = "text = {text}"
+defaults = {}
+signal_name = ""
+scope = ""
