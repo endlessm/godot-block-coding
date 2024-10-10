@@ -33,9 +33,14 @@ const ZOOM_FACTOR: float = 1.1
 @onready var _replace_block_code_button: Button = %ReplaceBlockCodeButton
 
 @onready var _open_scene_icon = _open_scene_button.get_theme_icon("Load", "EditorIcons")
+@onready var _icon_zoom_out := EditorInterface.get_editor_theme().get_icon("ZoomLess", "EditorIcons")
+@onready var _icon_zoom_in := EditorInterface.get_editor_theme().get_icon("ZoomMore", "EditorIcons")
 
 @onready var _mouse_override: Control = %MouseOverride
+@onready var _zoom_buttons: HBoxContainer = %ZoomButtons
+@onready var _zoom_out_button: Button = %ZoomOutButton
 @onready var _zoom_button: Button = %ZoomButton
+@onready var _zoom_in_button: Button = %ZoomInButton
 
 var _current_block_script: BlockScriptSerialization
 var _current_ast_list: ASTList
@@ -58,6 +63,10 @@ func _ready():
 
 	if not _open_scene_button.icon and not Util.node_is_part_of_edited_scene(self):
 		_open_scene_button.icon = _open_scene_icon
+	if not _zoom_out_button.icon:
+		_zoom_out_button.icon = _icon_zoom_out
+	if not _zoom_in_button.icon:
+		_zoom_in_button.icon = _icon_zoom_in
 
 
 func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
@@ -140,7 +149,7 @@ func _on_context_changed():
 		zoom = 1
 
 	_window.visible = false
-	_zoom_button.visible = false
+	_zoom_buttons.visible = false
 
 	_empty_box.visible = false
 	_selected_node_box.visible = false
@@ -152,7 +161,7 @@ func _on_context_changed():
 	if _context.block_script != null:
 		_load_block_script(_context.block_script)
 		_window.visible = true
-		_zoom_button.visible = true
+		_zoom_buttons.visible = true
 
 		if _context.block_script != _current_block_script:
 			reset_window_position()
@@ -437,6 +446,16 @@ func generate_script_from_current_window() -> String:
 	return ScriptGenerator.generate_script(_current_ast_list, _context.block_script)
 
 
+func _on_zoom_out_button_pressed() -> void:
+	if zoom > 0.2:
+		zoom /= ZOOM_FACTOR
+
+
 func _on_zoom_button_pressed():
 	zoom = 1.0
 	reset_window_position()
+
+
+func _on_zoom_in_button_pressed() -> void:
+	if zoom < 2:
+		zoom *= ZOOM_FACTOR

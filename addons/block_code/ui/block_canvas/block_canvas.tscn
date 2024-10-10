@@ -24,6 +24,7 @@ mouse_filter = 2
 
 [node name="Window" type="Control" parent="WindowContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 anchors_preset = 0
 offset_right = 1152.0
@@ -60,9 +61,31 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="ZoomButton" type="Button" parent="WindowContainer/Overlay/MarginContainer"]
+[node name="ZoomButtons" type="HBoxContainer" parent="WindowContainer/Overlay/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="ZoomOutButton" type="Button" parent="WindowContainer/Overlay/MarginContainer/ZoomButtons"]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.470588)
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+
+[node name="ZoomButton" type="Button" parent="WindowContainer/Overlay/MarginContainer/ZoomButtons"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.470588)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+text = "1.0x"
+
+[node name="ZoomInButton" type="Button" parent="WindowContainer/Overlay/MarginContainer/ZoomButtons"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.470588)
+custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 24
@@ -140,7 +163,9 @@ theme_type_variation = &"InspectorActionButton"
 text = "Override Block Code"
 icon = ExtResource("2_710vn")
 
-[connection signal="pressed" from="WindowContainer/Overlay/MarginContainer/ZoomButton" to="." method="_on_zoom_button_pressed"]
+[connection signal="pressed" from="WindowContainer/Overlay/MarginContainer/ZoomButtons/ZoomOutButton" to="." method="_on_zoom_out_button_pressed"]
+[connection signal="pressed" from="WindowContainer/Overlay/MarginContainer/ZoomButtons/ZoomButton" to="." method="_on_zoom_button_pressed"]
+[connection signal="pressed" from="WindowContainer/Overlay/MarginContainer/ZoomButtons/ZoomInButton" to="." method="_on_zoom_in_button_pressed"]
 [connection signal="pressed" from="SelectedNodeBox/ButtonsBox/AddBlockCodeButton" to="." method="_on_add_block_code_button_pressed"]
 [connection signal="pressed" from="SelectedNodeWithBlockCodeBox/ButtonsBox/OpenSceneButton" to="." method="_on_open_scene_button_pressed"]
 [connection signal="pressed" from="SelectedNodeWithBlockCodeBox/ButtonsBox/ReplaceBlockCodeButton" to="." method="_on_replace_block_code_button_pressed"]
