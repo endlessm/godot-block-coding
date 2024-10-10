@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=6 format=3 uid="uid://c5e1byehtxwc0"]
+[gd_resource type="Resource" load_steps=7 format=3 uid="uid://c5e1byehtxwc0"]
 
 [ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_emeuv"]
 [ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="1_xu43h"]
@@ -14,6 +14,11 @@ script = ExtResource("1_xu43h")
 selected = 0
 items = ["forward", "backwards"]
 
+[sub_resource type="Resource" id="Resource_17pec"]
+script = ExtResource("1_xu43h")
+selected = 0
+items = ["until done", "in the background"]
+
 [resource]
 script = ExtResource("1_emeuv")
 name = &"animationplayer_play"
@@ -22,15 +27,18 @@ description = "Play the animation."
 category = "Graphics | Animation"
 type = 2
 variant_type = 0
-display_template = "play {animation: STRING} {direction: NIL}"
+display_template = "play {animation: STRING} {direction: NIL} {wait_mode: NIL}"
 code_template = "if {direction} == \"forward\":
 	play({animation})
 else:
 	play_backwards({animation})
+if {wait_mode} == \"until done\":
+	await animation_finished
 "
 defaults = {
 "animation": SubResource("Resource_qpxn2"),
-"direction": SubResource("Resource_vnp2w")
+"direction": SubResource("Resource_vnp2w"),
+"wait_mode": SubResource("Resource_17pec")
 }
 signal_name = ""
 scope = ""
