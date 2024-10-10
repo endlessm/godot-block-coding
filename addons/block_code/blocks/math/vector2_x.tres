@@ -11,7 +11,7 @@ category = "Math"
 type = 3
 variant_type = 3
 display_template = "x of {vector2: VECTOR2}"
-code_template = "({vector2}).x"
+code_template = "{vector2}.x"
 defaults = {
 "vector2": Vector2(0, 0)
 }
