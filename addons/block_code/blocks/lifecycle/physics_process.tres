@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://3l8wefwlme2v"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_pmina"]
+
+[resource]
+script = ExtResource("1_pmina")
+name = &"physics_process"
+target_node_class = ""
+description = "Attached blocks will be executed before each physics step"
+category = "Lifecycle"
+type = 1
+variant_type = 0
+display_template = "every physics step"
+code_template = "func _physics_process(delta):"
+defaults = {}
+signal_name = ""
+scope = ""
+is_advanced = true
