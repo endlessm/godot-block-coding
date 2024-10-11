@@ -216,6 +216,7 @@ func _on_block_canvas_add_block_code():
 	undo_redo.create_action("Add block code for %s" % edited_node.name, UndoRedo.MERGE_DISABLE, edited_node)
 
 	undo_redo.add_do_method(edited_node, "add_child", block_code, true)
+	undo_redo.add_do_method(self, "_select_node", block_code)
 	undo_redo.add_do_property(block_code, "owner", scene_root)
 	undo_redo.add_do_property(_context, "block_code_node", block_code)
 	undo_redo.add_do_reference(block_code)
@@ -223,6 +224,11 @@ func _on_block_canvas_add_block_code():
 	undo_redo.add_undo_property(block_code, "owner", null)
 
 	undo_redo.commit_action()
+
+
+func _select_node(node: Node):
+	EditorInterface.get_selection().clear()
+	EditorInterface.get_selection().add_node(node)
 
 
 func _on_block_canvas_open_scene():
