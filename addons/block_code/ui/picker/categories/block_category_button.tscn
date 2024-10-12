@@ -1,57 +1,52 @@
-[gd_scene load_steps=7 format=3 uid="uid://bdtetj0gs45hv"]
+[gd_scene load_steps=8 format=3 uid="uid://bdtetj0gs45hv"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/picker/categories/block_category_button.gd" id="1_pxxnl"]
+[ext_resource type="Texture2D" uid="uid://g10ct6m5goi6" path="res://addons/block_code/ui/picker/categories/icons/file_broken.svg" id="2_0c1ke"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eogpc"]
-bg_color = Color(1, 0, 0, 1)
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ousiv"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fyk0j"]
-bg_color = Color(1, 1, 1, 0.196078)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ha83k"]
-bg_color = Color(1, 1, 1, 0.392157)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w0e7p"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dgecf"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fyk0j"]
+bg_color = Color(1, 1, 1, 0.196078)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ha83k"]
+bg_color = Color(1, 1, 1, 0.392157)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ousiv"]
+
 [node name="BlockCategoryButton" type="MarginContainer"]
-custom_minimum_size = Vector2(150, 0)
-offset_right = 148.0
-offset_bottom = 32.0
 script = ExtResource("1_pxxnl")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
-
-[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer"]
+[node name="Panel" type="Panel" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_eogpc")
-
-[node name="Label" type="Label" parent="HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Example"
+theme_override_styles/panel = SubResource("StyleBoxFlat_w0e7p")
 
 [node name="Button" type="Button" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Example"
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ousiv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dgecf")
 theme_override_styles/hover = SubResource("StyleBoxFlat_fyk0j")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ha83k")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dgecf")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ousiv")
+icon = ExtResource("2_0c1ke")
+icon_alignment = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
