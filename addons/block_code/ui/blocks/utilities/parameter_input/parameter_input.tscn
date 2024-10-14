@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://cjvxs6euc6xbm"]
+[gd_scene load_steps=13 format=3 uid="uid://cjvxs6euc6xbm"]
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.gd" id="1_rgmxn"]
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/background.gd" id="2_5dmag"]
 [ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_05gck"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="2_6esp3"]
 
@@ -40,6 +41,16 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_rgmxn")
+
+[node name="Background" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+script = ExtResource("2_5dmag")
+color = Color(1, 1, 1, 1)
+draw_outline = false
+show_top = false
+show_bottom = false
 
 [node name="Panel" type="Panel" parent="."]
 unique_name_in_owner = true

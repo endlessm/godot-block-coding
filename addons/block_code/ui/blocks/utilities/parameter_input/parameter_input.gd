@@ -21,6 +21,7 @@ var default_value: Variant
 
 var _drag_start: Vector2 = Vector2.INF
 
+@onready var _background := %Background
 @onready var _panel := %Panel
 @onready var snap_point := %SnapPoint
 @onready var _input_switcher := %InputSwitcher
@@ -216,6 +217,7 @@ func _update_visible_input():
 			TYPE_VECTOR2:
 				_switch_input(_vector2_input)
 			TYPE_BOOL:
+				_background.background_variant = _background.POINTED
 				_switch_input(_bool_input)
 			_:
 				_switch_input(_text_input)
@@ -224,7 +226,8 @@ func _update_visible_input():
 func _switch_input(node: Node):
 	for c in _input_switcher.get_children():
 		c.visible = c == node
-	_panel.visible = node not in [_option_input]
+	_panel.visible = not node == null and node not in [_option_input] and node not in [_bool_input]
+	_background.visible = node in [_bool_input]
 
 
 func _update_option_input(current_value: Variant = null):
