@@ -23,11 +23,11 @@ enum LimitBehavior { REPLACE, NO_SPAWN }
 
 ## The period of time in seconds to spawn another component. If zero, they won't spawn
 ## automatically. Use the "Spawn" block.
-@export_range(0.0, 10.0, 0.1, "or_greater") var spawn_frequency: float = 0.0:
+@export_range(0.0, 10.0, 0.1, "or_greater", "suffix:s") var spawn_frequency: float = 0.0:
 	set = _set_spawn_fraquency
 
 ## How many spawned scenes are allowed. If zero, there is no limit.
-@export_range(0, 50, 0.1, "or_greater") var spawn_limit: int = 50
+@export_range(0, 50, 0.1, "or_greater", "suffix:scenes") var spawn_limit: int = 50
 
 ## What happens when the limit is reached and a new spawn is attempted:
 ## - Replace: Remove the oldest spawned scene and spawn a new one.
