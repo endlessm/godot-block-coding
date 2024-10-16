@@ -35,6 +35,7 @@ const ZOOM_FACTOR: float = 1.1
 @onready var _open_scene_icon = _open_scene_button.get_theme_icon("Load", "EditorIcons")
 
 @onready var _mouse_override: Control = %MouseOverride
+@onready var _zoom_buttons: HBoxContainer = %ZoomButtons
 @onready var _zoom_button: Button = %ZoomButton
 
 var _current_block_script: BlockScriptSerialization
@@ -140,7 +141,7 @@ func _on_context_changed():
 		zoom = 1
 
 	_window.visible = false
-	_zoom_button.visible = false
+	_zoom_buttons.visible = false
 
 	_empty_box.visible = false
 	_selected_node_box.visible = false
@@ -152,7 +153,7 @@ func _on_context_changed():
 	if _context.block_script != null:
 		_load_block_script(_context.block_script)
 		_window.visible = true
-		_zoom_button.visible = true
+		_zoom_buttons.visible = true
 
 		if _context.block_script != _current_block_script:
 			reset_window_position()
@@ -437,6 +438,16 @@ func generate_script_from_current_window() -> String:
 	return ScriptGenerator.generate_script(_current_ast_list, _context.block_script)
 
 
+func _on_zoom_out_button_pressed() -> void:
+	if zoom > 0.2:
+		zoom /= ZOOM_FACTOR
+
+
 func _on_zoom_button_pressed():
 	zoom = 1.0
 	reset_window_position()
+
+
+func _on_zoom_in_button_pressed() -> void:
+	if zoom < 2:
+		zoom *= ZOOM_FACTOR
