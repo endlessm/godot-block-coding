@@ -22,6 +22,11 @@ const BUILTIN_CATEGORIES_PROPS: Dictionary = {
 		"color": Color("ec3b59"),
 		"order": 10,
 	},
+	"Lifecycle | Game":
+	{
+		"color": Color("ec3b59"),
+		"order": 12,
+	},
 	"Lifecycle | Spawn":
 	{
 		"color": Color("ec3b59"),
