@@ -12,7 +12,7 @@ var parent_block: Block
 
 ## Variant
 @export var variant: bool = 0:
-	set = _variant
+	set = _set_variant
 
 
 func _set_color(new_color):
@@ -21,7 +21,7 @@ func _set_color(new_color):
 	queue_redraw()
 
 
-func _variant(new_variant):
+func _set_variant(new_variant):
 	variant = new_variant
 	queue_redraw()
 

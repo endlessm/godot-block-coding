@@ -11,7 +11,7 @@ var parent_block: Block
 	set = _set_color
 
 @export var draw_outline: bool = true:
-	set = _draw_outline
+	set = _set_draw_outline
 
 @export var show_top: bool = true:
 	set = _set_show_top
@@ -27,9 +27,13 @@ var parent_block: Block
 @export var shift_bottom: float = 0.0:
 	set = _set_shift_bottom
 
+## Style of the top knob
+@export var top_variant: int = 0:
+	set = _set_top_variant
+
 ## |0|, \1/, /2/, <3>, >4>, v5v, v6^, \7y, /8y
 @export var variant: int = 0:
-	set = _variant
+	set = _set_variant
 
 
 func _set_color(new_color):
@@ -38,7 +42,7 @@ func _set_color(new_color):
 	queue_redraw()
 
 
-func _draw_outline(new_outline):
+func _set_draw_outline(new_outline):
 	draw_outline = new_outline
 	queue_redraw()
 
@@ -63,7 +67,12 @@ func _set_shift_bottom(new_shift_bottom):
 	queue_redraw()
 
 
-func _variant(new_variant):
+func _set_top_variant(new_variant):
+	top_variant = clamp(new_variant, 0, 1)
+	queue_redraw()
+
+
+func _set_variant(new_variant):
 	variant = clamp(new_variant, 0, 8)
 	queue_redraw()
 
@@ -75,14 +84,41 @@ func _ready():
 
 
 func _draw():
+	var top_left_align = Constants.KNOB_X + shift_top
+	var bottom_left_align = Constants.KNOB_X + shift_bottom
+	var top_knob = []
 	var fill_polygon: PackedVector2Array
 	fill_polygon.append(Vector2(0.0, 0.0))
 
 	if show_top:
-		fill_polygon.append(Vector2(Constants.KNOB_X + shift_top, 0.0))
-		fill_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_top, Constants.KNOB_H))
-		fill_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_top, Constants.KNOB_H))
-		fill_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_top, 0.0))
+		if top_variant == 1:
+			top_knob.append_array(
+				[
+					Vector2(0, 0),
+					Vector2(5, -4.012612),
+					Vector2(10, -7.240165),
+					Vector2(15, -9.822201),
+					Vector2(20, -11.84718),
+					Vector2(25, -13.37339),
+					Vector2(30, -14.43944),
+					Vector2(35, -15.06994),
+					Vector2(40, -15.27864),
+					Vector2(45, -15.06994),
+					Vector2(50, -14.43944),
+					Vector2(55, -13.37339),
+					Vector2(60, -11.84718),
+					Vector2(65, -9.822201),
+					Vector2(70, -7.240165),
+					Vector2(75, -4.012612),
+					Vector2(80, 0)
+				]
+			)
+		else:
+			top_knob.append(Vector2(top_left_align, 0.0))
+			top_knob.append(Vector2(top_left_align + Constants.KNOB_Z, Constants.KNOB_H))
+			top_knob.append(Vector2(top_left_align + Constants.KNOB_Z + Constants.KNOB_W, Constants.KNOB_H))
+			top_knob.append(Vector2(top_left_align + Constants.KNOB_Z * 2 + Constants.KNOB_W, 0.0))
+		fill_polygon.append_array(top_knob)
 
 	# Right side
 	if variant > 0:
@@ -107,10 +143,10 @@ func _draw():
 		fill_polygon.append(Vector2(size.x, size.y))
 
 	if show_bottom:
-		fill_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_bottom, size.y))
-		fill_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_bottom, size.y + Constants.KNOB_H))
-		fill_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_bottom, size.y + Constants.KNOB_H))
-		fill_polygon.append(Vector2(Constants.KNOB_X + shift_bottom, size.y))
+		fill_polygon.append(Vector2(bottom_left_align + Constants.KNOB_Z * 2 + Constants.KNOB_W, size.y))
+		fill_polygon.append(Vector2(bottom_left_align + Constants.KNOB_Z + Constants.KNOB_W, size.y + Constants.KNOB_H))
+		fill_polygon.append(Vector2(bottom_left_align + Constants.KNOB_Z, size.y + Constants.KNOB_H))
+		fill_polygon.append(Vector2(bottom_left_align, size.y))
 
 	# Left side
 	if variant > 0:
@@ -153,10 +189,7 @@ func _draw():
 			stroke_polygon.append(Vector2(shift_top - (0.0 if not shift_top > 0 else outline_middle), 0.0))
 
 		if show_top:
-			stroke_polygon.append(Vector2(Constants.KNOB_X + shift_top, 0.0))
-			stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_top, Constants.KNOB_H))
-			stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_top, Constants.KNOB_H))
-			stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_top, 0.0))
+			stroke_polygon.append_array(top_knob)
 
 		# Right line
 		if variant > 0:
@@ -181,10 +214,10 @@ func _draw():
 			stroke_polygon.append(Vector2(size.x, size.y))
 
 		if show_bottom:
-			stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z * 2 + Constants.KNOB_W + shift_bottom, size.y))
-			stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_bottom, size.y + Constants.KNOB_H))
-			stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_bottom, size.y + Constants.KNOB_H))
-			stroke_polygon.append(Vector2(Constants.KNOB_X + shift_bottom, size.y))
+			stroke_polygon.append(Vector2(bottom_left_align + Constants.KNOB_Z * 2 + Constants.KNOB_W, size.y))
+			stroke_polygon.append(Vector2(bottom_left_align + Constants.KNOB_Z + Constants.KNOB_W, size.y + Constants.KNOB_H))
+			stroke_polygon.append(Vector2(bottom_left_align + Constants.KNOB_Z, size.y + Constants.KNOB_H))
+			stroke_polygon.append(Vector2(bottom_left_align, size.y))
 
 		# Left line
 		if variant > 0:
