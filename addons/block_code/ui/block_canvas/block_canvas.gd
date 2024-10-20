@@ -98,7 +98,7 @@ func _on_context_changed():
 
 	if Engine.is_editor_hint():
 		edited_node = EditorInterface.get_inspector().get_edited_object() as Node
-
+		
 	if _context.block_script != _current_block_script:
 		_window.position = Vector2(0, 0)
 		zoom = 1

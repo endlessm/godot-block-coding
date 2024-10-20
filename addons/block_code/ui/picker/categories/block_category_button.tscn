@@ -9,7 +9,7 @@ corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ousiv"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dgecf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fyk0j"]
 bg_color = Color(1, 1, 1, 0.196078)
@@ -17,7 +17,7 @@ bg_color = Color(1, 1, 1, 0.196078)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ha83k"]
 bg_color = Color(1, 1, 1, 0.392157)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dgecf"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ousiv"]
 
 [node name="BlockCategoryButton" type="MarginContainer"]
 custom_minimum_size = Vector2(150, 0)
@@ -49,9 +49,9 @@ text = "Example"
 [node name="Button" type="Button" parent="."]
 layout_mode = 2
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ousiv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dgecf")
 theme_override_styles/hover = SubResource("StyleBoxFlat_fyk0j")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ha83k")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dgecf")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ousiv")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

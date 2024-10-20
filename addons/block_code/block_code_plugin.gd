@@ -174,6 +174,9 @@ static func is_block_code_editable(block_code: BlockCode) -> bool:
 	if not block_code:
 		return false
 
+	if not Engine.is_editor_hint():
+		return true
+
 	# A BlockCode node can be edited if it belongs to the edited scene, or it
 	# is an editable instance.
 

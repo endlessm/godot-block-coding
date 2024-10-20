@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d2sgdkbau3tfv"]
+[gd_scene load_steps=13 format=3 uid="uid://d2sgdkbau3tfv"]
 
 [ext_resource type="PackedScene" uid="uid://bq37yla8ya707" path="res://addons/block_code/ui/main_panel.tscn" id="1_kvne0"]
 [ext_resource type="Script" path="res://block_code_demo.gd" id="1_obq7i"]
@@ -9,23 +9,37 @@
 [ext_resource type="Script" path="res://addons/block_code/serialization/block_script_serialization.gd" id="5_bnd5w"]
 [ext_resource type="Script" path="res://addons/block_code/code_generation/variable_definition.gd" id="6_h8s2d"]
 
-[sub_resource type="Resource" id="Resource_oalom"]
+[sub_resource type="Resource" id="Resource_lqg8c"]
+script = ExtResource("4_1yrvj")
+name = &"print"
+children = Array[ExtResource("4_1yrvj")]([])
+arguments = {
+"text": "ffsdfsdfsdfsdf"
+}
+
+[sub_resource type="Resource" id="Resource_1jtnx"]
 script = ExtResource("4_1yrvj")
 name = &"ready"
-children = Array[ExtResource("4_1yrvj")]([])
+children = Array[ExtResource("4_1yrvj")]([SubResource("Resource_lqg8c")])
 arguments = {}
 
-[sub_resource type="Resource" id="Resource_8sqy5"]
+[sub_resource type="Resource" id="Resource_l46eq"]
 script = ExtResource("3_73e6f")
-root = SubResource("Resource_oalom")
-canvas_position = Vector2(54, 47)
+root = SubResource("Resource_1jtnx")
+canvas_position = Vector2(100, 50)
 
 [sub_resource type="Resource" id="Resource_ho2y6"]
 script = ExtResource("5_bnd5w")
 script_inherits = "Sprite2D"
-block_serialization_trees = Array[ExtResource("3_73e6f")]([SubResource("Resource_8sqy5")])
+block_serialization_trees = Array[ExtResource("3_73e6f")]([SubResource("Resource_l46eq")])
 variables = Array[ExtResource("6_h8s2d")]([])
-generated_script = "extends Sprite2D"
+generated_script = "extends Sprite2D
+
+
+func _ready():
+	print('ffsdfsdfsdfsdf')
+
+"
 version = 0
 
 [node name="BlockCodeDemo" type="Control"]
@@ -65,4 +79,5 @@ script = ExtResource("2_x7fcc")
 block_script = SubResource("Resource_ho2y6")
 
 [node name="MainPanel" parent="VSplitContainer" instance=ExtResource("1_kvne0")]
+unique_name_in_owner = true
 layout_mode = 2
