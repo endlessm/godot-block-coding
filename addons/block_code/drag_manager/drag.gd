@@ -194,7 +194,7 @@ func _update_preview():
 		_preview_block = Background.new()
 
 		_preview_block.color = Color(1, 1, 1, 0.5)
-		_preview_block.custom_minimum_size = _block.get_global_rect().size
+		_preview_block.custom_minimum_size = _block.get_global_rect().size / scale
 		_preview_block.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		_preview_block.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 
