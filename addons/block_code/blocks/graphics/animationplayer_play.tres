@@ -43,3 +43,4 @@ defaults = {
 signal_name = ""
 scope = ""
 extension_script = ExtResource("2_7ymgi")
+hidden = false

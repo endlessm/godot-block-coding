@@ -25,3 +25,4 @@ defaults = {
 signal_name = ""
 scope = ""
 extension_script = ExtResource("2_h11b7")
+hidden = false

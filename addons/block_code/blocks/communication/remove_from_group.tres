@@ -25,3 +25,4 @@ defaults = {
 signal_name = ""
 scope = ""
 extension_script = ExtResource("1_i50fw")
+hidden = false

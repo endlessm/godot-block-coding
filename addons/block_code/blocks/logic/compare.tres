@@ -25,3 +25,4 @@ defaults = {
 }
 signal_name = ""
 scope = ""
+hidden = false
