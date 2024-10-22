@@ -12,6 +12,9 @@ static var block_code_button: Button
 const BlockInspectorPlugin := preload("res://addons/block_code/inspector_plugin/block_script_inspector.gd")
 var block_inspector_plugin: BlockInspectorPlugin
 
+const BlockTranslationParserPlugin := preload("res://addons/block_code/translation/parser.gd")
+var _tx_parser_plugin: BlockTranslationParserPlugin
+
 var editor_inspector: EditorInspector
 
 var _selected_block_code: BlockCode
@@ -41,6 +44,10 @@ func _enter_tree():
 	block_inspector_plugin = BlockInspectorPlugin.new()
 	add_inspector_plugin(block_inspector_plugin)
 
+	if not _tx_parser_plugin:
+		_tx_parser_plugin = BlockTranslationParserPlugin.new()
+	add_translation_parser_plugin(_tx_parser_plugin)
+
 	# Remove unwanted class nodes from create node
 	old_feature_profile = EditorInterface.get_current_feature_profile()
 
@@ -69,6 +76,7 @@ func script_window_requested(script: String):
 
 
 func _exit_tree():
+	remove_translation_parser_plugin(_tx_parser_plugin)
 	remove_inspector_plugin(block_inspector_plugin)
 
 	if block_code_button:
