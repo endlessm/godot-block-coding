@@ -30,6 +30,11 @@ const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{(?<in_paramete
 
 @export var extension_script: GDScript
 
+## If true, do not show this block in the picker. This allows a block
+## definition to be kept for backwards-compatibility with existing block
+## programs, but not available for use in new programs.
+@export var hidden: bool = false
+
 static var _display_template_regex := RegEx.create_from_string(FORMAT_STRING_PATTERN)
 
 

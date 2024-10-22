@@ -73,7 +73,7 @@ func _update_block_components():
 		block_category_display.hide()
 
 	for category in block_categories:
-		var block_definitions := _context.block_script.get_blocks_in_category(category)
+		var block_definitions = _context.block_script.get_blocks_in_category(category).filter(func(block): return not block.hidden)
 		var order_override = CATEGORY_ORDER_OVERRIDE.get(category.name)
 		if order_override:
 			block_definitions.sort_custom(_sort_blocks_by_list_order.bind(order_override))
