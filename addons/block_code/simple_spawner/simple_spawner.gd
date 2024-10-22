@@ -23,8 +23,8 @@ enum LimitBehavior { REPLACE, NO_SPAWN }
 
 ## The period of time in seconds to spawn another component. If zero, they won't spawn
 ## automatically. Use the "Spawn" block.
-@export_range(0.0, 10.0, 0.1, "or_greater", "suffix:s") var spawn_frequency: float = 0.0:
-	set = _set_spawn_fraquency
+@export_range(0.0, 10.0, 0.1, "or_greater", "suffix:s") var spawn_period: float = 0.0:
+	set = _set_spawn_period
 
 ## How many spawned scenes are allowed. If zero, there is no limit.
 @export_range(0, 50, 0.1, "or_greater", "suffix:scenes") var spawn_limit: int = 50
@@ -33,6 +33,15 @@ enum LimitBehavior { REPLACE, NO_SPAWN }
 ## - Replace: Remove the oldest spawned scene and spawn a new one.
 ## - No Spawn: No spawn happens until any spawned scene is removed by other means.
 @export var limit_behavior: LimitBehavior
+
+## Old name for [member spawn_period].
+##
+## @deprecated: Use [member spawn_period] instead
+@export_storage var spawn_frequency: float:
+	get:
+		return spawn_period
+	set(value):
+		spawn_period = value
 
 var _timer: Timer
 var _spawned_scenes: Array[Node]
@@ -53,20 +62,20 @@ func _remove_oldest_spawned():
 		spawned.get_parent().remove_child(spawned)
 
 
-func _set_spawn_fraquency(new_frequency: float):
-	spawn_frequency = new_frequency
+func _set_spawn_period(new_period: float):
+	spawn_period = new_period
 	if not _timer or not is_instance_valid(_timer):
 		return
-	_timer.wait_time = spawn_frequency
+	_timer.wait_time = spawn_period
 
 
 func spawn_start():
-	if spawn_frequency == 0.0:
+	if spawn_period == 0.0:
 		return
 	if not _timer or not is_instance_valid(_timer):
 		_timer = Timer.new()
 		add_child(_timer)
-		_timer.wait_time = spawn_frequency
+		_timer.wait_time = spawn_period
 		_timer.timeout.connect(spawn_once)
 	_timer.start()
 	spawn_once.call_deferred()
@@ -107,8 +116,9 @@ func spawn_once():
 			spawned.position = global_position
 
 
+## @deprecated: Set the [member spawn_period] property instead
 func do_set_spawn_frequency(new_frequency: float):
-	_set_spawn_fraquency(new_frequency)
+	spawn_period = new_frequency
 
 
 static func setup_custom_blocks():
@@ -159,6 +169,7 @@ static func setup_custom_blocks():
 	block_definition.type = Types.BlockType.STATEMENT
 	block_definition.display_template = "set spawn frequency to {new_frequency: FLOAT}"
 	block_definition.code_template = "do_set_spawn_frequency({new_frequency})"
+	block_definition.hidden = true
 	block_list.append(block_definition)
 
 	block_definition = BlockDefinition.new()
@@ -169,6 +180,26 @@ static func setup_custom_blocks():
 	block_definition.variant_type = TYPE_FLOAT
 	block_definition.display_template = "spawn frequency"
 	block_definition.code_template = "spawn_frequency"
+	block_definition.hidden = true
+	block_list.append(block_definition)
+
+	block_definition = BlockDefinition.new()
+	block_definition.name = &"simplespawner_set_spawn_period"
+	block_definition.target_node_class = _class_name
+	block_definition.category = "Lifecycle | Spawn"
+	block_definition.type = Types.BlockType.STATEMENT
+	block_definition.display_template = "set spawn period to {new_period: FLOAT}"
+	block_definition.code_template = "spawn_period = {new_period}"
+	block_list.append(block_definition)
+
+	block_definition = BlockDefinition.new()
+	block_definition.name = &"simplespawner_get_spawn_period"
+	block_definition.target_node_class = _class_name
+	block_definition.category = "Lifecycle | Spawn"
+	block_definition.type = Types.BlockType.VALUE
+	block_definition.variant_type = TYPE_FLOAT
+	block_definition.display_template = "spawn period"
+	block_definition.code_template = "spawn_period"
 	block_list.append(block_definition)
 
 	BlocksCatalog.add_custom_blocks(_class_name, block_list, [], {})
