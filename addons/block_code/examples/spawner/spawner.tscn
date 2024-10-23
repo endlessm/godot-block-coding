@@ -37,7 +37,7 @@ arguments = {
 
 [sub_resource type="Resource" id="Resource_uv0fo"]
 script = ExtResource("7_cykhe")
-name = &"simplespawner_get_spawn_frequency"
+name = &"simplespawner_get_spawn_period"
 arguments = {}
 
 [sub_resource type="Resource" id="Resource_l45hk"]
@@ -50,10 +50,10 @@ arguments = {
 
 [sub_resource type="Resource" id="Resource_6g0ng"]
 script = ExtResource("6_dv2kl")
-name = &"simplespawner_set_spawn_frequency"
+name = &"simplespawner_set_spawn_period"
 children = Array[ExtResource("6_dv2kl")]([])
 arguments = {
-"new_frequency": SubResource("Resource_l45hk")
+"new_period": SubResource("Resource_l45hk")
 }
 
 [sub_resource type="Resource" id="Resource_ke4bk"]
@@ -74,7 +74,7 @@ arguments = {
 
 [sub_resource type="Resource" id="Resource_ih8lj"]
 script = ExtResource("7_cykhe")
-name = &"simplespawner_get_spawn_frequency"
+name = &"simplespawner_get_spawn_period"
 arguments = {}
 
 [sub_resource type="Resource" id="Resource_rfxul"]
@@ -87,10 +87,10 @@ arguments = {
 
 [sub_resource type="Resource" id="Resource_2rqfa"]
 script = ExtResource("6_dv2kl")
-name = &"simplespawner_set_spawn_frequency"
+name = &"simplespawner_set_spawn_period"
 children = Array[ExtResource("6_dv2kl")]([])
 arguments = {
-"new_frequency": SubResource("Resource_rfxul")
+"new_period": SubResource("Resource_rfxul")
 }
 
 [sub_resource type="Resource" id="Resource_movu5"]
@@ -194,9 +194,9 @@ func _ready():
 
 func _process(delta):
 	if (Input.is_action_just_pressed('ui_right')):
-		do_set_spawn_frequency(((spawn_frequency) - 0.1))
+		spawn_period = ((spawn_period) - 0.1)
 	elif (Input.is_action_just_pressed('ui_left')):
-		do_set_spawn_frequency(((spawn_frequency) + 0.1))
+		spawn_period = ((spawn_period) + 0.1)
 	elif (Input.is_action_just_pressed('ui_up')):
 		if (is_spawning()):
 			spawn_stop()
@@ -216,7 +216,7 @@ version = 0
 position = Vector2(103, 128)
 script = ExtResource("1_g2l2s")
 scenes = Array[PackedScene]([ExtResource("2_d0h86"), ExtResource("3_tt12o")])
-spawn_frequency = 0.6
+spawn_period = 0.6
 spawn_limit = 5
 
 [node name="BlockCode" type="Node" parent="SimpleSpawner"]
