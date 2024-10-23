@@ -49,7 +49,7 @@ layout_mode = 2
 [node name="VBox" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
 
-[node name="Code" type="TextEdit" parent="PanelContainer/VBox"]
+[node name="Code" type="CodeEdit" parent="PanelContainer/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
