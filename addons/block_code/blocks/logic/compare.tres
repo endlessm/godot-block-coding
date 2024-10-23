@@ -11,6 +11,7 @@ items = ["==", ">", "<", ">=", "<=", "!="]
 [resource]
 script = ExtResource("1_wp40r")
 name = &"compare"
+aliases = Array[StringName]([])
 target_node_class = ""
 description = ""
 category = "Logic | Comparison"

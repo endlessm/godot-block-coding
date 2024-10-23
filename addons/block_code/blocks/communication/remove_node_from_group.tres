@@ -12,6 +12,7 @@ items = []
 [resource]
 script = ExtResource("1_pec24")
 name = &"remove_node_from_group"
+aliases = Array[StringName]([])
 target_node_class = ""
 description = "Remove the node from the group"
 category = "Communication | Groups"

@@ -12,6 +12,7 @@ items = []
 [resource]
 script = ExtResource("1_tjyq5")
 name = &"is_in_group"
+aliases = Array[StringName]([])
 target_node_class = ""
 description = "Is this node in the group"
 category = "Communication | Groups"

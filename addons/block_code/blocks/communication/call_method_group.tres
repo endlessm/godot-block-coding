@@ -12,6 +12,7 @@ items = []
 [resource]
 script = ExtResource("1_mlm68")
 name = &"call_method_group"
+aliases = Array[StringName]([])
 target_node_class = ""
 description = "Calls the method/function on each member of the given group"
 category = "Communication | Methods"

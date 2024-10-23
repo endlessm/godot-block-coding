@@ -12,6 +12,7 @@ items = ["pressed", "just_pressed", "just_released"]
 [resource]
 script = ExtResource("1_rprh7")
 name = &"is_input_actioned"
+aliases = Array[StringName]([])
 target_node_class = ""
 description = "True if the specified input action has been pressed or released."
 category = "Input"

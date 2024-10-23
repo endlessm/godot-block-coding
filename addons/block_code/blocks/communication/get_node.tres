@@ -12,6 +12,7 @@ items = []
 [resource]
 script = ExtResource("1_d60g7")
 name = &"get_node"
+aliases = Array[StringName]([])
 target_node_class = ""
 description = "Get the node at the given path"
 category = "Communication | Nodes"

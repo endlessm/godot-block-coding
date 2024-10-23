@@ -22,6 +22,7 @@ items = ["until done", "in the background"]
 [resource]
 script = ExtResource("1_emeuv")
 name = &"animationplayer_play"
+aliases = Array[StringName]([])
 target_node_class = "AnimationPlayer"
 description = "Play the animation."
 category = "Graphics | Animation"

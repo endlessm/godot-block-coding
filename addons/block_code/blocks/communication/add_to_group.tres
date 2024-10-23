@@ -12,6 +12,7 @@ items = []
 [resource]
 script = ExtResource("1_bcm71")
 name = &"add_to_group"
+aliases = Array[StringName]([])
 target_node_class = ""
 description = "Add this node into the group"
 category = "Communication | Groups"
