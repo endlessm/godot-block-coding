@@ -3,7 +3,7 @@ extends Window
 
 var script_content: String = ""
 
-@onready var script_label: TextEdit = %Code
+@onready var script_label: CodeEdit = %Code
 
 
 func _ready():
