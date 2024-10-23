@@ -18,8 +18,16 @@ func _apply_editor_syntax_highlighter():
 			break
 
 
+## Undoes the effect of the CodeEdit being read-only
+func _remove_font_color_alpha_clamp():
+	var font_readonly_color = script_label.get_theme_color("font_readonly_color")
+	font_readonly_color.a = 1
+	script_label.add_theme_color_override("font_readonly_color", font_readonly_color)
+
+
 func _ready():
 	_apply_editor_syntax_highlighter()
+	_remove_font_color_alpha_clamp()
 	script_label.text = script_content.replace("\t", "    ")
 
 
