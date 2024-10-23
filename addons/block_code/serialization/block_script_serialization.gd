@@ -101,7 +101,7 @@ func get_block_definition(block_name: String) -> BlockDefinition:
 
 func _get_base_block_definition(block_name: String) -> BlockDefinition:
 	for block_definition in _available_blocks:
-		if block_definition.name == block_name:
+		if block_definition.name == block_name or block_name in block_definition.aliases:
 			return block_definition
 	return null
 

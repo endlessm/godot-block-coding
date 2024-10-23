@@ -6,6 +6,7 @@ const Types = preload("res://addons/block_code/types/types.gd")
 const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{(?<in_parameter>[^}]+)\\}|(?<label>[^\\{\\[]+)"
 
 @export var name: StringName
+@export var aliases: Array[StringName]
 
 ## The target node. Leaving this empty the block is considered a general block
 ## (for any node).

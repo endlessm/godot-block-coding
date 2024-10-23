@@ -87,13 +87,19 @@ const _SETTINGS_FOR_CLASS_PROPERTY = {
 }
 
 static var _catalog: Dictionary
+static var _aliases: Dictionary
 
+
+static func _add_to_catalog(block_definition: BlockDefinition):
+	_catalog[block_definition.name] = block_definition
+	for alias in block_definition.aliases:
+		_aliases[alias] = block_definition
 
 static func _setup_definitions_from_files():
 	var definition_files = Util.get_files_in_dir_recursive(_BLOCKS_PATH, "*.tres")
 	for file in definition_files:
 		var block_definition: BlockDefinition = load(file)
-		_catalog[block_definition.name] = block_definition
+		_add_to_catalog(block_definition)
 		var target = block_definition.target_node_class
 		if not target:
 			continue
@@ -123,7 +129,7 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 					{"value": block_settings.get("default_set", _FALLBACK_SET_FOR_TYPE[property.type])},
 				)
 			)
-			_catalog[block_definition.name] = block_definition
+			_add_to_catalog(block_definition)
 
 		# Changer
 		if block_settings.get("has_change", true):
@@ -141,7 +147,7 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 					{"value": block_settings.get("default_change", _FALLBACK_CHANGE_FOR_TYPE[property.type])},
 				)
 			)
-			_catalog[block_definition.name] = block_definition
+			_add_to_catalog(block_definition)
 
 		# Getter
 		block_definition = (
@@ -157,7 +163,7 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 				"%s" % property.name,
 			)
 		)
-		_catalog[block_definition.name] = block_definition
+		_add_to_catalog(block_definition)
 
 
 static func _setup_properties_for_class():
@@ -172,16 +178,17 @@ static func setup():
 		return
 
 	_catalog = {}
+	_aliases = {}
 	_setup_definitions_from_files()
 	_setup_properties_for_class()
 
 
 static func get_block(block_name: StringName):
-	return _catalog.get(block_name)
+	return _catalog.get(block_name) or _aliases.get(block_name)
 
 
 static func has_block(block_name: StringName):
-	return block_name in _catalog
+	return block_name in _catalog or block_name in _aliases
 
 
 static func _get_blocks_by_class(_class_name: String) -> Array[BlockDefinition]:
@@ -246,6 +253,8 @@ static func add_custom_blocks(
 
 	for block_definition in block_definitions:
 		_catalog[block_definition.name] = block_definition
+		for alias in block_definition.aliases:
+			_catalog[alias] = block_definition
 
 	_add_property_definitions(_class_name, property_list, property_settings)
 
