@@ -4,6 +4,7 @@
 
 [sub_resource type="SystemFont" id="SystemFont_r6ct2"]
 font_names = PackedStringArray("DejaVu Sans Mono")
+subpixel_positioning = 0
 
 [sub_resource type="CodeHighlighter" id="CodeHighlighter_yvmnf"]
 number_color = Color(0.498039, 0.760784, 0.686275, 1)
@@ -76,7 +77,6 @@ theme_override_constants/margin_bottom = 35
 
 [node name="Code" type="TextEdit" parent="Margin/VBox/ColorRect/Scroll/Margin"]
 layout_mode = 2
-theme_override_colors/background_color = Color(0.144063, 0.144063, 0.144062, 1)
 theme_override_fonts/font = SubResource("SystemFont_r6ct2")
 editable = false
 syntax_highlighter = SubResource("CodeHighlighter_yvmnf")
