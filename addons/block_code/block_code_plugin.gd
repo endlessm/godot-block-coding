@@ -61,9 +61,7 @@ func _enter_tree():
 func script_window_requested(script: String):
 	var script_window = ScriptWindow.instantiate()
 	script_window.script_content = script
-
-	EditorInterface.get_base_control().add_child(script_window)
-
+	EditorInterface.popup_dialog(script_window)
 	await script_window.close_requested
 
 	script_window.queue_free()
