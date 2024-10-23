@@ -7,7 +7,6 @@ var script_content: String = ""
 
 
 func _ready():
-	popup_centered()
 	script_label.text = script_content.replace("\t", "    ")
 
 
