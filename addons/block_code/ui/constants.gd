@@ -134,7 +134,7 @@ const BUILTIN_CATEGORIES_PROPS: Dictionary = {
 	},
 	"Variables":
 	{
-		"color": Color("ff8f08"),
+		"color": Color("e06000"),
 		"order": 180,
 	},
 	"Math":
