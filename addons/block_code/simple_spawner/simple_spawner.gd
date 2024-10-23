@@ -153,21 +153,23 @@ static func setup_custom_blocks():
 	block_list.append(block_definition)
 
 	block_definition = BlockDefinition.new()
-	block_definition.name = &"simplespawner_set_spawn_frequency"
+	block_definition.name = &"simplespawner_set_spawn_period"
+	block_definition.aliases = [&"simplespawner_set_spawn_frequency"]
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "set spawn frequency to {new_frequency: FLOAT}"
-	block_definition.code_template = "do_set_spawn_frequency({new_frequency})"
+	block_definition.display_template = "set spawn period to {new_period: FLOAT} seconds"
+	block_definition.code_template = "spawn_frequency = {new_period})"
 	block_list.append(block_definition)
 
 	block_definition = BlockDefinition.new()
-	block_definition.name = &"simplespawner_get_spawn_frequency"
+	block_definition.name = &"simplespawner_get_spawn_period"
+	block_definition.aliases = [&"simplespawner_get_spawn_frequency"]
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.VALUE
 	block_definition.variant_type = TYPE_FLOAT
-	block_definition.display_template = "spawn frequency"
+	block_definition.display_template = "spawn period"
 	block_definition.code_template = "spawn_frequency"
 	block_list.append(block_definition)
 
