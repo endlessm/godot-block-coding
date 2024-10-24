@@ -9,6 +9,7 @@ extends StatementBlock
 func _ready():
 	super()
 	bottom_snap = null
+	_background.show_top = true
 
 
 static func get_block_class():
