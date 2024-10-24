@@ -16,7 +16,9 @@ func _init(p_name: StringName = &"", p_children: Array[BlockSerialization] = [],
 
 
 # Block name backwards compatibility handling.
-const _renamed_blocks: Dictionary = {}
+const _renamed_blocks: Dictionary = {
+	&"simplespawner_set_spawn_frequency": &"simplespawner_set_spawn_period",
+}
 
 
 func _set_name(value):

@@ -12,7 +12,9 @@ func _init(p_name: StringName = &"", p_arguments: Dictionary = {}):
 
 
 # Block name backwards compatibility handling.
-const _renamed_blocks: Dictionary = {}
+const _renamed_blocks: Dictionary = {
+	&"simplespawner_get_spawn_frequency": &"simplespawner_get_spawn_period",
+}
 
 
 func _set_name(value):
