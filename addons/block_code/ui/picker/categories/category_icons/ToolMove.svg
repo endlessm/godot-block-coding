@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="16"
+   height="16"
+   version="1.1"
+   id="svg3188"
+   sodipodi:docname="ToolMove.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs3192" />
+  <sodipodi:namedview
+     id="namedview3190"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     showgrid="false"
+     inkscape:zoom="14.75"
+     inkscape:cx="8"
+     inkscape:cy="8.0338983"
+     inkscape:current-layer="svg3188" />
+  <g
+     fill="#e0e0e0"
+     id="g3186"
+     style="fill:#ffffff;fill-opacity:1">
+    <circle
+       cx="8"
+       cy="8"
+       r="2"
+       id="circle3182"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       d="M8 1a1 1 0 0 0-.691.291l-2 2 1.414 1.414 1.293-1.293 1.293 1.293 1.414-1.414-2-2A1 1 0 0 0 8 1zM3.309 5.291l-2 2a1 1 0 0 0 0 1.414l2 2 1.414-1.414L3.43 7.998l1.293-1.293-1.414-1.414zm9.414 0-1.414 1.414 1.293 1.293-1.293 1.293 1.414 1.414 2-2a1 1 0 0 0 0-1.414l-2-2zm-6 6-1.414 1.414 2 2a1 1 0 0 0 1.414 0l2-2-1.414-1.414-1.293 1.293-1.293-1.293z"
+       id="path3184"
+       style="fill:#ffffff;fill-opacity:1" />
+  </g>
+</svg>
