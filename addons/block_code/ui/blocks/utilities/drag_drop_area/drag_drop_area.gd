@@ -8,6 +8,7 @@
 extends Control
 
 const Constants = preload("res://addons/block_code/ui/constants.gd")
+const BlockTreeUtil = preload("res://addons/block_code/ui/block_tree_util.gd")
 
 signal drag_started(offset: Vector2)
 
@@ -16,6 +17,7 @@ signal drag_started(offset: Vector2)
 @export var drag_outside: bool = false
 
 var _drag_start_position: Vector2 = Vector2.INF
+var parent_block: Block
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -27,7 +29,7 @@ func _gui_input(event: InputEvent) -> void:
 
 	var button_event: InputEventMouseButton = event as InputEventMouseButton
 
-	if button_event.button_index != MOUSE_BUTTON_LEFT:
+	if button_event.button_index != MOUSE_BUTTON_LEFT and button_event.button_index != MOUSE_BUTTON_RIGHT:
 		return
 
 	if button_event.double_click:
@@ -37,7 +39,27 @@ func _gui_input(event: InputEvent) -> void:
 	elif button_event.pressed:
 		# Keep track of where the mouse click originated, but allow this
 		# event to propagate to other nodes.
-		_drag_start_position = event.global_position
+		if button_event.button_index == MOUSE_BUTTON_LEFT:
+			_drag_start_position = event.global_position
+		else:
+			if not parent_block:
+				parent_block = BlockTreeUtil.get_parent_block(self)
+
+			if parent_block and parent_block.can_delete:
+				# Accepts to avoid menu conflicts
+				accept_event()
+
+				# A new right-click menu with items
+				var _context_menu := PopupMenu.new()
+				_context_menu.add_icon_item(EditorInterface.get_editor_theme().get_icon("Duplicate", "EditorIcons"), "Duplicate")
+				_context_menu.add_icon_item(EditorInterface.get_editor_theme().get_icon("Remove", "EditorIcons"), "Delete")
+				_context_menu.popup_hide.connect(_cleanup)
+				_context_menu.id_pressed.connect(_menu_pressed.bind(_context_menu))
+
+				_context_menu.position = DisplayServer.mouse_get_position()
+				add_child(_context_menu)
+
+				_context_menu.show()
 	else:
 		_drag_start_position = Vector2.INF
 
@@ -64,3 +86,19 @@ func _input(event: InputEvent) -> void:
 	get_viewport().set_input_as_handled()
 	drag_started.emit(_drag_start_position - motion_event.global_position)
 	_drag_start_position = Vector2.INF
+
+
+func _menu_pressed(_index: int, _context_menu: PopupMenu):
+	# Getting which item was pressed and the corresponding function
+	var _pressed_label: String = _context_menu.get_item_text(_index)
+
+	if _pressed_label == "Duplicate":
+		parent_block.confirm_duplicate()
+	elif _pressed_label == "Delete":
+		parent_block.confirm_delete()
+
+
+func _cleanup():
+	for child in get_children():
+		remove_child(child)
+		child.queue_free()
