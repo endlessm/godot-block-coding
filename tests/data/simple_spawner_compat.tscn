@@ -1,0 +1,66 @@
+[gd_scene load_steps=14 format=3 uid="uid://br3g0jiuidqmb"]
+
+[ext_resource type="Script" path="res://addons/block_code/simple_spawner/simple_spawner.gd" id="1_liuhg"]
+[ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="2_xxmhe"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization_tree.gd" id="3_4xc0e"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization.gd" id="4_ao2cd"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/value_block_serialization.gd" id="5_387nk"]
+[ext_resource type="Script" path="res://addons/block_code/serialization/block_script_serialization.gd" id="5_a3p2k"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/variable_definition.gd" id="6_1vau2"]
+
+[sub_resource type="Resource" id="Resource_kt8ln"]
+script = ExtResource("4_ao2cd")
+name = &"simplespawner_set_spawn_frequency"
+children = Array[ExtResource("4_ao2cd")]([])
+arguments = {
+"new_frequency": 10.0
+}
+
+[sub_resource type="Resource" id="Resource_4x50y"]
+script = ExtResource("5_387nk")
+name = &"simplespawner_get_spawn_frequency"
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_ar5am"]
+script = ExtResource("4_ao2cd")
+name = &"print"
+children = Array[ExtResource("4_ao2cd")]([])
+arguments = {
+"text": SubResource("Resource_4x50y")
+}
+
+[sub_resource type="Resource" id="Resource_yeqkk"]
+script = ExtResource("4_ao2cd")
+name = &"ready"
+children = Array[ExtResource("4_ao2cd")]([SubResource("Resource_kt8ln"), SubResource("Resource_ar5am")])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_o6xkk"]
+script = ExtResource("3_4xc0e")
+root = SubResource("Resource_yeqkk")
+canvas_position = Vector2(54, 47)
+
+[sub_resource type="Resource" id="Resource_u6cb0"]
+script = ExtResource("5_a3p2k")
+script_inherits = "SimpleSpawner"
+block_serialization_trees = Array[ExtResource("3_4xc0e")]([SubResource("Resource_o6xkk")])
+variables = Array[ExtResource("6_1vau2")]([])
+generated_script = "extends SimpleSpawner
+
+
+func _ready():
+	do_set_spawn_frequency(10)
+	print((spawn_frequency))
+
+"
+version = 0
+
+[node name="Root" type="Node2D"]
+
+[node name="SimpleSpawner" type="Node2D" parent="."]
+script = ExtResource("1_liuhg")
+spawn_frequency = 5.0
+
+[node name="BlockCode" type="Node" parent="SimpleSpawner"]
+script = ExtResource("2_xxmhe")
+block_script = SubResource("Resource_u6cb0")

@@ -168,3 +168,40 @@ static func setup_custom_blocks():
 	block_list.append(block_definition)
 
 	BlocksCatalog.add_custom_blocks(_class_name, block_list, [], {})
+
+
+# Backwards compatibility handling
+func _get_property_list() -> Array[Dictionary]:
+	return [
+		{
+			# spawn_frequency was renamed to spawn_period
+			"name": "spawn_frequency",
+			"class_name": &"",
+			"type": TYPE_FLOAT,
+			"hint": PROPERTY_HINT_NONE,
+			"hint_string": "",
+			"usage": PROPERTY_USAGE_NONE,
+		},
+	]
+
+
+func _get(property: StringName) -> Variant:
+	match property:
+		"spawn_frequency":
+			return spawn_period
+		_:
+			return null
+
+
+func _set(property: StringName, value: Variant) -> bool:
+	match property:
+		"spawn_frequency":
+			print("Migrating SimpleSpawner spawn_frequency property to new name spawn_period")
+			spawn_period = value
+		_:
+			return false
+
+	# Any migrated properties need to be resaved.
+	if Engine.is_editor_hint():
+		EditorInterface.mark_scene_as_unsaved()
+	return true
