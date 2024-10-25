@@ -1,6 +1,12 @@
 @tool
 class_name SimpleSpawner
 extends Node2D
+## SimpleSpawner node.
+##
+## The scene being spawned is rotated according to this node's global rotation:
+## - If the spawned scene is a RigidBody2D, the linear velocity and constant forces
+##   are rotated according to the SimpleSpawner node global rotation.
+## - If the spawned scene is a Node2D, the rotation is copied from the SimpleSpawner node.
 
 const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
 const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
@@ -99,6 +105,12 @@ func spawn_once():
 	var scene: PackedScene = scenes.pick_random()
 	var spawned = scene.instantiate()
 	_spawned_scenes.push_back(spawned)
+	# Rotate the spawned scene according to the SimpleSpawner:
+	if spawned is RigidBody2D:
+		spawned.linear_velocity = spawned.linear_velocity.rotated(global_rotation)
+		spawned.constant_force = spawned.constant_force.rotated(global_rotation)
+	elif spawned is Node2D:
+		spawned.rotate(global_rotation)
 	match spawn_parent:
 		SpawnParent.THIS:
 			add_child(spawned)
