@@ -217,10 +217,18 @@ func _get_tooltip(at_position: Vector2) -> String:
 	if not definition:
 		return ""
 
-	if definition.variant_type == Variant.Type.TYPE_NIL:
-		return definition.description
+	var lines: Array[String]
+	
+	lines.append(definition.description)
 
-	return "{description}\n\nType: [b]{type}[/b]".format({"description": definition.description, "type": type_string(definition.variant_type)})
+	lines.append("")
+	lines.append("[code]{0}[/code]".format([definition.code_template.strip_edges()]))
+
+	if definition.variant_type != Variant.Type.TYPE_NIL:
+		lines.append("")
+		lines.append("Type: [b]{0}[/b]".format([type_string(definition.variant_type)]))
+	
+	return "\n".join(lines)
 
 
 func _make_custom_tooltip(for_text) -> Control:
