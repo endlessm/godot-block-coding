@@ -218,16 +218,30 @@ func _get_tooltip(at_position: Vector2) -> String:
 		return ""
 
 	var lines: Array[String]
-	
+
 	lines.append(definition.description)
 
 	lines.append("")
 	lines.append("[code]{0}[/code]".format([definition.code_template.strip_edges()]))
 
+	var input_parameters := definition.get_input_parameters()
+	var output_parameters := definition.get_output_parameters()
+
+	if input_parameters or output_parameters:
+		lines.append("")
+
+	for parameter_name in input_parameters:
+		var parameter_type = input_parameters[parameter_name]
+		lines.append("{0}: [b]{1}[/b]".format([parameter_name, type_string(parameter_type)]))
+
+	for parameter_name in output_parameters:
+		var parameter_type = output_parameters[parameter_name]
+		lines.append("{0}: [b]{1}[/b]".format([parameter_name, type_string(parameter_type)]))
+
 	if definition.variant_type != Variant.Type.TYPE_NIL:
 		lines.append("")
 		lines.append("Type: [b]{0}[/b]".format([type_string(definition.variant_type)]))
-	
+
 	return "\n".join(lines)
 
 
