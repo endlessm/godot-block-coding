@@ -34,11 +34,11 @@ enum LimitBehavior { REPLACE, NO_SPAWN }
 ## - No Spawn: No spawn happens until any spawned scene is removed by other means.
 @export var limit_behavior: LimitBehavior
 
-## Whether the scene being spawned is rotated according to the parent node:
+## Whether the scene being spawned is rotated according to the SimpleSpawner node:
 ## - If the spawned scene is a RigidBody2D, the linear velocity and constant forces
-##   are rotated according to the parent node rotation.
-## - If the spawned scene is a Node2D, the rotation is copied from the parent node.
-@export var rotate_with_parent: bool = true
+##   are rotated according to the SimpleSpawner node global rotation.
+## - If the spawned scene is a Node2D, the rotation is copied from the SimpleSpawner node.
+@export var rotate_with_spawner: bool = true
 
 var _timer: Timer
 var _spawned_scenes: Array[Node]
@@ -105,12 +105,12 @@ func spawn_once():
 	var scene: PackedScene = scenes.pick_random()
 	var spawned = scene.instantiate()
 	_spawned_scenes.push_back(spawned)
-	if rotate_with_parent and get_parent() and get_parent() is Node2D:
+	if rotate_with_spawner:
 		if spawned is RigidBody2D:
-			spawned.linear_velocity = spawned.linear_velocity.rotated(get_parent().rotation)
-			spawned.constant_force = spawned.constant_force.rotated(get_parent().rotation)
+			spawned.linear_velocity = spawned.linear_velocity.rotated(global_rotation)
+			spawned.constant_force = spawned.constant_force.rotated(global_rotation)
 		elif spawned is Node2D:
-			spawned.rotate(get_parent().rotation)
+			spawned.rotate(global_rotation)
 	match spawn_parent:
 		SpawnParent.THIS:
 			add_child(spawned)
