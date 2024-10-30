@@ -92,6 +92,11 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 
 
 func _drop_data(at_position: Vector2, data: Variant) -> void:
+	if data["type"] == "nodes":
+		_drop_node(at_position, data)
+
+
+func _drop_node(at_position: Vector2, data: Variant) -> void:
 	var abs_path: NodePath = data.get("nodes", []).pop_back()
 	if abs_path == null:
 		return
