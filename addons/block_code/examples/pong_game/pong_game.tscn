@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="7_3q6bj"]
 [ext_resource type="Script" path="res://addons/block_code/serialization/block_script_serialization.gd" id="7_uuuue"]
 [ext_resource type="Script" path="res://addons/block_code/code_generation/variable_definition.gd" id="9_lo3p1"]
-[ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://addons/block_code/examples/spawner/ball.tscn" id="9_xrqll"]
+[ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://addons/block_code/examples/pong_game/ball.tscn" id="9_xrqll"]
 [ext_resource type="Script" path="res://addons/block_code/serialization/value_block_serialization.gd" id="11_yafka"]
 [ext_resource type="PackedScene" uid="uid://fhoapg3anjsu" path="res://addons/block_code/examples/pong_game/goal_area.tscn" id="12_nqmxu"]
 [ext_resource type="PackedScene" uid="uid://djmtbm15n2wqq" path="res://addons/block_code/examples/pong_game/player_score.tscn" id="13_jvkp7"]
