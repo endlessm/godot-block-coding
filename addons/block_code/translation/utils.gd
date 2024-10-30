@@ -14,6 +14,9 @@ const LOCALE_DIR_PATH := "res://addons/block_code/locale"
 ## BlockCode POT file path
 const POT_FILE_PATH := "res://addons/block_code/locale/godot_block_coding.pot"
 
+## ProjectSetting containing the POT files array
+const POT_FILES_SETTING := "internationalization/locale/translations_pot_files"
+
 
 ## Get the BlockCode translation domain.
 ##
@@ -124,3 +127,33 @@ static func regenerate_pot_file():
 	var file_dialog: EditorFileDialog = localization.get_child(5)
 	print(translate("Updating %s POT file %s") % ["BlockCode", POT_FILE_PATH])
 	file_dialog.file_selected.emit(POT_FILE_PATH)
+
+
+static func _add_pot_files_recursive(pot_files: PackedStringArray, path: String):
+	# Make sure we're only operating in the block_code directory.
+	if not path.begins_with("res://addons/block_code"):
+		push_error("Cannot add POT files from %s" % path)
+		return
+
+	# Add specific file extensions to POT files.
+	for name in DirAccess.get_files_at(path):
+		if name.get_extension() in ["gd", "tres", "tscn"]:
+			var child_path := path.path_join(name)
+			print_verbose("Adding POT file %s" % child_path)
+			pot_files.append(child_path)
+
+	# Descend to subdirs.
+	for name in DirAccess.get_directories_at(path):
+		_add_pot_files_recursive(pot_files, path.path_join(name))
+
+
+## Update BlockCode POT files.
+##
+## Update the array of POT files for the BlockCode plugin. All gd, tres
+## and tscn files in the plugin are added.
+static func update_pot_files():
+	var pot_files: PackedStringArray
+	_add_pot_files_recursive(pot_files, "res://addons/block_code")
+	print(translate("Updating POT files setting %s") % POT_FILES_SETTING)
+	ProjectSettings.set_setting(POT_FILES_SETTING, pot_files)
+	ProjectSettings.save()

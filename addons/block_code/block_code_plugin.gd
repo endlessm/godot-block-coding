@@ -56,6 +56,7 @@ func _enter_tree():
 
 	# Custom Project->Tools menu items.
 	add_tool_menu_item(tr("Regenerate %s POT file") % "BlockCode", TxUtils.regenerate_pot_file)
+	add_tool_menu_item(tr("Update %s translated files") % "BlockCode", TxUtils.update_pot_files)
 
 	# Remove unwanted class nodes from create node
 	old_feature_profile = EditorInterface.get_current_feature_profile()
