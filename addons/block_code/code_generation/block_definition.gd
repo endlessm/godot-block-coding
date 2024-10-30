@@ -81,6 +81,15 @@ func _to_string():
 	return "%s - %s" % [name, target_node_class]
 
 
+func get_input_parameters() -> Dictionary:
+	var result: Dictionary
+	for item in parse_display_template(display_template):
+		if item.has("in_parameter"):
+			var parameter = item.get("in_parameter")
+			result[parameter["name"]] = parameter["type"]
+	return result
+
+
 func get_output_parameters() -> Dictionary:
 	var result: Dictionary
 	for item in parse_display_template(display_template):
