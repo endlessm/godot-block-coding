@@ -35,6 +35,7 @@ const DISABLED_CLASSES := [
 
 func _init():
 	TxUtils.load_translations()
+	TxUtils.set_block_translation_domain(self)
 
 
 func _enter_tree():
