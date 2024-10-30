@@ -11,6 +11,9 @@ const DOMAIN := &"godot_block_coding"
 ## BlockCode locale directory path
 const LOCALE_DIR_PATH := "res://addons/block_code/locale"
 
+## BlockCode POT file path
+const POT_FILE_PATH := "res://addons/block_code/locale/godot_block_coding.pot"
+
 
 ## Get the BlockCode translation domain.
 ##
@@ -105,3 +108,19 @@ static func set_block_translation_domain(obj: Object):
 	if obj.has_method(&"set_translation_domain"):
 		print_verbose("Setting %s translation domain to %s" % [obj, DOMAIN])
 		obj.call(&"set_translation_domain", DOMAIN)
+
+
+## Regenerate BlockCode POT file.
+##
+## Update the BlockCode POT file to include new translatable strings.
+static func regenerate_pot_file():
+	# Dirty method to drive the editor's Generate POT dialog from
+	# https://github.com/godotengine/godot-proposals/issues/10986#issuecomment-2419914451
+	#
+	# Obviously this is pretty fragile since it depends on the editor's UI
+	# remaining stable. Hopefully in the future we can just do this from the
+	# command line. See https://github.com/godotengine/godot/pull/98422.
+	var localization := EditorInterface.get_base_control().find_child("*Localization*", true, false)
+	var file_dialog: EditorFileDialog = localization.get_child(5)
+	print(translate("Updating %s POT file %s") % ["BlockCode", POT_FILE_PATH])
+	file_dialog.file_selected.emit(POT_FILE_PATH)

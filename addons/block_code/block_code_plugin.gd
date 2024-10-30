@@ -54,6 +54,9 @@ func _enter_tree():
 		_tx_parser_plugin = BlockTranslationParserPlugin.new()
 	add_translation_parser_plugin(_tx_parser_plugin)
 
+	# Custom Project->Tools menu items.
+	add_tool_menu_item(tr("Regenerate %s POT file") % "BlockCode", TxUtils.regenerate_pot_file)
+
 	# Remove unwanted class nodes from create node
 	old_feature_profile = EditorInterface.get_current_feature_profile()
 
