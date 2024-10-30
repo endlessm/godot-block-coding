@@ -60,6 +60,7 @@ func _on_undo_redo_version_changed():
 
 func _on_show_script_button_pressed():
 	var script: String = _block_canvas.generate_script_from_current_window()
+	print("_on_show_script_button_pressed ", _block_canvas._context.block_code_node)
 
 	script_window_requested.emit(script)
 
@@ -132,10 +133,7 @@ func save_script():
 		print("No script loaded to save.")
 		return
 
-	if not Engine.is_editor_hint():
-		return
-
-	var scene_node = EditorInterface.get_edited_scene_root()
+	var scene_node = EditorInterface.get_edited_scene_root() if Engine.is_editor_hint() else null
 
 	if not BlockCodePlugin.is_block_code_editable(_context.block_code_node):
 		print("Block code for {node} is not editable.".format({"node": _context.block_code_node}))
@@ -146,29 +144,36 @@ func save_script():
 	var resource_path_split = block_script.resource_path.split("::", true, 1)
 	var resource_scene = resource_path_split[0]
 
-	undo_redo.create_action("Modify %s's block code script" % _context.parent_node.name, UndoRedo.MERGE_DISABLE, _context.block_code_node)
+	if undo_redo:
+		undo_redo.create_action("Modify %s's block code script" % _context.parent_node.name, UndoRedo.MERGE_DISABLE, _context.block_code_node)
 
-	if resource_scene and resource_scene != scene_node.scene_file_path:
+	if resource_scene and scene_node and resource_scene != scene_node.scene_file_path:
 		# This resource is from another scene. Since the user is changing it
 		# here, we'll make a copy for this scene rather than changing it in the
 		# other scene file.
-		undo_redo.add_undo_property(_context.block_code_node, "block_script", _context.block_script)
+		if undo_redo:
+			undo_redo.add_undo_property(_context.block_code_node, "block_script", _context.block_script)
 		block_script = block_script.duplicate(true)
-		undo_redo.add_do_property(_context.block_code_node, "block_script", block_script)
+		if undo_redo:
+			undo_redo.add_do_property(_context.block_code_node, "block_script", block_script)
 
-	undo_redo.add_undo_property(block_script, "block_serialization_trees", block_script.block_serialization_trees)
+	if undo_redo:
+		undo_redo.add_undo_property(block_script, "block_serialization_trees", block_script.block_serialization_trees)
 	_block_canvas.rebuild_ast_list()
 	_block_canvas.rebuild_block_serialization_trees()
-	undo_redo.add_do_property(block_script, "block_serialization_trees", block_script.block_serialization_trees)
+	if undo_redo:
+		undo_redo.add_do_property(block_script, "block_serialization_trees", block_script.block_serialization_trees)
 
 	var generated_script = _block_canvas.generate_script_from_current_window()
 	if generated_script != block_script.generated_script:
-		undo_redo.add_undo_property(block_script, "generated_script", block_script.generated_script)
-		undo_redo.add_do_property(block_script, "generated_script", generated_script)
-
+		if undo_redo:
+			undo_redo.add_undo_property(block_script, "generated_script", block_script.generated_script)
+			undo_redo.add_do_property(block_script, "generated_script", generated_script)
+		
 	block_script.version = Constants.CURRENT_DATA_VERSION
 
-	undo_redo.commit_action()
+	if undo_redo:
+		undo_redo.commit_action()
 
 
 func _input(event):
@@ -278,13 +283,18 @@ func _create_variable(variable: VariableDefinition):
 
 	var block_script: BlockScriptSerialization = _context.block_script
 
-	undo_redo.create_action("Create variable %s in %s's block code script" % [variable.var_name, _context.parent_node.name])
-	undo_redo.add_undo_property(_context.block_script, "variables", _context.block_script.variables)
+	if undo_redo:
+		undo_redo.create_action("Create variable %s in %s's block code script" % [variable.var_name, _context.parent_node.name])
+		undo_redo.add_undo_property(_context.block_script, "variables", _context.block_script.variables)
 
-	var new_variables = block_script.variables.duplicate()
-	new_variables.append(variable)
+		var new_variables = block_script.variables.duplicate()
+		new_variables.append(variable)
 
-	undo_redo.add_do_property(_context.block_script, "variables", new_variables)
-	undo_redo.commit_action()
+		undo_redo.add_do_property(_context.block_script, "variables", new_variables)
+		undo_redo.commit_action()
+	else:
+		var new_variables = block_script.variables.duplicate()
+		new_variables.append(variable)
+		block_script.variables = new_variables
 
 	_picker.reload_blocks()
