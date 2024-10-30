@@ -1,7 +1,7 @@
 [gd_scene load_steps=37 format=3 uid="uid://cbgxxdewi6gld"]
 
 [ext_resource type="Script" path="res://addons/block_code/simple_spawner/simple_spawner.gd" id="1_g2l2s"]
-[ext_resource type="PackedScene" uid="uid://c7l70grmkauij" path="res://addons/block_code/examples/spawner/ball.tscn" id="2_d0h86"]
+[ext_resource type="PackedScene" uid="uid://dhfvkunrlqads" path="res://addons/block_code/examples/spawner/ball.tscn" id="2_d0h86"]
 [ext_resource type="PackedScene" uid="uid://c8hrliwojohal" path="res://addons/block_code/examples/spawner/volatile_ball.tscn" id="3_tt12o"]
 [ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="4_e0fbh"]
 [ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization_tree.gd" id="5_g4h7g"]
