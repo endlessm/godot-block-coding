@@ -21,12 +21,13 @@ func game_over(result: String):
 		"LOSE":
 			text = lose_message
 		_:
-			text = ""
+			reset()
 			push_warning('Unrecognized game result "%s"' % result)
 
 
 func reset():
-	text = ""
+	# Workaround for POT generation extracting empty string.
+	text = str("")
 
 
 func _ready():
@@ -51,7 +52,7 @@ func _enter_tree():
 	if Engine.is_editor_hint():
 		text = win_message
 	else:
-		text = ""
+		reset()
 
 
 func get_custom_class():
