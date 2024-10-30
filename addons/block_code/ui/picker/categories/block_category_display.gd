@@ -21,7 +21,6 @@ var _blocks: Dictionary  # String, Block
 
 
 func _ready():
-	_label.text = title  # category.name if category != null else ""
 	_update_label()
 	_update_blocks()
 
@@ -40,7 +39,7 @@ func _update_label():
 	if not _label:
 		return
 
-	_label.text = title
+	_label.text = tr(title)
 
 
 func _update_blocks():
