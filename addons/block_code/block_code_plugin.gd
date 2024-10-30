@@ -4,6 +4,7 @@ extends EditorPlugin
 const MainPanelScene := preload("res://addons/block_code/ui/main_panel.tscn")
 const MainPanel = preload("res://addons/block_code/ui/main_panel.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
+const TxUtils := preload("res://addons/block_code/translation/utils.gd")
 const ScriptWindow := preload("res://addons/block_code/ui/script_window/script_window.tscn")
 
 static var main_panel: MainPanel
@@ -30,6 +31,10 @@ const DISABLED_CLASSES := [
 	"BlockScriptSerialization",
 	"CategoryFactory",
 ]
+
+
+func _init():
+	TxUtils.load_translations()
 
 
 func _enter_tree():
