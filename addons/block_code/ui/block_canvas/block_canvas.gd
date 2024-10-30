@@ -4,9 +4,11 @@ extends MarginContainer
 const ASTList = preload("res://addons/block_code/code_generation/ast_list.gd")
 const BlockAST = preload("res://addons/block_code/code_generation/block_ast.gd")
 const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
+const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
 const BlockTreeUtil = preload("res://addons/block_code/ui/block_tree_util.gd")
 const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
 const ScriptGenerator = preload("res://addons/block_code/code_generation/script_generator.gd")
+const Types = preload("res://addons/block_code/types/types.gd")
 const Util = preload("res://addons/block_code/ui/util.gd")
 
 const EXTEND_MARGIN: float = 800
@@ -75,6 +77,10 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	if typeof(data) != TYPE_DICTIONARY:
 		return false
 
+	# Allow dropping property block
+	if data.get("type", "") == "obj_property":
+		return true
+
 	var nodes: Array = data.get("nodes", [])
 	if nodes.size() != 1:
 		return false
@@ -94,6 +100,8 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 func _drop_data(at_position: Vector2, data: Variant) -> void:
 	if data["type"] == "nodes":
 		_drop_node(at_position, data)
+	elif data["type"] == "obj_property":
+		_drop_obj_property(at_position, data)
 
 
 func _drop_node(at_position: Vector2, data: Variant) -> void:
@@ -109,6 +117,30 @@ func _drop_node(at_position: Vector2, data: Variant) -> void:
 
 	var block = _context.block_script.instantiate_block_by_name(&"get_node")
 	block.set_parameter_values_on_ready({"path": node_path})
+	add_block(block, at_position)
+	reconnect_block.emit(block)
+
+
+func _drop_obj_property(at_position: Vector2, data: Variant) -> void:
+	var object_name = str(data["object"]).get_slice(":", 0)
+	var property_name = data["property"]
+	var property_value = data["value"]
+
+	# Prepare a block to get the property's value
+	var block_definition = (
+		BlockDefinition
+		. new(
+			&"%s_get_%s" % [object_name, property_name],
+			object_name,
+			"The %s property" % property_name,
+			"Variables",
+			Types.BlockType.VALUE,
+			typeof(property_value),
+			"%s" % property_name.capitalize().to_lower(),
+			"%s" % property_name,
+		)
+	)
+	var block = _context.block_script.instantiate_block(block_definition)
 	add_block(block, at_position)
 	reconnect_block.emit(block)
 
