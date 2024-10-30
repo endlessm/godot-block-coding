@@ -5,12 +5,11 @@ extends Node2D
 ##
 ## If multiple spawned scenes are provided, one is picked ramdomly when spawning.
 ##
-## Spawned instances are children of the current scene.
+## Spawned instances are siblings of this SimpleSpawner node, copying its position
+## and rotation.
 ##
-## The scene being spawned is rotated according to this node's global rotation:
-## - If the spawned scene is a RigidBody2D, the linear velocity and constant forces
-##   are rotated according to the SimpleSpawner node global rotation.
-## - If the spawned scene is a Node2D, the rotation is copied from the SimpleSpawner node.
+## If the spawned scene is a RigidBody2D, its linear velocity and constant forces
+## are rotated according to this node's global rotation.
 
 const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
 const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
@@ -100,15 +99,16 @@ func spawn_once():
 	var scene: PackedScene = scenes.pick_random()
 	var spawned = scene.instantiate()
 	_spawned_scenes.push_back(spawned)
-	# Rotate the spawned scene according to the SimpleSpawner:
+	# If the spawned scene is a RigidBody2D, rotate the linear velocity and constant force
+	# according to this node's global rotation:
 	if spawned is RigidBody2D:
 		spawned.linear_velocity = spawned.linear_velocity.rotated(global_rotation)
 		spawned.constant_force = spawned.constant_force.rotated(global_rotation)
-	elif spawned is Node2D:
-		spawned.rotate(global_rotation)
-	# Add the spawned instance to the current scene:
-	get_tree().current_scene.add_child(spawned)
-	spawned.position = global_position
+	# Add the spawned instance as sibling of this node and copy its position and rotation:
+	add_sibling(spawned)
+	if spawned is Node2D:
+		spawned.position = position
+		spawned.rotation = rotation
 
 
 static func setup_custom_blocks():
