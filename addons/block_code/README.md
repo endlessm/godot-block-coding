@@ -66,6 +66,70 @@ Lean into animations! Godot's animations functionality goes beyond just simple a
 
 Please share feedback in the [Godot Forum Block Coding thread](https://forum.godotengine.org/t/block-coding-high-level-block-based-visual-programming/68941).
 
+## Localization
+
+The plugin supports translations through Godot's [gettext][godot-gettext]
+support. We welcome contributions to make the plugin work better in your
+language! However, please note that translations in the Godot editor **will
+only work with Godot 4.4 or newer**.
+
+The gettext PO files are located in the `addons/block_code/locale` directory.
+See the Godot [documentation][godot-gettext] for instructions on working with
+PO files.
+
+[godot-gettext]: https://docs.godotengine.org/en/stable/tutorials/i18n/localization_using_gettext.html
+
+For developers, a few things need to be done to keep the translatable strings
+up to date.
+
+* If files are added or removed, the list of translatable files needs to be
+  updated. This can be done by using the **Add** dialog in the [POT
+  Generation][pot-generation] tab. Or you can use the **Project → Tools →
+  Update BlockCode translated files** menu item in the editor.
+
+* If translatable strings have changed, the POT file needs to be updated. This
+  can be done by using the **Generate POT** dialog in the [POT
+  Generation][pot-generation] tab. Or you can use the **Project → Tools →
+  Regenerate BlockCode POT file** menu item in the editor.
+
+* If the POT file has changed, the PO message files need to be updated. This
+  can be done using the gettext `msgmerge` tool in the
+  `addons/block_code/locale` directory:
+  ```
+  for po in *.po; do
+    msgmerge --update --backup=none "$po" godot_block_coding.pot
+  done
+  ```
+
+[pot-generation]: https://docs.godotengine.org/en/stable/tutorials/i18n/localization_using_gettext.html#automatic-generation-using-the-editor
+
+Strings added in scene files or block definition resources will usually be
+extracted for localization and translated in the editor automatically. Strings
+in scripts need more consideration.
+
+* `Object`s or `Node`s that are not descendents of the Block Coding panel need
+  to have their translation domain set with the `set_block_translation_domain`
+  helper function. This should usually be done in the object's `_init` method
+  to make sure the translation domain is set before that object or any of its
+  descendents (which inherit the translation domain by default) try to use
+  localized strings.
+
+* Usually [`tr`][object-tr] and [`tr_n`][object-tr-n] (or [`atr`][node-atr] and
+  [`atr_n`][node-atr-n] for `Node`s) should be used to mark translatable
+  strings. These will eventually call the domain's
+  [`translate`][domain-translate] or
+  [`translate_plural`][domain-translate-plural] methods, but the `tr` methods
+  respect translation settings on the object instances. The only time the
+  `translate` methods should be called directly is within a static context when
+  an object instance isn't available.
+
+[object-tr]: https://docs.godotengine.org/en/stable/classes/class_object.html#class-object-method-tr
+[object-tr-n]: https://docs.godotengine.org/en/stable/classes/class_object.html#class-object-method-tr-n
+[node-atr]: https://docs.godotengine.org/en/stable/classes/class_node.html#class-node-method-atr
+[node-atr-n]: https://docs.godotengine.org/en/stable/classes/class_node.html#class-node-method-atr-n
+[domain-translate]: https://docs.godotengine.org/en/latest/classes/class_translationdomain.html#class-translationdomain-method-translate
+[domain-translate-plural]: https://docs.godotengine.org/en/latest/classes/class_translationdomain.html#class-translationdomain-method-translate-plural
+
 ## Development
 
 ### pre-commit
