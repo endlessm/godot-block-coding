@@ -54,6 +54,8 @@ var zoom: float:
 	get:
 		return _window.scale.x
 
+var _modifier_ctrl := false
+
 signal reconnect_block(block: Block)
 signal add_block_code
 signal open_scene
@@ -126,20 +128,41 @@ func _drop_obj_property(at_position: Vector2, data: Variant) -> void:
 	var property_name = data["property"]
 	var property_value = data["value"]
 
-	# Prepare a block to get the property's value
-	var block_definition = (
-		BlockDefinition
-		. new(
-			&"%s_get_%s" % [object_name, property_name],
-			object_name,
-			"The %s property" % property_name,
-			"Variables",
-			Types.BlockType.VALUE,
-			typeof(property_value),
-			"%s" % property_name.capitalize().to_lower(),
-			"%s" % property_name,
+	# Prepare a Variable block to set / get the property's value according to
+	# the modifier KEY_CTRL pressing.
+	var block_definition: BlockDefinition
+	var property_type = typeof(property_value)
+	if _modifier_ctrl:
+		var type_string: String = Types.VARIANT_TYPE_TO_STRING[property_type]
+		block_definition = (
+			BlockDefinition
+			. new(
+				&"%s_set_%s" % [object_name, property_name],
+				object_name,
+				"Set the %s property" % property_name,
+				"Variables",
+				Types.BlockType.STATEMENT,
+				property_type,
+				"set %s to {value: %s}" % [property_name.capitalize().to_lower(), type_string],
+				"%s = {value}" % property_name,
+				{"value": property_value},
+			)
 		)
-	)
+	else:
+		block_definition = (
+			BlockDefinition
+			. new(
+				&"%s_get_%s" % [object_name, property_name],
+				object_name,
+				"The %s property" % property_name,
+				"Variables",
+				Types.BlockType.VALUE,
+				property_type,
+				"%s" % property_name.capitalize().to_lower(),
+				"%s" % property_name,
+			)
+		)
+
 	var block = _context.block_script.instantiate_block(block_definition)
 	add_block(block, at_position)
 	reconnect_block.emit(block)
@@ -408,6 +431,12 @@ func _on_replace_block_code_button_pressed():
 	_replace_block_code_button.disabled = true
 
 	replace_block_code.emit()
+
+
+func _input(event):
+	if event is InputEventKey:
+		if event.keycode == KEY_CTRL:
+			_modifier_ctrl = event.pressed
 
 
 func _gui_input(event):
