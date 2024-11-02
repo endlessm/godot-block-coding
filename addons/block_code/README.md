@@ -75,9 +75,11 @@ only work with Godot 4.4 or newer**.
 
 The gettext PO files are located in the `addons/block_code/locale` directory.
 See the Godot [documentation][godot-gettext] for instructions on working with
-PO files.
+PO files. You can also join our project on [Transifex][transifex-project] to
+collaborate with others translating the Block Coding content.
 
 [godot-gettext]: https://docs.godotengine.org/en/stable/tutorials/i18n/localization_using_gettext.html
+[transifex-project]: https://explore.transifex.com/endless-os/godot-block-coding/
 
 For developers, a few things need to be done to keep the translatable strings
 up to date.

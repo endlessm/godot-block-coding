@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[o:endless-os:p:godot-block-coding:r:all]
+source_file = addons/block_code/locale/godot_block_coding.pot
+source_lang = en
+file_filter = addons/block_code/locale/<lang>.po
+type = PO
