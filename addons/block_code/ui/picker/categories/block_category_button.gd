@@ -21,7 +21,7 @@ func _ready():
 		new_stylebox.bg_color = category.color
 		_panel.add_theme_stylebox_override("panel", new_stylebox)
 
-	_label.text = category.name
+	_label.text = tr(category.name)
 
 
 func _on_button_pressed():

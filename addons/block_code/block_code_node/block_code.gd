@@ -3,7 +3,13 @@
 class_name BlockCode
 extends Node
 
+const TxUtils := preload("res://addons/block_code/translation/utils.gd")
+
 @export var block_script: BlockScriptSerialization = null
+
+
+func _init():
+	TxUtils.set_block_translation_domain(self)
 
 
 func _ready():

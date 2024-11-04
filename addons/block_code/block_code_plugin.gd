@@ -4,6 +4,7 @@ extends EditorPlugin
 const MainPanelScene := preload("res://addons/block_code/ui/main_panel.tscn")
 const MainPanel = preload("res://addons/block_code/ui/main_panel.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
+const TxUtils := preload("res://addons/block_code/translation/utils.gd")
 const ScriptWindow := preload("res://addons/block_code/ui/script_window/script_window.tscn")
 
 static var main_panel: MainPanel
@@ -11,6 +12,9 @@ static var block_code_button: Button
 
 const BlockInspectorPlugin := preload("res://addons/block_code/inspector_plugin/block_script_inspector.gd")
 var block_inspector_plugin: BlockInspectorPlugin
+
+const BlockTranslationParserPlugin := preload("res://addons/block_code/translation/parser.gd")
+var _tx_parser_plugin: BlockTranslationParserPlugin
 
 var editor_inspector: EditorInspector
 
@@ -29,6 +33,11 @@ const DISABLED_CLASSES := [
 ]
 
 
+func _init():
+	TxUtils.load_translations()
+	TxUtils.set_block_translation_domain(self)
+
+
 func _enter_tree():
 	Types.init_cast_graph()
 
@@ -40,6 +49,14 @@ func _enter_tree():
 	block_code_button = add_control_to_bottom_panel(main_panel, _get_plugin_name())
 	block_inspector_plugin = BlockInspectorPlugin.new()
 	add_inspector_plugin(block_inspector_plugin)
+
+	if not _tx_parser_plugin:
+		_tx_parser_plugin = BlockTranslationParserPlugin.new()
+	add_translation_parser_plugin(_tx_parser_plugin)
+
+	# Custom Project->Tools menu items.
+	add_tool_menu_item(tr("Regenerate %s POT file") % "BlockCode", TxUtils.regenerate_pot_file)
+	add_tool_menu_item(tr("Update %s translated files") % "BlockCode", TxUtils.update_pot_files)
 
 	# Remove unwanted class nodes from create node
 	old_feature_profile = EditorInterface.get_current_feature_profile()
@@ -69,6 +86,7 @@ func script_window_requested(script: String):
 
 
 func _exit_tree():
+	remove_translation_parser_plugin(_tx_parser_plugin)
 	remove_inspector_plugin(block_inspector_plugin)
 
 	if block_code_button:

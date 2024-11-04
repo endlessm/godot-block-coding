@@ -27,6 +27,7 @@ text = "Name "
 
 [node name="VariableInput" type="LineEdit" parent="VBoxContainer/GridContainer"]
 unique_name_in_owner = true
+auto_translate_mode = 2
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../TypeOption")
 focus_next = NodePath("../TypeOption")
@@ -37,6 +38,7 @@ text = "Type "
 
 [node name="TypeOption" type="OptionButton" parent="VBoxContainer/GridContainer"]
 unique_name_in_owner = true
+auto_translate_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_top = NodePath("../VariableInput")
@@ -44,6 +46,7 @@ focus_previous = NodePath("../VariableInput")
 selected = 0
 item_count = 6
 popup/item_0/text = "STRING"
+popup/item_0/id = 0
 popup/item_1/text = "BOOL"
 popup/item_1/id = 1
 popup/item_2/text = "INT"

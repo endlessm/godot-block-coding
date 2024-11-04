@@ -9,6 +9,7 @@ const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_ca
 const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
 const Picker = preload("res://addons/block_code/ui/picker/picker.gd")
 const TitleBar = preload("res://addons/block_code/ui/title_bar/title_bar.gd")
+const TxUtils := preload("res://addons/block_code/translation/utils.gd")
 const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
 
 @onready var _context := BlockEditorContext.get_default()
@@ -38,6 +39,10 @@ var undo_redo: EditorUndoRedoManager:
 		undo_redo = value
 		if undo_redo:
 			undo_redo.version_changed.connect(_on_undo_redo_version_changed)
+
+
+func _init():
+	TxUtils.set_block_translation_domain(self)
 
 
 func _ready():
