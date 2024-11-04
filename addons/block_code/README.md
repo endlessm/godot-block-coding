@@ -153,15 +153,17 @@ This plugin uses the [Godot Unit Test](https://gut.readthedocs.io/en/latest/) (G
 Tests can also be run from the command line using the GUT command line script:
 
 ```
-godot --path . --headless --script addons/gut/gut_cmdln.gd -gexit
+godot --path . --headless -s addons/gut/gut_cmdln.gd -gexit
 ```
 
 A few options are of note here:
 
 - `--path` instructs Godot to use the project in the current directory.
 - `--headless` instructs Godot to run without a display or sound.
-- `--script` instructs Godot to run the GUT command line script instead of
-  running the main scene.
+- `-s` instructs Godot to run the GUT command line script instead of
+  running the main scene. Due to a [bug in
+  GUT](https://github.com/bitwes/Gut/issues/667), the long form `--script`
+  cannot be used.
 - `-gexit` is an option for the GUT command line script that instructs GUT to
   exit after the tests complete.
 
