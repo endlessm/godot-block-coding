@@ -118,7 +118,7 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 					block_settings.category,
 					Types.BlockType.STATEMENT,
 					TYPE_NIL,
-					"set %s to {value: %s}" % [property.name.to_lower(), type_string],
+					"set %s to {value: %s}" % [property.name.capitalize().to_lower(), type_string],
 					"%s = {value}" % property.name,
 					{"value": block_settings.get("default_set", _FALLBACK_SET_FOR_TYPE[property.type])},
 				)
@@ -136,7 +136,7 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 					block_settings.category,
 					Types.BlockType.STATEMENT,
 					TYPE_NIL,
-					"change %s by {value: %s}" % [property.name.to_lower(), type_string],
+					"change %s by {value: %s}" % [property.name.capitalize().to_lower(), type_string],
 					"%s += {value}" % property.name,
 					{"value": block_settings.get("default_change", _FALLBACK_CHANGE_FOR_TYPE[property.type])},
 				)
@@ -153,7 +153,7 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 				block_settings.category,
 				Types.BlockType.VALUE,
 				property.type,
-				"%s" % property.name.to_lower(),
+				"%s" % property.name.capitalize().to_lower(),
 				"%s" % property.name,
 			)
 		)
