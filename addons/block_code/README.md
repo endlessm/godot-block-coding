@@ -92,7 +92,9 @@ up to date.
 * If translatable strings have changed, the POT file needs to be updated. This
   can be done by using the **Generate POT** dialog in the [POT
   Generation][pot-generation] tab. Or you can use the **Project → Tools →
-  Regenerate BlockCode POT file** menu item in the editor.
+  Regenerate BlockCode POT file** menu item in the editor. From the command
+  line, the POT file can be regenerated with the `scripts/regenerate-pot.sh`
+  shell script.
 
 * If the POT file has changed, the PO message files need to be updated. This
   can be done using the gettext `msgmerge` tool in the
