@@ -34,6 +34,7 @@ jobs:
       matrix:
         godot-version:
           - 4.3.0
+          - 4.4.0-dev7
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
