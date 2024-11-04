@@ -87,7 +87,9 @@ up to date.
 * If files are added or removed, the list of translatable files needs to be
   updated. This can be done by using the **Add** dialog in the [POT
   Generation][pot-generation] tab. Or you can use the **Project → Tools →
-  Update BlockCode translated files** menu item in the editor.
+  Update BlockCode translated files** menu item in the editor. From the command
+  line, the POT file can be regenerated with the `scripts/update-pot-files.sh`
+  shell script.
 
 * If translatable strings have changed, the POT file needs to be updated. This
   can be done by using the **Generate POT** dialog in the [POT
