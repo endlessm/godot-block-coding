@@ -162,11 +162,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Block Coding Plugin\n"
-"Language-Team: Norwegian Bokmål (https://app.transifex.com/endless-os/teams/9016/nb/)\n"
+"Language-Team: Marathi (https://app.transifex.com/endless-os/teams/9016/mr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
-"Language: nb\n"
+"Language: mr\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: addons/block_code/block_code_plugin.gd

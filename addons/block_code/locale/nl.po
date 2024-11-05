@@ -155,18 +155,18 @@
 # res://addons/block_code/ui/title_bar/title_bar.tscn
 # res://addons/block_code/ui/tooltip/tooltip.gd
 # res://addons/block_code/ui/tooltip/tooltip.tscn
-#
-# Automatically generated, 2024.
-#
+# 
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Block Coding Plugin\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: nl\n"
+"Language-Team: Dutch (https://app.transifex.com/endless-os/teams/9016/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8-bit\n"
+"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: addons/block_code/block_code_plugin.gd
@@ -381,14 +381,14 @@ msgstr ""
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
 "Move the character up, down, left, and right with the keyboard using the "
-"given keys. The speed of movement can be adjusted separately for x (left and "
-"right) and y (up and down)."
+"given keys. The speed of movement can be adjusted separately for x (left and"
+" right) and y (up and down)."
 msgstr ""
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
-"move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at "
-"speed {speed: VECTOR2}"
+"move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at"
+" speed {speed: VECTOR2}"
 msgstr ""
 
 #: addons/block_code/blocks/input/is_input_actioned.tres
@@ -766,8 +766,7 @@ msgid ""
 "\n"
 "From the Inspector: Try changing spawn limit and spawn limit behavior.\n"
 "\n"
-"Color balls remove themselves after 3 seconds. While uncolored balls are "
-"only removed by the SimpleSpawner node according to the limit setings."
+"Color balls remove themselves after 3 seconds. While uncolored balls are only removed by the SimpleSpawner node according to the limit setings."
 msgstr ""
 
 #: addons/block_code/inspector_plugin/block_script_inspector.gd
@@ -800,7 +799,8 @@ msgstr ""
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid ""
-"Use block coding to create custom behavior and game mechanics for \"{node}\"."
+"Use block coding to create custom behavior and game mechanics for "
+"\"{node}\"."
 msgstr ""
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn

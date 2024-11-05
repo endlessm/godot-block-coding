@@ -155,19 +155,23 @@
 # res://addons/block_code/ui/title_bar/title_bar.tscn
 # res://addons/block_code/ui/tooltip/tooltip.gd
 # res://addons/block_code/ui/tooltip/tooltip.tscn
-#
-# Automatically generated, 2024.
-#
+# 
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Manuel Quiñones, 2024
+# 
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Block Coding Plugin\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: es\n"
+"Last-Translator: Manuel Quiñones, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/endless-os/teams/9016/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Content-Transfer-Encoding: 8-bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: addons/block_code/block_code_plugin.gd
 msgid "Regenerate %s POT file"
@@ -184,23 +188,23 @@ msgstr ""
 #: addons/block_code/blocks/communication/remove_from_group.tres
 #: addons/block_code/blocks/communication/remove_node_from_group.tres
 msgid "Communication | Groups"
-msgstr ""
+msgstr "Comunicación | Grupos"
 
 #: addons/block_code/blocks/communication/add_node_to_group.tres
 msgid "Add the node into the group"
-msgstr ""
+msgstr "Agrega el nodo al grupo"
 
 #: addons/block_code/blocks/communication/add_node_to_group.tres
 msgid "add {node: OBJECT} to group {group: STRING}"
-msgstr ""
+msgstr "agregar {node: OBJECT} al grupo {group: STRING}"
 
 #: addons/block_code/blocks/communication/add_to_group.tres
 msgid "Add this node into the group"
-msgstr ""
+msgstr "Agrega este nodo al grupo"
 
 #: addons/block_code/blocks/communication/add_to_group.tres
 msgid "add to group {group: STRING}"
-msgstr ""
+msgstr "agregar al grupo {group: STRING}"
 
 #: addons/block_code/blocks/communication/area2d_on_entered.tres
 #: addons/block_code/blocks/communication/area2d_on_exited.tres
@@ -210,45 +214,45 @@ msgstr ""
 #: addons/block_code/blocks/communication/rigidbody2d_on_entered.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_exited.tres
 msgid "Communication | Methods"
-msgstr ""
+msgstr "Comunicación | Métodos"
 
 #: addons/block_code/blocks/communication/area2d_on_entered.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_entered.tres
 msgid "when this node collides with [something: OBJECT]"
-msgstr ""
+msgstr "cuando este nodo colisiona con [something: OBJECT]"
 
 #: addons/block_code/blocks/communication/area2d_on_exited.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_exited.tres
 msgid "when this node stops colliding with [something: OBJECT]"
-msgstr ""
+msgstr "cuando este nodo deja de colisionar con [something: OBJECT]"
 
 #: addons/block_code/blocks/communication/call_method_group.tres
 msgid "Calls the method/function on each member of the given group"
-msgstr ""
+msgstr "Llama al método/función en cada miembro del grupo dado"
 
 #: addons/block_code/blocks/communication/call_method_group.tres
 msgid "call method {method_name: STRING} in group {group: STRING}"
-msgstr ""
+msgstr "llamar al método {method_name: STRING} en el grupo {group: STRING}"
 
 #: addons/block_code/blocks/communication/call_method_node.tres
 msgid "Calls the method/function of the given node"
-msgstr ""
+msgstr "Llama al método/función en el nodo dado"
 
 #: addons/block_code/blocks/communication/call_method_node.tres
 msgid "call method {method_name: STRING} on node {node: OBJECT}"
-msgstr ""
+msgstr "llamar al método {method_name: STRING} en el nodo {node: OBJECT}"
 
 #: addons/block_code/blocks/communication/define_method.tres
 msgid "Define a method/function with following statements"
-msgstr ""
+msgstr "Define un método/función con las declaraciones siguientes"
 
 #: addons/block_code/blocks/communication/define_method.tres
 msgid "define method {method_name: STRING_NAME}"
-msgstr ""
+msgstr "definir al método {method_name: STRING_NAME}"
 
 #: addons/block_code/blocks/communication/get_node.tres
 msgid "Communication | Nodes"
-msgstr ""
+msgstr "Comunicación | Nodos"
 
 #: addons/block_code/blocks/communication/get_node.tres
 msgid "Get the node at the given path"
@@ -381,14 +385,14 @@ msgstr ""
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
 "Move the character up, down, left, and right with the keyboard using the "
-"given keys. The speed of movement can be adjusted separately for x (left and "
-"right) and y (up and down)."
+"given keys. The speed of movement can be adjusted separately for x (left and"
+" right) and y (up and down)."
 msgstr ""
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
-"move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at "
-"speed {speed: VECTOR2}"
+"move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at"
+" speed {speed: VECTOR2}"
 msgstr ""
 
 #: addons/block_code/blocks/input/is_input_actioned.tres
@@ -766,8 +770,7 @@ msgid ""
 "\n"
 "From the Inspector: Try changing spawn limit and spawn limit behavior.\n"
 "\n"
-"Color balls remove themselves after 3 seconds. While uncolored balls are "
-"only removed by the SimpleSpawner node according to the limit setings."
+"Color balls remove themselves after 3 seconds. While uncolored balls are only removed by the SimpleSpawner node according to the limit setings."
 msgstr ""
 
 #: addons/block_code/inspector_plugin/block_script_inspector.gd
@@ -800,7 +803,8 @@ msgstr ""
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid ""
-"Use block coding to create custom behavior and game mechanics for \"{node}\"."
+"Use block coding to create custom behavior and game mechanics for "
+"\"{node}\"."
 msgstr ""
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn

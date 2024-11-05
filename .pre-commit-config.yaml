@@ -15,4 +15,4 @@ repos:
   hooks:
   - id: gdformat
     args: [--line-length=200]
-files: ^(addons/block_code/(?!lib/).*|tests/.*)$
+files: ^(addons/block_code/(?!lib/|locale/).*|tests/.*)$
