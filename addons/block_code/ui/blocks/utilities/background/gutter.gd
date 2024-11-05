@@ -11,8 +11,8 @@ var parent_block: Block
 	set = _set_color
 
 ## Variant
-@export var variant: bool = 0:
-	set = _set_variant
+@export var background_variant := false:
+	set = _set_background_variant
 
 
 func _set_color(new_color):
@@ -21,8 +21,8 @@ func _set_color(new_color):
 	queue_redraw()
 
 
-func _set_variant(new_variant):
-	variant = new_variant
+func _set_background_variant(new_variant):
+	background_variant = new_variant
 	queue_redraw()
 
 
@@ -34,20 +34,20 @@ func _ready():
 
 func _draw():
 	var fill_polygon: PackedVector2Array
-	fill_polygon.append(Vector2(5.0 if variant else 0.0, 0.0))
-	fill_polygon.append(Vector2(size.x + (5.0 if variant else 0.0), 0.0))
-	fill_polygon.append(Vector2(size.x + (5.0 if variant else 0.0), size.y))
-	fill_polygon.append(Vector2(5.0 if variant else 0.0, size.y))
-	fill_polygon.append(Vector2(5.0 if variant else 0.0, 0.0))
+	fill_polygon.append(Vector2(Constants.POINT_WIDTH if background_variant else 0.0, 0.0))
+	fill_polygon.append(Vector2(size.x + (Constants.POINT_WIDTH if background_variant else 0.0), 0.0))
+	fill_polygon.append(Vector2(size.x + (Constants.POINT_WIDTH if background_variant else 0.0), size.y))
+	fill_polygon.append(Vector2(Constants.POINT_WIDTH if background_variant else 0.0, size.y))
+	fill_polygon.append(Vector2(Constants.POINT_WIDTH if background_variant else 0.0, 0.0))
 
 	var left_polygon: PackedVector2Array
 	var right_polygon: PackedVector2Array
 
-	left_polygon.append(Vector2(5.0 if variant else 0.0, 0.0))
-	left_polygon.append(Vector2(5.0 if variant else 0.0, size.y))
+	left_polygon.append(Vector2(Constants.POINT_WIDTH if background_variant else 0.0, 0.0))
+	left_polygon.append(Vector2(Constants.POINT_WIDTH if background_variant else 0.0, size.y))
 
-	right_polygon.append(Vector2(size.x + (5.0 if variant else 0.0), 0.0))
-	right_polygon.append(Vector2(size.x + (5.0 if variant else 0.0), size.y))
+	right_polygon.append(Vector2(size.x + (Constants.POINT_WIDTH if background_variant else 0.0), 0.0))
+	right_polygon.append(Vector2(size.x + (Constants.POINT_WIDTH if background_variant else 0.0), size.y))
 
 	draw_colored_polygon(fill_polygon, color)
 	draw_polyline(left_polygon, Constants.FOCUS_BORDER_COLOR if parent_block.has_focus() else outline_color, Constants.OUTLINE_WIDTH)

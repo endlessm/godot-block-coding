@@ -27,13 +27,17 @@ var parent_block: Block
 @export var shift_bottom: float = 0.0:
 	set = _set_shift_bottom
 
+enum { BODY, HEADER }
+
 ## Style of the top knob
-@export var top_variant: int = 0:
+@export var top_variant := BODY:
 	set = _set_top_variant
 
-## |0|, \1/, /2/, <3>, >4>, v5v, v6^, \7y, /8y
-@export var variant: int = 0:
-	set = _set_variant
+enum { FLAT, POINTED }
+
+## Style of the background |FLAT|, <POINTED>
+@export var background_variant := FLAT:
+	set = _set_background_variant
 
 
 func _set_color(new_color):
@@ -68,12 +72,12 @@ func _set_shift_bottom(new_shift_bottom):
 
 
 func _set_top_variant(new_variant):
-	top_variant = clamp(new_variant, 0, 1)
+	top_variant = clamp(new_variant, BODY, HEADER)
 	queue_redraw()
 
 
-func _set_variant(new_variant):
-	variant = clamp(new_variant, 0, 8)
+func _set_background_variant(new_variant):
+	background_variant = clamp(new_variant, FLAT, POINTED)
 	queue_redraw()
 
 
@@ -87,14 +91,14 @@ func _ready():
 
 
 func _draw():
-	var top_left_align = Constants.KNOB_X + shift_top
-	var bottom_left_align = Constants.KNOB_X + shift_bottom
+	var top_left_align := Constants.KNOB_X + shift_top
+	var bottom_left_align := Constants.KNOB_X + shift_bottom
 	var top_knob: PackedVector2Array
 	var fill_polygon: PackedVector2Array
 	fill_polygon.append(Vector2(0.0, 0.0))
 
 	if show_top:
-		if top_variant == 1:
+		if top_variant == HEADER:
 			top_knob.append_array(
 				[
 					Vector2(5, -4.012612),
@@ -123,23 +127,15 @@ func _draw():
 		fill_polygon.append_array(top_knob)
 
 	# Right side
-	if variant > 0:
+	if background_variant == POINTED:
 		# Top
-		if variant == 3 or variant == 4:
-			fill_polygon.append(Vector2(size.x - 5.0, 0.0))
-		else:
-			fill_polygon.append(Vector2(size.x, 0.0))
+		fill_polygon.append(Vector2(size.x - Constants.POINT_WIDTH, 0.0))
 
 		# Middle
-		if variant == 3 or variant == 4:
-			fill_polygon.append(Vector2(size.x, size.y / 2.0))
-		elif variant == 5 or variant == 6:
-			fill_polygon.append(Vector2(size.x, size.y * 2.0 / 3.0))
-		elif variant == 7 or variant == 8:
-			fill_polygon.append(Vector2(size.x, size.y / 3.0))
+		fill_polygon.append(Vector2(size.x, size.y / 2.0))
 
 		# Bottom
-		fill_polygon.append(Vector2(size.x - 5.0, size.y))
+		fill_polygon.append(Vector2(size.x - Constants.POINT_WIDTH, size.y))
 	else:
 		fill_polygon.append(Vector2(size.x, 0.0))
 		fill_polygon.append(Vector2(size.x, size.y))
@@ -151,28 +147,15 @@ func _draw():
 		fill_polygon.append(Vector2(bottom_left_align, size.y))
 
 	# Left side
-	if variant > 0:
+	if background_variant == POINTED:
 		# Bottom
-		if variant == 2 or variant == 4 or variant == 6 or variant == 8:
-			fill_polygon.append(Vector2(0.0, size.y))
-		else:
-			fill_polygon.append(Vector2(5.0, size.y))
+		fill_polygon.append(Vector2(Constants.POINT_WIDTH, size.y))
 
 		# Middle
-		if variant == 4:
-			fill_polygon.append(Vector2(5.0, size.y / 2.0))
-		elif variant == 3:
-			fill_polygon.append(Vector2(0.0, size.y / 2.0))
-		elif variant == 5 or variant == 8:
-			fill_polygon.append(Vector2(0.0, size.y * 2 / 3.0))
-		elif variant == 6 or variant == 7:
-			fill_polygon.append(Vector2(0.0, size.y / 3.0))
+		fill_polygon.append(Vector2(0.0, size.y / 2.0))
 
 		# Top
-		if variant == 2 or variant == 3 or variant == 6 or variant == 8:
-			fill_polygon.append(Vector2(5.0, 0.0))
-		else:
-			fill_polygon.append(Vector2(0.0, 0.0))
+		fill_polygon.append(Vector2(Constants.POINT_WIDTH, 0.0))
 	else:
 		fill_polygon.append(Vector2(0.0, size.y))
 		fill_polygon.append(Vector2(0.0, 0.0))
@@ -182,11 +165,11 @@ func _draw():
 	if draw_outline:
 		var stroke_polygon: PackedVector2Array
 		var edge_polygon: PackedVector2Array
-		var outline_middle = Constants.OUTLINE_WIDTH / 2
+		var outline_middle := Constants.OUTLINE_WIDTH / 2
 
 		# Top line
-		if variant > 0:
-			stroke_polygon.append(Vector2(shift_top - (0.0 if not shift_top > 0 else outline_middle) + 5.0, 0.0))
+		if background_variant == POINTED:
+			stroke_polygon.append(Vector2(shift_top - (0.0 if not shift_top > 0 else outline_middle) + Constants.POINT_WIDTH, 0.0))
 		else:
 			stroke_polygon.append(Vector2(shift_top - (0.0 if not shift_top > 0 else outline_middle), 0.0))
 
@@ -194,23 +177,15 @@ func _draw():
 			stroke_polygon.append_array(top_knob)
 
 		# Right line
-		if variant > 0:
+		if background_variant == POINTED:
 			# Top
-			if variant == 3 or variant == 4:
-				stroke_polygon.append(Vector2(size.x - 5.0, 0.0))
-			else:
-				stroke_polygon.append(Vector2(size.x, 0.0))
+			stroke_polygon.append(Vector2(size.x - Constants.POINT_WIDTH, 0.0))
 
 			# Middle
-			if variant == 3 or variant == 4:
-				stroke_polygon.append(Vector2(size.x, size.y / 2.0))
-			elif variant == 5 or variant == 6:
-				stroke_polygon.append(Vector2(size.x, size.y * 2.0 / 3.0))
-			elif variant == 7 or variant == 8:
-				stroke_polygon.append(Vector2(size.x, size.y / 3.0))
+			stroke_polygon.append(Vector2(size.x, size.y / 2.0))
 
 			# Bottom
-			stroke_polygon.append(Vector2(size.x - 5.0, size.y))
+			stroke_polygon.append(Vector2(size.x - Constants.POINT_WIDTH, size.y))
 		else:
 			stroke_polygon.append(Vector2(size.x, 0.0))
 			stroke_polygon.append(Vector2(size.x, size.y))
@@ -222,33 +197,19 @@ func _draw():
 			stroke_polygon.append(Vector2(bottom_left_align, size.y))
 
 		# Left line
-		if variant > 0:
-			stroke_polygon.append(Vector2(shift_bottom - (outline_middle if shift_bottom > 0 else 0.0) + 5.0, size.y))
-			edge_polygon.append(Vector2(5.0 + outline_middle, 0.0))
+		if background_variant == POINTED:
+			stroke_polygon.append(Vector2(shift_bottom - (outline_middle if shift_bottom > 0 else 0.0) + Constants.POINT_WIDTH, size.y))
+			edge_polygon.append(Vector2(Constants.POINT_WIDTH + outline_middle, 0.0))
 
 			# Top
-			if variant == 2 or variant == 3 or variant == 6 or variant == 8:
-				edge_polygon.append(Vector2(5.0, 0.0))
-			else:
-				edge_polygon.append(Vector2(0.0, 0.0))
+			edge_polygon.append(Vector2(Constants.POINT_WIDTH, 0.0))
 
 			# Middle
-			if variant == 4:
-				edge_polygon.append(Vector2(5.0, size.y / 2.0))
-			elif variant == 3:
-				edge_polygon.append(Vector2(0.0, size.y / 2.0))
-			elif variant == 5 or variant == 8:
-				edge_polygon.append(Vector2(0.0, size.y * 2.0 / 3.0))
-			elif variant == 6 or variant == 7:
-				edge_polygon.append(Vector2(0.0, size.y / 3.0))
+			edge_polygon.append(Vector2(0.0, size.y / 2.0))
 
 			# Bottom
-			if variant == 2 or variant == 4 or variant == 6 or variant == 8:
-				edge_polygon.append(Vector2(0.0, size.y))
-				edge_polygon.append(Vector2(5.0 + outline_middle, size.y))
-			else:
-				edge_polygon.append(Vector2(5.0, size.y))
-				edge_polygon.append(Vector2(5.0 + outline_middle, size.y))
+			edge_polygon.append(Vector2(Constants.POINT_WIDTH, size.y))
+			edge_polygon.append(Vector2(Constants.POINT_WIDTH + outline_middle, size.y))
 		else:
 			stroke_polygon.append(Vector2(shift_bottom - (outline_middle if shift_bottom > 0 else 0.0), size.y))
 			edge_polygon.append(Vector2(0.0, 0.0 - (0.0 if shift_top > 0 else outline_middle)))
