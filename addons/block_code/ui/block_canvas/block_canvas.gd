@@ -4,9 +4,11 @@ extends MarginContainer
 const ASTList = preload("res://addons/block_code/code_generation/ast_list.gd")
 const BlockAST = preload("res://addons/block_code/code_generation/block_ast.gd")
 const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
+const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
 const BlockTreeUtil = preload("res://addons/block_code/ui/block_tree_util.gd")
 const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
 const ScriptGenerator = preload("res://addons/block_code/code_generation/script_generator.gd")
+const Types = preload("res://addons/block_code/types/types.gd")
 const Util = preload("res://addons/block_code/ui/util.gd")
 
 const EXTEND_MARGIN: float = 800
@@ -52,6 +54,8 @@ var zoom: float:
 	get:
 		return _window.scale.x
 
+var _modifier_ctrl := false
+
 signal reconnect_block(block: Block)
 signal add_block_code
 signal open_scene
@@ -75,6 +79,10 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	if typeof(data) != TYPE_DICTIONARY:
 		return false
 
+	# Allow dropping property block
+	if data.get("type", "") == "obj_property":
+		return true
+
 	var nodes: Array = data.get("nodes", [])
 	if nodes.size() != 1:
 		return false
@@ -92,6 +100,13 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 
 
 func _drop_data(at_position: Vector2, data: Variant) -> void:
+	if data["type"] == "nodes":
+		_drop_node(at_position, data)
+	elif data["type"] == "obj_property":
+		_drop_obj_property(at_position, data)
+
+
+func _drop_node(at_position: Vector2, data: Variant) -> void:
 	var abs_path: NodePath = data.get("nodes", []).pop_back()
 	if abs_path == null:
 		return
@@ -104,6 +119,51 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 
 	var block = _context.block_script.instantiate_block_by_name(&"get_node")
 	block.set_parameter_values_on_ready({"path": node_path})
+	add_block(block, at_position)
+	reconnect_block.emit(block)
+
+
+func _drop_obj_property(at_position: Vector2, data: Variant) -> void:
+	var object_name = str(data["object"]).get_slice(":", 0)
+	var property_name = data["property"]
+	var property_value = data["value"]
+
+	# Prepare a Variable block to set / get the property's value according to
+	# the modifier KEY_CTRL pressing.
+	var block_definition: BlockDefinition
+	var property_type = typeof(property_value)
+	if _modifier_ctrl:
+		var type_string: String = Types.VARIANT_TYPE_TO_STRING[property_type]
+		block_definition = (
+			BlockDefinition
+			. new(
+				&"%s_set_%s" % [object_name, property_name],
+				object_name,
+				"Set the %s property" % property_name,
+				"Variables",
+				Types.BlockType.STATEMENT,
+				property_type,
+				"set %s to {value: %s}" % [property_name.capitalize().to_lower(), type_string],
+				"%s = {value}" % property_name,
+				{"value": property_value},
+			)
+		)
+	else:
+		block_definition = (
+			BlockDefinition
+			. new(
+				&"%s_get_%s" % [object_name, property_name],
+				object_name,
+				"The %s property" % property_name,
+				"Variables",
+				Types.BlockType.VALUE,
+				property_type,
+				"%s" % property_name.capitalize().to_lower(),
+				"%s" % property_name,
+			)
+		)
+
+	var block = _context.block_script.instantiate_block(block_definition)
 	add_block(block, at_position)
 	reconnect_block.emit(block)
 
@@ -371,6 +431,12 @@ func _on_replace_block_code_button_pressed():
 	_replace_block_code_button.disabled = true
 
 	replace_block_code.emit()
+
+
+func _input(event):
+	if event is InputEventKey:
+		if event.keycode == KEY_CTRL:
+			_modifier_ctrl = event.pressed
 
 
 func _gui_input(event):
