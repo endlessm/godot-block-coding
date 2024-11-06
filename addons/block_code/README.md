@@ -90,21 +90,20 @@ up to date.
 * If files are added or removed, the list of translatable files needs to be
   updated. This can be done by using the **Add** dialog in the [POT
   Generation][pot-generation] tab. Or you can use the **Project → Tools →
-  Update BlockCode translated files** menu item in the editor.
+  Update BlockCode translated files** menu item in the editor. From the command
+  line, the POT file can be regenerated with the `scripts/update-pot-files.sh`
+  shell script.
 
 * If translatable strings have changed, the POT file needs to be updated. This
   can be done by using the **Generate POT** dialog in the [POT
   Generation][pot-generation] tab. Or you can use the **Project → Tools →
-  Regenerate BlockCode POT file** menu item in the editor.
+  Regenerate BlockCode POT file** menu item in the editor. From the command
+  line, the POT file can be regenerated with the `scripts/regenerate-pot.sh`
+  shell script.
 
 * If the POT file has changed, the PO message files need to be updated. This
-  can be done using the gettext `msgmerge` tool in the
-  `addons/block_code/locale` directory:
-  ```
-  for po in *.po; do
-    msgmerge --update --backup=none "$po" godot_block_coding.pot
-  done
-  ```
+  can be done using the gettext `msgmerge` tool with the
+  `scripts/merge-messages.sh` shell script.
 
 [pot-generation]: https://docs.godotengine.org/en/stable/tutorials/i18n/localization_using_gettext.html#automatic-generation-using-the-editor
 
