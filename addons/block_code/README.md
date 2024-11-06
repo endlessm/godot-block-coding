@@ -62,6 +62,9 @@ We have some high level blocks for simplifying common game elements. Add a Simpl
 
 Lean into animations! Godot's animations functionality goes beyond just simple animations of graphics. You can do so much by combining block coding with Godot's powerful animations editor.
 
+If you want to access the node's property, you can drag the property from the Inspector dock and drop it into the block script as a getter block. And, if you want to modify the property's value, please press & hold Ctrl key when you drop the property, then it will be a setter block of the property in the block script.
+
+
 ## Feedback
 
 Please share feedback in the [Godot Forum Block Coding thread](https://forum.godotengine.org/t/block-coding-high-level-block-based-visual-programming/68941).
