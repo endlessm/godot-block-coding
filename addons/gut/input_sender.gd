@@ -73,7 +73,7 @@ class InputQueueItem:
 		if(frame_delay > 0 and _delay_started):
 			_waited_frames += 1
 			if(_waited_frames >= frame_delay):
-				emit_signal("event_ready")
+				event_ready.emit()
 
 	func _init(t_delay,f_delay):
 		time_delay = t_delay
@@ -82,7 +82,7 @@ class InputQueueItem:
 
 	func _on_time_timeout():
 		_is_ready = true
-		emit_signal("event_ready")
+		event_ready.emit()
 
 	func _delay_timer(t):
 		return Engine.get_main_loop().root.get_tree().create_timer(t)
@@ -182,12 +182,11 @@ class MouseDraw:
 # ##############################################################################
 #
 # ##############################################################################
-var _utils = load('res://addons/gut/utils.gd').get_instance()
 var InputFactory = load("res://addons/gut/input_factory.gd")
 
 const INPUT_WARN = 'If using Input as a reciever it will not respond to *_down events until a *_up event is recieved.  Call the appropriate *_up event or use hold_for(...) to automatically release after some duration.'
 
-var _lgr = _utils.get_logger()
+var _lgr = GutUtils.get_logger()
 var _receivers = []
 var _input_queue = []
 var _next_queue_item = null
@@ -277,6 +276,11 @@ func _send_event(event):
 	for r in _receivers:
 		if(r == Input):
 			Input.parse_input_event(event)
+			if(event is InputEventAction):
+				if(event.pressed):
+					Input.action_press(event.action)
+				else:
+					Input.action_release(event.action)
 			if(_auto_flush_input):
 				Input.flush_buffered_events()
 		else:
@@ -322,6 +326,9 @@ func _new_defaulted_mouse_button_event(position, global_position):
 func _new_defaulted_mouse_motion_event(position, global_position):
 	var event = InputEventMouseMotion.new()
 	_apply_last_position_and_set_last_position(event, position, global_position)
+	for key in _pressed_mouse_buttons:
+		if(_pressed_mouse_buttons[key].pressed):
+			event.button_mask += key
 	return event
 
 
@@ -337,7 +344,7 @@ func _on_queue_item_ready(item):
 
 	if(_input_queue.size() == 0):
 		_next_queue_item = null
-		emit_signal("idle")
+		idle.emit()
 	else:
 		_input_queue[0].start()
 
