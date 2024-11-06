@@ -156,11 +156,14 @@ Tests can also be run from the command line using the GUT command line script:
 godot --path . --headless --script addons/gut/gut_cmdln.gd -gexit
 ```
 
-A few options are of note here. `--path` instructs Godot to use the project in
-the current directory. `--headless` instructs Godot to run without a display or
-sound. `--script` instructs Godot to run the GUT command line script instead of
-running the main scene. `-gexit` is an option for the GUT command line script
-that instructs GUT to exit after the tests complete.
+A few options are of note here:
+
+- `--path` instructs Godot to use the project in the current directory.
+- `--headless` instructs Godot to run without a display or sound.
+- `--script` instructs Godot to run the GUT command line script instead of
+  running the main scene.
+- `-gexit` is an option for the GUT command line script that instructs GUT to
+  exit after the tests complete.
 
 There are several other GUT command line options for running specific tests.
 For example, `-gtest=path/to/test_script_1.gd,path/to/test_script_2.gd` can be
