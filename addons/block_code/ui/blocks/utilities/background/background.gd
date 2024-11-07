@@ -129,13 +129,13 @@ func _draw():
 	# Right side
 	if background_variant == POINTED:
 		# Top
-		fill_polygon.append(Vector2(size.x - Constants.POINT_WIDTH, 0.0))
+		fill_polygon.append(Vector2(size.x - Constants.POINTY_WIDTH, 0.0))
 
 		# Middle
 		fill_polygon.append(Vector2(size.x, size.y / 2.0))
 
 		# Bottom
-		fill_polygon.append(Vector2(size.x - Constants.POINT_WIDTH, size.y))
+		fill_polygon.append(Vector2(size.x - Constants.POINTY_WIDTH, size.y))
 	else:
 		fill_polygon.append(Vector2(size.x, 0.0))
 		fill_polygon.append(Vector2(size.x, size.y))
@@ -149,13 +149,13 @@ func _draw():
 	# Left side
 	if background_variant == POINTED:
 		# Bottom
-		fill_polygon.append(Vector2(Constants.POINT_WIDTH, size.y))
+		fill_polygon.append(Vector2(Constants.POINTY_WIDTH, size.y))
 
 		# Middle
 		fill_polygon.append(Vector2(0.0, size.y / 2.0))
 
 		# Top
-		fill_polygon.append(Vector2(Constants.POINT_WIDTH, 0.0))
+		fill_polygon.append(Vector2(Constants.POINTY_WIDTH, 0.0))
 	else:
 		fill_polygon.append(Vector2(0.0, size.y))
 		fill_polygon.append(Vector2(0.0, 0.0))
@@ -169,7 +169,7 @@ func _draw():
 
 		# Top line
 		if background_variant == POINTED:
-			stroke_polygon.append(Vector2(shift_top - (0.0 if not shift_top > 0 else outline_middle) + Constants.POINT_WIDTH, 0.0))
+			stroke_polygon.append(Vector2(shift_top - (0.0 if not shift_top > 0 else outline_middle) + Constants.POINTY_WIDTH, 0.0))
 		else:
 			stroke_polygon.append(Vector2(shift_top - (0.0 if not shift_top > 0 else outline_middle), 0.0))
 
@@ -179,13 +179,13 @@ func _draw():
 		# Right line
 		if background_variant == POINTED:
 			# Top
-			stroke_polygon.append(Vector2(size.x - Constants.POINT_WIDTH, 0.0))
+			stroke_polygon.append(Vector2(size.x - Constants.POINTY_WIDTH, 0.0))
 
 			# Middle
 			stroke_polygon.append(Vector2(size.x, size.y / 2.0))
 
 			# Bottom
-			stroke_polygon.append(Vector2(size.x - Constants.POINT_WIDTH, size.y))
+			stroke_polygon.append(Vector2(size.x - Constants.POINTY_WIDTH, size.y))
 		else:
 			stroke_polygon.append(Vector2(size.x, 0.0))
 			stroke_polygon.append(Vector2(size.x, size.y))
@@ -198,18 +198,18 @@ func _draw():
 
 		# Left line
 		if background_variant == POINTED:
-			stroke_polygon.append(Vector2(shift_bottom - (outline_middle if shift_bottom > 0 else 0.0) + Constants.POINT_WIDTH, size.y))
-			edge_polygon.append(Vector2(Constants.POINT_WIDTH + outline_middle, 0.0))
+			stroke_polygon.append(Vector2(shift_bottom - (outline_middle if shift_bottom > 0 else 0.0) + Constants.POINTY_WIDTH, size.y))
+			edge_polygon.append(Vector2(Constants.POINTY_WIDTH + outline_middle, 0.0))
 
 			# Top
-			edge_polygon.append(Vector2(Constants.POINT_WIDTH, 0.0))
+			edge_polygon.append(Vector2(Constants.POINTY_WIDTH, 0.0))
 
 			# Middle
 			edge_polygon.append(Vector2(0.0, size.y / 2.0))
 
 			# Bottom
-			edge_polygon.append(Vector2(Constants.POINT_WIDTH, size.y))
-			edge_polygon.append(Vector2(Constants.POINT_WIDTH + outline_middle, size.y))
+			edge_polygon.append(Vector2(Constants.POINTY_WIDTH, size.y))
+			edge_polygon.append(Vector2(Constants.POINTY_WIDTH + outline_middle, size.y))
 		else:
 			stroke_polygon.append(Vector2(shift_bottom - (outline_middle if shift_bottom > 0 else 0.0), size.y))
 			edge_polygon.append(Vector2(0.0, 0.0 - (0.0 if shift_top > 0 else outline_middle)))
