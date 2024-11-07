@@ -27,11 +27,8 @@ var parent_block: Block
 @export var shift_bottom: float = 0.0:
 	set = _set_shift_bottom
 
-enum { BODY, HEADER }
-
-## Style of the top knob
-@export var top_variant := BODY:
-	set = _set_top_variant
+@export var is_round_top: bool = false:
+	set = _set_is_round_top
 
 @export var is_pointy: bool = false:
 	set = _set_is_pointy
@@ -68,8 +65,8 @@ func _set_shift_bottom(new_shift_bottom):
 	queue_redraw()
 
 
-func _set_top_variant(new_variant):
-	top_variant = clamp(new_variant, BODY, HEADER)
+func _set_is_round_top(new_is_round_top):
+	is_round_top = new_is_round_top
 	queue_redraw()
 
 
@@ -95,7 +92,7 @@ func _draw():
 	fill_polygon.append(Vector2(0.0, 0.0))
 
 	if show_top:
-		if top_variant == HEADER:
+		if is_round_top:
 			top_knob.append_array(
 				[
 					Vector2(5, -4.012612),
