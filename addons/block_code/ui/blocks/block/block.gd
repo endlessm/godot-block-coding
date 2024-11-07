@@ -221,7 +221,7 @@ func _get_tooltip(at_position: Vector2) -> String:
 	if definition.variant_type == Variant.Type.TYPE_NIL:
 		return description_tx
 
-	return "{description}\n\n{type_field}: [b]{type}[/b]".format({"description": description_tx, "type_field": tr("Type:"), "type": type_string(definition.variant_type)})
+	return "{description}\n\n{type_field} [b]{type}[/b]".format({"description": description_tx, "type_field": tr("Type:"), "type": type_string(definition.variant_type)})
 
 
 func _make_custom_tooltip(for_text) -> Control:
