@@ -217,7 +217,7 @@ func _update_visible_input():
 			TYPE_VECTOR2:
 				_switch_input(_vector2_input)
 			TYPE_BOOL:
-				_background.background_variant = _background.POINTED
+				_background.is_pointy = true
 				_switch_input(_bool_input)
 			_:
 				_switch_input(_text_input)

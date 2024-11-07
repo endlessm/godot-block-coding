@@ -33,11 +33,8 @@ enum { BODY, HEADER }
 @export var top_variant := BODY:
 	set = _set_top_variant
 
-enum { FLAT, POINTED }
-
-## Style of the background |FLAT|, <POINTED>
-@export var background_variant := FLAT:
-	set = _set_background_variant
+@export var is_pointy: bool = false:
+	set = _set_is_pointy
 
 
 func _set_color(new_color):
@@ -76,8 +73,8 @@ func _set_top_variant(new_variant):
 	queue_redraw()
 
 
-func _set_background_variant(new_variant):
-	background_variant = clamp(new_variant, FLAT, POINTED)
+func _set_is_pointy(new_is_pointy):
+	is_pointy = new_is_pointy
 	queue_redraw()
 
 
@@ -127,7 +124,7 @@ func _draw():
 		fill_polygon.append_array(top_knob)
 
 	# Right side
-	if background_variant == POINTED:
+	if is_pointy:
 		# Top
 		fill_polygon.append(Vector2(size.x - Constants.POINTY_WIDTH, 0.0))
 
@@ -147,7 +144,7 @@ func _draw():
 		fill_polygon.append(Vector2(bottom_left_align, size.y))
 
 	# Left side
-	if background_variant == POINTED:
+	if is_pointy:
 		# Bottom
 		fill_polygon.append(Vector2(Constants.POINTY_WIDTH, size.y))
 
@@ -168,7 +165,7 @@ func _draw():
 		var outline_middle := Constants.OUTLINE_WIDTH / 2
 
 		# Top line
-		if background_variant == POINTED:
+		if is_pointy:
 			stroke_polygon.append(Vector2(shift_top - (0.0 if not shift_top > 0 else outline_middle) + Constants.POINTY_WIDTH, 0.0))
 		else:
 			stroke_polygon.append(Vector2(shift_top - (0.0 if not shift_top > 0 else outline_middle), 0.0))
@@ -177,7 +174,7 @@ func _draw():
 			stroke_polygon.append_array(top_knob)
 
 		# Right line
-		if background_variant == POINTED:
+		if is_pointy:
 			# Top
 			stroke_polygon.append(Vector2(size.x - Constants.POINTY_WIDTH, 0.0))
 
@@ -197,7 +194,7 @@ func _draw():
 			stroke_polygon.append(Vector2(bottom_left_align, size.y))
 
 		# Left line
-		if background_variant == POINTED:
+		if is_pointy:
 			stroke_polygon.append(Vector2(shift_bottom - (outline_middle if shift_bottom > 0 else 0.0) + Constants.POINTY_WIDTH, size.y))
 			edge_polygon.append(Vector2(Constants.POINTY_WIDTH + outline_middle, 0.0))
 

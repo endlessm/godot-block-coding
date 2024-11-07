@@ -21,7 +21,7 @@ func _ready():
 
 	if not definition == null and definition.variant_type == Variant.Type.TYPE_BOOL:
 		_background.visible = true
-		_background.background_variant = _background.POINTED
+		_background.is_pointy = true
 		_background.color = color
 		_panel.visible = false
 	else:
