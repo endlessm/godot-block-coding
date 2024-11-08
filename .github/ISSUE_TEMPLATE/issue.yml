@@ -1,9 +1,9 @@
-name: Report Public Issue
+name: Report Issue
 description: Report an issue with using the Godot Block Coding plugin
 body:
   - type: markdown
     attributes:
-      value: Thanks for taking the time to report an issue! If you're an employee of Endless OS Foundation, please track internal tasks [on Phabricator](https://phabricator.endlessm.com/tag/baby_godot/) instead.
+      value: Thanks for taking the time to report an issue!
   - type: textarea
     id: what-happened
     attributes:
@@ -20,7 +20,7 @@ body:
       description: Can it be reliably reproduced, and if so, how?
       placeholder: |
         1. Add a BlockCode child node
-        2. Drag blocks X, Y, and Z to the editor 
+        2. Drag blocks X, Y, and Z to the editor
         3. ...
     validations:
       required: true
