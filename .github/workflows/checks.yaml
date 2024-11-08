@@ -6,6 +6,11 @@ on:
     branches:
       - main
 
+# Cancel any ongoing previous run if a PR is updated
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   pre-commit:
     name: Linting and Formatting
