@@ -253,25 +253,40 @@ static func add_custom_blocks(
 static func get_variable_block_definitions(variables: Array[VariableDefinition]) -> Array[BlockDefinition]:
 	var block_definitions: Array[BlockDefinition] = []
 	for variable: VariableDefinition in variables:
-		var type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
+		var block_def: BlockDefinition
 
 		# Getter
-		var block_def = BlockDefinition.new()
-		block_def.name = "get_var_%s" % variable.var_name
-		block_def.category = "Variables"
-		block_def.type = Types.BlockType.VALUE
-		block_def.variant_type = variable.var_type
-		block_def.display_template = variable.var_name
-		block_def.code_template = variable.var_name
+		block_def = get_variable_getter_block_definition(variable)
 		block_definitions.append(block_def)
 
 		# Setter
-		block_def = BlockDefinition.new()
-		block_def.name = "set_var_%s" % variable.var_name
-		block_def.category = "Variables"
-		block_def.type = Types.BlockType.STATEMENT
-		block_def.display_template = "Set %s to {value: %s}" % [variable.var_name, type_string]
-		block_def.code_template = "%s = {value}" % [variable.var_name]
+		block_def = get_variable_setter_block_definition(variable)
 		block_definitions.append(block_def)
 
 	return block_definitions
+
+
+static func get_variable_getter_block_definition(variable: VariableDefinition) -> BlockDefinition:
+	var block_def := BlockDefinition.new()
+
+	block_def.name = "get_var_%s" % variable.var_name
+	block_def.category = "Variables"
+	block_def.type = Types.BlockType.VALUE
+	block_def.variant_type = variable.var_type
+	block_def.display_template = variable.var_name
+	block_def.code_template = variable.var_name
+
+	return block_def
+
+
+static func get_variable_setter_block_definition(variable: VariableDefinition) -> BlockDefinition:
+	var type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
+	var block_def := BlockDefinition.new()
+
+	block_def.name = "set_var_%s" % variable.var_name
+	block_def.category = "Variables"
+	block_def.type = Types.BlockType.STATEMENT
+	block_def.display_template = "Set %s to {value: %s}" % [variable.var_name, type_string]
+	block_def.code_template = "%s = {value}" % [variable.var_name]
+
+	return block_def
