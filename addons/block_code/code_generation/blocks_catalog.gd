@@ -287,6 +287,18 @@ static func get_variable_setter_block_definition(variable: VariableDefinition) -
 	block_def.category = "Variables"
 	block_def.type = Types.BlockType.STATEMENT
 	block_def.display_template = "Set %s to {value: %s}" % [variable.var_name, type_string]
-	block_def.code_template = "%s = {value}" % [variable.var_name]
+	block_def.code_template = "%s = {value}" % variable.var_name
 
+	return block_def
+
+
+static func get_property_getter_block_definition(variable: VariableDefinition) -> BlockDefinition:
+	var block_def := get_variable_getter_block_definition(variable)
+	block_def.description = "The %s property" % variable.var_name
+	return block_def
+
+
+static func get_property_setter_block_definition(variable: VariableDefinition) -> BlockDefinition:
+	var block_def := get_variable_setter_block_definition(variable)
+	block_def.description = "Set the %s property" % variable.var_name
 	return block_def
