@@ -1,0 +1,29 @@
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://vkxfyk7uglo7"]
+
+[ext_resource type="Script" path="res://addons/block_code/blocks/communication/groups.gd" id="1_2f03u"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="1_aom4j"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_xf3iq"]
+
+[sub_resource type="Resource" id="Resource_1plv6"]
+script = ExtResource("1_aom4j")
+selected = 0
+items = []
+
+[resource]
+script = ExtResource("1_xf3iq")
+name = &"rigidbody2d_on_entered_group"
+target_node_class = "RigidBody2D"
+description = ""
+category = "Communication | Methods"
+type = 1
+variant_type = 0
+display_template = "when this node collides with [something: OBJECT] in group {group: STRING}"
+code_template = "func _on_body_entered(something: Node2D):
+	if not something.is_in_group({group}):
+		return"
+defaults = {
+"group": SubResource("Resource_1plv6")
+}
+signal_name = "body_entered"
+scope = ""
+extension_script = ExtResource("1_2f03u")
