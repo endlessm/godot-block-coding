@@ -31,6 +31,24 @@ const SCENE_PER_TYPE = {
 var _available_blocks: Array[BlockDefinition]
 var _categories: Array[BlockCategory]
 
+var _block_code_node: BlockCode:
+	get:
+		if _block_code_node == null:
+			_block_code_node = _get_block_code_node()
+		return _block_code_node
+
+var _target_node: Node:
+	get:
+		if _target_node == null:
+			_target_node = _get_target_node()
+		return _target_node
+
+var _target_properties: Array[Dictionary]:
+	get:
+		if _target_properties == []:
+			_target_properties = _get_target_properties()
+		return _target_properties
+
 
 func _init(
 	p_script_inherits: String = "", p_block_serialization_trees: Array[BlockSerializationTree] = [], p_variables: Array[VariableDefinition] = [], p_generated_script: String = "", p_version = 0
@@ -49,6 +67,49 @@ func initialize():
 func _set_variables(value):
 	variables = value
 	_update_block_definitions()
+
+
+# Find the BlockCode node using this script.
+func _get_block_code_node() -> BlockCode:
+	var root: Node
+	if Engine.is_editor_hint():
+		root = EditorInterface.get_edited_scene_root()
+	else:
+		var tree := Engine.get_main_loop() as SceneTree
+		if tree:
+			root = tree.current_scene
+
+	if not root:
+		return null
+
+	for node in root.find_children("*", "BlockCode"):
+		var block_code_node := node as BlockCode
+		if block_code_node and block_code_node.block_script == self:
+			return block_code_node
+
+	return null
+
+
+# Get the node that the block script targets through the BlockCode node.
+func _get_target_node() -> Node:
+	if not _block_code_node:
+		return null
+	return _block_code_node.get_parent()
+
+
+# Get the properties for the block script target node.
+func _get_target_properties() -> Array[Dictionary]:
+	if not _target_node:
+		return []
+	return _target_node.get_property_list()
+
+
+# Get a property definition for the block script target node.
+func _get_target_property(name: String) -> Dictionary:
+	for prop in _target_properties:
+		if prop.get("name") == name:
+			return prop
+	return {}
 
 
 func instantiate_block(block_definition: BlockDefinition) -> Block:
