@@ -81,8 +81,10 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	if typeof(data) != TYPE_DICTIONARY:
 		return false
 
-	# Allow dropping property block
+	# Allow dropping property block of the block code node's parent node
 	if data.get("type", "") == "obj_property":
+		if data["object"] != _context.parent_node:
+			return false
 		return true
 
 	var nodes: Array = data.get("nodes", [])
