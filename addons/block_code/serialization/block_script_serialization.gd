@@ -28,6 +28,8 @@ const SCENE_PER_TYPE = {
 @export var generated_script: String
 @export var version: int
 
+var block_code_node: BlockCode
+
 var _available_blocks: Array[BlockDefinition]
 var _categories: Array[BlockCategory]
 

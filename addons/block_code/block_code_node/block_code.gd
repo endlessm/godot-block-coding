@@ -5,7 +5,8 @@ extends Node
 
 const TxUtils := preload("res://addons/block_code/translation/utils.gd")
 
-@export var block_script: BlockScriptSerialization = null
+@export var block_script: BlockScriptSerialization = null:
+	set = _set_block_script
 
 
 func _init():
@@ -35,6 +36,17 @@ func _enter_tree():
 		new_block_script.script_inherits = _get_custom_or_native_class(get_parent())
 		new_block_script.generated_script = new_block_script.generated_script.replace("INHERIT_DEFAULT", new_block_script.script_inherits)
 		block_script = new_block_script
+
+
+func _set_block_script(value):
+	if value == null:
+		# Wipe out the bidirectional link between this block code node and the
+		# block script
+		if block_script:
+			block_script.block_code_node = null
+	else:
+		value.block_code_node = self
+	block_script = value
 
 
 func _update_parent_script():
