@@ -13,8 +13,6 @@ const ParameterInputScene = preload("res://addons/block_code/ui/blocks/utilities
 const ParameterOutput = preload("res://addons/block_code/ui/blocks/utilities/parameter_output/parameter_output.gd")
 const ParameterOutputScene = preload("res://addons/block_code/ui/blocks/utilities/parameter_output/parameter_output.tscn")
 
-const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{(?<in_parameter>[^}]+)\\}|(?<label>[^\\{\\[]+)"
-
 ## A string describing a block's display format. For example:
 ## [br]
 ## [code]
@@ -41,7 +39,6 @@ var parent_block: Block
 var _parameter_inputs_by_name: Dictionary
 
 @onready var _container := %Container
-@onready var _regex := RegEx.create_from_string(FORMAT_STRING_PATTERN)
 
 
 func _ready() -> void:
