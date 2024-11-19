@@ -94,6 +94,8 @@ func _update_from_format_string():
 			_append_input_parameter(item.get("in_parameter"), match_id)
 		elif item.has("out_parameter"):
 			_append_output_parameter(item.get("out_parameter"), match_id)
+		elif item.has("const_parameter"):
+			_append_const_parameter(item.get("const_parameter"), match_id)
 		match_id += 1
 
 
@@ -104,7 +106,7 @@ func _append_label(label_format: String):
 	_container.add_child(label)
 
 
-func _append_input_parameter(parameter: Dictionary, id: int):
+func _append_input_parameter(parameter: Dictionary, id: int) -> ParameterInput:
 	var default_value = parameter_defaults.get(parameter["name"])
 
 	var parameter_input: ParameterInput = ParameterInputScene.instantiate()
@@ -126,6 +128,8 @@ func _append_input_parameter(parameter: Dictionary, id: int):
 	_container.add_child(parameter_input)
 	_parameter_inputs_by_name[parameter["name"]] = parameter_input
 
+	return parameter_input
+
 
 func _append_output_parameter(parameter: Dictionary, id: int):
 	var parameter_output: ParameterOutput
@@ -135,6 +139,13 @@ func _append_output_parameter(parameter: Dictionary, id: int):
 	parameter_output.block = parent_block
 	parameter_output.parameter_name = parameter["name"]
 	_container.add_child(parameter_output)
+
+
+func _append_const_parameter(parameter: Dictionary, id: int):
+	# const_parameter is a kind of in_parameter with default value, but never
+	# changes value.
+	var parameter_const := _append_input_parameter(parameter, id)
+	parameter_const.visible = false
 
 
 func _on_parameter_input_drag_started(offset: Vector2):
