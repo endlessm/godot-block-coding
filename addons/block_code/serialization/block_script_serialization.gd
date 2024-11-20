@@ -72,7 +72,7 @@ func instantiate_block(block_definition: BlockDefinition) -> Block:
 
 
 func instantiate_block_by_name(block_name: String) -> Block:
-	var block_definition := get_block_definition(block_name)
+	var block_definition := get_block_definition(block_name, {})
 
 	if block_definition == null:
 		push_warning("Cannot find a block definition for %s" % block_name)
@@ -81,18 +81,25 @@ func instantiate_block_by_name(block_name: String) -> Block:
 	return instantiate_block(block_definition)
 
 
-func get_block_definition(block_name: String) -> BlockDefinition:
+func get_block_definition(block_name: String, arguments: Dictionary) -> BlockDefinition:
 	var split := block_name.split(":", true, 1)
 	var block_definition: BlockDefinition
 
 	if len(split) > 1:
-		return _get_parameter_block_definition(split[0], split[1])
+		block_definition = _get_parameter_block_definition(split[0], split[1])
+		if block_definition:
+			return block_definition
 
 	block_definition = _get_base_block_definition(block_name)
 	if block_definition != null:
 		return block_definition
 
 	block_definition = _get_obj_property_block_definition(block_name)
+	if block_definition != null:
+		return block_definition
+
+	var file_path = arguments.get("file_path", "")
+	block_definition = _get_resource_block_definition(block_name, file_path)
 	if block_definition != null:
 		return block_definition
 
@@ -182,6 +189,16 @@ func _get_parent_node_property_info(property_name: String) -> Dictionary:
 	return {}
 
 
+func _get_resource_block_definition(block_name: String, file_path: String) -> BlockDefinition:
+	if block_name != "get_resource_file_path":
+		return null
+
+	if file_path.is_empty() or not FileAccess.file_exists(file_path) or not ResourceLoader.exists(file_path):
+		return null
+
+	return BlocksCatalog.get_resource_block_definition(file_path)
+
+
 func _update_block_definitions():
 	_available_blocks.clear()
 	_available_blocks.append_array(_get_inherited_block_definitions())
@@ -251,13 +268,14 @@ func _tree_to_ast(tree: BlockSerializationTree) -> BlockAST:
 
 func _block_to_ast_node(node: BlockSerialization) -> BlockAST.ASTNode:
 	var ast_node := BlockAST.ASTNode.new()
-	ast_node.data = get_block_definition(node.name)
 
 	for arg_name in node.arguments:
 		var argument = node.arguments[arg_name]
 		if argument is ValueBlockSerialization:
 			argument = _value_to_ast_value(argument)
 		ast_node.arguments[arg_name] = argument
+
+	ast_node.data = get_block_definition(node.name, ast_node.arguments)
 
 	var children: Array[BlockAST.ASTNode]
 	for c in node.children:
@@ -269,13 +287,14 @@ func _block_to_ast_node(node: BlockSerialization) -> BlockAST.ASTNode:
 
 func _value_to_ast_value(value_node: ValueBlockSerialization) -> BlockAST.ASTValueNode:
 	var ast_value_node := BlockAST.ASTValueNode.new()
-	ast_value_node.data = get_block_definition(value_node.name)
 
 	for arg_name in value_node.arguments:
 		var argument = value_node.arguments[arg_name]
 		if argument is ValueBlockSerialization:
 			argument = _value_to_ast_value(argument)
 		ast_value_node.arguments[arg_name] = argument
+
+	ast_value_node.data = get_block_definition(value_node.name, ast_value_node.arguments)
 
 	return ast_value_node
 
