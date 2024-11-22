@@ -3,6 +3,12 @@ extends Control
 
 const BlockTreeUtil = preload("res://addons/block_code/ui/block_tree_util.gd")
 const Constants = preload("res://addons/block_code/ui/constants.gd")
+const Types = preload("res://addons/block_code/types/types.gd")
+
+enum ControlPart {
+	TOP,
+	BOTTOM,
+}
 
 var outline_color: Color
 var parent_block: Block
@@ -30,6 +36,14 @@ var parent_block: Block
 @export var is_round_top: bool = false:
 	set = _set_is_round_top
 
+@export var block_type: Types.BlockType = Types.BlockType.STATEMENT:
+	set = _set_block_type
+
+## Only relevant if block_type is CONTROL.
+@export var control_part: ControlPart = ControlPart.TOP:
+	set = _set_control_part
+
+## Only relevant if block_type is VALUE.
 @export var is_pointy: bool = false:
 	set = _set_is_pointy
 
@@ -75,6 +89,16 @@ func _set_is_pointy(new_is_pointy):
 	queue_redraw()
 
 
+func _set_block_type(new_block_type):
+	block_type = new_block_type
+	queue_redraw()
+
+
+func _set_control_part(new_control_part):
+	control_part = new_control_part
+	queue_redraw()
+
+
 func _ready():
 	# I think the parent block should get the child but this works
 	parent_block = BlockTreeUtil.get_parent_block(self)
@@ -85,6 +109,30 @@ func _ready():
 
 
 func _draw():
+	if block_type == Types.BlockType.ENTRY:
+		# FIXME draw entry
+		pass
+	elif block_type == Types.BlockType.CONTROL:
+		if control_part == ControlPart.TOP:
+			# FIXME draw control top
+			pass
+		else:
+			# FIXME draw control bottom
+			pass
+	elif block_type == Types.BlockType.VALUE:
+		if is_pointy:
+			# FIXME draw pointy value
+			pass
+		else:
+			# FIXME draw round value
+			pass
+	elif block_type == Types.BlockType.STATEMENT:
+		# FIXME draw statement
+		pass
+	return _old_draw()
+
+
+func _old_draw():
 	var top_left_align := Constants.KNOB_X + shift_top
 	var bottom_left_align := Constants.KNOB_X + shift_bottom
 	var top_knob: PackedVector2Array

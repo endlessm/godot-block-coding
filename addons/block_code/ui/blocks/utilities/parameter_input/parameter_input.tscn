@@ -51,6 +51,7 @@ color = Color(1, 1, 1, 1)
 draw_outline = false
 show_top = false
 show_bottom = false
+block_type = 3
 
 [node name="Panel" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -237,7 +238,6 @@ action_mode = 1
 selected = 0
 item_count = 2
 popup/item_0/text = "false"
-popup/item_0/id = 0
 popup/item_1/text = "true"
 popup/item_1/id = 1
 
