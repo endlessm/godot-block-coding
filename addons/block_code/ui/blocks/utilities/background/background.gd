@@ -49,6 +49,12 @@ func _ready():
 	parent_block.focus_exited.connect(queue_redraw)
 
 
+func _get_border_color() -> Color:
+	if parent_block.has_focus():
+		return Constants.FOCUS_BORDER_COLOR
+	return outline_color
+
+
 func _draw():
 	var fill_polygon: PackedVector2Array
 	fill_polygon.append(Vector2(0.0, 0.0))
@@ -105,5 +111,5 @@ func _draw():
 		edge_polygon.append(Vector2(0.0, size.y + outline_middle))
 
 	draw_colored_polygon(fill_polygon, color)
-	draw_polyline(stroke_polygon, Constants.FOCUS_BORDER_COLOR if parent_block.has_focus() else outline_color, Constants.OUTLINE_WIDTH)
-	draw_polyline(edge_polygon, Constants.FOCUS_BORDER_COLOR if parent_block.has_focus() else outline_color, Constants.OUTLINE_WIDTH)
+	draw_polyline(stroke_polygon, _get_border_color(), Constants.OUTLINE_WIDTH)
+	draw_polyline(edge_polygon, _get_border_color(), Constants.OUTLINE_WIDTH)
