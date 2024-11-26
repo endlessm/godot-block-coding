@@ -46,7 +46,7 @@ unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("2_tx0qr")
 color = Color(1, 1, 1, 1)
-shift_bottom = 20.0
+block_type = 4
 
 [node name="DragDropArea" parent="VBoxContainer/MarginContainer/Rows/Row" instance=ExtResource("3_21e8n")]
 layout_mode = 2
@@ -91,7 +91,8 @@ layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("2_tx0qr")
 color = Color(1, 1, 1, 1)
-shift_top = 20.0
+block_type = 4
+control_part = 1
 
 [node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("3_nhryi")]
 layout_mode = 2
