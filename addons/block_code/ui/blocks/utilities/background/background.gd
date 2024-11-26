@@ -74,13 +74,11 @@ func _draw():
 	fill_polygon.append(Vector2(0.0, 0.0))
 
 	var stroke_polygon: PackedVector2Array
-	var edge_polygon: PackedVector2Array
-	var outline_middle = Constants.OUTLINE_WIDTH / 2
 
-	if shift_top > 0:
-		stroke_polygon.append(Vector2(shift_top - outline_middle, 0.0))
-	else:
-		stroke_polygon.append(Vector2(shift_top, 0.0))
+	if shift_bottom > 0 or shift_top == 0:
+		stroke_polygon.append(Vector2(0.0, size.y))
+
+	stroke_polygon.append(Vector2(shift_top, 0.0))
 
 	if show_top:
 		stroke_polygon.append(Vector2(Constants.KNOB_X + shift_top, 0.0))
@@ -94,22 +92,10 @@ func _draw():
 	stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + Constants.KNOB_W + shift_bottom, size.y + Constants.KNOB_H))
 	stroke_polygon.append(Vector2(Constants.KNOB_X + Constants.KNOB_Z + shift_bottom, size.y + Constants.KNOB_H))
 	stroke_polygon.append(Vector2(Constants.KNOB_X + shift_bottom, size.y))
-
-	if shift_bottom > 0:
-		stroke_polygon.append(Vector2(shift_bottom - outline_middle, size.y))
-	else:
-		stroke_polygon.append(Vector2(shift_bottom, size.y))
+	stroke_polygon.append(Vector2(shift_bottom, size.y))
 
 	if shift_top > 0:
-		edge_polygon.append(Vector2(0.0, 0.0))
-	else:
-		edge_polygon.append(Vector2(0.0, 0.0 - outline_middle))
-
-	if shift_bottom > 0:
-		edge_polygon.append(Vector2(0.0, size.y))
-	else:
-		edge_polygon.append(Vector2(0.0, size.y + outline_middle))
+		stroke_polygon.append(Vector2(0.0, 0.0))
 
 	draw_colored_polygon(fill_polygon, color)
 	draw_polyline(stroke_polygon, _get_border_color(), Constants.OUTLINE_WIDTH)
-	draw_polyline(edge_polygon, _get_border_color(), Constants.OUTLINE_WIDTH)
