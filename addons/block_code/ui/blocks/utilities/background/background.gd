@@ -110,6 +110,55 @@ func _get_statement_shape() -> PackedVector2Array:
 	return box_shape.slice(0, 1) + top_knob_shape + box_shape.slice(1, 3) + bottom_knob_shape + box_shape.slice(3)
 
 
+func _get_round_value_shape() -> PackedVector2Array:
+	# Normally radius_y will be equal to radius_x. But if the block is more vertical
+	# than horizontal, we'll have to deform the arc shapes.
+	var radius_x = min(size.x, size.y) / 2
+	var radius_y = max(radius_x, size.y / 2)
+
+	var right_arc = []
+	for i in range(Constants.ROUND_RESOLUTION):
+		var angle = -PI / 2 + PI * i / Constants.ROUND_RESOLUTION
+		(
+			right_arc
+			. append(
+				Vector2(
+					cos(angle) * radius_x + size.x - radius_x,
+					(sin(angle) + 1) * radius_y,
+				)
+			)
+		)
+	var left_arc = []
+	for i in range(Constants.ROUND_RESOLUTION):
+		var angle = PI / 2 + PI * i / Constants.ROUND_RESOLUTION
+		(
+			left_arc
+			. append(
+				Vector2(
+					(cos(angle) + 1) * radius_x,
+					(sin(angle) + 1) * radius_y,
+				)
+			)
+		)
+	return PackedVector2Array(
+		(
+			[
+				Vector2(radius_x, 0),
+				Vector2(size.x - radius_x, 0),
+			]
+			+ right_arc
+			+ [
+				Vector2(size.x - radius_x, size.y),
+				Vector2(radius_x, size.y),
+			]
+			+ left_arc
+			+ [
+				Vector2(radius_x, 0),
+			]
+		)
+	)
+
+
 func _get_control_top_fill_shape() -> PackedVector2Array:
 	var box_shape = _get_box_shape(size)
 	var top_knob_shape = _get_knob_shape(Vector2(Constants.KNOB_X, 0.0))
@@ -149,6 +198,10 @@ func _draw():
 			stroke_polygon = shape
 		Types.BlockType.STATEMENT:
 			var shape = _get_statement_shape()
+			fill_polygon = shape
+			stroke_polygon = shape
+		Types.BlockType.VALUE:
+			var shape = _get_round_value_shape()
 			fill_polygon = shape
 			stroke_polygon = shape
 		Types.BlockType.CONTROL:

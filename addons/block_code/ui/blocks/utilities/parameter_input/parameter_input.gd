@@ -21,7 +21,7 @@ var default_value: Variant
 
 var _drag_start: Vector2 = Vector2.INF
 
-@onready var _panel := %Panel
+@onready var _background := %Background
 @onready var snap_point := %SnapPoint
 @onready var _input_switcher := %InputSwitcher
 
@@ -68,7 +68,7 @@ func set_raw_input(raw_input: Variant):
 	match variant_type:
 		TYPE_COLOR:
 			_color_input.color = raw_input
-			_update_panel_bg_color(raw_input)
+			_update_background_color(raw_input)
 		TYPE_VECTOR2:
 			# Rounding because floats are doubles by default but Vector2s have single components
 			_x_line_edit.text = ("%.4f" % raw_input.x).rstrip("0").rstrip(".") if raw_input != null else ""
@@ -140,8 +140,7 @@ func _set_placeholder(new_placeholder: String) -> void:
 
 
 func _ready():
-	var stylebox = _panel.get_theme_stylebox("panel")
-	stylebox.bg_color = Color.WHITE
+	_background.color = Color.WHITE
 
 	_set_placeholder(placeholder)
 	_set_option_data(option_data)
@@ -224,7 +223,7 @@ func _update_visible_input():
 func _switch_input(node: Node):
 	for c in _input_switcher.get_children():
 		c.visible = c == node
-	_panel.visible = node not in [_option_input]
+	_background.visible = node not in [_option_input]
 
 
 func _update_option_input(current_value: Variant = null):
@@ -276,14 +275,12 @@ func _update_option_input(current_value: Variant = null):
 
 
 func _on_color_input_color_changed(color):
-	_update_panel_bg_color(color)
+	_update_background_color(color)
 	modified.emit()
 
 
-func _update_panel_bg_color(new_color):
-	var stylebox = _panel.get_theme_stylebox("panel").duplicate()
-	stylebox.bg_color = new_color
-	_panel.add_theme_stylebox_override("panel", stylebox)
+func _update_background_color(new_color):
+	_background.color = new_color
 
 
 func _on_option_input_item_selected(index):

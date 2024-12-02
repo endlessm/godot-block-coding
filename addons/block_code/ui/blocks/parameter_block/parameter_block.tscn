@@ -2,18 +2,8 @@
 
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/parameter_block/parameter_block.gd" id="1_0hajy"]
 [ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_0eadx"]
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/background.gd" id="2_oimwh"]
 [ext_resource type="PackedScene" uid="uid://b1xvp3u11h41s" path="res://addons/block_code/ui/blocks/utilities/template_editor/template_editor.tscn" id="3_shl1a"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dbera"]
-bg_color = Color(1, 1, 1, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
 
 [node name="ParameterBlock" type="MarginContainer" node_paths=PackedStringArray("template_editor")]
 offset_right = 16.0
@@ -24,10 +14,12 @@ mouse_filter = 2
 script = ExtResource("1_0hajy")
 template_editor = NodePath("MarginContainer/TemplateEditor")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Background" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_dbera")
+script = ExtResource("2_oimwh")
+color = Color(1, 1, 1, 1)
+block_type = 3
 
 [node name="DragDropArea" parent="." instance=ExtResource("2_0eadx")]
 layout_mode = 2
@@ -36,6 +28,8 @@ mouse_default_cursor_shape = 2
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
 
 [node name="TemplateEditor" parent="MarginContainer" instance=ExtResource("3_shl1a")]
 unique_name_in_owner = true
