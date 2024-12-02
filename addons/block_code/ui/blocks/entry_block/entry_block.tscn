@@ -35,7 +35,7 @@ layout_mode = 2
 mouse_filter = 1
 script = ExtResource("2_yrw8l")
 color = Color(1, 1, 1, 1)
-show_top = false
+block_type = 1
 
 [node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("3_swkpp")]
 layout_mode = 2

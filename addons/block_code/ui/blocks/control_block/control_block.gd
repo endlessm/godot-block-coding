@@ -9,9 +9,7 @@ func _ready():
 	super()
 
 	%TopBackground.color = color
-	%TopBackground.shift_bottom = Constants.CONTROL_MARGIN
 	%BottomBackground.color = color
-	%BottomBackground.shift_top = Constants.CONTROL_MARGIN
 	%SnapPoint.add_theme_constant_override("margin_left", Constants.CONTROL_MARGIN)
 	%SnapGutter.color = color
 	%SnapGutter.custom_minimum_size.x = Constants.CONTROL_MARGIN
