@@ -179,7 +179,7 @@ func _get_distance_to_snap_point(snap_point: SnapPoint) -> float:
 func _update_action_hint():
 	match action:
 		DragAction.REMOVE:
-			_block.modulate = Color(1.0, 1.0, 1.0, 0.5)
+			_block.modulate = Constants.DRAG_REMOVE_COLOR
 		_:
 			_block.modulate = Color.WHITE
 
@@ -193,7 +193,15 @@ func _update_preview():
 		# Make preview block
 		_preview_block = Background.new()
 
-		_preview_block.color = Color(1, 1, 1, 0.5)
+		_preview_block.color = Constants.DRAG_PREVIEW_COLOR
+		if _block.definition.type == Types.BlockType.CONTROL:
+			# Especial case for control block, use statement shape as preview:
+			_preview_block.block_type = Types.BlockType.STATEMENT
+		else:
+			_preview_block.block_type = _block.definition.type
+			if _block.definition.type == Types.BlockType.VALUE and _block.definition.variant_type == TYPE_BOOL:
+				_preview_block.is_pointy_value = true
+
 		_preview_block.custom_minimum_size = _block.get_global_rect().size / scale
 		_preview_block.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		_preview_block.size_flags_vertical = Control.SIZE_SHRINK_BEGIN

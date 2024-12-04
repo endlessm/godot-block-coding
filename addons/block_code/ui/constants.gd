@@ -13,6 +13,8 @@ const MINIMUM_DRAG_THRESHOLD = 25
 const ROUND_RESOLUTION = 10
 
 const FOCUS_BORDER_COLOR = Color(225, 242, 0)
+const DRAG_REMOVE_COLOR = Color(1, 1, 1, 0.5)
+const DRAG_PREVIEW_COLOR = Color(225, 242, 0, 0.3)
 
 ## Properties for builtin categories. Order starts at 10 for the first
 ## category and then are separated by 10 to allow custom categories to
