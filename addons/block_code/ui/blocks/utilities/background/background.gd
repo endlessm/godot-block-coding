@@ -47,7 +47,7 @@ func _ready():
 
 
 func _get_border_color() -> Color:
-	if parent_block.has_focus():
+	if parent_block and parent_block.has_focus():
 		return Constants.FOCUS_BORDER_COLOR
 	return outline_color
 
