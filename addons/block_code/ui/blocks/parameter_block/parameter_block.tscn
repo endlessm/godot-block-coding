@@ -20,6 +20,7 @@ layout_mode = 2
 script = ExtResource("2_oimwh")
 color = Color(1, 1, 1, 1)
 block_type = 3
+is_pointy_value = null
 
 [node name="DragDropArea" parent="." instance=ExtResource("2_0eadx")]
 layout_mode = 2

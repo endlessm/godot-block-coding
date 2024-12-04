@@ -23,6 +23,10 @@ var parent_block: Block
 @export var control_part: ControlPart = ControlPart.TOP:
 	set = _set_control_part
 
+## Only relevant if block_type is VALUE.
+@export var is_pointy_value: bool = false:
+	set = _set_is_pointy_value
+
 
 func _set_color(new_color):
 	color = new_color
@@ -40,6 +44,11 @@ func _set_control_part(new_control_part):
 	queue_redraw()
 
 
+func _set_is_pointy_value(new_is_pointy_value):
+	is_pointy_value = new_is_pointy_value
+	queue_redraw()
+
+
 func _ready():
 	parent_block = BlockTreeUtil.get_parent_block(self)
 	parent_block.focus_entered.connect(queue_redraw)
@@ -47,7 +56,7 @@ func _ready():
 
 
 func _get_border_color() -> Color:
-	if parent_block and parent_block.has_focus():
+	if parent_block.has_focus():
 		return Constants.FOCUS_BORDER_COLOR
 	return outline_color
 
@@ -108,6 +117,24 @@ func _get_statement_shape() -> PackedVector2Array:
 	var bottom_knob_shape = _get_knob_shape(Vector2(Constants.KNOB_X, size.y))
 	bottom_knob_shape.reverse()
 	return box_shape.slice(0, 1) + top_knob_shape + box_shape.slice(1, 3) + bottom_knob_shape + box_shape.slice(3)
+
+
+# Note: This is a especial case of _get_round_value_shape() with resolution = 2,
+# but it's easier this way.
+func _get_pointy_value_shape() -> PackedVector2Array:
+	var radius_x = min(size.x, size.y) / 2
+	var radius_y = max(radius_x, size.y / 2)
+	return PackedVector2Array(
+		[
+			Vector2(radius_x, 0),
+			Vector2(size.x - radius_x, 0),
+			Vector2(size.x, radius_y),
+			Vector2(size.x - radius_x, size.y),
+			Vector2(radius_x, size.y),
+			Vector2(0, radius_y),
+			Vector2(radius_x, 0),
+		]
+	)
 
 
 func _get_round_value_shape() -> PackedVector2Array:
@@ -201,7 +228,11 @@ func _draw():
 			fill_polygon = shape
 			stroke_polygon = shape
 		Types.BlockType.VALUE:
-			var shape = _get_round_value_shape()
+			var shape
+			if is_pointy_value:
+				shape = _get_pointy_value_shape()
+			else:
+				shape = _get_round_value_shape()
 			fill_polygon = shape
 			stroke_polygon = shape
 		Types.BlockType.CONTROL:

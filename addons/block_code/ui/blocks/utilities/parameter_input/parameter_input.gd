@@ -223,7 +223,8 @@ func _update_visible_input():
 func _switch_input(node: Node):
 	for c in _input_switcher.get_children():
 		c.visible = c == node
-	_background.visible = node not in [_option_input]
+	_background.visible = node not in [_option_input, null]
+	_background.is_pointy_value = node == _bool_input
 
 
 func _update_option_input(current_value: Variant = null):

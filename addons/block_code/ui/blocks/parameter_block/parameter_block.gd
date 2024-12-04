@@ -15,6 +15,19 @@ var spawned_by: ParameterOutput
 func _ready():
 	super()
 	_background.color = color
+	_update_block_shape()
+
+
+func _on_definition_changed():
+	super()
+	_update_block_shape()
+
+
+func _update_block_shape():
+	if not definition:
+		return
+	await ready
+	_background.is_pointy_value = definition.variant_type == TYPE_BOOL
 
 
 func _on_drag_drop_area_drag_started(offset: Vector2) -> void:
