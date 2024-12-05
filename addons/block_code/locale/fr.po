@@ -158,10 +158,14 @@
 # 
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Will Thompson <wjt@endlessos.org>, 2024
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Block Coding Plugin\n"
+"Last-Translator: Will Thompson <wjt@endlessos.org>, 2024\n"
 "Language-Team: French (https://app.transifex.com/endless-os/teams/9016/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -676,7 +680,7 @@ msgstr ""
 #: addons/block_code/blocks/sounds/play_sound.tres
 #: addons/block_code/blocks/sounds/stop_sound.tres
 msgid "Sounds"
-msgstr ""
+msgstr "Sons"
 
 #: addons/block_code/blocks/sounds/audiostreamplayer_play.tres
 msgid "Play the audio stream"
@@ -775,7 +779,7 @@ msgstr ""
 
 #: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: addons/block_code/ui/main_panel.tscn
 msgid "Show Generated Script"
@@ -791,7 +795,7 @@ msgstr ""
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "1.0x"
-msgstr ""
+msgstr "1.0×"
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "Select a node to create and edit block code."
@@ -838,11 +842,11 @@ msgstr ""
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Create"
-msgstr ""
+msgstr "Crée"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Name "
-msgstr ""
+msgstr "Nom"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Type "
