@@ -158,10 +158,16 @@
 # 
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Vanessa Chang, 2024
+# Will Thompson <wjt@endlessos.org>, 2024
+# Jian-Hong Pan, 2024
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Block Coding Plugin\n"
+"Last-Translator: Jian-Hong Pan, 2024\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/endless-os/teams/9016/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -171,11 +177,11 @@ msgstr ""
 
 #: addons/block_code/block_code_plugin.gd
 msgid "Regenerate %s POT file"
-msgstr ""
+msgstr "重新產出POT翻譯檔案"
 
 #: addons/block_code/block_code_plugin.gd
 msgid "Update %s translated files"
-msgstr ""
+msgstr "更新已翻譯的檔案"
 
 #: addons/block_code/blocks/communication/add_node_to_group.tres
 #: addons/block_code/blocks/communication/add_to_group.tres
@@ -184,23 +190,23 @@ msgstr ""
 #: addons/block_code/blocks/communication/remove_from_group.tres
 #: addons/block_code/blocks/communication/remove_node_from_group.tres
 msgid "Communication | Groups"
-msgstr ""
+msgstr "互動|群組"
 
 #: addons/block_code/blocks/communication/add_node_to_group.tres
 msgid "Add the node into the group"
-msgstr ""
+msgstr "把指定節點加入群組"
 
 #: addons/block_code/blocks/communication/add_node_to_group.tres
 msgid "add {node: OBJECT} to group {group: STRING}"
-msgstr ""
+msgstr "把節點{node: OBJECT}加入群組{group: STRING}"
 
 #: addons/block_code/blocks/communication/add_to_group.tres
 msgid "Add this node into the group"
-msgstr ""
+msgstr "把這個節點加入群組"
 
 #: addons/block_code/blocks/communication/add_to_group.tres
 msgid "add to group {group: STRING}"
-msgstr ""
+msgstr "把這個節點加入群組{group: STRING}"
 
 #: addons/block_code/blocks/communication/area2d_on_entered.tres
 #: addons/block_code/blocks/communication/area2d_on_exited.tres
@@ -210,304 +216,306 @@ msgstr ""
 #: addons/block_code/blocks/communication/rigidbody2d_on_entered.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_exited.tres
 msgid "Communication | Methods"
-msgstr ""
+msgstr "互動|函式"
 
 #: addons/block_code/blocks/communication/area2d_on_entered.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_entered.tres
 msgid "when this node collides with [something: OBJECT]"
-msgstr ""
+msgstr "當此節點進入[something: OBJECT]的範圍"
 
 #: addons/block_code/blocks/communication/area2d_on_exited.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_exited.tres
 msgid "when this node stops colliding with [something: OBJECT]"
-msgstr ""
+msgstr "當此節點離開[something: OBJECT]的範圍"
 
 #: addons/block_code/blocks/communication/call_method_group.tres
 msgid "Calls the method/function on each member of the given group"
-msgstr ""
+msgstr "呼叫該群組裡所有節點的指定函式"
 
 #: addons/block_code/blocks/communication/call_method_group.tres
 msgid "call method {method_name: STRING} in group {group: STRING}"
-msgstr ""
+msgstr "呼叫該群組{group: STRING}裡所有節點的指定函式{method_name: STRING}"
 
 #: addons/block_code/blocks/communication/call_method_node.tres
 msgid "Calls the method/function of the given node"
-msgstr ""
+msgstr "呼叫節點的函式"
 
 #: addons/block_code/blocks/communication/call_method_node.tres
 msgid "call method {method_name: STRING} on node {node: OBJECT}"
-msgstr ""
+msgstr "呼叫節點{node: OBJECT}的函式{method_name: STRING}"
 
 #: addons/block_code/blocks/communication/define_method.tres
 msgid "Define a method/function with following statements"
-msgstr ""
+msgstr "定義一個函式"
 
 #: addons/block_code/blocks/communication/define_method.tres
 msgid "define method {method_name: STRING_NAME}"
-msgstr ""
+msgstr "定義函式{method_name: STRING_NAME}"
 
 #: addons/block_code/blocks/communication/get_node.tres
 msgid "Communication | Nodes"
-msgstr ""
+msgstr "互動|節點"
 
 #: addons/block_code/blocks/communication/get_node.tres
 msgid "Get the node at the given path"
-msgstr ""
+msgstr "取得該節點在節點樹上的路徑"
 
 #: addons/block_code/blocks/communication/get_node.tres
 msgid "{path: NIL}"
-msgstr ""
+msgstr "{path: NIL}"
 
 #: addons/block_code/blocks/communication/is_in_group.tres
 msgid "Is this node in the group"
-msgstr ""
+msgstr "這節點是否在群組裡"
 
 #: addons/block_code/blocks/communication/is_in_group.tres
 msgid "is in group {group: STRING}"
-msgstr ""
+msgstr "這節點是否在群組{group: STRING}裡"
 
 #: addons/block_code/blocks/communication/is_node_in_group.tres
 msgid "Is the node in the group"
-msgstr ""
+msgstr "該節點是否在群組裡"
 
 #: addons/block_code/blocks/communication/is_node_in_group.tres
 msgid "{node: OBJECT} is in group {group: STRING}"
-msgstr ""
+msgstr "節點{node: OBJECT}是否在群組{group: STRING}裡"
 
 #: addons/block_code/blocks/communication/remove_from_group.tres
 msgid "Remove this node from the group"
-msgstr ""
+msgstr "將此節點從群組中移除"
 
 #: addons/block_code/blocks/communication/remove_from_group.tres
 msgid "remove from group {group: STRING}"
-msgstr ""
+msgstr "把這節點從群組{group: STRING}中移除"
 
 #: addons/block_code/blocks/communication/remove_node_from_group.tres
 msgid "Remove the node from the group"
-msgstr ""
+msgstr "將節點從群組中移除"
 
 #: addons/block_code/blocks/communication/remove_node_from_group.tres
 msgid "remove {node: OBJECT} from group {group: NIL}"
-msgstr ""
+msgstr "將節點{node: OBJECT}從群組{group: NIL}中移除"
 
 #: addons/block_code/blocks/graphics/animationplayer_is_playing.tres
 #: addons/block_code/blocks/graphics/animationplayer_pause.tres
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
 msgid "Graphics | Animation"
-msgstr ""
+msgstr "圖像|動畫"
 
 #: addons/block_code/blocks/graphics/animationplayer_is_playing.tres
 msgid "Check if an animation is currently playing."
-msgstr ""
+msgstr "檢查動畫是否正在播放"
 
 #: addons/block_code/blocks/graphics/animationplayer_is_playing.tres
 msgid "is playing"
-msgstr ""
+msgstr "正在播放"
 
 #: addons/block_code/blocks/graphics/animationplayer_pause.tres
 msgid "Pause the currently playing animation."
-msgstr ""
+msgstr "暫停播放中的動畫"
 
 #: addons/block_code/blocks/graphics/animationplayer_pause.tres
 msgid "pause"
-msgstr ""
+msgstr "暫停"
 
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
 msgid "Play the animation."
-msgstr ""
+msgstr "播放動畫"
 
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
 msgid "play {animation: STRING} {direction: NIL} {wait_mode: NIL}"
-msgstr ""
+msgstr "播放{animation: STRING} {direction: NIL} {wait_mode: NIL}"
 
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
 msgid "Stop the currently playing animation."
-msgstr ""
+msgstr "停止並復歸播放中的動畫"
 
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
 #: addons/block_code/blocks/sounds/audiostreamplayer_stop.tres
 msgid "stop"
-msgstr ""
+msgstr "停止並復歸"
 
 #: addons/block_code/blocks/graphics/viewport_center.tres
 #: addons/block_code/blocks/graphics/viewport_height.tres
 #: addons/block_code/blocks/graphics/viewport_width.tres
 msgid "Graphics | Viewport"
-msgstr ""
+msgstr "圖形 | 視窗"
 
 #: addons/block_code/blocks/graphics/viewport_center.tres
 msgid "Coordinates of the middle of the viewable screen when playing."
-msgstr ""
+msgstr "播放時可視畫面中央的座標"
 
 #: addons/block_code/blocks/graphics/viewport_center.tres
 msgid "viewport center"
-msgstr ""
+msgstr "可視畫面中央座標"
 
 #: addons/block_code/blocks/graphics/viewport_height.tres
 msgid "How tall the viewable screen is when playing."
-msgstr ""
+msgstr "播放時可視畫面的高度"
 
 #: addons/block_code/blocks/graphics/viewport_height.tres
 msgid "viewport height"
-msgstr ""
+msgstr "視窗高度"
 
 #: addons/block_code/blocks/graphics/viewport_width.tres
 msgid "How wide the viewable screen is when playing."
-msgstr ""
+msgstr "播放時可視畫面的寬度"
 
 #: addons/block_code/blocks/graphics/viewport_width.tres
 msgid "viewport width"
-msgstr ""
+msgstr "視窗寬度"
 
 #: addons/block_code/blocks/input/characterbody2d_is_on_floor.tres
 #: addons/block_code/blocks/physics/characterbody2d_move_and_slide.tres
 msgid "Physics | Velocity"
-msgstr ""
+msgstr "物理|速度"
 
 #: addons/block_code/blocks/input/characterbody2d_is_on_floor.tres
 msgid "True if the character is on the floor."
-msgstr ""
+msgstr "如果角色在地面上，則為 True"
 
 #: addons/block_code/blocks/input/characterbody2d_is_on_floor.tres
 msgid "is on floor"
-msgstr ""
+msgstr "是否在地面上"
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 #: addons/block_code/blocks/input/is_input_actioned.tres
 msgid "Input"
-msgstr ""
+msgstr "輸入"
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
 "Move the character up, down, left, and right with the keyboard using the "
 "given keys. The speed of movement can be adjusted separately for x (left and"
 " right) and y (up and down)."
-msgstr ""
+msgstr "使用鍵盤上所設定的按鍵，讓角色可以上下左右移動。移動速度可以分別調整 x 軸（左右）和 y 軸（上下）的速度。"
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
 "move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at"
 " speed {speed: VECTOR2}"
 msgstr ""
+"使用鍵盤的{up: STRING}{down: STRING}{left: STRING}{right: STRING}以速度 {speed: "
+"VECTOR2}移動"
 
 #: addons/block_code/blocks/input/is_input_actioned.tres
 msgid "True if the specified input action has been pressed or released."
-msgstr ""
+msgstr "如果指定的輸入動作已被按下或釋放，則為True"
 
 #: addons/block_code/blocks/input/is_input_actioned.tres
 msgid "action {action_name: STRING_NAME} is {action: NIL}"
-msgstr ""
+msgstr "動作{action_name: STRING_NAME} 是 {action: NIL}"
 
 #: addons/block_code/blocks/lifecycle/process.tres
 #: addons/block_code/blocks/lifecycle/queue_free.tres
 #: addons/block_code/blocks/lifecycle/queue_free_node.tres
 #: addons/block_code/blocks/lifecycle/ready.tres
 msgid "Lifecycle"
-msgstr ""
+msgstr "生命週期"
 
 #: addons/block_code/blocks/lifecycle/process.tres
 msgid ""
 "Attached blocks will be executed during the processing step of the main loop"
-msgstr ""
+msgstr "附加的區塊將在主迴圈的處理步驟中執行"
 
 #: addons/block_code/blocks/lifecycle/process.tres
 msgid "every frame"
-msgstr ""
+msgstr "每一影格"
 
 #: addons/block_code/blocks/lifecycle/queue_free.tres
 msgid "Queues this node to be deleted at the end of the current frame"
-msgstr ""
+msgstr "把這節點移至待刪除的佇列，將於當下影格結束時刪除"
 
 #: addons/block_code/blocks/lifecycle/queue_free.tres
 msgid "remove"
-msgstr ""
+msgstr "移除"
 
 #: addons/block_code/blocks/lifecycle/queue_free_node.tres
 msgid "Queues the given node to be deleted at the end of the current frame"
-msgstr ""
+msgstr "把指定節點移至待刪除的佇列，將於當下影格結束時刪除"
 
 #: addons/block_code/blocks/lifecycle/queue_free_node.tres
 msgid "remove {node: OBJECT}"
-msgstr ""
+msgstr "移除{node: OBJECT}"
 
 #: addons/block_code/blocks/lifecycle/ready.tres
 msgid "Attached blocks will be executed once when the node is \"ready\""
-msgstr ""
+msgstr "附加的區塊將在節點\"準備好\"時執行一次"
 
 #: addons/block_code/blocks/lifecycle/ready.tres
 msgid "when starting"
-msgstr ""
+msgstr "當開始時"
 
 #: addons/block_code/blocks/log/breakpoint.tres
 #: addons/block_code/blocks/log/concat.tres
 #: addons/block_code/blocks/log/print.tres
 msgid "Log"
-msgstr ""
+msgstr "日誌"
 
 #: addons/block_code/blocks/log/breakpoint.tres
 msgid "Pause execution and show the current line of code in the debugger."
-msgstr ""
+msgstr "暫停執行並在除錯器中顯示當行程式碼"
 
 #: addons/block_code/blocks/log/breakpoint.tres
 msgid "breakpoint"
-msgstr ""
+msgstr "除錯斷點"
 
 #: addons/block_code/blocks/log/concat.tres
 msgid "{string1: STRING} + {string2: STRING}"
-msgstr ""
+msgstr "{string1: STRING} + {string2: STRING}"
 
 #: addons/block_code/blocks/log/print.tres
 msgid "Print the text to output"
-msgstr ""
+msgstr "將文句輸出顯示"
 
 #: addons/block_code/blocks/log/print.tres
 msgid "log text {text: STRING}"
-msgstr ""
+msgstr "日誌文本 {text: STRING}"
 
 #: addons/block_code/blocks/logic/and.tres
 #: addons/block_code/blocks/logic/not.tres
 #: addons/block_code/blocks/logic/or.tres
 msgid "Logic | Boolean"
-msgstr ""
+msgstr "邏輯運算 | 布林變數"
 
 #: addons/block_code/blocks/logic/and.tres
 msgid "{bool1: BOOL} and {bool2: BOOL}"
-msgstr ""
+msgstr "{bool1: BOOL} 和 {bool2: BOOL}"
 
 #: addons/block_code/blocks/logic/compare.tres
 msgid "Logic | Comparison"
-msgstr ""
+msgstr "邏輯運算 | 比較運算子"
 
 #: addons/block_code/blocks/logic/compare.tres
 msgid "{float1: FLOAT} {op: NIL} {float2: FLOAT}"
-msgstr ""
+msgstr "{float1: FLOAT}{op: NIL}{float2: FLOAT}"
 
 #: addons/block_code/blocks/logic/else.tres
 #: addons/block_code/blocks/logic/else_if.tres
 #: addons/block_code/blocks/logic/if.tres
 msgid "Logic | Conditionals"
-msgstr ""
+msgstr "邏輯運算 | 條件式語法"
 
 #: addons/block_code/blocks/logic/else.tres
 msgid "else"
-msgstr ""
+msgstr "else"
 
 #: addons/block_code/blocks/logic/else_if.tres
 msgid "else if {condition: BOOL}"
-msgstr ""
+msgstr "else if {condition: BOOL}"
 
 #: addons/block_code/blocks/logic/if.tres
 msgid "if {condition: BOOL}"
-msgstr ""
+msgstr "if {condition: BOOL}"
 
 #: addons/block_code/blocks/logic/not.tres
 msgid "not {bool: BOOL}"
-msgstr ""
+msgstr "not {condition: BOOL}"
 
 #: addons/block_code/blocks/logic/or.tres
 msgid "{bool1: BOOL} or {bool2: BOOL}"
-msgstr ""
+msgstr "{bool1: BOOL} 或 {bool2: BOOL}"
 
 #: addons/block_code/blocks/loops/await_scene_ready.tres
 #: addons/block_code/blocks/loops/break.tres
@@ -515,27 +523,27 @@ msgstr ""
 #: addons/block_code/blocks/loops/for.tres
 #: addons/block_code/blocks/loops/while.tres
 msgid "Loops"
-msgstr ""
+msgstr "迴圈"
 
 #: addons/block_code/blocks/loops/await_scene_ready.tres
 msgid "wait for the scene to be ready"
-msgstr ""
+msgstr "等待場景準備好"
 
 #: addons/block_code/blocks/loops/break.tres
 msgid "break"
-msgstr ""
+msgstr "離開"
 
 #: addons/block_code/blocks/loops/continue.tres
 msgid "continue"
-msgstr ""
+msgstr "繼續"
 
 #: addons/block_code/blocks/loops/for.tres
 msgid "Run the connected blocks [i]number[/i] times"
-msgstr ""
+msgstr "執行已連接的區塊[i] 數字[/i]次"
 
 #: addons/block_code/blocks/loops/for.tres
 msgid "repeat {number: INT}"
-msgstr ""
+msgstr "重複 {number: INT}"
 
 #: addons/block_code/blocks/loops/while.tres
 msgid ""
@@ -543,10 +551,13 @@ msgid ""
 "\n"
 "Hint: snap a [b]Comparison[/b] block into the condition."
 msgstr ""
+"只要[i]條件[/i]為 true，就執行已連接的區塊。\n"
+"\n"
+"提示：將一個[b]比較運算子[/b]區塊拖入條件中。"
 
 #: addons/block_code/blocks/loops/while.tres
 msgid "while {condition: BOOL}"
-msgstr ""
+msgstr "當條件{condition: BOOL}成立時的迴圈"
 
 #: addons/block_code/blocks/math/add.tres
 #: addons/block_code/blocks/math/cos.tres
@@ -564,41 +575,41 @@ msgstr ""
 #: addons/block_code/blocks/math/vector_multiply.tres
 #: addons/block_code/blocks/variables/vector2.tres
 msgid "Math"
-msgstr ""
+msgstr "數學運算"
 
 #: addons/block_code/blocks/math/add.tres
 msgid "{a: FLOAT} + {b: FLOAT}"
-msgstr ""
+msgstr "{a: FLOAT} + {b: FLOAT}"
 
 #: addons/block_code/blocks/math/cos.tres
 msgid "Calculate the cosine of [i]angle[/i]"
-msgstr ""
+msgstr "計算[i]角度(徑度)[/i]的餘弦值(cos)"
 
 #: addons/block_code/blocks/math/cos.tres
 msgid "cos {angle: FLOAT}"
-msgstr ""
+msgstr "cos {angle: FLOAT}"
 
 #: addons/block_code/blocks/math/divide.tres
 msgid "{a: FLOAT} / {b: FLOAT}"
-msgstr ""
+msgstr "{a: FLOAT} / {b: FLOAT}"
 
 #: addons/block_code/blocks/math/multiply.tres
 msgid "{a: FLOAT} * {b: FLOAT}"
-msgstr ""
+msgstr "{a: FLOAT} * {b: FLOAT}"
 
 #: addons/block_code/blocks/math/pow.tres
 msgid "{base: FLOAT} ^ {exp: FLOAT}"
-msgstr ""
+msgstr " {base: FLOAT} ^ {exp: FLOAT}"
 
 #: addons/block_code/blocks/math/randf_range.tres
 msgid ""
 "Generate a random floating point number between [i]from[/i] and [i]to[/i] "
 "inclusively"
-msgstr ""
+msgstr "產生指定[i]上[/i]、[i]下[/i]界(包含)範圍內的浮點數亂數"
 
 #: addons/block_code/blocks/math/randf_range.tres
 msgid "random floating point number between {from: FLOAT} and {to: FLOAT}"
-msgstr ""
+msgstr "在 {from: FLOAT} 和 {to: FLOAT} 之間的隨機浮點數"
 
 #: addons/block_code/blocks/math/randi_range.tres
 msgid ""
@@ -606,68 +617,70 @@ msgid ""
 "[i]to[/i] inclusively. [i]from[/i] and [i]to[/i] can be a negative or "
 "positive number"
 msgstr ""
+"產生一個範圍從 [i]from [/i]到 [i]to[/i]之間的隨機帶符號32位整數，包含範圍的兩端。[i]from [/i]和[i]to "
+"[/i]可以是負數或是正數。"
 
 #: addons/block_code/blocks/math/randi_range.tres
 msgid "random integer number between {from: INT} and {to: INT}"
-msgstr ""
+msgstr "在{from: INT} 和 {to: INT}之間的隨機整數"
 
 #: addons/block_code/blocks/math/sin.tres
 msgid "Calculate the sine of [i]angle[/i]"
-msgstr ""
+msgstr "計算[i]角度(徑度)[/i]的正弦值(sin)"
 
 #: addons/block_code/blocks/math/sin.tres
 msgid "sin {angle: FLOAT}"
-msgstr ""
+msgstr "sin {angle: FLOAT}"
 
 #: addons/block_code/blocks/math/subtract.tres
 msgid "{a: FLOAT} - {b: FLOAT}"
-msgstr ""
+msgstr "{a: FLOAT} - {b: FLOAT}"
 
 #: addons/block_code/blocks/math/tan.tres
 msgid "Calculate the tangent of [i]angle[/i]"
-msgstr ""
+msgstr "計算[i]角度(徑度)[/i]的正切值(tan)"
 
 #: addons/block_code/blocks/math/tan.tres
 msgid "tan {angle: FLOAT}"
-msgstr ""
+msgstr "tan {angle: FLOAT}"
 
 #: addons/block_code/blocks/math/vector2_x.tres
 msgid "Gives the x of a [i]Vector2[/i]"
-msgstr ""
+msgstr "取得[i]二維向量[/i]的 X 分量"
 
 #: addons/block_code/blocks/math/vector2_x.tres
 msgid "x of {vector2: VECTOR2}"
-msgstr ""
+msgstr "二維向量{vector2: VECTOR2}的 x"
 
 #: addons/block_code/blocks/math/vector2_y.tres
 msgid "Gives the y of a [i]Vector2[/i]"
-msgstr ""
+msgstr "取得[i]二維向量[/i]的 Y 分量"
 
 #: addons/block_code/blocks/math/vector2_y.tres
 msgid "y of {vector2: VECTOR2}"
-msgstr ""
+msgstr "二維向量{vector2: VECTOR2}的 y"
 
 #: addons/block_code/blocks/math/vector_from_angle.tres
 msgid "Creates a unit Vector2 rotated to the given angle in radians."
-msgstr ""
+msgstr "新增一個指定角度(弳度)的二維單位向量"
 
 #: addons/block_code/blocks/math/vector_from_angle.tres
 msgid "vector from {angle: FLOAT}"
-msgstr ""
+msgstr "指定角度(弳度){angle: FLOAT}的二維單位向量"
 
 #: addons/block_code/blocks/math/vector_multiply.tres
 msgid ""
 "Multiplies a vector with a number. Use this, for example, to get a point "
 "some distance away along an angle."
-msgstr ""
+msgstr "將向量與數字相乘。例如，可以使用這個方法來計算沿著某個角度一段距離外的點"
 
 #: addons/block_code/blocks/math/vector_multiply.tres
 msgid "multiply {vector: VECTOR2} by {number: FLOAT}"
-msgstr ""
+msgstr "二維向量{vector: VECTOR2}乘以常數{number: FLOAT}"
 
 #: addons/block_code/blocks/physics/characterbody2d_move_and_slide.tres
 msgid "move and slide"
-msgstr ""
+msgstr "移動與滑動"
 
 #: addons/block_code/blocks/sounds/audiostreamplayer_play.tres
 #: addons/block_code/blocks/sounds/audiostreamplayer_stop.tres
@@ -676,86 +689,86 @@ msgstr ""
 #: addons/block_code/blocks/sounds/play_sound.tres
 #: addons/block_code/blocks/sounds/stop_sound.tres
 msgid "Sounds"
-msgstr ""
+msgstr "音訊"
 
 #: addons/block_code/blocks/sounds/audiostreamplayer_play.tres
 msgid "Play the audio stream"
-msgstr ""
+msgstr "播放音訊串流"
 
 #: addons/block_code/blocks/sounds/audiostreamplayer_play.tres
 msgid "play"
-msgstr ""
+msgstr "播放"
 
 #: addons/block_code/blocks/sounds/audiostreamplayer_stop.tres
 #: addons/block_code/blocks/sounds/stop_sound.tres
 msgid "Stop the audio stream"
-msgstr ""
+msgstr "停止音訊串流"
 
 #: addons/block_code/blocks/sounds/load_sound.tres
 msgid "Load a resource file as the audio stream"
-msgstr ""
+msgstr "將資源檔案載入為音訊串流"
 
 #: addons/block_code/blocks/sounds/load_sound.tres
 msgid "load file {file_path: STRING} as sound {name: STRING}"
-msgstr ""
+msgstr "將檔案 {file_path: STRING} 載入設定為音效 {name: STRING}"
 
 #: addons/block_code/blocks/sounds/pause_continue_sound.tres
 msgid "Pause/Continue the audio stream"
-msgstr ""
+msgstr "暫停/繼續播放聲音串流"
 
 #: addons/block_code/blocks/sounds/pause_continue_sound.tres
 msgid "{pause: NIL} the sound {name: STRING}"
-msgstr ""
+msgstr "{pause: NIL}聲音串流{name: STRING}"
 
 #: addons/block_code/blocks/sounds/play_sound.tres
 msgid "Play the audio stream with volume and pitch"
-msgstr ""
+msgstr "播放聲音串流並控制音量和音調"
 
 #: addons/block_code/blocks/sounds/play_sound.tres
 msgid ""
 "play the sound {name: STRING} with volume {db: FLOAT} dB and pitch scale "
 "{pitch: FLOAT}"
-msgstr ""
+msgstr "播放音效 {name: STRING}：使用音量 {db: FLOAT} 分貝及音高比例 {pitch: FLOAT}"
 
 #: addons/block_code/blocks/sounds/stop_sound.tres
 msgid "stop the sound {name: STRING}"
-msgstr ""
+msgstr "停止播放並重置聲音串流{name: STRING}"
 
 #: addons/block_code/blocks/spawn/cpuparticles2d_finished.tres
 msgid "Lifecycle | Spawn"
-msgstr ""
+msgstr "生命週期 | 孵化"
 
 #: addons/block_code/blocks/spawn/cpuparticles2d_finished.tres
 msgid "Emitted when all active particles have finished processing."
-msgstr ""
+msgstr "當所有運作的粒子完成執行後，觸發訊號"
 
 #: addons/block_code/blocks/spawn/cpuparticles2d_finished.tres
 msgid "when particles are finished"
-msgstr ""
+msgstr "當所有的粒子完成執行"
 
 #: addons/block_code/blocks/transform/rigidbody2d_physics_position.tres
 msgid "Transform | Position"
-msgstr ""
+msgstr "變換 | 位置"
 
 #: addons/block_code/blocks/transform/rigidbody2d_physics_position.tres
 msgid "set physics position {position: VECTOR2}"
-msgstr ""
+msgstr "設定位置{position: VECTOR2}"
 
 #: addons/block_code/blocks/ui/label_set_text.tres
 msgid "UI"
-msgstr ""
+msgstr "使用者介面"
 
 #: addons/block_code/blocks/ui/label_set_text.tres
 msgid "Set the text for the label."
-msgstr ""
+msgstr "設定標籤文字"
 
 #: addons/block_code/blocks/ui/label_set_text.tres
 msgid "set text to {text: STRING}"
-msgstr ""
+msgstr "設定文字{text: STRING}"
 
 #: addons/block_code/blocks/variables/vector2.tres
 msgid "vector2 x: {x: FLOAT} y: {y: FLOAT}"
-msgstr ""
+msgstr "二維向量 x: {x: FLOAT} y: {y: FLOAT}"
 
 #: addons/block_code/examples/spawner/spawner.tscn
 msgid ""
@@ -768,90 +781,98 @@ msgid ""
 "\n"
 "Color balls remove themselves after 3 seconds. While uncolored balls are only removed by the SimpleSpawner node according to the limit setings."
 msgstr ""
+"[b]上箭頭：[/b] 開始/停止生成。\n"
+"[b]下箭頭：[/b] 生成一次。\n"
+"[b]左箭頭：[/b] 減少生成頻率。\n"
+"[b]右箭頭：[/b] 增加生成頻率。\n"
+"\n"
+"屬性面板：嘗試更改生成限制條件和生成限制行為。\n"
+"\n"
+"顏色球會在 3 秒後自動移除。而未上色的球則只會根據 SimpleSpawner 節點所設定的限制條件進行移除。"
 
 #: addons/block_code/inspector_plugin/block_script_inspector.gd
 msgid "Open Block Script"
-msgstr ""
+msgstr "打開區塊腳本"
 
 #: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: addons/block_code/ui/main_panel.tscn
 msgid "Show Generated Script"
-msgstr ""
+msgstr "顯示產生的腳本"
 
 #: addons/block_code/ui/main_panel.tscn
 msgid "Delete Block Code"
-msgstr ""
+msgstr "刪除 Block Code"
 
 #: addons/block_code/ui/main_panel.tscn
 msgid "Toggle Block Picker (Ctrl+BackSlash)"
-msgstr ""
+msgstr "切換區塊選擇器（Ctrl+反斜線）"
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "1.0x"
-msgstr ""
+msgstr "1.0x"
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "Select a node to create and edit block code."
-msgstr ""
+msgstr "選擇一個節點來創建和編輯區塊程式碼"
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid ""
 "Use block coding to create custom behavior and game mechanics for "
 "\"{node}\"."
-msgstr ""
+msgstr "使用區塊程式碼來為 {node}建立客製化的行為和遊戲機制"
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "Add Block Code"
-msgstr ""
+msgstr "新增區塊程式碼"
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "\"{node}\" uses block coding."
-msgstr ""
+msgstr "{node}使用區塊程式碼"
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "Open in Editor"
-msgstr ""
+msgstr "在編輯器中打開"
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "Override Block Code"
-msgstr ""
+msgstr "覆蓋區塊程式碼"
 
 #: addons/block_code/ui/blocks/block/block.gd
 msgid "Type:"
-msgstr ""
+msgstr "型態："
 
 #: addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn
 msgid "Parameter"
-msgstr ""
+msgstr "參數"
 
 #: addons/block_code/ui/picker/categories/block_category_button.tscn
 msgid "Example"
-msgstr ""
+msgstr "範例"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_button.tscn
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Create New Variable"
-msgstr ""
+msgstr "宣告新變數"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Create"
-msgstr ""
+msgstr "新增"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Name "
-msgstr ""
+msgstr "名子"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Type "
-msgstr ""
+msgstr "型態"
 
 #: addons/block_code/ui/script_window/script_window.tscn
 msgid "Block Code Generated GDScript"
-msgstr ""
+msgstr "區塊程式碼產生的 GDScript"
 
 #: addons/block_code/ui/script_window/script_window.tscn
 msgid "Copy"
-msgstr ""
+msgstr "複製"

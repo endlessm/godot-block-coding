@@ -158,10 +158,14 @@
 # 
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Deep ChTi, 2024
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Block Coding Plugin\n"
+"Last-Translator: Deep ChTi, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/endless-os/teams/9016/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -171,11 +175,11 @@ msgstr ""
 
 #: addons/block_code/block_code_plugin.gd
 msgid "Regenerate %s POT file"
-msgstr ""
+msgstr "重新生成%s个 POT 文件"
 
 #: addons/block_code/block_code_plugin.gd
 msgid "Update %s translated files"
-msgstr ""
+msgstr "更新%s已翻译的文件"
 
 #: addons/block_code/blocks/communication/add_node_to_group.tres
 #: addons/block_code/blocks/communication/add_to_group.tres
@@ -184,23 +188,23 @@ msgstr ""
 #: addons/block_code/blocks/communication/remove_from_group.tres
 #: addons/block_code/blocks/communication/remove_node_from_group.tres
 msgid "Communication | Groups"
-msgstr ""
+msgstr "通信|组"
 
 #: addons/block_code/blocks/communication/add_node_to_group.tres
 msgid "Add the node into the group"
-msgstr ""
+msgstr "将node节点添加到组中"
 
 #: addons/block_code/blocks/communication/add_node_to_group.tres
 msgid "add {node: OBJECT} to group {group: STRING}"
-msgstr ""
+msgstr "将{node: OBJECT}添加到组{group: STRING}"
 
 #: addons/block_code/blocks/communication/add_to_group.tres
 msgid "Add this node into the group"
-msgstr ""
+msgstr "将此节点添加到组中"
 
 #: addons/block_code/blocks/communication/add_to_group.tres
 msgid "add to group {group: STRING}"
-msgstr ""
+msgstr "添加到组{group: STRING}"
 
 #: addons/block_code/blocks/communication/area2d_on_entered.tres
 #: addons/block_code/blocks/communication/area2d_on_exited.tres
@@ -210,37 +214,37 @@ msgstr ""
 #: addons/block_code/blocks/communication/rigidbody2d_on_entered.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_exited.tres
 msgid "Communication | Methods"
-msgstr ""
+msgstr "通信|方法"
 
 #: addons/block_code/blocks/communication/area2d_on_entered.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_entered.tres
 msgid "when this node collides with [something: OBJECT]"
-msgstr ""
+msgstr "当此节点与[something: OBJECT]"
 
 #: addons/block_code/blocks/communication/area2d_on_exited.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_exited.tres
 msgid "when this node stops colliding with [something: OBJECT]"
-msgstr ""
+msgstr "当此节点与[something: OBJECT]停止"
 
 #: addons/block_code/blocks/communication/call_method_group.tres
 msgid "Calls the method/function on each member of the given group"
-msgstr ""
+msgstr "对给定组的每个成员调用方法/函数"
 
 #: addons/block_code/blocks/communication/call_method_group.tres
 msgid "call method {method_name: STRING} in group {group: STRING}"
-msgstr ""
+msgstr "调用组{group: STRING}中的{method_name: STRING}方法"
 
 #: addons/block_code/blocks/communication/call_method_node.tres
 msgid "Calls the method/function of the given node"
-msgstr ""
+msgstr "调用给定节点的方法/函数"
 
 #: addons/block_code/blocks/communication/call_method_node.tres
 msgid "call method {method_name: STRING} on node {node: OBJECT}"
-msgstr ""
+msgstr "在节点{node: OBJECT}上调用方法{method_name: STRING}"
 
 #: addons/block_code/blocks/communication/define_method.tres
 msgid "Define a method/function with following statements"
-msgstr ""
+msgstr "使用以下语句定义方法/函数"
 
 #: addons/block_code/blocks/communication/define_method.tres
 msgid "define method {method_name: STRING_NAME}"
@@ -315,85 +319,87 @@ msgstr ""
 
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
 msgid "Play the animation."
-msgstr ""
+msgstr "播放动画"
 
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
 msgid "play {animation: STRING} {direction: NIL} {wait_mode: NIL}"
-msgstr ""
+msgstr "播放动画{animation: STRING}{direction: NIL}{wait_mode: NIL}"
 
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
 msgid "Stop the currently playing animation."
-msgstr ""
+msgstr "停止当前播放的动画"
 
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
 #: addons/block_code/blocks/sounds/audiostreamplayer_stop.tres
 msgid "stop"
-msgstr ""
+msgstr "停止"
 
 #: addons/block_code/blocks/graphics/viewport_center.tres
 #: addons/block_code/blocks/graphics/viewport_height.tres
 #: addons/block_code/blocks/graphics/viewport_width.tres
 msgid "Graphics | Viewport"
-msgstr ""
+msgstr "图形|视窗"
 
 #: addons/block_code/blocks/graphics/viewport_center.tres
 msgid "Coordinates of the middle of the viewable screen when playing."
-msgstr ""
+msgstr "播放时可视屏幕中间的坐标"
 
 #: addons/block_code/blocks/graphics/viewport_center.tres
 msgid "viewport center"
-msgstr ""
+msgstr "视区居中"
 
 #: addons/block_code/blocks/graphics/viewport_height.tres
 msgid "How tall the viewable screen is when playing."
-msgstr ""
+msgstr "播放时可视屏幕的高度"
 
 #: addons/block_code/blocks/graphics/viewport_height.tres
 msgid "viewport height"
-msgstr ""
+msgstr "视区高度"
 
 #: addons/block_code/blocks/graphics/viewport_width.tres
 msgid "How wide the viewable screen is when playing."
-msgstr ""
+msgstr "播放时可视屏幕的宽度"
 
 #: addons/block_code/blocks/graphics/viewport_width.tres
 msgid "viewport width"
-msgstr ""
+msgstr "视区宽度"
 
 #: addons/block_code/blocks/input/characterbody2d_is_on_floor.tres
 #: addons/block_code/blocks/physics/characterbody2d_move_and_slide.tres
 msgid "Physics | Velocity"
-msgstr ""
+msgstr "物理|速度"
 
 #: addons/block_code/blocks/input/characterbody2d_is_on_floor.tres
 msgid "True if the character is on the floor."
-msgstr ""
+msgstr "如果角色在地板上，则为 True"
 
 #: addons/block_code/blocks/input/characterbody2d_is_on_floor.tres
 msgid "is on floor"
-msgstr ""
+msgstr "在地板上"
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 #: addons/block_code/blocks/input/is_input_actioned.tres
 msgid "Input"
-msgstr ""
+msgstr "输入"
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
 "Move the character up, down, left, and right with the keyboard using the "
 "given keys. The speed of movement can be adjusted separately for x (left and"
 " right) and y (up and down)."
-msgstr ""
+msgstr "使用给定的键通过键盘上下、向左和向右移动角色。可以分别为 x （左和右） 和 y （上和下） 调整移动速度。"
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
 "move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at"
 " speed {speed: VECTOR2}"
 msgstr ""
+"使用键盘上的{up: STRING}{down: STRING}{left: STRING}{right: STRING}键，用速度{speed: "
+"VECTOR2}移动"
 
 #: addons/block_code/blocks/input/is_input_actioned.tres
 msgid "True if the specified input action has been pressed or released."
-msgstr ""
+msgstr "如果已按下或释放指定的输入操作，则为 True。"
 
 #: addons/block_code/blocks/input/is_input_actioned.tres
 msgid "action {action_name: STRING_NAME} is {action: NIL}"
@@ -527,7 +533,7 @@ msgstr ""
 
 #: addons/block_code/blocks/loops/continue.tres
 msgid "continue"
-msgstr ""
+msgstr "继续"
 
 #: addons/block_code/blocks/loops/for.tres
 msgid "Run the connected blocks [i]number[/i] times"
@@ -543,10 +549,13 @@ msgid ""
 "\n"
 "Hint: snap a [b]Comparison[/b] block into the condition."
 msgstr ""
+"只要条件[i]为 true，就将连接的块[/i]作为运行。\n"
+"\n"
+"提示：将比较块[b]对齐到条件[/b]中。"
 
 #: addons/block_code/blocks/loops/while.tres
 msgid "while {condition: BOOL}"
-msgstr ""
+msgstr "当{condition: BOOL}就重复执行"
 
 #: addons/block_code/blocks/math/add.tres
 #: addons/block_code/blocks/math/cos.tres
@@ -564,41 +573,41 @@ msgstr ""
 #: addons/block_code/blocks/math/vector_multiply.tres
 #: addons/block_code/blocks/variables/vector2.tres
 msgid "Math"
-msgstr ""
+msgstr "数学"
 
 #: addons/block_code/blocks/math/add.tres
 msgid "{a: FLOAT} + {b: FLOAT}"
-msgstr ""
+msgstr "{a: FLOAT} +{b: FLOAT}"
 
 #: addons/block_code/blocks/math/cos.tres
 msgid "Calculate the cosine of [i]angle[/i]"
-msgstr ""
+msgstr "计算[i]的角度[/i]的余弦值"
 
 #: addons/block_code/blocks/math/cos.tres
 msgid "cos {angle: FLOAT}"
-msgstr ""
+msgstr "计算{angle: FLOAT}的余弦"
 
 #: addons/block_code/blocks/math/divide.tres
 msgid "{a: FLOAT} / {b: FLOAT}"
-msgstr ""
+msgstr "{a: FLOAT} / {b: FLOAT}"
 
 #: addons/block_code/blocks/math/multiply.tres
 msgid "{a: FLOAT} * {b: FLOAT}"
-msgstr ""
+msgstr "{a: FLOAT} * {b: FLOAT}"
 
 #: addons/block_code/blocks/math/pow.tres
 msgid "{base: FLOAT} ^ {exp: FLOAT}"
-msgstr ""
+msgstr "{base: FLOAT} ^ {exp: FLOAT}"
 
 #: addons/block_code/blocks/math/randf_range.tres
 msgid ""
 "Generate a random floating point number between [i]from[/i] and [i]to[/i] "
 "inclusively"
-msgstr ""
+msgstr "在 [i] 到 [/i] 之间生成一个随机浮点数（包含 [i]和 [/i]）"
 
 #: addons/block_code/blocks/math/randf_range.tres
 msgid "random floating point number between {from: FLOAT} and {to: FLOAT}"
-msgstr ""
+msgstr "介于 {from: FLOAT} 和 {to: FLOAT} 之间的随机浮点数"
 
 #: addons/block_code/blocks/math/randi_range.tres
 msgid ""
@@ -684,16 +693,16 @@ msgstr ""
 
 #: addons/block_code/blocks/sounds/audiostreamplayer_play.tres
 msgid "play"
-msgstr ""
+msgstr "播放"
 
 #: addons/block_code/blocks/sounds/audiostreamplayer_stop.tres
 #: addons/block_code/blocks/sounds/stop_sound.tres
 msgid "Stop the audio stream"
-msgstr ""
+msgstr "停止音频流"
 
 #: addons/block_code/blocks/sounds/load_sound.tres
 msgid "Load a resource file as the audio stream"
-msgstr ""
+msgstr "将资源文件加载为音频流"
 
 #: addons/block_code/blocks/sounds/load_sound.tres
 msgid "load file {file_path: STRING} as sound {name: STRING}"
@@ -813,7 +822,7 @@ msgstr ""
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "Open in Editor"
-msgstr ""
+msgstr "在编辑器中打开"
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "Override Block Code"
@@ -829,29 +838,29 @@ msgstr ""
 
 #: addons/block_code/ui/picker/categories/block_category_button.tscn
 msgid "Example"
-msgstr ""
+msgstr "例子"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_button.tscn
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Create New Variable"
-msgstr ""
+msgstr "创建新变量"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Create"
-msgstr ""
+msgstr "新建"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Name "
-msgstr ""
+msgstr "名字"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Type "
-msgstr ""
+msgstr "标签"
 
 #: addons/block_code/ui/script_window/script_window.tscn
 msgid "Block Code Generated GDScript"
-msgstr ""
+msgstr "通过Block Code生成GDScript"
 
 #: addons/block_code/ui/script_window/script_window.tscn
 msgid "Copy"
-msgstr ""
+msgstr "复制"
