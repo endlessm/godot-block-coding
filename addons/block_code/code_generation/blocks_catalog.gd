@@ -302,3 +302,20 @@ static func get_property_setter_block_definition(variable: VariableDefinition) -
 	var block_def := get_variable_setter_block_definition(variable)
 	block_def.description = "Set the %s property" % variable.var_name
 	return block_def
+
+
+static func get_resource_block_definition(file_path: String) -> BlockDefinition:
+	var block_def := BlockDefinition.new()
+	var file_name = file_path.get_file()
+
+	# Block Definition's name cannot work with '.'
+	block_def.name = &"get_resource_file_path"
+	block_def.description = "The full resource path of '%s'" % file_name
+	block_def.category = "Variables"
+	block_def.type = Types.BlockType.VALUE
+	block_def.variant_type = TYPE_STRING
+	block_def.display_template = "%s {const file_path: STRING}" % file_name
+	block_def.code_template = "{file_path}"
+	block_def.defaults = {"file_path": file_path}
+
+	return block_def

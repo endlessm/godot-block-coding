@@ -87,6 +87,10 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 			return false
 		return true
 
+	# Allow dropping resource file
+	if data.get("type", "") == "files":
+		return true
+
 	var nodes: Array = data.get("nodes", [])
 	if nodes.size() != 1:
 		return false
@@ -108,6 +112,8 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 		_drop_node(at_position, data)
 	elif data["type"] == "obj_property":
 		_drop_obj_property(at_position, data)
+	elif data["type"] == "files":
+		_drop_files(at_position, data)
 
 
 func _drop_node(at_position: Vector2, data: Variant) -> void:
@@ -146,6 +152,23 @@ func _drop_obj_property(at_position: Vector2, data: Variant) -> void:
 	var block = _context.block_script.instantiate_block(block_definition)
 	add_block(block, at_position)
 	reconnect_block.emit(block)
+
+
+func _drop_files(at_position: Vector2, data: Variant) -> void:
+	var resource_files = data["files"]
+	var next_position = at_position
+	const bias = 20
+
+	for file_path in resource_files:
+		# Prepare a Variable block getting the file's resource path.
+		var block_definition = BlocksCatalog.get_resource_block_definition(file_path)
+		var block = _context.block_script.instantiate_block(block_definition)
+		add_block(block, next_position)
+		reconnect_block.emit(block)
+
+		# Shift next block's position a little bit to avoid overlap totally.
+		next_position.x += bias
+		next_position.y += bias
 
 
 func add_block(block: Block, position: Vector2 = Vector2.ZERO) -> void:

@@ -3,7 +3,7 @@ extends Resource
 
 const Types = preload("res://addons/block_code/types/types.gd")
 
-const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{(?<in_parameter>[^}]+)\\}|(?<label>[^\\{\\[]+)"
+const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{const (?<const_parameter>[^}]+)\\}|\\{(?!const )(?<in_parameter>[^}]+)\\}|(?<label>[^\\{\\[]+)"
 
 @export var name: StringName
 
@@ -102,6 +102,9 @@ static func parse_display_template(template_string: String):
 		elif regex_match.names.has("out_parameter"):
 			var parameter_string := regex_match.get_string("out_parameter")
 			items.append({"out_parameter": _parse_parameter_format(parameter_string)})
+		elif regex_match.names.has("const_parameter"):
+			var parameter_string := regex_match.get_string("const_parameter")
+			items.append({"const_parameter": _parse_parameter_format(parameter_string)})
 	return items
 
 
