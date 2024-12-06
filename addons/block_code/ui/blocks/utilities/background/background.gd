@@ -37,6 +37,7 @@ func _set_color(new_color):
 func _set_block_type(new_block_type):
 	block_type = new_block_type
 	queue_redraw()
+	notify_property_list_changed()
 
 
 func _set_control_part(new_control_part):
@@ -47,6 +48,13 @@ func _set_control_part(new_control_part):
 func _set_is_pointy_value(new_is_pointy_value):
 	is_pointy_value = new_is_pointy_value
 	queue_redraw()
+
+
+func _validate_property(property: Dictionary):
+	if property.name == "control_part" and block_type != Types.BlockType.CONTROL:
+		property.usage |= PROPERTY_USAGE_READ_ONLY
+	elif property.name == "is_pointy_value" and block_type != Types.BlockType.VALUE:
+		property.usage |= PROPERTY_USAGE_READ_ONLY
 
 
 func _ready():
