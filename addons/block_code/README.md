@@ -64,6 +64,7 @@ Lean into animations! Godot's animations functionality goes beyond just simple a
 
 If you want to access the node's property, you can drag the property from the Inspector dock and drop it into the block script as a getter block. And, if you want to modify the property's value, please press & hold Ctrl key when you drop the property, then it will be a setter block of the property in the block script.
 
+You can also drag a file from the Resource Filesystem dock and drop it into the block script as a getter block. It will become a constant value block holding the file's resource full path.
 
 ## Feedback
 
