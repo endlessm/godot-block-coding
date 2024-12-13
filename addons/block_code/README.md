@@ -5,6 +5,8 @@ Experimental plugin by [Endless OS Foundation](https://endlessos.org) that intro
 [![Godot asset](https://img.shields.io/badge/Asset_Library-Block_Coding-blue?logo=godot-engine)](https://godotengine.org/asset-library/asset/3095)
 [![Latest release](https://img.shields.io/github/v/release/endlessm/godot-block-coding?label=Release&logo=github)](https://github.com/endlessm/godot-block-coding/releases)
 
+[![Youtube video](https://i.ibb.co/B2Y11n5/Bildschirmfoto-20241213-173815.png)](https://www.youtube.com/watch?v=WlUN7Zz0Djg)
+
 ## Background
 
 Our aim is to reduce the learning curve faced by learners who are on the early part of their journey towards becoming game developers. Learners within our target audience understand game concepts, but have never used Godot (or any other game engine) before, and do not have programming experience. Ordinarily, such learners are faced with the challenge of learning their way around Godot's powerful, complex editor UI, combined with the additional challenge of learning to code for the first time as they navigate the ins and outs of GDScript.
