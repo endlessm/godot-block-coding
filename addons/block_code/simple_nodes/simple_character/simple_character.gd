@@ -29,6 +29,36 @@ const PLAYER_KEYS = [
 	}
 ]
 
+const PLAYER_JOYSTICK_BUTTONS = {
+	"up": JOY_BUTTON_DPAD_UP,
+	"down": JOY_BUTTON_DPAD_DOWN,
+	"left": JOY_BUTTON_DPAD_LEFT,
+	"right": JOY_BUTTON_DPAD_RIGHT,
+}
+
+const PLAYER_JOYSTICK_MOTION = {
+	"up":
+	{
+		"axis": JOY_AXIS_LEFT_Y,
+		"axis_value": -1,
+	},
+	"down":
+	{
+		"axis": JOY_AXIS_LEFT_Y,
+		"axis_value": 1,
+	},
+	"left":
+	{
+		"axis": JOY_AXIS_LEFT_X,
+		"axis_value": -1,
+	},
+	"right":
+	{
+		"axis": JOY_AXIS_LEFT_X,
+		"axis_value": 1,
+	},
+}
+
 var sprite: Sprite2D
 var collision: CollisionShape2D
 
@@ -99,6 +129,19 @@ func _setup_actions():
 			var e = InputEventKey.new()
 			e.physical_keycode = PLAYER_KEYS[i][action]
 			InputMap.action_add_event(action_name, e)
+
+			#controller d-pad event
+			var ej = InputEventJoypadButton.new()
+			ej.device = i
+			ej.button_index = PLAYER_JOYSTICK_BUTTONS[action]
+			InputMap.action_add_event(action_name, ej)
+
+			#controller left stick event
+			var ejm = InputEventJoypadMotion.new()
+			ejm.device = i
+			ejm.axis = PLAYER_JOYSTICK_MOTION[action]["axis"]
+			ejm.axis_value = PLAYER_JOYSTICK_MOTION[action]["axis_value"]
+			InputMap.action_add_event(action_name, ejm)
 
 
 func get_custom_class():
