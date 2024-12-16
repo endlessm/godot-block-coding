@@ -92,20 +92,45 @@ func get_custom_class():
 
 func _player_input_to_direction(player: String):
 	var direction = Vector2()
+
+	# Keyboard input (existing)
 	direction.x += float(Input.is_physical_key_pressed(PLAYER_KEYS[player]["right"]))
 	direction.x -= float(Input.is_physical_key_pressed(PLAYER_KEYS[player]["left"]))
 	direction.y += float(Input.is_physical_key_pressed(PLAYER_KEYS[player]["down"]))
 	direction.y -= float(Input.is_physical_key_pressed(PLAYER_KEYS[player]["up"]))
+
+	# Gamepad input (new)
+	if player == "player_1" or player == "player_2":
+		var joy_index = 0 if player == "player_1" else 1 # Assuming player 1 uses the first gamepad and player 2 uses the second
+		# Horizontal movement (left stick x-axis)
+		direction.x += Input.get_joy_axis(joy_index, JOY_AXIS_0) # Left stick X-axis
+		# Vertical movement (left stick y-axis)
+		direction.y += Input.get_joy_axis(joy_index, JOY_AXIS_1) # Left stick Y-axis
+
+		# You can also check for specific gamepad button presses if needed
+		# For example, A button for jumping (Button 0) on player 1 and player 2
+		if Input.is_joy_button_pressed(joy_index, JOY_BUTTON_0): # Button 0 (A button on most controllers)
+			# Handle button press (for jumping or other actions)
+			pass
+
 	return direction
 
 
-func move_with_player_buttons(player: String, kind: String, delta: float):
-	var direction = _player_input_to_direction(player)
+func move_with_player_buttons(player: String, kind: String, delta: float, input_type: String):
+	var direction = Vector2()
+
+	# Handle input based on the selected input type (keyboard or gamepad)
+	if input_type == "keyboard":
+		# Get direction using keyboard input (existing)
+		direction = _player_input_to_direction(player)
+	elif input_type == "gamepad":
+		# Get direction using gamepad input (newly added)
+		direction = _player_input_to_direction(player)  # This function now also supports gamepad
+
 	direction_x = direction.x
 
 	if kind == "top-down":
 		velocity = direction * speed
-
 	elif kind == "platformer":
 		velocity.x = direction.x * speed.x
 		if not is_on_floor():
@@ -116,40 +141,47 @@ func move_with_player_buttons(player: String, kind: String, delta: float):
 				velocity.y -= speed.y
 			else:
 				_jumping = false
-
 	elif kind == "spaceship":
 		rotation_degrees += direction.x * speed.x / 100.0
 		velocity = Vector2.DOWN.rotated(rotation) * speed.y * direction.y
+
 	move_and_slide()
+
 
 
 static func setup_custom_blocks():
 	var _class_name = "SimpleCharacter"
 	var block_list: Array[BlockDefinition] = []
 
-	# Movement
+	# Movement block definition
 	var block_definition: BlockDefinition = BlockDefinition.new()
 	block_definition.name = &"simplecharacter_move"
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Input"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "move with {player: NIL} buttons as {kind: NIL}"
-	block_definition.description = """Move the character using the “Player 1” or “Player 2” controls as configured in Godot.
-
-“Top-down” enables the character to move in both x (vertical) and y (horizontal) dimensions, as if the camera is above the character, looking down. No gravity is added.
-
-“Platformer” enables the character to move as if the camera is looking from the side, like a side-scroller. Gravity is applied on the x (vertical) axis, making the character fall down until they collide.
-
-“Spaceship” uses the left/right controls to turn the character and up/down controls to go forward or backward."""
-	# TODO: delta here is assumed to be the parameter name of
-	# the _process or _physics_process method:
-	block_definition.code_template = "move_with_player_buttons({player}, {kind}, delta)"
+	block_definition.display_template = "move with {player: NIL} buttons as {kind: NIL} using {input_type: NIL}"
+	block_definition.description = """Move the character using the configured controls. You can select between keyboard or gamepad for the input.
+	
+	“Top-down” enables the character to move in both x (horizontal) and y (vertical) dimensions, like a top-down view.
+	
+	“Platformer” enables the character to move as in a side-scroller, with gravity affecting vertical movement.
+	
+	“Spaceship” uses the left/right controls to rotate and up/down controls to move forward or backward."""
+	
+	# Updated code template to include input type
+	block_definition.code_template = "move_with_player_buttons({player}, {kind}, delta, {input_type})"
+	
+	# Add new input type option (keyboard or gamepad)
 	block_definition.defaults = {
 		"player": OptionData.new(["player_1", "player_2"]),
 		"kind": OptionData.new(["top-down", "platformer", "spaceship"]),
+		"input_type": OptionData.new(["keyboard", "gamepad"])  # Add gamepad option
 	}
+	
+	# Add block definition to the block list
 	block_list.append(block_definition)
 
+	# Define custom properties
 	var property_list: Array[Dictionary] = [
 		{
 			"name": "speed",
@@ -173,4 +205,5 @@ static func setup_custom_blocks():
 		},
 	}
 
+	// Add custom blocks to the catalog
 	BlocksCatalog.add_custom_blocks(_class_name, block_list, property_list, property_settings)
