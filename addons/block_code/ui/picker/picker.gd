@@ -38,6 +38,7 @@ var scroll_tween: Tween
 
 var _category_buttons: Dictionary  # String, BlockCategoryButton
 var _category_displays: Dictionary  # String, BlockCategoryDisplay
+var _advanced_mode: bool = false
 
 
 func _ready() -> void:
@@ -74,6 +75,10 @@ func _update_block_components():
 
 	for category in block_categories:
 		var block_definitions := _context.block_script.get_blocks_in_category(category)
+
+		if not _advanced_mode:
+			block_definitions = block_definitions.filter(func(definition): return not definition.is_advanced)
+
 		var order_override = CATEGORY_ORDER_OVERRIDE.get(category.name)
 		if order_override:
 			block_definitions.sort_custom(_sort_blocks_by_list_order.bind(order_override))
@@ -136,3 +141,8 @@ func _category_selected(category_name: String):
 
 func set_collapsed(collapsed: bool):
 	_widget_container.visible = not collapsed
+
+
+func set_advanced(advanced: bool):
+	_advanced_mode = advanced
+	reload_blocks()
