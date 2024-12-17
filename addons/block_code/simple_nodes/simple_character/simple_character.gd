@@ -14,21 +14,49 @@ const Types = preload("res://addons/block_code/types/types.gd")
 
 @export var speed: Vector2 = Vector2(300, 300)
 
-const PLAYER_KEYS = {
-	"player_1":
+const PLAYER_KEYS = [
 	{
 		"up": KEY_W,
 		"down": KEY_S,
 		"left": KEY_A,
 		"right": KEY_D,
 	},
-	"player_2":
 	{
 		"up": KEY_UP,
 		"down": KEY_DOWN,
 		"left": KEY_LEFT,
 		"right": KEY_RIGHT,
 	}
+]
+
+const PLAYER_JOYSTICK_BUTTONS = {
+	"up": JOY_BUTTON_DPAD_UP,
+	"down": JOY_BUTTON_DPAD_DOWN,
+	"left": JOY_BUTTON_DPAD_LEFT,
+	"right": JOY_BUTTON_DPAD_RIGHT,
+}
+
+const PLAYER_JOYSTICK_MOTION = {
+	"up":
+	{
+		"axis": JOY_AXIS_LEFT_Y,
+		"axis_value": -1,
+	},
+	"down":
+	{
+		"axis": JOY_AXIS_LEFT_Y,
+		"axis_value": 1,
+	},
+	"left":
+	{
+		"axis": JOY_AXIS_LEFT_X,
+		"axis_value": -1,
+	},
+	"right":
+	{
+		"axis": JOY_AXIS_LEFT_X,
+		"axis_value": 1,
+	},
 }
 
 var sprite: Sprite2D
@@ -83,24 +111,45 @@ func _ready():
 
 func simple_setup():
 	add_to_group("affected_by_gravity", true)
+	_setup_actions()
 	_texture_updated()
+
+
+func _setup_actions():
+	if Engine.is_editor_hint() or InputMap.has_action("player_1_left"):
+		return
+
+	for i in PLAYER_KEYS.size():
+		for action in PLAYER_KEYS[i]:
+			var player = "player_%d" % [i + 1]
+			var action_name = player + "_" + action
+			InputMap.add_action(action_name)
+
+			#keyboard event
+			var e = InputEventKey.new()
+			e.physical_keycode = PLAYER_KEYS[i][action]
+			InputMap.action_add_event(action_name, e)
+
+			#controller d-pad event
+			var ej = InputEventJoypadButton.new()
+			ej.device = i
+			ej.button_index = PLAYER_JOYSTICK_BUTTONS[action]
+			InputMap.action_add_event(action_name, ej)
+
+			#controller left stick event
+			var ejm = InputEventJoypadMotion.new()
+			ejm.device = i
+			ejm.axis = PLAYER_JOYSTICK_MOTION[action]["axis"]
+			ejm.axis_value = PLAYER_JOYSTICK_MOTION[action]["axis_value"]
+			InputMap.action_add_event(action_name, ejm)
 
 
 func get_custom_class():
 	return "SimpleCharacter"
 
 
-func _player_input_to_direction(player: String):
-	var direction = Vector2()
-	direction.x += float(Input.is_physical_key_pressed(PLAYER_KEYS[player]["right"]))
-	direction.x -= float(Input.is_physical_key_pressed(PLAYER_KEYS[player]["left"]))
-	direction.y += float(Input.is_physical_key_pressed(PLAYER_KEYS[player]["down"]))
-	direction.y -= float(Input.is_physical_key_pressed(PLAYER_KEYS[player]["up"]))
-	return direction
-
-
 func move_with_player_buttons(player: String, kind: String, delta: float):
-	var direction = _player_input_to_direction(player)
+	var direction = Input.get_vector(player + "_left", player + "_right", player + "_up", player + "_down")
 	direction_x = direction.x
 
 	if kind == "top-down":
@@ -111,7 +160,7 @@ func move_with_player_buttons(player: String, kind: String, delta: float):
 		if not is_on_floor():
 			velocity.y += gravity * delta
 		else:
-			if not _jumping and Input.is_physical_key_pressed(PLAYER_KEYS[player]["up"]):
+			if not _jumping and direction.y < 0:
 				_jumping = true
 				velocity.y -= speed.y
 			else:
