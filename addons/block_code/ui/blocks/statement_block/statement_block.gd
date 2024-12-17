@@ -12,9 +12,6 @@ var args_to_add_after_format: Dictionary  # Only used when loading
 
 func _ready():
 	super()
-
-	if definition != null and definition.type != Types.BlockType.STATEMENT:
-		_background.show_top = false
 	_background.color = color
 
 

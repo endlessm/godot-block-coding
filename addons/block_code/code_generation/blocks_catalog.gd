@@ -118,7 +118,7 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 					block_settings.category,
 					Types.BlockType.STATEMENT,
 					TYPE_NIL,
-					"set %s to {value: %s}" % [property.name.to_lower(), type_string],
+					"set %s to {value: %s}" % [property.name.capitalize().to_lower(), type_string],
 					"%s = {value}" % property.name,
 					{"value": block_settings.get("default_set", _FALLBACK_SET_FOR_TYPE[property.type])},
 				)
@@ -136,7 +136,7 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 					block_settings.category,
 					Types.BlockType.STATEMENT,
 					TYPE_NIL,
-					"change %s by {value: %s}" % [property.name.to_lower(), type_string],
+					"change %s by {value: %s}" % [property.name.capitalize().to_lower(), type_string],
 					"%s += {value}" % property.name,
 					{"value": block_settings.get("default_change", _FALLBACK_CHANGE_FOR_TYPE[property.type])},
 				)
@@ -153,7 +153,7 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 				block_settings.category,
 				Types.BlockType.VALUE,
 				property.type,
-				"%s" % property.name.to_lower(),
+				"%s" % property.name.capitalize().to_lower(),
 				"%s" % property.name,
 			)
 		)
@@ -253,25 +253,69 @@ static func add_custom_blocks(
 static func get_variable_block_definitions(variables: Array[VariableDefinition]) -> Array[BlockDefinition]:
 	var block_definitions: Array[BlockDefinition] = []
 	for variable: VariableDefinition in variables:
-		var type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
+		var block_def: BlockDefinition
 
 		# Getter
-		var block_def = BlockDefinition.new()
-		block_def.name = "get_var_%s" % variable.var_name
-		block_def.category = "Variables"
-		block_def.type = Types.BlockType.VALUE
-		block_def.variant_type = variable.var_type
-		block_def.display_template = variable.var_name
-		block_def.code_template = variable.var_name
+		block_def = get_variable_getter_block_definition(variable)
 		block_definitions.append(block_def)
 
 		# Setter
-		block_def = BlockDefinition.new()
-		block_def.name = "set_var_%s" % variable.var_name
-		block_def.category = "Variables"
-		block_def.type = Types.BlockType.STATEMENT
-		block_def.display_template = "Set %s to {value: %s}" % [variable.var_name, type_string]
-		block_def.code_template = "%s = {value}" % [variable.var_name]
+		block_def = get_variable_setter_block_definition(variable)
 		block_definitions.append(block_def)
 
 	return block_definitions
+
+
+static func get_variable_getter_block_definition(variable: VariableDefinition) -> BlockDefinition:
+	var block_def := BlockDefinition.new()
+
+	block_def.name = "get_var_%s" % variable.var_name
+	block_def.category = "Variables"
+	block_def.type = Types.BlockType.VALUE
+	block_def.variant_type = variable.var_type
+	block_def.display_template = variable.var_name
+	block_def.code_template = variable.var_name
+
+	return block_def
+
+
+static func get_variable_setter_block_definition(variable: VariableDefinition) -> BlockDefinition:
+	var type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
+	var block_def := BlockDefinition.new()
+
+	block_def.name = "set_var_%s" % variable.var_name
+	block_def.category = "Variables"
+	block_def.type = Types.BlockType.STATEMENT
+	block_def.display_template = "Set %s to {value: %s}" % [variable.var_name, type_string]
+	block_def.code_template = "%s = {value}" % variable.var_name
+
+	return block_def
+
+
+static func get_property_getter_block_definition(variable: VariableDefinition) -> BlockDefinition:
+	var block_def := get_variable_getter_block_definition(variable)
+	block_def.description = "The %s property" % variable.var_name
+	return block_def
+
+
+static func get_property_setter_block_definition(variable: VariableDefinition) -> BlockDefinition:
+	var block_def := get_variable_setter_block_definition(variable)
+	block_def.description = "Set the %s property" % variable.var_name
+	return block_def
+
+
+static func get_resource_block_definition(file_path: String) -> BlockDefinition:
+	var block_def := BlockDefinition.new()
+	var file_name = file_path.get_file()
+
+	# Block Definition's name cannot work with '.'
+	block_def.name = &"get_resource_file_path"
+	block_def.description = "The full resource path of '%s'" % file_name
+	block_def.category = "Variables"
+	block_def.type = Types.BlockType.VALUE
+	block_def.variant_type = TYPE_STRING
+	block_def.display_template = "%s {const file_path: STRING}" % file_name
+	block_def.code_template = "{file_path}"
+	block_def.defaults = {"file_path": file_path}
+
+	return block_def

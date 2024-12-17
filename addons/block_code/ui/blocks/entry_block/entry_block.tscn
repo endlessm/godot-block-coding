@@ -19,6 +19,12 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 0
 
+[node name="DragDropArea" parent="VBoxContainer" instance=ExtResource("3_swkpp")]
+custom_minimum_size = Vector2(80, 16)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_default_cursor_shape = 2
+
 [node name="TopMarginContainer" type="MarginContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
@@ -35,7 +41,7 @@ layout_mode = 2
 mouse_filter = 1
 script = ExtResource("2_yrw8l")
 color = Color(1, 1, 1, 1)
-show_top = false
+block_type = 1
 
 [node name="DragDropArea" parent="VBoxContainer/TopMarginContainer" instance=ExtResource("3_swkpp")]
 layout_mode = 2
@@ -56,4 +62,5 @@ layout_mode = 2
 [node name="SnapPoint" parent="VBoxContainer" instance=ExtResource("4_yj206")]
 layout_mode = 2
 
+[connection signal="drag_started" from="VBoxContainer/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
 [connection signal="drag_started" from="VBoxContainer/TopMarginContainer/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]

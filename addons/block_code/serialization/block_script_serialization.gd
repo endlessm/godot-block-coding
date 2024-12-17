@@ -28,6 +28,8 @@ const SCENE_PER_TYPE = {
 @export var generated_script: String
 @export var version: int
 
+var block_code_node: BlockCode
+
 var _available_blocks: Array[BlockDefinition]
 var _categories: Array[BlockCategory]
 
@@ -70,7 +72,7 @@ func instantiate_block(block_definition: BlockDefinition) -> Block:
 
 
 func instantiate_block_by_name(block_name: String) -> Block:
-	var block_definition := get_block_definition(block_name)
+	var block_definition := get_block_definition(block_name, {})
 
 	if block_definition == null:
 		push_warning("Cannot find a block definition for %s" % block_name)
@@ -79,24 +81,35 @@ func instantiate_block_by_name(block_name: String) -> Block:
 	return instantiate_block(block_definition)
 
 
-func get_block_definition(block_name: String) -> BlockDefinition:
+func get_block_definition(block_name: String, arguments: Dictionary) -> BlockDefinition:
 	var split := block_name.split(":", true, 1)
+	var block_definition: BlockDefinition
 
 	if len(split) > 1:
-		return _get_parameter_block_definition(split[0], split[1])
+		block_definition = _get_parameter_block_definition(split[0], split[1])
+		if block_definition:
+			return block_definition
 
-	var block_definition = _get_base_block_definition(block_name)
+	block_definition = _get_base_block_definition(block_name)
+	if block_definition != null:
+		return block_definition
 
-	if block_definition == null:
-		# FIXME: This is a workaround for old-style output block references.
-		#        These were generated ahead of time using a block name that has
-		#        a "_" before the parameter name. Now, these parameter blocks
-		#        are generated on demand for any block name containing a ":".
-		#        Please remove this fallback when it is no longer necessary.
-		split = block_name.rsplit("_", true, 1)
-		return _get_parameter_block_definition(split[0], split[1])
+	block_definition = _get_obj_property_block_definition(block_name)
+	if block_definition != null:
+		return block_definition
 
-	return block_definition
+	var file_path = arguments.get("file_path", "")
+	block_definition = _get_resource_block_definition(block_name, file_path)
+	if block_definition != null:
+		return block_definition
+
+	# FIXME: This is a workaround for old-style output block references.
+	#        These were generated ahead of time using a block name that has
+	#        a "_" before the parameter name. Now, these parameter blocks
+	#        are generated on demand for any block name containing a ":".
+	#        Please remove this fallback when it is no longer necessary.
+	split = block_name.rsplit("_", true, 1)
+	return _get_parameter_block_definition(split[0], split[1])
 
 
 func _get_base_block_definition(block_name: String) -> BlockDefinition:
@@ -131,6 +144,59 @@ func _get_parameter_block_definition(block_name: String, parameter_name: String)
 	block_definition.scope = base_block_definition.code_template
 
 	return block_definition
+
+
+func _get_obj_property_block_definition(block_name: String) -> BlockDefinition:
+	var block_definition: BlockDefinition
+	var variable: VariableDefinition
+	var property_name: String
+	var is_getter = true
+
+	if block_name.begins_with("get_var_"):
+		property_name = block_name.get_slice("get_var_", 1)
+	elif block_name.begins_with("set_var_"):
+		property_name = block_name.get_slice("set_var_", 1)
+		is_getter = false
+	else:
+		return null
+
+	# Getter block needs the property's variant type information by visiting the
+	# block_code_node's parent node because the type is not saved as a key of
+	# the resource in the scene file
+	var property_info := _get_parent_node_property_info(property_name)
+	if not property_info.has("type"):
+		return null
+
+	if is_getter:
+		variable = VariableDefinition.new(property_name, property_info["type"])
+		block_definition = BlocksCatalog.get_property_getter_block_definition(variable)
+	else:
+		variable = VariableDefinition.new(property_name, property_info["type"])
+		block_definition = BlocksCatalog.get_property_setter_block_definition(variable)
+
+	return block_definition
+
+
+func _get_parent_node_property_info(property_name: String) -> Dictionary:
+	if not block_code_node:
+		return {}
+
+	var properties := block_code_node.get_parent().get_property_list()
+	for property in properties:
+		if property["name"] == property_name:
+			return property
+
+	return {}
+
+
+func _get_resource_block_definition(block_name: String, file_path: String) -> BlockDefinition:
+	if block_name != "get_resource_file_path":
+		return null
+
+	if file_path.is_empty() or not FileAccess.file_exists(file_path) or not ResourceLoader.exists(file_path):
+		return null
+
+	return BlocksCatalog.get_resource_block_definition(file_path)
 
 
 func _update_block_definitions():
@@ -202,13 +268,14 @@ func _tree_to_ast(tree: BlockSerializationTree) -> BlockAST:
 
 func _block_to_ast_node(node: BlockSerialization) -> BlockAST.ASTNode:
 	var ast_node := BlockAST.ASTNode.new()
-	ast_node.data = get_block_definition(node.name)
 
 	for arg_name in node.arguments:
 		var argument = node.arguments[arg_name]
 		if argument is ValueBlockSerialization:
 			argument = _value_to_ast_value(argument)
 		ast_node.arguments[arg_name] = argument
+
+	ast_node.data = get_block_definition(node.name, ast_node.arguments)
 
 	var children: Array[BlockAST.ASTNode]
 	for c in node.children:
@@ -220,13 +287,14 @@ func _block_to_ast_node(node: BlockSerialization) -> BlockAST.ASTNode:
 
 func _value_to_ast_value(value_node: ValueBlockSerialization) -> BlockAST.ASTValueNode:
 	var ast_value_node := BlockAST.ASTValueNode.new()
-	ast_value_node.data = get_block_definition(value_node.name)
 
 	for arg_name in value_node.arguments:
 		var argument = value_node.arguments[arg_name]
 		if argument is ValueBlockSerialization:
 			argument = _value_to_ast_value(argument)
 		ast_value_node.arguments[arg_name] = argument
+
+	ast_value_node.data = get_block_definition(value_node.name, ast_value_node.arguments)
 
 	return ast_value_node
 

@@ -3,11 +3,15 @@ extends MarginContainer
 
 const ASTList = preload("res://addons/block_code/code_generation/ast_list.gd")
 const BlockAST = preload("res://addons/block_code/code_generation/block_ast.gd")
+const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
 const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
+const BlockDefinition = preload("res://addons/block_code/code_generation/block_definition.gd")
 const BlockTreeUtil = preload("res://addons/block_code/ui/block_tree_util.gd")
 const DragManager = preload("res://addons/block_code/drag_manager/drag_manager.gd")
 const ScriptGenerator = preload("res://addons/block_code/code_generation/script_generator.gd")
+const Types = preload("res://addons/block_code/types/types.gd")
 const Util = preload("res://addons/block_code/ui/util.gd")
+const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
 
 const EXTEND_MARGIN: float = 800
 const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(25, 8)
@@ -52,6 +56,8 @@ var zoom: float:
 	get:
 		return _window.scale.x
 
+var _modifier_ctrl := false
+
 signal reconnect_block(block: Block)
 signal add_block_code
 signal open_scene
@@ -75,6 +81,16 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	if typeof(data) != TYPE_DICTIONARY:
 		return false
 
+	# Allow dropping property block of the block code node's parent node
+	if data.get("type", "") == "obj_property":
+		if data["object"] != _context.parent_node:
+			return false
+		return true
+
+	# Allow dropping resource file
+	if data.get("type", "") == "files":
+		return true
+
 	var nodes: Array = data.get("nodes", [])
 	if nodes.size() != 1:
 		return false
@@ -92,6 +108,15 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 
 
 func _drop_data(at_position: Vector2, data: Variant) -> void:
+	if data["type"] == "nodes":
+		_drop_node(at_position, data)
+	elif data["type"] == "obj_property":
+		_drop_obj_property(at_position, data)
+	elif data["type"] == "files":
+		_drop_files(at_position, data)
+
+
+func _drop_node(at_position: Vector2, data: Variant) -> void:
 	var abs_path: NodePath = data.get("nodes", []).pop_back()
 	if abs_path == null:
 		return
@@ -106,6 +131,44 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 	block.set_parameter_values_on_ready({"path": node_path})
 	add_block(block, at_position)
 	reconnect_block.emit(block)
+
+
+func _drop_obj_property(at_position: Vector2, data: Variant) -> void:
+	var property_name = data["property"]
+	var property_value = data["value"]
+	var is_getter = !_modifier_ctrl
+
+	# Prepare a Variable block to set / get the property's value according to
+	# the modifier KEY_CTRL pressing.
+	var variable := VariableDefinition.new(property_name, typeof(property_value))
+	var block_definition: BlockDefinition
+
+	if is_getter:
+		block_definition = BlocksCatalog.get_property_getter_block_definition(variable)
+	else:
+		block_definition = BlocksCatalog.get_property_setter_block_definition(variable)
+		block_definition.defaults = {"value": property_value}
+
+	var block = _context.block_script.instantiate_block(block_definition)
+	add_block(block, at_position)
+	reconnect_block.emit(block)
+
+
+func _drop_files(at_position: Vector2, data: Variant) -> void:
+	var resource_files = data["files"]
+	var next_position = at_position
+	const bias = 20
+
+	for file_path in resource_files:
+		# Prepare a Variable block getting the file's resource path.
+		var block_definition = BlocksCatalog.get_resource_block_definition(file_path)
+		var block = _context.block_script.instantiate_block(block_definition)
+		add_block(block, next_position)
+		reconnect_block.emit(block)
+
+		# Shift next block's position a little bit to avoid overlap totally.
+		next_position.x += bias
+		next_position.y += bias
 
 
 func add_block(block: Block, position: Vector2 = Vector2.ZERO) -> void:
@@ -371,6 +434,12 @@ func _on_replace_block_code_button_pressed():
 	_replace_block_code_button.disabled = true
 
 	replace_block_code.emit()
+
+
+func _input(event):
+	if event is InputEventKey:
+		if event.keycode == KEY_CTRL:
+			_modifier_ctrl = event.pressed
 
 
 func _gui_input(event):

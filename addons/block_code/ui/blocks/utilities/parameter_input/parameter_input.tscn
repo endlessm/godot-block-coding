@@ -3,13 +3,7 @@
 [ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.gd" id="1_rgmxn"]
 [ext_resource type="PackedScene" uid="uid://c7puyxpqcq6xo" path="res://addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.tscn" id="2_05gck"]
 [ext_resource type="PackedScene" uid="uid://b1oge52xhjqnu" path="res://addons/block_code/ui/blocks/utilities/snap_point/snap_point.tscn" id="2_6esp3"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tn6h4"]
-bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
+[ext_resource type="Script" path="res://addons/block_code/ui/blocks/utilities/background/background.gd" id="2_68spp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_afyv2"]
 
@@ -41,11 +35,11 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_rgmxn")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Background" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_tn6h4")
+script = ExtResource("2_68spp")
+block_type = 3
 
 [node name="InputSwitcher" type="MarginContainer" parent="."]
 unique_name_in_owner = true
@@ -67,6 +61,7 @@ theme_override_constants/margin_bottom = 4
 
 [node name="LineEdit" type="LineEdit" parent="InputSwitcher/TextInput"]
 unique_name_in_owner = true
+auto_translate_mode = 2
 layout_mode = 2
 mouse_filter = 1
 theme_override_colors/font_placeholder_color = Color(0.76662, 0.76662, 0.76662, 1)
@@ -98,6 +93,7 @@ drag_outside = true
 
 [node name="OptionInput" type="OptionButton" parent="InputSwitcher"]
 unique_name_in_owner = true
+auto_translate_mode = 2
 visible = false
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
@@ -136,6 +132,7 @@ size_flags_horizontal = 3
 
 [node name="XLineEdit" type="LineEdit" parent="InputSwitcher/Vector2Input/HBoxContainer"]
 unique_name_in_owner = true
+auto_translate_mode = 2
 layout_mode = 2
 mouse_filter = 1
 theme_override_colors/font_placeholder_color = Color(0.76662, 0.76662, 0.76662, 1)
@@ -177,6 +174,7 @@ size_flags_horizontal = 3
 
 [node name="YLineEdit" type="LineEdit" parent="InputSwitcher/Vector2Input/HBoxContainer"]
 unique_name_in_owner = true
+auto_translate_mode = 2
 layout_mode = 2
 mouse_filter = 1
 theme_override_colors/font_placeholder_color = Color(0.76662, 0.76662, 0.76662, 1)
@@ -206,6 +204,7 @@ theme_override_constants/margin_left = 8
 
 [node name="BoolInputOption" type="OptionButton" parent="InputSwitcher/BoolInput"]
 unique_name_in_owner = true
+auto_translate_mode = 2
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_hover_pressed_color = Color(0.117647, 0.117647, 0.117647, 1)
@@ -221,6 +220,7 @@ action_mode = 1
 selected = 0
 item_count = 2
 popup/item_0/text = "false"
+popup/item_0/id = 0
 popup/item_1/text = "true"
 popup/item_1/id = 1
 

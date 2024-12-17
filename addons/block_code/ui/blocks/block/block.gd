@@ -120,7 +120,7 @@ func _get_format_string() -> String:
 	if not definition:
 		return ""
 
-	return definition.display_template
+	return tr(definition.display_template)
 
 
 func _get_parameter_defaults() -> Dictionary:
@@ -244,10 +244,11 @@ func _get_tooltip(at_position: Vector2) -> String:
 	if not definition:
 		return ""
 
+	var description_tx := tr(definition.description)
 	if definition.variant_type == Variant.Type.TYPE_NIL:
-		return definition.description
+		return description_tx
 
-	return "{description}\n\nType: [b]{type}[/b]".format({"description": definition.description, "type": type_string(definition.variant_type)})
+	return "{description}\n\n{type_field} [b]{type}[/b]".format({"description": description_tx, "type_field": tr("Type:"), "type": type_string(definition.variant_type)})
 
 
 func _make_custom_tooltip(for_text) -> Control:

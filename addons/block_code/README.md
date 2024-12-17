@@ -5,6 +5,8 @@ Experimental plugin by [Endless OS Foundation](https://endlessos.org) that intro
 [![Godot asset](https://img.shields.io/badge/Asset_Library-Block_Coding-blue?logo=godot-engine)](https://godotengine.org/asset-library/asset/3095)
 [![Latest release](https://img.shields.io/github/v/release/endlessm/godot-block-coding?label=Release&logo=github)](https://github.com/endlessm/godot-block-coding/releases)
 
+[![Youtube video](https://i.ibb.co/B2Y11n5/Bildschirmfoto-20241213-173815.png)](https://www.youtube.com/watch?v=WlUN7Zz0Djg)
+
 ## Background
 
 Our aim is to reduce the learning curve faced by learners who are on the early part of their journey towards becoming game developers. Learners within our target audience understand game concepts, but have never used Godot (or any other game engine) before, and do not have programming experience. Ordinarily, such learners are faced with the challenge of learning their way around Godot's powerful, complex editor UI, combined with the additional challenge of learning to code for the first time as they navigate the ins and outs of GDScript.
@@ -62,9 +64,78 @@ We have some high level blocks for simplifying common game elements. Add a Simpl
 
 Lean into animations! Godot's animations functionality goes beyond just simple animations of graphics. You can do so much by combining block coding with Godot's powerful animations editor.
 
+If you want to access the node's property, you can drag the property from the Inspector dock and drop it into the block script as a getter block. And, if you want to modify the property's value, please press & hold Ctrl key when you drop the property, then it will be a setter block of the property in the block script.
+
+You can also drag a file from the Resource Filesystem dock and drop it into the block script as a getter block. It will become a constant value block holding the file's resource full path.
+
 ## Feedback
 
 Please share feedback in the [Godot Forum Block Coding thread](https://forum.godotengine.org/t/block-coding-high-level-block-based-visual-programming/68941).
+
+## Localization
+
+The plugin supports translations through Godot's [gettext][godot-gettext]
+support. We welcome contributions to make the plugin work better in your
+language! However, please note that translations in the Godot editor **will
+only work with Godot 4.4 or newer**.
+
+The gettext PO files are located in the `addons/block_code/locale` directory.
+See the Godot [documentation][godot-gettext] for instructions on working with
+PO files. You can also join our project on [Transifex][transifex-project] to
+collaborate with others translating the Block Coding content.
+
+[godot-gettext]: https://docs.godotengine.org/en/stable/tutorials/i18n/localization_using_gettext.html
+[transifex-project]: https://explore.transifex.com/endless-os/godot-block-coding/
+
+For developers, a few things need to be done to keep the translatable strings
+up to date.
+
+* If files are added or removed, the list of translatable files needs to be
+  updated. This can be done by using the **Add** dialog in the [POT
+  Generation][pot-generation] tab. Or you can use the **Project → Tools →
+  Update BlockCode translated files** menu item in the editor. From the command
+  line, the POT file can be regenerated with the `scripts/update-pot-files.sh`
+  shell script.
+
+* If translatable strings have changed, the POT file needs to be updated. This
+  can be done by using the **Generate POT** dialog in the [POT
+  Generation][pot-generation] tab. Or you can use the **Project → Tools →
+  Regenerate BlockCode POT file** menu item in the editor. From the command
+  line, the POT file can be regenerated with the `scripts/regenerate-pot.sh`
+  shell script.
+
+* If the POT file has changed, the PO message files need to be updated. This
+  can be done using the gettext `msgmerge` tool with the
+  `scripts/merge-messages.sh` shell script.
+
+[pot-generation]: https://docs.godotengine.org/en/stable/tutorials/i18n/localization_using_gettext.html#automatic-generation-using-the-editor
+
+Strings added in scene files or block definition resources will usually be
+extracted for localization and translated in the editor automatically. Strings
+in scripts need more consideration.
+
+* `Object`s or `Node`s that are not descendents of the Block Coding panel need
+  to have their translation domain set with the `set_block_translation_domain`
+  helper function. This should usually be done in the object's `_init` method
+  to make sure the translation domain is set before that object or any of its
+  descendents (which inherit the translation domain by default) try to use
+  localized strings.
+
+* Usually [`tr`][object-tr] and [`tr_n`][object-tr-n] (or [`atr`][node-atr] and
+  [`atr_n`][node-atr-n] for `Node`s) should be used to mark translatable
+  strings. These will eventually call the domain's
+  [`translate`][domain-translate] or
+  [`translate_plural`][domain-translate-plural] methods, but the `tr` methods
+  respect translation settings on the object instances. The only time the
+  `translate` methods should be called directly is within a static context when
+  an object instance isn't available.
+
+[object-tr]: https://docs.godotengine.org/en/stable/classes/class_object.html#class-object-method-tr
+[object-tr-n]: https://docs.godotengine.org/en/stable/classes/class_object.html#class-object-method-tr-n
+[node-atr]: https://docs.godotengine.org/en/stable/classes/class_node.html#class-node-method-atr
+[node-atr-n]: https://docs.godotengine.org/en/stable/classes/class_node.html#class-node-method-atr-n
+[domain-translate]: https://docs.godotengine.org/en/latest/classes/class_translationdomain.html#class-translationdomain-method-translate
+[domain-translate-plural]: https://docs.godotengine.org/en/latest/classes/class_translationdomain.html#class-translationdomain-method-translate-plural
 
 ## Development
 
@@ -89,14 +160,19 @@ This plugin uses the [Godot Unit Test](https://gut.readthedocs.io/en/latest/) (G
 Tests can also be run from the command line using the GUT command line script:
 
 ```
-godot --path . --headless --script addons/gut/gut_cmdln.gd -gexit
+godot --path . --headless -s addons/gut/gut_cmdln.gd -gexit
 ```
 
-A few options are of note here. `--path` instructs Godot to use the project in
-the current directory. `--headless` instructs Godot to run without a display or
-sound. `--script` instructs Godot to run the GUT command line script instead of
-running the main scene. `-gexit` is an option for the GUT command line script
-that instructs GUT to exit after the tests complete.
+A few options are of note here:
+
+- `--path` instructs Godot to use the project in the current directory.
+- `--headless` instructs Godot to run without a display or sound.
+- `-s` instructs Godot to run the GUT command line script instead of
+  running the main scene. Due to a [bug in
+  GUT](https://github.com/bitwes/Gut/issues/667), the long form `--script`
+  cannot be used.
+- `-gexit` is an option for the GUT command line script that instructs GUT to
+  exit after the tests complete.
 
 There are several other GUT command line options for running specific tests.
 For example, `-gtest=path/to/test_script_1.gd,path/to/test_script_2.gd` can be

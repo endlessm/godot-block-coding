@@ -28,7 +28,8 @@ func _ready():
 
 
 func _clear():
-	_variable_input.text = ""
+	# Workaround for POT generation extracting empty string.
+	_variable_input.text = str("")
 	get_ok_button().disabled = check_errors(_variable_input.text)
 	_type_option.select(0)
 

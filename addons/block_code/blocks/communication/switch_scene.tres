@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dnc2555wnobks"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_rnqd5"]
+
+[resource]
+script = ExtResource("1_rnqd5")
+name = &"switch_scene"
+target_node_class = ""
+description = "Stop playing the current scene, and switch to a different one. You might use this to switch to a new level."
+category = "Communication | Methods"
+type = 2
+variant_type = 0
+display_template = "switch the scene to {file_path: STRING}"
+code_template = "get_tree().change_scene_to_file({file_path})
+"
+defaults = {}
+signal_name = ""
+scope = ""

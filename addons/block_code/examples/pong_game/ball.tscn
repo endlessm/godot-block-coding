@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7l70grmkauij"]
+[gd_scene load_steps=4 format=3 uid="uid://c7l70grmkauij"]
 
 [ext_resource type="Texture2D" uid="uid://bcgr5amsq3jfl" path="res://addons/block_code/examples/pong_game/assets/ball.png" id="2_xkrmm"]
 
@@ -14,8 +14,8 @@ collision_layer = 2
 collision_mask = 15
 physics_material_override = SubResource("PhysicsMaterial_c3m63")
 continuous_cd = 1
-max_contacts_reported = 1
 contact_monitor = true
+max_contacts_reported = 1
 linear_velocity = Vector2(353.553, 353.553)
 linear_damp_mode = 1
 angular_damp_mode = 1
