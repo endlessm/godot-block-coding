@@ -86,6 +86,11 @@ func _on_delete_node_button_pressed():
 	dialog.connect("confirmed", _on_delete_dialog_confirmed.bind(_context.block_code_node))
 
 
+func _on_advanced_checkbox_toggled(is_advanced: bool):
+	_picker.set_advanced(is_advanced)
+	_picker.reload_blocks()
+
+
 func _on_delete_dialog_confirmed(block_code_node: BlockCode):
 	var parent_node = block_code_node.get_parent()
 

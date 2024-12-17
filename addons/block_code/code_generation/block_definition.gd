@@ -28,6 +28,8 @@ const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{const (?<const
 ## Empty except for blocks that have a defined scope
 @export var scope: String
 
+@export var is_advanced: bool
+
 @export var extension_script: GDScript
 
 static var _display_template_regex := RegEx.create_from_string(FORMAT_STRING_PATTERN)
@@ -46,6 +48,7 @@ func _init(
 	p_signal_name: String = "",
 	p_scope: String = "",
 	p_extension_script: GDScript = null,
+	p_is_advanced: bool = false,
 ):
 	name = p_name
 	target_node_class = p_target_node_class
@@ -59,6 +62,7 @@ func _init(
 	signal_name = p_signal_name
 	scope = p_scope
 	extension_script = p_extension_script
+	is_advanced = p_is_advanced
 
 
 func create_block_extension() -> BlockExtension:
