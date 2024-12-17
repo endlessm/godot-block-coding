@@ -101,15 +101,15 @@ func _player_input_to_direction(player: String):
 
 	# Gamepad input (new)
 	if player == "player_1" or player == "player_2":
-		var joy_index = 0 if player == "player_1" else 1 # Assuming player 1 uses the first gamepad and player 2 uses the second
+		var joy_index = 0 if player == "player_1" else 1  # Assuming player 1 uses the first gamepad and player 2 uses the second
 		# Horizontal movement (left stick x-axis)
-		direction.x += Input.get_joy_axis(joy_index, JOY_AXIS_0) # Left stick X-axis
+		direction.x += Input.get_joy_axis(joy_index, JOY_AXIS_0)  # Left stick X-axis
 		# Vertical movement (left stick y-axis)
-		direction.y += Input.get_joy_axis(joy_index, JOY_AXIS_1) # Left stick Y-axis
+		direction.y += Input.get_joy_axis(joy_index, JOY_AXIS_1)  # Left stick Y-axis
 
 		# You can also check for specific gamepad button presses if needed
 		# For example, A button for jumping (Button 0) on player 1 and player 2
-		if Input.is_joy_button_pressed(joy_index, JOY_BUTTON_0): # Button 0 (A button on most controllers)
+		if Input.is_joy_button_pressed(joy_index, JOY_BUTTON_0):  # Button 0 (A button on most controllers)
 			# Handle button press (for jumping or other actions)
 			pass
 
@@ -148,7 +148,6 @@ func move_with_player_buttons(player: String, kind: String, delta: float, input_
 	move_and_slide()
 
 
-
 static func setup_custom_blocks():
 	var _class_name = "SimpleCharacter"
 	var block_list: Array[BlockDefinition] = []
@@ -161,23 +160,21 @@ static func setup_custom_blocks():
 	block_definition.type = Types.BlockType.STATEMENT
 	block_definition.display_template = "move with {player: NIL} buttons as {kind: NIL} using {input_type: NIL}"
 	block_definition.description = """Move the character using the configured controls. You can select between keyboard or gamepad for the input.
-	
+
 	“Top-down” enables the character to move in both x (horizontal) and y (vertical) dimensions, like a top-down view.
-	
+
 	“Platformer” enables the character to move as in a side-scroller, with gravity affecting vertical movement.
-	
+
 	“Spaceship” uses the left/right controls to rotate and up/down controls to move forward or backward."""
-	
+
 	# Updated code template to include input type
 	block_definition.code_template = "move_with_player_buttons({player}, {kind}, delta, {input_type})"
-	
+
 	# Add new input type option (keyboard or gamepad)
 	block_definition.defaults = {
-		"player": OptionData.new(["player_1", "player_2"]),
-		"kind": OptionData.new(["top-down", "platformer", "spaceship"]),
-		"input_type": OptionData.new(["keyboard", "gamepad"])  # Add gamepad option
+		"player": OptionData.new(["player_1", "player_2"]), "kind": OptionData.new(["top-down", "platformer", "spaceship"]), "input_type": OptionData.new(["keyboard", "gamepad"])  # Add gamepad option
 	}
-	
+
 	# Add block definition to the block list
 	block_list.append(block_definition)
 
@@ -205,5 +202,4 @@ static func setup_custom_blocks():
 		},
 	}
 
-	// Add custom blocks to the catalog
 	BlocksCatalog.add_custom_blocks(_class_name, block_list, property_list, property_settings)
