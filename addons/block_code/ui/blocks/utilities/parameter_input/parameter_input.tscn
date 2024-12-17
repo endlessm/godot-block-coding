@@ -39,6 +39,7 @@ script = ExtResource("1_rgmxn")
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("2_68spp")
+color = Color(1, 1, 1, 1)
 block_type = 3
 
 [node name="InputSwitcher" type="MarginContainer" parent="."]
@@ -220,13 +221,136 @@ action_mode = 1
 selected = 0
 item_count = 2
 popup/item_0/text = "false"
-popup/item_0/id = 0
 popup/item_1/text = "true"
 popup/item_1/id = 1
 
 [node name="DragDropArea" parent="InputSwitcher/BoolInput/BoolInputOption" instance=ExtResource("2_05gck")]
 layout_mode = 1
 drag_outside = true
+
+[node name="Vector3Input" type="MarginContainer" parent="InputSwitcher"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InputSwitcher/Vector3Input"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="InputSwitcher/Vector3Input/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="V3XLineEdit" type="LineEdit" parent="InputSwitcher/Vector3Input/HBoxContainer"]
+unique_name_in_owner = true
+auto_translate_mode = 2
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_placeholder_color = Color(0.76662, 0.76662, 0.76662, 1)
+theme_override_colors/font_uneditable_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_colors/font_color = Color(0.118581, 0.118581, 0.118581, 1)
+theme_override_constants/minimum_character_width = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_afyv2")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_3r4mt")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6oowp")
+placeholder_text = "x"
+alignment = 1
+expand_to_text_length = true
+
+[node name="DragDropArea" parent="InputSwitcher/Vector3Input/HBoxContainer/V3XLineEdit" instance=ExtResource("2_05gck")]
+layout_mode = 1
+drag_outside = true
+
+[node name="Control3" type="Control" parent="InputSwitcher/Vector3Input/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CenterContainer" type="MarginContainer" parent="InputSwitcher/Vector3Input/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect" type="ColorRect" parent="InputSwitcher/Vector3Input/HBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.804743, 0.804743, 0.804743, 1)
+
+[node name="DragDropArea" parent="InputSwitcher/Vector3Input/HBoxContainer/CenterContainer/ColorRect" instance=ExtResource("2_05gck")]
+layout_mode = 1
+drag_outside = true
+
+[node name="Control4" type="Control" parent="InputSwitcher/Vector3Input/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="V3YLineEdit" type="LineEdit" parent="InputSwitcher/Vector3Input/HBoxContainer"]
+unique_name_in_owner = true
+auto_translate_mode = 2
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_placeholder_color = Color(0.76662, 0.76662, 0.76662, 1)
+theme_override_colors/font_uneditable_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_colors/font_color = Color(0.118581, 0.118581, 0.118581, 1)
+theme_override_constants/minimum_character_width = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_afyv2")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_3r4mt")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6oowp")
+placeholder_text = "y"
+alignment = 1
+expand_to_text_length = true
+
+[node name="DragDropArea" parent="InputSwitcher/Vector3Input/HBoxContainer/V3YLineEdit" instance=ExtResource("2_05gck")]
+layout_mode = 1
+drag_outside = true
+
+[node name="Control2" type="Control" parent="InputSwitcher/Vector3Input/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CenterContainer2" type="MarginContainer" parent="InputSwitcher/Vector3Input/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect" type="ColorRect" parent="InputSwitcher/Vector3Input/HBoxContainer/CenterContainer2"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.804743, 0.804743, 0.804743, 1)
+
+[node name="DragDropArea" parent="InputSwitcher/Vector3Input/HBoxContainer/CenterContainer2/ColorRect" instance=ExtResource("2_05gck")]
+layout_mode = 1
+drag_outside = true
+
+[node name="Control5" type="Control" parent="InputSwitcher/Vector3Input/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="V3ZLineEdit" type="LineEdit" parent="InputSwitcher/Vector3Input/HBoxContainer"]
+unique_name_in_owner = true
+auto_translate_mode = 2
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_placeholder_color = Color(0.76662, 0.76662, 0.76662, 1)
+theme_override_colors/font_uneditable_color = Color(0.117647, 0.117647, 0.117647, 1)
+theme_override_colors/font_color = Color(0.118581, 0.118581, 0.118581, 1)
+theme_override_constants/minimum_character_width = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_afyv2")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_3r4mt")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6oowp")
+placeholder_text = "z"
+alignment = 1
+expand_to_text_length = true
+
+[node name="DragDropArea" parent="InputSwitcher/Vector3Input/HBoxContainer/V3ZLineEdit" instance=ExtResource("2_05gck")]
+layout_mode = 1
+drag_outside = true
+
+[node name="Control6" type="Control" parent="InputSwitcher/Vector3Input/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="SnapPoint" parent="." instance=ExtResource("2_6esp3")]
 unique_name_in_owner = true
@@ -250,4 +374,15 @@ variant_type = 4
 [connection signal="drag_started" from="InputSwitcher/Vector2Input/HBoxContainer/YLineEdit/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
 [connection signal="item_selected" from="InputSwitcher/BoolInput/BoolInputOption" to="." method="_on_option_input_item_selected"]
 [connection signal="drag_started" from="InputSwitcher/BoolInput/BoolInputOption/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
+[connection signal="focus_exited" from="InputSwitcher/Vector3Input/HBoxContainer/V3XLineEdit" to="." method="_on_v3_x_line_edit_focus_exited"]
+[connection signal="text_submitted" from="InputSwitcher/Vector3Input/HBoxContainer/V3XLineEdit" to="." method="_on_v3_x_line_edit_text_submitted"]
+[connection signal="drag_started" from="InputSwitcher/Vector3Input/HBoxContainer/V3XLineEdit/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
+[connection signal="drag_started" from="InputSwitcher/Vector3Input/HBoxContainer/CenterContainer/ColorRect/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
+[connection signal="focus_exited" from="InputSwitcher/Vector3Input/HBoxContainer/V3YLineEdit" to="." method="_on_v3_y_line_edit_focus_exited"]
+[connection signal="text_submitted" from="InputSwitcher/Vector3Input/HBoxContainer/V3YLineEdit" to="." method="_on_v3_y_line_edit_text_submitted"]
+[connection signal="drag_started" from="InputSwitcher/Vector3Input/HBoxContainer/V3YLineEdit/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
+[connection signal="drag_started" from="InputSwitcher/Vector3Input/HBoxContainer/CenterContainer2/ColorRect/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
+[connection signal="focus_exited" from="InputSwitcher/Vector3Input/HBoxContainer/V3ZLineEdit" to="." method="_on_v3_z_line_edit_focus_exited"]
+[connection signal="text_submitted" from="InputSwitcher/Vector3Input/HBoxContainer/V3ZLineEdit" to="." method="_on_v3_z_line_edit_text_submitted"]
+[connection signal="drag_started" from="InputSwitcher/Vector3Input/HBoxContainer/V3ZLineEdit/DragDropArea" to="." method="_on_drag_drop_area_drag_started"]
 [connection signal="snapped_block_changed" from="SnapPoint" to="." method="_on_snap_point_snapped_block_changed"]

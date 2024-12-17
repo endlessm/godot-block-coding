@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ddj24k1fp0s82"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_ilw3v"]
+
+[resource]
+script = ExtResource("1_ilw3v")
+name = &"vector3"
+target_node_class = ""
+description = ""
+category = "Math"
+type = 3
+variant_type = 9
+display_template = "vector3 x: {x: FLOAT} y: {y: FLOAT}: z: {z: FLOAT}"
+code_template = "Vector3({x}, {y}, {z})"
+defaults = {
+"x": 0.0,
+"y": 0.0,
+"z": 0.0
+}
+signal_name = ""
+scope = ""
