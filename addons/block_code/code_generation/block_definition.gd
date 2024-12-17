@@ -92,19 +92,31 @@ func get_output_parameters() -> Dictionary:
 
 static func parse_display_template(template_string: String):
 	var items: Array[Dictionary]
-	for regex_match in _display_template_regex.search_all(template_string):
-		if regex_match.names.has("label"):
-			var label_string := regex_match.get_string("label")
-			items.append({"label": label_string})
-		elif regex_match.names.has("in_parameter"):
-			var parameter_string := regex_match.get_string("in_parameter")
-			items.append({"in_parameter": _parse_parameter_format(parameter_string)})
-		elif regex_match.names.has("out_parameter"):
-			var parameter_string := regex_match.get_string("out_parameter")
-			items.append({"out_parameter": _parse_parameter_format(parameter_string)})
-		elif regex_match.names.has("const_parameter"):
-			var parameter_string := regex_match.get_string("const_parameter")
-			items.append({"const_parameter": _parse_parameter_format(parameter_string)})
+	# Parse the template string.
+	var parse_template_string = func(template_string: String, hidden: bool):
+		for regex_match in _display_template_regex.search_all(template_string):
+			if regex_match.names.has("label"):
+				var label_string := regex_match.get_string("label")
+				items.append({"label": label_string, "hidden": hidden})
+			elif regex_match.names.has("in_parameter"):
+				var parameter_string := regex_match.get_string("in_parameter")
+				items.append({"in_parameter": _parse_parameter_format(parameter_string), "hidden": hidden})
+			elif regex_match.names.has("out_parameter"):
+				var parameter_string := regex_match.get_string("out_parameter")
+				items.append({"out_parameter": _parse_parameter_format(parameter_string), "hidden": hidden})
+			elif regex_match.names.has("const_parameter"):
+				var parameter_string := regex_match.get_string("const_parameter")
+				items.append({"const_parameter": _parse_parameter_format(parameter_string), "hidden": hidden})
+	# This splits in two the template string in the first "|" character
+	# to separate normal and hidden parameters.
+	var sep: int = template_string.find("|")
+	if sep == -1:
+		parse_template_string.call(template_string, false)
+	else:
+		var template_string_normal := template_string.substr(0, sep).trim_suffix(" ")
+		var template_string_advanced := template_string.substr(sep + 1)
+		parse_template_string.call(template_string_normal, false)
+		parse_template_string.call(template_string_advanced, true)
 	return items
 
 
