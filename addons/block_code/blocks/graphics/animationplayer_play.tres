@@ -27,7 +27,7 @@ description = "Play the animation."
 category = "Graphics | Animation"
 type = 2
 variant_type = 0
-display_template = "play {animation: STRING} {direction: NIL} {wait_mode: NIL}"
+display_template = "play {animation: STRING} | {direction: NIL} {wait_mode: NIL}"
 code_template = "if {direction} == \"forward\":
 	play({animation})
 else:
