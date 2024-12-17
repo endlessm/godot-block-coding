@@ -52,10 +52,6 @@ func _gui_input(event: InputEvent) -> void:
 				# A new right-click menu with items
 				var _context_menu := PopupMenu.new()
 				_context_menu.add_icon_item(EditorInterface.get_editor_theme().get_icon("Duplicate", "EditorIcons"), "Duplicate")
-				_context_menu.add_icon_item(EditorInterface.get_editor_theme().get_icon("Info", "EditorIcons"), "Summary")
-				_context_menu.add_icon_item(EditorInterface.get_editor_theme().get_icon("Pin", "EditorIcons"), "Unpin" if parent_block.pinned else "Pin")
-				_context_menu.add_separator()
-				_context_menu.add_icon_item(EditorInterface.get_editor_theme().get_icon("Remove", "EditorIcons"), "Delete")
 				_context_menu.popup_hide.connect(_cleanup)
 				_context_menu.id_pressed.connect(_menu_pressed.bind(_context_menu))
 
@@ -97,22 +93,6 @@ func _menu_pressed(_index: int, _context_menu: PopupMenu):
 
 	if _pressed_label == "Duplicate":
 		parent_block.confirm_duplicate()
-	elif _pressed_label == "Unpin" or _pressed_label == "Pin":
-		parent_block.pinned = not parent_block.pinned
-		parent_block._pin_snapped_blocks(parent_block, parent_block.pinned)
-	elif _pressed_label == "Summary":
-		# TODO: Replace tooltip with full summary
-		var _tooltip := parent_block._make_custom_tooltip(parent_block.get_tooltip())
-		var _tooltip_window := Popup.new()
-
-		_tooltip_window.position = DisplayServer.mouse_get_position()
-		_tooltip_window.popup_hide.connect(_cleanup)
-		_tooltip_window.add_child(_tooltip)
-		add_child(_tooltip_window)
-
-		_tooltip_window.show()
-	elif _pressed_label == "Delete":
-		parent_block.confirm_delete()
 
 
 func _cleanup():

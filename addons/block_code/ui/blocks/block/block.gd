@@ -41,39 +41,6 @@ signal modified
 ## Whether the block can be deleted by the Delete key.
 var can_delete: bool = true
 
-# FIXME: Variable pinned should be saved with the scene
-## Whether the block is pinned
-var pinned: bool:
-	set(value):
-		if not can_delete:
-			return
-
-		pinned = value
-
-		if pinned:
-			block_pinned_container = Container.new()
-			block_pinned_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
-			var block_pinned_panel := Panel.new()
-			block_pinned_panel.custom_minimum_size = Vector2(16, 16)
-			block_pinned_panel.grow_horizontal = 2
-			block_pinned_panel.grow_vertical = 2
-			block_pinned_panel.self_modulate = Color(1, 1, 1, 0.75)
-
-			var block_pinned_icon := TextureRect.new()
-			block_pinned_icon.texture = EditorInterface.get_editor_theme().get_icon("Pin", "EditorIcons")
-
-			block_pinned_panel.add_child(block_pinned_icon)
-			block_pinned_container.add_child(block_pinned_panel)
-			add_child(block_pinned_container)
-		else:
-			remove_child(block_pinned_container)
-			block_pinned_container.queue_free()
-
-		block_pinned_container.visible = pinned
-
-var block_pinned_container: Container
-
 var _block_extension: BlockExtension
 
 var _block_canvas: Node
@@ -198,37 +165,24 @@ func _on_block_extension_changed():
 
 func _gui_input(event):
 	if event is InputEventKey:
-		if event.pressed:
-			if event.keycode == KEY_DELETE:
-				# Always accept the Delete key so it doesn't propagate to the
-				# BlockCode node in the scene tree.
-				accept_event()
-				confirm_delete()
-			elif event.ctrl_pressed and not event.shift_pressed and not event.alt_pressed and not event.meta_pressed:
-				# Should not accept when other keys are pressed
-				if event.keycode == KEY_D:
-					accept_event()
-					confirm_duplicate()
-				elif event.keycode == KEY_P:
-					accept_event()
-					pinned = not pinned
-					_pin_snapped_blocks(self, pinned)
+		if event.pressed and event.keycode == KEY_DELETE:
+			# Always accept the Delete key so it doesn't propagate to the
+			# BlockCode node in the scene tree.
+			accept_event()
 
+			if not can_delete:
+				return
 
-func confirm_delete():
-	if not can_delete:
-		return
-
-	var dialog := ConfirmationDialog.new()
-	var num_blocks = _count_child_blocks(self) + 1
-	# FIXME: Maybe this should use block_name or label, but that
-	# requires one to be both unique and human friendly.
-	if num_blocks > 1:
-		dialog.dialog_text = "Delete %d blocks?" % num_blocks
-	else:
-		dialog.dialog_text = "Delete block?"
-	dialog.confirmed.connect(remove_from_tree)
-	EditorInterface.popup_dialog_centered(dialog)
+			var dialog := ConfirmationDialog.new()
+			var num_blocks = _count_child_blocks(self) + 1
+			# FIXME: Maybe this should use block_name or label, but that
+			# requires one to be both unique and human friendly.
+			if num_blocks > 1:
+				dialog.dialog_text = "Delete %d blocks?" % num_blocks
+			else:
+				dialog.dialog_text = "Delete block?"
+			dialog.confirmed.connect(remove_from_tree)
+			EditorInterface.popup_dialog_centered(dialog)
 
 
 func confirm_duplicate():
@@ -273,8 +227,7 @@ static func get_scene_path():
 
 
 func _drag_started(offset: Vector2 = Vector2.ZERO):
-	if not pinned:
-		drag_started.emit(self, offset)
+	drag_started.emit(self, offset)
 
 
 func disconnect_signals():
@@ -339,12 +292,3 @@ func _copy_snapped_blocks(copy_from: Node, copy_to: Node):
 
 		if copy_from_child is Container:
 			_copy_snapped_blocks(copy_from_child, copy_to_child)
-
-
-func _pin_snapped_blocks(node: Node, _is_pinned: bool):
-	for child in node.get_children():
-		if child is SnapPoint and child.has_snapped_block():
-			child.snapped_block.pinned = _is_pinned
-
-		if child is Container:
-			_pin_snapped_blocks(child, _is_pinned)
