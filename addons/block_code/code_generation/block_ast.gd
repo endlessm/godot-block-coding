@@ -131,6 +131,8 @@ static func raw_input_to_code_string(input) -> String:
 			return "'%s'" % input.c_escape()
 		TYPE_VECTOR2:
 			return "Vector2%s" % str(input)
+		TYPE_VECTOR3:
+			return "Vector3%s" % str(input)
 		TYPE_COLOR:
 			return "Color%s" % str(input)
 		_:

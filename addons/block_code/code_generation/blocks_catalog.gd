@@ -12,6 +12,7 @@ const _FALLBACK_SET_FOR_TYPE = {
 	TYPE_INT: 0,
 	TYPE_FLOAT: 0.0,
 	TYPE_VECTOR2: Vector2(0, 0),
+	TYPE_VECTOR3: Vector3(0, 0, 0),
 	TYPE_COLOR: Color.DARK_ORANGE,
 }
 
@@ -20,6 +21,7 @@ const _FALLBACK_CHANGE_FOR_TYPE = {
 	TYPE_INT: 1,
 	TYPE_FLOAT: 1.0,
 	TYPE_VECTOR2: Vector2(1, 1),
+	TYPE_VECTOR3: Vector3(1, 1, 1),
 	TYPE_COLOR: Color.DARK_ORANGE,
 }
 
@@ -44,6 +46,27 @@ const _SETTINGS_FOR_CLASS_PROPERTY = {
 			"default_set": Vector2(2, 2),
 			"default_change": Vector2(0.1, 0.1),
 		},
+	},
+	"Node3D":
+	{
+		"position":
+		{
+			"category": "Transform | Position",
+			"default_set": Vector3(0, 0, 0),
+			"default_change": Vector3(0.1, 0.1, 0.1),
+		},
+		"rotation":
+		{
+			"category": "Transform | Rotation",
+			"default_set": Vector3(0, 0, 0),
+			"default_change": Vector3(0.1, 0.1, 0.1),
+		},
+		"scale":
+		{
+			"category": "Transform | Scale",
+			"default_set": Vector3(1, 1, 1),
+			"default_change": Vector3(0.1, 0.1, 0.1),
+		}
 	},
 	"CanvasItem":
 	{
@@ -280,13 +303,13 @@ static func get_variable_getter_block_definition(variable: VariableDefinition) -
 
 
 static func get_variable_setter_block_definition(variable: VariableDefinition) -> BlockDefinition:
-	var type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
+	var _type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
 	var block_def := BlockDefinition.new()
 
 	block_def.name = "set_var_%s" % variable.var_name
 	block_def.category = "Variables"
 	block_def.type = Types.BlockType.STATEMENT
-	block_def.display_template = "Set %s to {value: %s}" % [variable.var_name, type_string]
+	block_def.display_template = "Set %s to {value: %s}" % [variable.var_name, _type_string]
 	block_def.code_template = "%s = {value}" % variable.var_name
 
 	return block_def

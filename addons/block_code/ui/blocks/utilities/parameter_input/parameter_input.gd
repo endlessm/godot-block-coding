@@ -37,6 +37,11 @@ var _drag_start: Vector2 = Vector2.INF
 @onready var _vector2_input := %Vector2Input
 @onready var _x_line_edit := %XLineEdit
 @onready var _y_line_edit := %YLineEdit
+# Vector3
+@onready var _vector3_input := %Vector3Input
+@onready var _v3_x_line_edit := %V3XLineEdit
+@onready var _v3_y_line_edit := %V3YLineEdit
+@onready var _v3_z_line_edit := %V3ZLineEdit
 # Bool
 @onready var _bool_input := %BoolInput
 @onready var _bool_input_option := %BoolInputOption
@@ -46,6 +51,9 @@ var _drag_start: Vector2 = Vector2.INF
 	_line_edit: "",
 	_x_line_edit: "",
 	_y_line_edit: "",
+	_v3_x_line_edit: "",
+	_v3_y_line_edit: "",
+	_v3_z_line_edit: "",
 }
 
 
@@ -73,6 +81,10 @@ func set_raw_input(raw_input: Variant):
 			# Rounding because floats are doubles by default but Vector2s have single components
 			_x_line_edit.text = ("%.4f" % raw_input.x).rstrip("0").rstrip(".") if raw_input != null else ""
 			_y_line_edit.text = ("%.4f" % raw_input.y).rstrip("0").rstrip(".") if raw_input != null else ""
+		TYPE_VECTOR3:
+			_v3_x_line_edit.text = ("%.4f" % raw_input.x).rstrip("0").rstrip(".") if raw_input != null else ""
+			_v3_y_line_edit.text = ("%.4f" % raw_input.y).rstrip("0").rstrip(".") if raw_input != null else ""
+			_v3_z_line_edit.text = ("%.4f" % raw_input.z).rstrip("0").rstrip(".") if raw_input != null else ""
 		TYPE_BOOL:
 			_bool_input_option.select(1 if raw_input else 0)
 		TYPE_NIL:
@@ -83,6 +95,9 @@ func set_raw_input(raw_input: Variant):
 	_last_submitted_text[_line_edit] = _line_edit.text
 	_last_submitted_text[_x_line_edit] = _x_line_edit.text
 	_last_submitted_text[_y_line_edit] = _y_line_edit.text
+	_last_submitted_text[_v3_x_line_edit] = _v3_x_line_edit.text
+	_last_submitted_text[_v3_y_line_edit] = _v3_y_line_edit.text
+	_last_submitted_text[_v3_z_line_edit] = _v3_z_line_edit.text
 
 
 ## Gets the value, which could be one of a variety of types depending on
@@ -102,6 +117,8 @@ func get_raw_input() -> Variant:
 			return _color_input.color
 		TYPE_VECTOR2:
 			return Vector2(float(_x_line_edit.text), float(_y_line_edit.text))
+		TYPE_VECTOR3:
+			return Vector3(float(_v3_x_line_edit.text), float(_v3_y_line_edit.text), float(_v3_z_line_edit.text))
 		TYPE_BOOL:
 			return bool(_bool_input_option.selected)
 		TYPE_INT:
@@ -203,6 +220,30 @@ func _on_y_line_edit_focus_exited():
 	_validate_and_submit_edit_text(_y_line_edit, TYPE_FLOAT)
 
 
+func _on_v3_x_line_edit_text_submitted(_new_text):
+	_validate_and_submit_edit_text(_v3_x_line_edit, TYPE_FLOAT)
+
+
+func _on_v3_x_line_edit_focus_exited():
+	_validate_and_submit_edit_text(_v3_x_line_edit, TYPE_FLOAT)
+
+
+func _on_v3_y_line_edit_text_submitted(_new_text):
+	_validate_and_submit_edit_text(_v3_y_line_edit, TYPE_FLOAT)
+
+
+func _on_v3_y_line_edit_focus_exited():
+	_validate_and_submit_edit_text(_v3_y_line_edit, TYPE_FLOAT)
+
+
+func _on_v3_z_line_edit_text_submitted(_new_text):
+	_validate_and_submit_edit_text(_v3_z_line_edit, TYPE_FLOAT)
+
+
+func _on_v3_z_line_edit_focus_exited():
+	_validate_and_submit_edit_text(_v3_z_line_edit, TYPE_FLOAT)
+
+
 func _update_visible_input():
 	if snap_point.has_snapped_block():
 		_switch_input(null)
@@ -214,6 +255,8 @@ func _update_visible_input():
 				_switch_input(_color_input)
 			TYPE_VECTOR2:
 				_switch_input(_vector2_input)
+			TYPE_VECTOR3:
+				_switch_input(_vector3_input)
 			TYPE_BOOL:
 				_switch_input(_bool_input)
 			_:
