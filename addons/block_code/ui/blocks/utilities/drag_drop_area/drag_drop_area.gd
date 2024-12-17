@@ -52,6 +52,7 @@ func _gui_input(event: InputEvent) -> void:
 				# A new right-click menu with items
 				var _context_menu := PopupMenu.new()
 				_context_menu.add_icon_item(EditorInterface.get_editor_theme().get_icon("Duplicate", "EditorIcons"), "Duplicate")
+				_context_menu.add_icon_item(EditorInterface.get_editor_theme().get_icon("Remove", "EditorIcons"), "Delete")
 				_context_menu.popup_hide.connect(_cleanup)
 				_context_menu.id_pressed.connect(_menu_pressed.bind(_context_menu))
 
@@ -93,6 +94,8 @@ func _menu_pressed(_index: int, _context_menu: PopupMenu):
 
 	if _pressed_label == "Duplicate":
 		parent_block.confirm_duplicate()
+	elif _pressed_label == "Delete":
+		parent_block.confirm_delete()
 
 
 func _cleanup():

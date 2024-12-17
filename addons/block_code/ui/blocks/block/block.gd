@@ -165,24 +165,33 @@ func _on_block_extension_changed():
 
 func _gui_input(event):
 	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_DELETE:
-			# Always accept the Delete key so it doesn't propagate to the
-			# BlockCode node in the scene tree.
-			accept_event()
+		if event.pressed:
+			if event.keycode == KEY_DELETE:
+				# Always accept the Delete key so it doesn't propagate to the
+				# BlockCode node in the scene tree.
+				accept_event()
+				confirm_delete()
+			elif event.ctrl_pressed and not event.shift_pressed and not event.alt_pressed and not event.meta_pressed:
+				# Should not accept when other keys are pressed
+				if event.keycode == KEY_D:
+					accept_event()
+					confirm_duplicate()
 
-			if not can_delete:
-				return
 
-			var dialog := ConfirmationDialog.new()
-			var num_blocks = _count_child_blocks(self) + 1
-			# FIXME: Maybe this should use block_name or label, but that
-			# requires one to be both unique and human friendly.
-			if num_blocks > 1:
-				dialog.dialog_text = "Delete %d blocks?" % num_blocks
-			else:
-				dialog.dialog_text = "Delete block?"
-			dialog.confirmed.connect(remove_from_tree)
-			EditorInterface.popup_dialog_centered(dialog)
+func confirm_delete():
+	if not can_delete:
+		return
+
+	var dialog := ConfirmationDialog.new()
+	var num_blocks = _count_child_blocks(self) + 1
+	# FIXME: Maybe this should use block_name or label, but that
+	# requires one to be both unique and human friendly.
+	if num_blocks > 1:
+		dialog.dialog_text = "Delete %d blocks?" % num_blocks
+	else:
+		dialog.dialog_text = "Delete block?"
+	dialog.confirmed.connect(remove_from_tree)
+	EditorInterface.popup_dialog_centered(dialog)
 
 
 func confirm_duplicate():
