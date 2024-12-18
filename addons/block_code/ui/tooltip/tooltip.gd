@@ -27,5 +27,5 @@ func override_fonts():
 
 
 func _ready():
-	if not Util.node_is_part_of_edited_scene(self):
+	if not self.is_part_of_edited_scene():
 		override_fonts()

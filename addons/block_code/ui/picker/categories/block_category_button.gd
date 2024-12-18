@@ -16,7 +16,7 @@ func _ready():
 	if not category:
 		category = BlockCategory.new("Example", Color.RED)
 
-	if not Util.node_is_part_of_edited_scene(self):
+	if not self.is_part_of_edited_scene():
 		var new_stylebox: StyleBoxFlat = _panel.get_theme_stylebox("panel").duplicate()
 		new_stylebox.bg_color = category.color
 		_panel.add_theme_stylebox_override("panel", new_stylebox)
