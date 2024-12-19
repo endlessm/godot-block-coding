@@ -67,7 +67,7 @@ signal replace_block_code
 func _ready():
 	_context.changed.connect(_on_context_changed)
 
-	if not _open_scene_button.icon and not Util.node_is_part_of_edited_scene(self):
+	if not _open_scene_button.icon and not self.is_part_of_edited_scene():
 		_open_scene_button.icon = _open_scene_icon
 	if not _zoom_out_button.icon:
 		_zoom_out_button.icon = _icon_zoom_out
@@ -99,7 +99,7 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	# Don't allow dropping BlockCode nodes or nodes that aren't part of the
 	# edited scene.
 	var node := get_tree().root.get_node(abs_path)
-	if node is BlockCode or not Util.node_is_part_of_edited_scene(node):
+	if node is BlockCode or not node.is_part_of_edited_scene():
 		return false
 
 	# Don't allow dropping the BlockCode node's parent as that's already self.

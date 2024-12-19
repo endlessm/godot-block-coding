@@ -132,10 +132,7 @@ func _get_parameter_defaults() -> Dictionary:
 	if not block_extension:
 		return definition.defaults
 
-	# Use Dictionary.merge instead of Dictionary.merged for Godot 4.2 compatibility
-	var new_defaults := block_extension.get_defaults()
-	new_defaults.merge(definition.defaults)
-	return new_defaults
+	return block_extension.get_defaults().merged(definition.defaults)
 
 
 func _get_or_create_block_extension() -> BlockExtension:

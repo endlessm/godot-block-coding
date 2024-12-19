@@ -32,7 +32,8 @@ jobs:
     name: Tests
     strategy:
       matrix:
-        godot-version: [4.2.2, 4.3.0]
+        godot-version:
+          - 4.3.0
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
