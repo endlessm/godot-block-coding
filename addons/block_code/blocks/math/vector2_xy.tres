@@ -1,0 +1,26 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://bpdjqy6oidfo4"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="1_p8v57"]
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="2_207xo"]
+
+[sub_resource type="Resource" id="Resource_ie4sg"]
+script = ExtResource("1_p8v57")
+selected = 0
+items = ["x", "y"]
+
+[resource]
+script = ExtResource("2_207xo")
+name = &"vector2_xy"
+target_node_class = ""
+description = "Gives the x or y of a [b]Vector2[/b]"
+category = "Math"
+type = 3
+variant_type = 3
+display_template = "{xy: NIL} of {vector2: VECTOR2}"
+code_template = "{vector2}.{{xy}}"
+defaults = {
+"xy": SubResource("Resource_ie4sg")
+}
+signal_name = ""
+scope = ""
+is_advanced = false
