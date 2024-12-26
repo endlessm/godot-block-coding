@@ -28,3 +28,4 @@ defaults = {
 }
 signal_name = ""
 scope = ""
+is_advanced = false
