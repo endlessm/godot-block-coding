@@ -24,4 +24,5 @@ defaults = {
 }
 signal_name = ""
 scope = ""
+is_advanced = false
 extension_script = ExtResource("2_42ixf")
