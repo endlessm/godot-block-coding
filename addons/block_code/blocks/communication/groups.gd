@@ -3,7 +3,6 @@
 extends BlockExtension
 
 const OptionData = preload("res://addons/block_code/code_generation/option_data.gd")
-const Util = preload("res://addons/block_code/ui/util.gd")
 
 
 # Global groups are just project settings in the global_group group.
@@ -58,7 +57,7 @@ func get_defaults() -> Dictionary:
 		return {}
 
 	# The default groups are only needed in the editor.
-	if not Util.node_is_part_of_edited_scene(context_node):
+	if not context_node.is_part_of_edited_scene():
 		return {}
 
 	var groups: Array[String] = _get_edited_scene_groups()
