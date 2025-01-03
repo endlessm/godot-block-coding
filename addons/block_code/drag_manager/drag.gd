@@ -128,8 +128,8 @@ func _snaps_to(node: Node) -> bool:
 		if _block.definition.type != _snap_point.block_type:
 			return false
 
-	if _block.definition.type == Types.BlockType.VALUE and not Types.can_cast(_block.definition.variant_type, _snap_point.variant_type):
-		# We only snap Value blocks to snaps that can cast to same variant:
+	if _block.definition.type == Types.BlockType.VALUE and not Types.has_relationship(_block.definition.variant_type, _snap_point.variant_type):
+		# We only snap Value blocks to snaps if their types have a relationship:
 		return false
 
 	# Check if any parent node is this node
