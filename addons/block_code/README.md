@@ -68,9 +68,9 @@ If you want to access the node's property, you can drag the property from the In
 
 You can also drag a file from the Resource Filesystem dock and drop it into the block script as a getter block. It will become a constant value block holding the file's resource full path.
 
-## Feedback
+## Feedback & Discussion
 
-Please share feedback in the [Godot Forum Block Coding thread](https://forum.godotengine.org/t/block-coding-high-level-block-based-visual-programming/68941).
+Please join our [Discussion Board](https://github.com/endlessm/godot-block-coding/discussions) to provide feedback, share ideas, and ask questions about building your games with Block Coding.
 
 ## Localization
 
