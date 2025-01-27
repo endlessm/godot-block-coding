@@ -21,7 +21,9 @@ See our [pedagogy and audience documentation](docs/PEDAGOGY.md) for more info.
 
 ## Getting Started
 
-1. Install the plugin through the Godot AssetLib searching for the name
+1. Make sure you have Godot 4.3 or a newer version installed.
+
+2. Install the plugin through the Godot AssetLib searching for the name
    Block Coding. You can also download it from the online [Asset
    Library](https://godotengine.org/asset-library/asset/3095) and import
    it through AssetLib. Alternatively, you can clone the git repository and
@@ -30,13 +32,13 @@ See our [pedagogy and audience documentation](docs/PEDAGOGY.md) for more info.
    project, reload the project once after opening it for the first time
    to resolve any errors. This is a Godot issue.*
 
-2. Make sure to enable the plugin in **Project** → **Project Settings** → **Plugins**.
+3. Make sure to enable the plugin in **Project** → **Project Settings** → **Plugins**.
 
-3. You're ready to get started! Open a scene, select a node, and observe that there's a **Block Code** section within the lower central pane of the Godot editor, where you usually find debugging, animation and shader functionality. Click **Block Code** and then use the **Add Block Code** button to create a block canvas.
+4. You're ready to get started! Open a scene, select a node, and observe that there's a **Block Code** section within the lower central pane of the Godot editor, where you usually find debugging, animation and shader functionality. Click **Block Code** and then use the **Add Block Code** button to create a block canvas.
 
-4. Drag blocks from the picker and snap them together to create a script. You can switch to other Block Code scripts by selecting the respective node from the scene tree.
+5. Drag blocks from the picker and snap them together to create a script. You can switch to other Block Code scripts by selecting the respective node from the scene tree.
 
-5. **Run** the scene to see your Block Code scripts in action. Block Code scripts are saved within the scene.
+6. **Run** the scene to see your Block Code scripts in action. Block Code scripts are saved within the scene.
 
 If you clone the plugin's git repository and open it in Godot, you will be presented with a block-built Pong game as an example.
 
