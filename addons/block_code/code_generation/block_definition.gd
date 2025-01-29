@@ -18,7 +18,8 @@ const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{const (?<const
 @export var category: String
 
 ## Which kind of block is this. See [enum Types.BlockType].
-@export var type: Types.BlockType
+@export var type: Types.BlockType:
+	set = _set_type
 
 ## Only relevant for Value blocks. The variant type that this block is
 ## supposed to return.
@@ -56,15 +57,15 @@ const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{const (?<const
 ## name.
 @export var signal_name: String
 
-## Empty except for blocks that have a defined scope.
-@export var scope: String
-
 ## If checked, the block will be hidden by default in the Picker.
 @export var is_advanced: bool
 
 ## An optional script that can extend this block definition. For instance, to
 ## dynamically add the defaults.
 @export var extension_script: GDScript
+
+## Empty except for blocks that have a defined scope.
+var scope: String
 
 static var _display_template_regex := RegEx.create_from_string(FORMAT_STRING_PATTERN)
 
@@ -97,6 +98,18 @@ func _init(
 	scope = p_scope
 	extension_script = p_extension_script
 	is_advanced = p_is_advanced
+
+
+func _set_type(p_type):
+	type = p_type
+	notify_property_list_changed()
+
+
+func _validate_property(property: Dictionary):
+	if property.name == "variant_type" and type != Types.BlockType.VALUE:
+		property.usage |= PROPERTY_USAGE_READ_ONLY
+	elif property.name == "signal_name" and type != Types.BlockType.ENTRY:
+		property.usage |= PROPERTY_USAGE_READ_ONLY
 
 
 func create_block_extension() -> BlockExtension:
