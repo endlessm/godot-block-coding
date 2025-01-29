@@ -11,25 +11,59 @@ const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{const (?<const
 ## (for any node).
 @export var target_node_class: String
 
+## A description for this block, which will be shown to the user in a tooltip.
 @export_multiline var description: String
+
+## The category under which this block will appear in the Picker.
 @export var category: String
 
+## Which kind of block is this. See [enum Types.BlockType].
 @export var type: Types.BlockType
+
+## Only relevant for Value blocks. The variant type that this block is
+## supposed to return.
 @export var variant_type: Variant.Type
 
+## Template for creating the UI of this block. That is, the labels and the
+## parameters that will become user inputs with slots. The UI can be split
+## between basic and advanced using the [code]|[/code] character as separator.
+## Example:
+## [codeblock]
+## say {salute: STRING} | {fancy: BOOL}
+## [/codeblock]
 @export var display_template: String
+
+## Template for the generated GDScript code. This must be valid GDScript. The
+## parameters in [member display_template] will be replaced by the user input
+## or by the resulting value of snapped blocks.
+## Following the example in [member display_template]:
+## [codeblock]
+## if {fancy}:
+##     print_rich('[color=green][b]' + {salute} + '[/b][/color]')
+## else:
+##     print({salute})
+## [/codeblock]
 @export_multiline var code_template: String
+
+## Optional defaults for the variables defined in [member display_template].
+## The key must be of type String and match a variable name in both [member
+## display_template] and [member code_template]. The value must be of the same
+## type as defined in the [member display_template].
 @export var defaults: Dictionary
 
-## Only for blocks of type Types.ENTRY. If non-empty, this block defines a
-## callback that will be connected to the signal with this name.
+## Only for blocks of type [member Types.BlockType.ENTRY]. If non-empty, this
+## block defines a callback that will be connected to the signal with this
+## name.
 @export var signal_name: String
 
-## Empty except for blocks that have a defined scope
+## Empty except for blocks that have a defined scope.
 @export var scope: String
 
+## If checked, the block will be hidden by default in the Picker.
 @export var is_advanced: bool
 
+## An optional script that can extend this block definition. For instance, to
+## dynamically add the defaults.
 @export var extension_script: GDScript
 
 static var _display_template_regex := RegEx.create_from_string(FORMAT_STRING_PATTERN)
