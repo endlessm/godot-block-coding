@@ -36,6 +36,10 @@ const CollapsableSettingsScene = preload("res://addons/block_code/ui/blocks/util
 		parameter_defaults = value
 		_update_from_format_string()
 
+## Whether the parameter inputs can be edited.
+@export var editable: bool = true:
+	set = _set_editable
+
 var parent_block: Block
 var _parameter_inputs_by_name: Dictionary
 
@@ -46,6 +50,13 @@ func _ready() -> void:
 	parent_block = BlockTreeUtil.get_parent_block(self)
 
 	_update_from_format_string()
+
+
+func _set_editable(value) -> void:
+	editable = value
+	for parameter_name in _parameter_inputs_by_name:
+		var parameter_input: ParameterInput = _parameter_inputs_by_name[parameter_name]
+		parameter_input.editable = value
 
 
 ## Set the values of all input parameters based from a dictionary of raw values.
@@ -125,6 +136,7 @@ func _append_input_parameter(container: Container, parameter: Dictionary, id: in
 	parameter_input.placeholder = parameter["name"]
 	parameter_input.variant_type = parameter["type"]
 	parameter_input.drag_started.connect(_on_parameter_input_drag_started)
+	parameter_input.editable = editable
 
 	if default_value is OptionData:
 		var option_data := default_value as OptionData

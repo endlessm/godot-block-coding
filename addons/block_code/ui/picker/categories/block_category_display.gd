@@ -66,6 +66,7 @@ func _get_or_create_block(block_definition: BlockDefinition) -> Block:
 	if block == null:
 		block = _context.block_script.instantiate_block(block_definition)
 		block.can_delete = false
+		block.editable = false
 		block.drag_started.connect(func(block: Block, offset: Vector2): block_picked.emit(block, offset))
 		_blocks_container.add_child(block)
 		_blocks[block_definition.name] = block
