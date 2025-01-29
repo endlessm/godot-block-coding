@@ -56,6 +56,22 @@ var _drag_start: Vector2 = Vector2.INF
 	_v3_z_line_edit: "",
 }
 
+## Whether the text inputs can be edited, and whether the options selection have any effect.
+@export var editable: bool = true:
+	set = _set_editable
+
+
+func _set_editable(value) -> void:
+	if not is_node_ready():
+		await ready
+	editable = value
+	_line_edit.editable = value
+	_x_line_edit.editable = value
+	_y_line_edit.editable = value
+	_v3_x_line_edit.editable = value
+	_v3_y_line_edit.editable = value
+	_v3_z_line_edit.editable = value
+
 
 ## Sets the value using [param raw_input], which could be one of a variety of types
 ## depending on [member variant_type]. The value could also be a [Block], in which
@@ -180,6 +196,8 @@ func get_snapped_block() -> Block:
 
 
 func _validate_and_submit_edit_text(line_edit: Node, type: Variant.Type):
+	if not editable:
+		return
 	if _last_submitted_text[line_edit] == line_edit.text:
 		return
 	match type:
@@ -319,6 +337,8 @@ func _update_option_input(current_value: Variant = null):
 
 
 func _on_color_input_color_changed(color):
+	if not editable:
+		return
 	_update_background_color(color)
 	modified.emit()
 
@@ -328,6 +348,8 @@ func _update_background_color(new_color):
 
 
 func _on_option_input_item_selected(index):
+	if not editable:
+		return
 	modified.emit()
 
 

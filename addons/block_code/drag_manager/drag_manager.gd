@@ -82,8 +82,9 @@ func drag_ended():
 		connect_block_canvas_signals(block)
 		block.grab_focus()
 
-		# Allow the block to be deleted now that it's on the canvas.
+		# Allow the block to be deleted and edited now that it's on the canvas.
 		block.can_delete = true
+		block.editable = true
 
 	_block_canvas.release_scope()
 

@@ -10,6 +10,10 @@ signal modified
 ## Color of block (optionally used to draw block color)
 @export var color: Color = Color(1., 1., 1.)
 
+## Whether the parameter inputs inside the block can be edited.
+@export var editable: bool = true:
+	set = _set_editable
+
 # FIXME Note: This used to be a NodePath. There is a bug in Godot 4.2 that causes the
 # reference to not be set properly when the node is duplicated. Since we don't
 # use the Node duplicate function anymore, this is okay.
@@ -54,6 +58,11 @@ func _ready():
 	focus_entered.connect(_block_on_focus_entered)
 	focus_exited.connect(_block_on_focus_exited)
 	_on_definition_changed()
+
+
+func _set_editable(value) -> void:
+	editable = value
+	template_editor.editable = value
 
 
 func _block_on_focus_entered():
