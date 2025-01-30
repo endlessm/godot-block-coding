@@ -1,11 +1,11 @@
 extends Node
 
 enum BlockType {
-	NONE,
-	ENTRY,
-	STATEMENT,
-	VALUE,
-	CONTROL,
+	NONE,  ## @deprecated
+	ENTRY,  ## A block that's the entry point. Statement or control blocks can be attached below it.
+	STATEMENT,  ## A block that executes a statement. Another statement or control block can be attached below it.
+	VALUE,  ## A block that represents a value. It could be a constant or the result of an operation. All blocks may have slots to attach value blocks in their body.
+	CONTROL,  ## A block that can conditionally execute other statement or control blocks. Another statement or control block can be attached below it.
 }
 
 const VARIANT_TYPE_TO_STRING: Dictionary = {
