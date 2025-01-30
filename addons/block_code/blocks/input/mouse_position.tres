@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dwrdne76nxk7t"]
+
+[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_7vl3n"]
+
+[resource]
+script = ExtResource("1_7vl3n")
+name = &"mouse_position"
+target_node_class = "CanvasItem"
+description = "The coordinates of the mouse position."
+category = "Input"
+type = 3
+variant_type = 5
+display_template = "mouse position"
+code_template = "get_global_mouse_position()"
+defaults = {}
+signal_name = ""
+is_advanced = false
