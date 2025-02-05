@@ -58,8 +58,6 @@
 # res://addons/block_code/blocks/math/sin.tres
 # res://addons/block_code/blocks/math/subtract.tres
 # res://addons/block_code/blocks/math/tan.tres
-# res://addons/block_code/blocks/math/vector2_x.tres
-# res://addons/block_code/blocks/math/vector2_y.tres
 # res://addons/block_code/blocks/math/vector_from_angle.tres
 # res://addons/block_code/blocks/math/vector_multiply.tres
 # res://addons/block_code/blocks/physics/characterbody2d_move_and_slide.tres
@@ -155,6 +153,13 @@
 # res://addons/block_code/ui/title_bar/title_bar.tscn
 # res://addons/block_code/ui/tooltip/tooltip.gd
 # res://addons/block_code/ui/tooltip/tooltip.tscn
+# res://addons/block_code/blocks/input/mouse_position.tres
+# res://addons/block_code/blocks/math/vector2_xy.tres
+# res://addons/block_code/blocks/math/vector3_xyz.tres
+# res://addons/block_code/blocks/math/vector3_multiply.tres
+# res://addons/block_code/blocks/communication/switch_scene.tres
+# res://addons/block_code/blocks/variables/vector3.tres
+# res://addons/block_code/blocks/lifecycle/physics_process.tres
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -206,6 +211,7 @@ msgstr ""
 #: addons/block_code/blocks/communication/define_method.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_entered.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_exited.tres
+#: addons/block_code/blocks/communication/switch_scene.tres
 msgid "Communication | Methods"
 msgstr ""
 
@@ -315,7 +321,7 @@ msgid "Play the animation."
 msgstr ""
 
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
-msgid "play {animation: STRING} {direction: NIL} {wait_mode: NIL}"
+msgid "play {animation: STRING} | {direction: NIL} {wait_mode: NIL}"
 msgstr ""
 
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
@@ -372,6 +378,7 @@ msgstr ""
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 #: addons/block_code/blocks/input/is_input_actioned.tres
+#: addons/block_code/blocks/input/mouse_position.tres
 msgid "Input"
 msgstr ""
 
@@ -395,6 +402,7 @@ msgstr ""
 #: addons/block_code/blocks/lifecycle/queue_free.tres
 #: addons/block_code/blocks/lifecycle/queue_free_node.tres
 #: addons/block_code/blocks/lifecycle/ready.tres
+#: addons/block_code/blocks/lifecycle/physics_process.tres
 msgid "Lifecycle"
 msgstr ""
 
@@ -549,11 +557,13 @@ msgstr ""
 #: addons/block_code/blocks/math/sin.tres
 #: addons/block_code/blocks/math/subtract.tres
 #: addons/block_code/blocks/math/tan.tres
-#: addons/block_code/blocks/math/vector2_x.tres
-#: addons/block_code/blocks/math/vector2_y.tres
 #: addons/block_code/blocks/math/vector_from_angle.tres
 #: addons/block_code/blocks/math/vector_multiply.tres
 #: addons/block_code/blocks/variables/vector2.tres
+#: addons/block_code/blocks/math/vector2_xy.tres
+#: addons/block_code/blocks/math/vector3_xyz.tres
+#: addons/block_code/blocks/math/vector3_multiply.tres
+#: addons/block_code/blocks/variables/vector3.tres
 msgid "Math"
 msgstr ""
 
@@ -615,22 +625,6 @@ msgstr ""
 
 #: addons/block_code/blocks/math/tan.tres
 msgid "tan {angle: FLOAT}"
-msgstr ""
-
-#: addons/block_code/blocks/math/vector2_x.tres
-msgid "Gives the x of a [i]Vector2[/i]"
-msgstr ""
-
-#: addons/block_code/blocks/math/vector2_x.tres
-msgid "x of {vector2: VECTOR2}"
-msgstr ""
-
-#: addons/block_code/blocks/math/vector2_y.tres
-msgid "Gives the y of a [i]Vector2[/i]"
-msgstr ""
-
-#: addons/block_code/blocks/math/vector2_y.tres
-msgid "y of {vector2: VECTOR2}"
 msgstr ""
 
 #: addons/block_code/blocks/math/vector_from_angle.tres
@@ -696,7 +690,7 @@ msgid "Play the audio stream with volume and pitch"
 msgstr ""
 
 #: addons/block_code/blocks/sounds/play_sound.tres
-msgid "play the sound {name: STRING} with volume {db: FLOAT} dB and pitch scale {pitch: FLOAT}"
+msgid "play the sound {name: STRING} | with volume {db: FLOAT} dB and pitch scale {pitch: FLOAT}"
 msgstr ""
 
 #: addons/block_code/blocks/sounds/stop_sound.tres
@@ -760,6 +754,10 @@ msgid "0"
 msgstr ""
 
 #: addons/block_code/ui/main_panel.tscn
+msgid "Advanced"
+msgstr ""
+
+#: addons/block_code/ui/main_panel.tscn
 msgid "Show Generated Script"
 msgstr ""
 
@@ -803,6 +801,14 @@ msgstr ""
 msgid "Type:"
 msgstr ""
 
+#: addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.gd
+msgid "Duplicate"
+msgstr ""
+
+#: addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.gd
+msgid "Delete"
+msgstr ""
+
 #: addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn
 msgid "Parameter"
 msgstr ""
@@ -834,4 +840,56 @@ msgstr ""
 
 #: addons/block_code/ui/script_window/script_window.tscn
 msgid "Copy"
+msgstr ""
+
+#: addons/block_code/blocks/input/mouse_position.tres
+msgid "The coordinates of the mouse position."
+msgstr ""
+
+#: addons/block_code/blocks/input/mouse_position.tres
+msgid "mouse position"
+msgstr ""
+
+#: addons/block_code/blocks/math/vector2_xy.tres
+msgid "Gives the x or y of a [b]Vector2[/b]"
+msgstr ""
+
+#: addons/block_code/blocks/math/vector2_xy.tres
+msgid "{xy: NIL} of {vector2: VECTOR2}"
+msgstr ""
+
+#: addons/block_code/blocks/math/vector3_xyz.tres
+msgid "Gives the x, y, or z of a [b]Vector3[/b]"
+msgstr ""
+
+#: addons/block_code/blocks/math/vector3_xyz.tres
+msgid "{xyz: NIL} of {vector3: VECTOR3}"
+msgstr ""
+
+#: addons/block_code/blocks/math/vector3_multiply.tres
+msgid "Multiplies a Vector3 with a number. Use this, for example, to get a point some distance away along an angle."
+msgstr ""
+
+#: addons/block_code/blocks/math/vector3_multiply.tres
+msgid "multiply {vector: VECTOR3} by {number: FLOAT}"
+msgstr ""
+
+#: addons/block_code/blocks/communication/switch_scene.tres
+msgid "Stop playing the current scene, and switch to a different one. You might use this to switch to a new level."
+msgstr ""
+
+#: addons/block_code/blocks/communication/switch_scene.tres
+msgid "switch the scene to {file_path: STRING}"
+msgstr ""
+
+#: addons/block_code/blocks/variables/vector3.tres
+msgid "vector3 x: {x: FLOAT} y: {y: FLOAT}: z: {z: FLOAT}"
+msgstr ""
+
+#: addons/block_code/blocks/lifecycle/physics_process.tres
+msgid "Attached blocks will be executed before each physics step"
+msgstr ""
+
+#: addons/block_code/blocks/lifecycle/physics_process.tres
+msgid "every physics step"
 msgstr ""
