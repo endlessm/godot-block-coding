@@ -73,6 +73,7 @@ func _update_block_components():
 	for block_category_display: BlockCategoryDisplay in _category_displays.values():
 		block_category_display.hide()
 
+	var unique_category_prefixes: Array[String]
 	for category in block_categories:
 		var block_definitions := _context.block_script.get_blocks_in_category(category)
 
@@ -83,10 +84,12 @@ func _update_block_components():
 		if order_override:
 			block_definitions.sort_custom(_sort_blocks_by_list_order.bind(order_override))
 
-		var block_category_button := _get_or_create_block_category_button(category)
-		_category_list.move_child(block_category_button, -1)
-		if category.name == "Variables" or not block_definitions.is_empty():
-			block_category_button.show()
+		if not unique_category_prefixes.has(category.name.get_slice(" |", 0)):
+			var block_category_button := _get_or_create_block_category_button(category)
+			_category_list.move_child(block_category_button, -1)
+			if category.name == "Variables" or not block_definitions.is_empty():
+				block_category_button.show()
+			unique_category_prefixes.append(category.name.get_slice(" |", 0))
 
 		var block_category_display := _get_or_create_block_category_display(category)
 		block_category_display.block_definitions = block_definitions
