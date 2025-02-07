@@ -23,6 +23,5 @@ defaults = {
 "path": SubResource("Resource_esr4a")
 }
 signal_name = ""
-scope = ""
 is_advanced = false
 extension_script = ExtResource("1_we5wl")

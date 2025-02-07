@@ -22,5 +22,4 @@ defaults = {
 "xy": SubResource("Resource_ie4sg")
 }
 signal_name = ""
-scope = ""
 is_advanced = false

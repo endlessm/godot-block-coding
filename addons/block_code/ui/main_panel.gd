@@ -1,8 +1,6 @@
 @tool
 extends Control
 
-signal script_window_requested(script: String)
-
 const BlockCanvas = preload("res://addons/block_code/ui/block_canvas/block_canvas.gd")
 const BlockCodePlugin = preload("res://addons/block_code/block_code_plugin.gd")
 const BlocksCatalog = preload("res://addons/block_code/code_generation/blocks_catalog.gd")
@@ -11,6 +9,7 @@ const Picker = preload("res://addons/block_code/ui/picker/picker.gd")
 const TitleBar = preload("res://addons/block_code/ui/title_bar/title_bar.gd")
 const TxUtils := preload("res://addons/block_code/translation/utils.gd")
 const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
+const ScriptWindow := preload("res://addons/block_code/ui/script_window/script_window.tscn")
 
 @onready var _context := BlockEditorContext.get_default()
 
@@ -23,6 +22,10 @@ const VariableDefinition = preload("res://addons/block_code/code_generation/vari
 @onready var _picker_split: HSplitContainer = %PickerSplit
 @onready var _collapse_button: Button = %CollapseButton
 
+@onready var _show_script_button: Button = %ShowScriptButton
+@onready var _split_script_container: MarginContainer = %SplitScriptContainer
+@onready var _split_script_window := %SplitScriptWindow
+
 @onready var _icon_delete := EditorInterface.get_editor_theme().get_icon("Remove", "EditorIcons")
 @onready var _icon_collapse := EditorInterface.get_editor_theme().get_icon("Back", "EditorIcons")
 @onready var _icon_expand := EditorInterface.get_editor_theme().get_icon("Forward", "EditorIcons")
@@ -31,6 +34,13 @@ const Constants = preload("res://addons/block_code/ui/constants.gd")
 
 var _block_code_nodes: Array
 var _collapsed: bool = false
+var _window_active: bool = false
+var _script_window = null
+
+var split_script_visibility: bool = false:
+	set(value):
+		split_script_visibility = value
+		_change_split_script_visibility(split_script_visibility)
 
 var undo_redo: EditorUndoRedoManager:
 	set(value):
@@ -47,6 +57,7 @@ func _init():
 
 func _ready():
 	_context.changed.connect(_on_context_changed)
+	_split_script_window.script_window_opened.connect(_on_script_window_opened)
 
 	_picker.block_picked.connect(_drag_manager.copy_picked_block_and_drag)
 	_picker.variable_created.connect(_create_variable)
@@ -62,12 +73,6 @@ func _ready():
 
 func _on_undo_redo_version_changed():
 	_context.force_update()
-
-
-func _on_show_script_button_pressed():
-	var script: String = _block_canvas.generate_script_from_current_window()
-
-	script_window_requested.emit(script)
 
 
 func _on_delete_node_button_pressed():
@@ -127,12 +132,14 @@ func switch_block_code_node(block_code_node: BlockCode):
 		block_script.initialize()
 
 	_context.block_code_node = block_code_node
+	_update_script()
 
 
 func _on_context_changed():
 	_delete_node_button.disabled = _context.block_code_node == null
 	if _context.block_code_node != null:
 		_try_migration()
+	_update_script()
 
 
 func save_script():
@@ -174,6 +181,7 @@ func save_script():
 	block_script.version = Constants.CURRENT_DATA_VERSION
 
 	undo_redo.commit_action()
+	_update_script()
 
 
 func _input(event):
@@ -213,6 +221,64 @@ func _on_collapse_button_pressed():
 	toggle_collapse()
 
 
+#region Script Window UI
+func _on_show_script_button_pressed():
+	if split_script_visibility == true:
+		split_script_visibility = false
+	else:
+		split_script_visibility = true
+		_update_script()
+
+
+func _on_script_window_opened() -> void:
+	split_script_visibility = false
+	_show_script_button.visible = false
+	_script_window_opened()
+
+
+func _on_script_window_closed() -> void:
+	split_script_visibility = true
+	_show_script_button.visible = true
+	_update_script()
+
+
+func _script_window_opened() -> void:
+	_script_window = ScriptWindow.instantiate()
+	EditorInterface.popup_dialog(_script_window)
+	_update_script()
+	await _script_window.close_requested
+	
+	_on_script_window_closed()
+	_script_window.queue_free()
+	_script_window = null
+	_update_script()
+
+
+func _change_split_script_visibility(visibility: bool) -> void:
+	if visibility == false:
+		_split_script_container.visible = false
+		_show_script_button.text = "Show Generated Script"
+	else:
+		_split_script_container.visible = true
+		_show_script_button.text = "Hide Generated Script"
+	_update_script()
+
+
+func _update_script() -> void:
+	var block_script: BlockScriptSerialization = _context.block_script
+	
+	if block_script != null:
+		block_script = block_script.duplicate(true)
+		_split_script_window.update_script(block_script.generated_script)
+		if _script_window != null:
+			_script_window.update_script(block_script.generated_script)
+	else:
+		_split_script_window.update_script(" ")
+		if _script_window != null:
+			_script_window.update_script(" ")
+#endregion
+
+
 func _on_block_canvas_add_block_code():
 	var edited_node: Node = EditorInterface.get_inspector().get_edited_object() as Node
 	var scene_root: Node = EditorInterface.get_edited_scene_root()
@@ -234,6 +300,7 @@ func _on_block_canvas_add_block_code():
 	undo_redo.add_undo_property(block_code, "owner", null)
 
 	undo_redo.commit_action()
+	_update_script()
 
 
 func _select_node(node: Node):
@@ -248,6 +315,7 @@ func _on_block_canvas_open_scene():
 		return
 
 	EditorInterface.open_scene_from_path(edited_node.scene_file_path)
+	_update_script()
 
 
 func _on_block_canvas_replace_block_code():
@@ -265,6 +333,7 @@ func _on_block_canvas_replace_block_code():
 	undo_redo.add_undo_method(scene_root, "set_editable_instance", edited_node, false)
 
 	undo_redo.commit_action()
+	_update_script()
 
 
 func _create_variable(variable: VariableDefinition):
@@ -284,3 +353,4 @@ func _create_variable(variable: VariableDefinition):
 	undo_redo.commit_action()
 
 	_picker.reload_blocks()
+	_update_script()
