@@ -23,6 +23,5 @@ defaults = {
 "action": SubResource("Resource_ai5in")
 }
 signal_name = ""
-scope = ""
 is_advanced = false
 extension_script = ExtResource("2_h11b7")

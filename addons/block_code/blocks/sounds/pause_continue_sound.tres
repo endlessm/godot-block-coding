@@ -27,5 +27,4 @@ defaults = {
 "pause": SubResource("Resource_lalgp")
 }
 signal_name = ""
-scope = ""
 is_advanced = false

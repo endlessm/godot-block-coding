@@ -1,0 +1,69 @@
+[gd_scene load_steps=3 format=3 uid="uid://dk1f21b8d2yp7"]
+
+[ext_resource type="Script" path="res://addons/block_code/ui/script_window/split_script_window.gd" id="1_slx3m"]
+
+[sub_resource type="SystemFont" id="SystemFont_r6ct2"]
+font_names = PackedStringArray("DejaVu Sans Mono")
+subpixel_positioning = 0
+
+[node name="SplitScriptWindow" type="HBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -750.0
+offset_top = -375.0
+offset_bottom = 375.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 8
+size_flags_vertical = 3
+script = ExtResource("1_slx3m")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="CodeContainer" type="VBoxContainer" parent="PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Code" type="CodeEdit" parent="PanelContainer/CodeContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_readonly_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_fonts/font = SubResource("SystemFont_r6ct2")
+editable = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/CodeContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/CodeContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/CodeContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="CopyCode" type="Button" parent="PanelContainer/CodeContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Copy"
+
+[node name="WindowButton" type="Button" parent="PanelContainer/CodeContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Open Window"
+
+[connection signal="pressed" from="PanelContainer/CodeContainer/HBoxContainer/MarginContainer/HBoxContainer/CopyCode" to="." method="_on_copy_code_pressed"]
+[connection signal="pressed" from="PanelContainer/CodeContainer/HBoxContainer/MarginContainer/HBoxContainer/WindowButton" to="." method="_on_window_button_pressed"]
