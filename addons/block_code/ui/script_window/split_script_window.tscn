@@ -18,7 +18,7 @@ offset_top = -375.0
 offset_bottom = 375.0
 grow_horizontal = 0
 grow_vertical = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 0
 size_flags_vertical = 3
 script = ExtResource("1_slx3m")
 
