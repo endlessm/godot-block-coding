@@ -40,7 +40,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
     - name: Setup Godot
-      uses: chickensoft-games/setup-godot@v2.1.1
+      uses: chickensoft-games/setup-godot@v2.2.0
       with:
         version: ${{ matrix.godot-version }}
         use-dotnet: false
