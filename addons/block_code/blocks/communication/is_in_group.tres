@@ -23,6 +23,5 @@ defaults = {
 "group": SubResource("Resource_d0v0d")
 }
 signal_name = ""
-scope = ""
 is_advanced = false
 extension_script = ExtResource("2_o165d")

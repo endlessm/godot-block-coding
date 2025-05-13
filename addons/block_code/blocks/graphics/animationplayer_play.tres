@@ -41,6 +41,5 @@ defaults = {
 "wait_mode": SubResource("Resource_17pec")
 }
 signal_name = ""
-scope = ""
 is_advanced = false
 extension_script = ExtResource("2_7ymgi")

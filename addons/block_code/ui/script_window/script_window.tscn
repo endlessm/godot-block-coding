@@ -6,28 +6,9 @@
 font_names = PackedStringArray("DejaVu Sans Mono")
 subpixel_positioning = 0
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_yvmnf"]
-number_color = Color(0.498039, 0.760784, 0.686275, 1)
-symbol_color = Color(0.803922, 0.811765, 0.823529, 1)
-function_color = Color(0.290196, 0.576471, 0.819608, 1)
-member_variable_color = Color(0.615686, 0.729412, 0.831373, 1)
-keyword_colors = {
-"and": Color(1, 0.439216, 0.521569, 1),
-"elif": Color(1, 0.54902, 0.8, 1),
-"else": Color(1, 0.54902, 0.8, 1),
-"extends": Color(1, 0.439216, 0.521569, 1),
-"for": Color(1, 0.54902, 0.8, 1),
-"func": Color(1, 0.439216, 0.521569, 1),
-"if": Color(1, 0.54902, 0.8, 1),
-"not": Color(1, 0.439216, 0.521569, 1),
-"or": Color(1, 0.439216, 0.521569, 1),
-"return": Color(1, 0.54902, 0.8, 1),
-"var": Color(1, 0.439216, 0.521569, 1)
-}
-color_regions = {
-"\" \"": Color(1, 0.929412, 0.627451, 1),
-"' '": Color(1, 0.929412, 0.627451, 1)
-}
+[sub_resource type="GDScriptSyntaxHighlighter" id="GDScriptSyntaxHighlighter_3xcld"]
+resource_local_to_scene = true
+resource_name = ""
 
 [node name="ScriptWindow" type="Window"]
 title = "Block Code Generated GDScript"
@@ -53,9 +34,10 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/font_readonly_color = Color(0.875, 0.875, 0.875, 1)
 theme_override_fonts/font = SubResource("SystemFont_r6ct2")
 editable = false
-syntax_highlighter = SubResource("CodeHighlighter_yvmnf")
+syntax_highlighter = SubResource("GDScriptSyntaxHighlighter_3xcld")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBox"]
 layout_mode = 2
