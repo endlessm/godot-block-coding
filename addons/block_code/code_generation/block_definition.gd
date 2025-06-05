@@ -32,6 +32,9 @@ const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{const (?<const
 ## [codeblock]
 ## say {salute: STRING} | {fancy: BOOL}
 ## [/codeblock]
+## If [member property_name] is set, this template is assumed to be a format
+## string with a `%s` placeholder; in this case, any literal `%` signs must
+## be escaped as `%%`.
 @export var display_template: String
 
 ## Template for the generated GDScript code. This must be valid GDScript. The
@@ -66,6 +69,10 @@ const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{const (?<const
 
 ## Empty except for blocks that have a defined scope.
 var scope: String
+
+## Optional property name, for localizing it. Only relevant for property setters, changers and
+## getters.
+var property_name: String
 
 static var _display_template_regex := RegEx.create_from_string(FORMAT_STRING_PATTERN)
 
@@ -198,42 +205,48 @@ static func has_category(block_definition, category: String) -> bool:
 
 static func new_property_setter(_class_name: String, property: Dictionary, category: String, default_value: Variant) -> Resource:
 	var type_string: String = Types.VARIANT_TYPE_TO_STRING[property.type]
-	return new(
+	var block_definition: Resource = new(
 		&"%s_set_%s" % [_class_name, property.name],
 		_class_name,
 		"Set the %s property" % property.name,
 		category,
 		Types.BlockType.STATEMENT,
 		TYPE_NIL,
-		"set %s to {value: %s}" % [property.name.capitalize().to_lower(), type_string],
+		"set %%s to {value: %s}" % type_string,
 		"%s = {value}" % property.name,
 		{"value": default_value},
 	)
+	block_definition.property_name = property.name
+	return block_definition
 
 
 static func new_property_changer(_class_name: String, property: Dictionary, category: String, default_value: Variant) -> Resource:
 	var type_string: String = Types.VARIANT_TYPE_TO_STRING[property.type]
-	return new(
+	var block_definition: Resource = new(
 		&"%s_change_%s" % [_class_name, property.name],
 		_class_name,
 		"Change the %s property" % property.name,
 		category,
 		Types.BlockType.STATEMENT,
 		TYPE_NIL,
-		"change %s by {value: %s}" % [property.name.capitalize().to_lower(), type_string],
+		"change %%s by {value: %s}" % type_string,
 		"%s += {value}" % property.name,
 		{"value": default_value},
 	)
+	block_definition.property_name = property.name
+	return block_definition
 
 
 static func new_property_getter(_class_name: String, property: Dictionary, category: String) -> Resource:
-	return new(
+	var block_definition: Resource = new(
 		&"%s_get_%s" % [_class_name, property.name],
 		_class_name,
 		"The %s property" % property.name,
 		category,
 		Types.BlockType.VALUE,
 		property.type,
-		"%s" % property.name.capitalize().to_lower(),
+		"%s",
 		"%s" % property.name,
 	)
+	block_definition.property_name = property.name
+	return block_definition
