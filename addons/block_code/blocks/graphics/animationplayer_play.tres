@@ -1,8 +1,8 @@
 [gd_resource type="Resource" load_steps=7 format=3 uid="uid://c5e1byehtxwc0"]
 
-[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_emeuv"]
-[ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="1_xu43h"]
-[ext_resource type="Script" path="res://addons/block_code/blocks/graphics/animationplayer_play.gd" id="2_7ymgi"]
+[ext_resource type="Script" uid="uid://bau6qtv87fcdo" path="res://addons/block_code/code_generation/block_definition.gd" id="1_emeuv"]
+[ext_resource type="Script" uid="uid://bkapmk0btnk7y" path="res://addons/block_code/code_generation/option_data.gd" id="1_xu43h"]
+[ext_resource type="Script" uid="uid://c38ngxebcyrg6" path="res://addons/block_code/blocks/graphics/animationplayer_play.gd" id="2_7ymgi"]
 
 [sub_resource type="Resource" id="Resource_qpxn2"]
 script = ExtResource("1_xu43h")
@@ -41,6 +41,5 @@ defaults = {
 "wait_mode": SubResource("Resource_17pec")
 }
 signal_name = ""
-scope = ""
 is_advanced = false
 extension_script = ExtResource("2_7ymgi")

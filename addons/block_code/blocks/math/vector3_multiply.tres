@@ -1,9 +1,9 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bff7cwmpisihj"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ctl30ew7wtnlj"]
 
-[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_52jwf"]
+[ext_resource type="Script" uid="uid://bau6qtv87fcdo" path="res://addons/block_code/code_generation/block_definition.gd" id="1_bxnpg"]
 
 [resource]
-script = ExtResource("1_52jwf")
+script = ExtResource("1_bxnpg")
 name = &"vector3_multiply"
 target_node_class = ""
 description = "Multiplies a Vector3 with a number. Use this, for example, to get a point some distance away along an angle."
@@ -17,4 +17,4 @@ defaults = {
 "vector": Vector3(1, 1, 1)
 }
 signal_name = ""
-scope = ""
+is_advanced = false

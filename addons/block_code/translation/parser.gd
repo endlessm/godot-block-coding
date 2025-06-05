@@ -27,14 +27,18 @@ func _resource_is_block_definition(resource: Resource) -> bool:
 	return script.resource_path == BLOCK_DEFINITION_SCRIPT_PATH
 
 
-func _parse_file(path: String, msgids: Array[String], msgids_context_plural: Array[Array]) -> void:
+func _parse_file(path: String) -> Array[PackedStringArray]:
 	# Only BlockDefinition resources are supported.
 	var res = ResourceLoader.load(path, "Resource")
 	if not res or not _resource_is_block_definition(res):
-		return
+		return []
+	# Each entry should contain [msgid, msgctxt, msgid_plural, comment],
+	# where all except msgid are optional.
+	var ret: Array[PackedStringArray] = []
 	for prop in block_def_tx_properties:
 		var value: String = res.get(prop)
 		if value:
 			# For now just the messages are used. It might be better to provide
 			# context with msgids_context_plural to avoid conflicts.
-			msgids.append(value)
+			ret.append(PackedStringArray([value]))
+	return ret

@@ -1,8 +1,8 @@
 [gd_resource type="Resource" load_steps=5 format=3 uid="uid://bbtdxeey74x67"]
 
-[ext_resource type="Script" path="res://addons/block_code/code_generation/block_definition.gd" id="1_5krrs"]
-[ext_resource type="Script" path="res://addons/block_code/blocks/communication/groups.gd" id="1_r4prw"]
-[ext_resource type="Script" path="res://addons/block_code/code_generation/option_data.gd" id="1_y4j0k"]
+[ext_resource type="Script" uid="uid://bau6qtv87fcdo" path="res://addons/block_code/code_generation/block_definition.gd" id="1_5krrs"]
+[ext_resource type="Script" uid="uid://cumj4bsraukca" path="res://addons/block_code/blocks/communication/groups.gd" id="1_r4prw"]
+[ext_resource type="Script" uid="uid://bkapmk0btnk7y" path="res://addons/block_code/code_generation/option_data.gd" id="1_y4j0k"]
 
 [sub_resource type="Resource" id="Resource_o38ym"]
 script = ExtResource("1_y4j0k")
@@ -23,6 +23,5 @@ defaults = {
 "group": SubResource("Resource_o38ym")
 }
 signal_name = ""
-scope = ""
 is_advanced = false
 extension_script = ExtResource("1_r4prw")
