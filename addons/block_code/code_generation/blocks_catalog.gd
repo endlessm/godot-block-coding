@@ -132,54 +132,18 @@ static func _add_property_definitions(_class_name: String, property_list: Array[
 		# Setter
 		var block_definition: BlockDefinition
 		if block_settings.get("has_setter", true):
-			block_definition = (
-				BlockDefinition
-				. new(
-					&"%s_set_%s" % [_class_name, property.name],
-					_class_name,
-					"Set the %s property" % property.name,
-					block_settings.category,
-					Types.BlockType.STATEMENT,
-					TYPE_NIL,
-					"set %s to {value: %s}" % [property.name.capitalize().to_lower(), type_string],
-					"%s = {value}" % property.name,
-					{"value": block_settings.get("default_set", _FALLBACK_SET_FOR_TYPE[property.type])},
-				)
-			)
+			var default_value: Variant = block_settings.get("default_set", _FALLBACK_SET_FOR_TYPE[property.type])
+			block_definition = BlockDefinition.new_property_setter(_class_name, property, block_settings.category, default_value)
 			_catalog[block_definition.name] = block_definition
 
 		# Changer
 		if block_settings.get("has_change", true):
-			block_definition = (
-				BlockDefinition
-				. new(
-					&"%s_change_%s" % [_class_name, property.name],
-					_class_name,
-					"Change the %s property" % property.name,
-					block_settings.category,
-					Types.BlockType.STATEMENT,
-					TYPE_NIL,
-					"change %s by {value: %s}" % [property.name.capitalize().to_lower(), type_string],
-					"%s += {value}" % property.name,
-					{"value": block_settings.get("default_change", _FALLBACK_CHANGE_FOR_TYPE[property.type])},
-				)
-			)
+			var default_value: Variant = block_settings.get("default_change", _FALLBACK_CHANGE_FOR_TYPE[property.type])
+			block_definition = BlockDefinition.new_property_changer(_class_name, property, block_settings.category, default_value)
 			_catalog[block_definition.name] = block_definition
 
 		# Getter
-		block_definition = (
-			BlockDefinition
-			. new(
-				&"%s_get_%s" % [_class_name, property.name],
-				_class_name,
-				"The %s property" % property.name,
-				block_settings.category,
-				Types.BlockType.VALUE,
-				property.type,
-				"%s" % property.name.capitalize().to_lower(),
-				"%s" % property.name,
-			)
-		)
+		block_definition = BlockDefinition.new_property_getter(_class_name, property, block_settings.category)
 		_catalog[block_definition.name] = block_definition
 
 

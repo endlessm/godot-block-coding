@@ -194,3 +194,46 @@ static func _parse_parameter_format(parameter_format: String) -> Dictionary:
 
 static func has_category(block_definition, category: String) -> bool:
 	return block_definition.category == category
+
+
+static func new_property_setter(_class_name: String, property: Dictionary, category: String, default_value: Variant) -> Resource:
+	var type_string: String = Types.VARIANT_TYPE_TO_STRING[property.type]
+	return new(
+		&"%s_set_%s" % [_class_name, property.name],
+		_class_name,
+		"Set the %s property" % property.name,
+		category,
+		Types.BlockType.STATEMENT,
+		TYPE_NIL,
+		"set %s to {value: %s}" % [property.name.capitalize().to_lower(), type_string],
+		"%s = {value}" % property.name,
+		{"value": default_value},
+	)
+
+
+static func new_property_changer(_class_name: String, property: Dictionary, category: String, default_value: Variant) -> Resource:
+	var type_string: String = Types.VARIANT_TYPE_TO_STRING[property.type]
+	return new(
+		&"%s_change_%s" % [_class_name, property.name],
+		_class_name,
+		"Change the %s property" % property.name,
+		category,
+		Types.BlockType.STATEMENT,
+		TYPE_NIL,
+		"change %s by {value: %s}" % [property.name.capitalize().to_lower(), type_string],
+		"%s += {value}" % property.name,
+		{"value": default_value},
+	)
+
+
+static func new_property_getter(_class_name: String, property: Dictionary, category: String) -> Resource:
+	return new(
+		&"%s_get_%s" % [_class_name, property.name],
+		_class_name,
+		"The %s property" % property.name,
+		category,
+		Types.BlockType.VALUE,
+		property.type,
+		"%s" % property.name.capitalize().to_lower(),
+		"%s" % property.name,
+	)
