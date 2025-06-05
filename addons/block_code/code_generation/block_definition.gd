@@ -4,6 +4,12 @@ extends Resource
 const Types = preload("res://addons/block_code/types/types.gd")
 
 const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{const (?<const_parameter>[^}]+)\\}|\\{(?!const )(?<in_parameter>[^}]+)\\}|(?<label>[^\\{\\[]+)"
+const PROPERTY_SETTER_NAME_PATTERN = "(?<class_name>[^\\s]*)_set_(?<property_name>[^\\s]+)"
+const PROPERTY_SETTER_NAME_FORMAT = &"%s_set_%s"
+const PROPERTY_CHANGER_NAME_PATTERN = "(?<class_name>[^\\s]*)_change_(?<property_name>[^\\s]+)"
+const PROPERTY_CHANGER_NAME_FORMAT = &"%s_change_%s"
+const PROPERTY_GETTER_NAME_PATTERN = "(?<class_name>[^\\s]*)_get_(?<property_name>[^\\s]+)"
+const PROPERTY_GETTER_NAME_FORMAT = &"%s_get_%s"
 
 @export var name: StringName
 
@@ -75,6 +81,10 @@ var scope: String
 var property_name: String
 
 static var _display_template_regex := RegEx.create_from_string(FORMAT_STRING_PATTERN)
+
+static var property_setter_regex := RegEx.create_from_string(PROPERTY_SETTER_NAME_PATTERN)
+static var property_changer_regex := RegEx.create_from_string(PROPERTY_CHANGER_NAME_PATTERN)
+static var property_getter_regex := RegEx.create_from_string(PROPERTY_GETTER_NAME_PATTERN)
 
 
 func _init(
@@ -206,7 +216,7 @@ static func has_category(block_definition, category: String) -> bool:
 static func new_property_setter(_class_name: String, property: Dictionary, category: String, default_value: Variant) -> Resource:
 	var type_string: String = Types.VARIANT_TYPE_TO_STRING[property.type]
 	var block_definition: Resource = new(
-		&"%s_set_%s" % [_class_name, property.name],
+		PROPERTY_SETTER_NAME_FORMAT % [_class_name, property.name],
 		_class_name,
 		"Set the %s property" % property.name,
 		category,
@@ -223,7 +233,7 @@ static func new_property_setter(_class_name: String, property: Dictionary, categ
 static func new_property_changer(_class_name: String, property: Dictionary, category: String, default_value: Variant) -> Resource:
 	var type_string: String = Types.VARIANT_TYPE_TO_STRING[property.type]
 	var block_definition: Resource = new(
-		&"%s_change_%s" % [_class_name, property.name],
+		PROPERTY_CHANGER_NAME_FORMAT % [_class_name, property.name],
 		_class_name,
 		"Change the %s property" % property.name,
 		category,
@@ -239,7 +249,7 @@ static func new_property_changer(_class_name: String, property: Dictionary, cate
 
 static func new_property_getter(_class_name: String, property: Dictionary, category: String) -> Resource:
 	var block_definition: Resource = new(
-		&"%s_get_%s" % [_class_name, property.name],
+		PROPERTY_GETTER_NAME_FORMAT % [_class_name, property.name],
 		_class_name,
 		"The %s property" % property.name,
 		category,

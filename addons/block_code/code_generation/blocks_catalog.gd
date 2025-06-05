@@ -202,7 +202,7 @@ static func _get_custom_parent_class_name(_custom_class_name: String) -> String:
 	return "Node"
 
 
-static func _get_parents(_class_name: String) -> Array[String]:
+static func get_parents(_class_name: String) -> Array[String]:
 	if ClassDB.class_exists(_class_name):
 		return _get_builtin_parents(_class_name)
 	var parents: Array[String] = []
@@ -217,7 +217,7 @@ static func get_inherited_blocks(_class_name: String) -> Array[BlockDefinition]:
 	setup()
 
 	var definitions: Array[BlockDefinition] = []
-	for _parent_class_name in _get_parents(_class_name):
+	for _parent_class_name in get_parents(_class_name):
 		definitions.append_array(_get_blocks_by_class(_parent_class_name))
 	definitions.append_array(_get_blocks_by_class(""))
 	return definitions
@@ -279,16 +279,23 @@ static func get_variable_setter_block_definition(variable: VariableDefinition) -
 	return block_def
 
 
-static func get_property_getter_block_definition(variable: VariableDefinition) -> BlockDefinition:
-	var block_def := get_variable_getter_block_definition(variable)
-	block_def.description = "The %s property" % variable.var_name
-	return block_def
+static func get_property_getter_block_definition(_class_name: String, property: Dictionary) -> BlockDefinition:
+	var name = BlockDefinition.PROPERTY_GETTER_NAME_FORMAT % [_class_name, property.name]
+	if name in _catalog:
+		return _catalog[name]
+	var block_definition := BlockDefinition.new_property_getter(_class_name, property, "Variables")
+	_catalog[block_definition.name] = block_definition
+	return block_definition
 
 
-static func get_property_setter_block_definition(variable: VariableDefinition) -> BlockDefinition:
-	var block_def := get_variable_setter_block_definition(variable)
-	block_def.description = "Set the %s property" % variable.var_name
-	return block_def
+static func get_property_setter_block_definition(_class_name: String, property: Dictionary) -> BlockDefinition:
+	var name = BlockDefinition.PROPERTY_SETTER_NAME_FORMAT % [_class_name, property.name]
+	if name in _catalog:
+		return _catalog[name]
+	var default_value: Variant = _FALLBACK_SET_FOR_TYPE[property.type]
+	var block_definition := BlockDefinition.new_property_setter(_class_name, property, "Variables", default_value)
+	_catalog[block_definition.name] = block_definition
+	return block_definition
 
 
 static func get_resource_block_definition(file_path: String) -> BlockDefinition:
