@@ -218,11 +218,11 @@ static func new_property_setter(_class_name: String, property: Dictionary, categ
 	var block_definition: Resource = new(
 		PROPERTY_SETTER_NAME_FORMAT % [_class_name, property.name],
 		_class_name,
-		"Set the %s property" % property.name,
+		Engine.tr("Set the %s property") % property.name,
 		category,
 		Types.BlockType.STATEMENT,
 		TYPE_NIL,
-		"set %%s to {value: %s}" % type_string,
+		Engine.tr("set %%s to {value: %s}") % type_string,
 		"%s = {value}" % property.name,
 		{"value": default_value},
 	)
@@ -235,11 +235,11 @@ static func new_property_changer(_class_name: String, property: Dictionary, cate
 	var block_definition: Resource = new(
 		PROPERTY_CHANGER_NAME_FORMAT % [_class_name, property.name],
 		_class_name,
-		"Change the %s property" % property.name,
+		Engine.tr("Change the %s property") % property.name,
 		category,
 		Types.BlockType.STATEMENT,
 		TYPE_NIL,
-		"change %%s by {value: %s}" % type_string,
+		Engine.tr("change %%s by {value: %s}") % type_string,
 		"%s += {value}" % property.name,
 		{"value": default_value},
 	)
@@ -251,7 +251,7 @@ static func new_property_getter(_class_name: String, property: Dictionary, categ
 	var block_definition: Resource = new(
 		PROPERTY_GETTER_NAME_FORMAT % [_class_name, property.name],
 		_class_name,
-		"The %s property" % property.name,
+		Engine.tr("The %s property") % property.name,
 		category,
 		Types.BlockType.VALUE,
 		property.type,
