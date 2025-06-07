@@ -1,14 +1,14 @@
 [gd_scene load_steps=37 format=3 uid="uid://cbgxxdewi6gld"]
 
-[ext_resource type="Script" path="res://addons/block_code/simple_spawner/simple_spawner.gd" id="1_g2l2s"]
+[ext_resource type="Script" uid="uid://7kttlqmve4yi" path="res://addons/block_code/simple_spawner/simple_spawner.gd" id="1_g2l2s"]
 [ext_resource type="PackedScene" uid="uid://dhfvkunrlqads" path="res://addons/block_code/examples/spawner/ball.tscn" id="2_d0h86"]
 [ext_resource type="PackedScene" uid="uid://c8hrliwojohal" path="res://addons/block_code/examples/spawner/volatile_ball.tscn" id="3_tt12o"]
-[ext_resource type="Script" path="res://addons/block_code/block_code_node/block_code.gd" id="4_e0fbh"]
-[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization_tree.gd" id="5_g4h7g"]
-[ext_resource type="Script" path="res://addons/block_code/serialization/block_serialization.gd" id="6_dv2kl"]
-[ext_resource type="Script" path="res://addons/block_code/serialization/value_block_serialization.gd" id="7_cykhe"]
-[ext_resource type="Script" path="res://addons/block_code/serialization/block_script_serialization.gd" id="8_tovvd"]
-[ext_resource type="Script" path="res://addons/block_code/code_generation/variable_definition.gd" id="9_m8g1j"]
+[ext_resource type="Script" uid="uid://cumxsbxj56dmk" path="res://addons/block_code/block_code_node/block_code.gd" id="4_e0fbh"]
+[ext_resource type="Script" uid="uid://brx1cabdmgu38" path="res://addons/block_code/serialization/block_serialization_tree.gd" id="5_g4h7g"]
+[ext_resource type="Script" uid="uid://u035wsjd5tpj" path="res://addons/block_code/serialization/block_serialization.gd" id="6_dv2kl"]
+[ext_resource type="Script" uid="uid://duvgxorhfitb7" path="res://addons/block_code/serialization/value_block_serialization.gd" id="7_cykhe"]
+[ext_resource type="Script" uid="uid://tlsvrkc3fubl" path="res://addons/block_code/serialization/block_script_serialization.gd" id="8_tovvd"]
+[ext_resource type="Script" uid="uid://bwkinr8omutpw" path="res://addons/block_code/code_generation/variable_definition.gd" id="9_m8g1j"]
 
 [sub_resource type="Resource" id="Resource_1x252"]
 script = ExtResource("6_dv2kl")
@@ -211,6 +211,7 @@ version = 0
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_c5n1h"]
 
 [node name="Node2D" type="Node2D"]
+auto_translate_mode = 2
 
 [node name="SimpleSpawner" type="Node2D" parent="."]
 position = Vector2(103, 128)
