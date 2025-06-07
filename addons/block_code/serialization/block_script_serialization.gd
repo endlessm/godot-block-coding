@@ -107,13 +107,8 @@ func get_block_definition(block_name: String, arguments: Dictionary) -> BlockDef
 	if block_definition != null:
 		return block_definition
 
-	# FIXME: This is a workaround for old-style output block references.
-	#        These were generated ahead of time using a block name that has
-	#        a "_" before the parameter name. Now, these parameter blocks
-	#        are generated on demand for any block name containing a ":".
-	#        Please remove this fallback when it is no longer necessary.
-	split = block_name.rsplit("_", true, 1)
-	return _get_parameter_block_definition(split[0], split[1])
+	push_error("Couldn't get block definition with name %s and arguments %s" % [block_name, arguments])
+	return null
 
 
 func _get_base_block_definition(block_name: String) -> BlockDefinition:
