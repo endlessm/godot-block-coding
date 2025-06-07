@@ -182,14 +182,19 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Input"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "move with {player: NIL} buttons as {kind: NIL}"
-	block_definition.description = """Move the character using the “Player 1” or “Player 2” controls as configured in Godot.
+	block_definition.display_template = Engine.tr("move with {player: NIL} buttons as {kind: NIL}")
+	block_definition.description = (
+		Engine
+		. tr(
+			"""Move the character using the “Player 1” or “Player 2” controls as configured in Godot.
 
 “Top-down” enables the character to move in both x (horizontal) and y (vertical) dimensions, as if the camera is above the character, looking down. No gravity is added.
 
 “Platformer” enables the character to move as if the camera is looking from the side, like a side-scroller. Gravity is applied on the y (vertical) axis, making the character fall down until they collide with something.
 
 “Spaceship” uses the left/right controls to rotate the character and up/down controls to go forward or backward in the direction they are pointing."""
+		)
+	)
 	# TODO: delta here is assumed to be the parameter name of
 	# the _process or _physics_process method:
 	block_definition.code_template = "move_with_player_buttons({player}, {kind}, delta)"

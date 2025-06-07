@@ -63,7 +63,7 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Info | Score"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "set score to {score: INT}"
+	block_definition.display_template = Engine.tr("set score to {score: INT}")
 	block_definition.code_template = "score = {score}"
 	block_list.append(block_definition)
 
@@ -72,7 +72,7 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Info | Score"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "change score by {score: INT}"
+	block_definition.display_template = Engine.tr("change score by {score: INT}")
 	block_definition.code_template = "score += {score}"
 	block_list.append(block_definition)
 
