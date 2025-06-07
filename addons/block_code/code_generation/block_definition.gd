@@ -2,6 +2,7 @@
 extends Resource
 
 const Types = preload("res://addons/block_code/types/types.gd")
+const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
 
 const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{const (?<const_parameter>[^}]+)\\}|\\{(?!const )(?<in_parameter>[^}]+)\\}|(?<label>[^\\{\\[]+)"
 const PROPERTY_SETTER_NAME_PATTERN = "(?<class_name>[^\\s]*)_set_(?<property_name>[^\\s]+)"
@@ -10,6 +11,8 @@ const PROPERTY_CHANGER_NAME_PATTERN = "(?<class_name>[^\\s]*)_change_(?<property
 const PROPERTY_CHANGER_NAME_FORMAT = &"%s_change_%s"
 const PROPERTY_GETTER_NAME_PATTERN = "(?<class_name>[^\\s]*)_get_(?<property_name>[^\\s]+)"
 const PROPERTY_GETTER_NAME_FORMAT = &"%s_get_%s"
+const VARIABLE_SETTER_NAME_FORMAT = &"set_var_%s"
+const VARIABLE_GETTER_NAME_FORMAT = &"get_var_%s"
 
 @export var name: StringName
 
@@ -259,4 +262,33 @@ static func new_property_getter(_class_name: String, property: Dictionary, categ
 		"%s" % property.name,
 	)
 	block_definition.property_name = property.name
+	return block_definition
+
+
+static func new_variable_setter(variable: VariableDefinition) -> Resource:
+	var _type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
+	var block_definition: Resource = new(
+		VARIABLE_SETTER_NAME_FORMAT % variable.var_name,
+		"",
+		Engine.tr("Set the %s variable") % variable.var_name,
+		"Variables",
+		Types.BlockType.STATEMENT,
+		TYPE_NIL,
+		Engine.tr("set %s to {value: %s}") % [variable.var_name, _type_string],
+		"%s = {value}" % variable.var_name,
+	)
+	return block_definition
+
+
+static func new_variable_getter(variable: VariableDefinition) -> Resource:
+	var block_definition: Resource = new(
+		VARIABLE_GETTER_NAME_FORMAT % variable.var_name,
+		"",
+		Engine.tr("The %s variable") % variable.var_name,
+		"Variables",
+		Types.BlockType.VALUE,
+		variable.var_type,
+		"%s" % variable.var_name,
+		"%s",
+	)
 	return block_definition
