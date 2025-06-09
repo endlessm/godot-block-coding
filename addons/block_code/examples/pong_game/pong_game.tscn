@@ -612,11 +612,9 @@ follow_viewport_enabled = true
 
 [node name="PlayerScoreLeft" parent="CanvasLayer" instance=ExtResource("13_jvkp7")]
 position = Vector2(240, 0)
-score = 0
 
 [node name="PlayerScoreRight" parent="CanvasLayer" instance=ExtResource("13_jvkp7")]
 position = Vector2(1200, 0)
-score = 0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
