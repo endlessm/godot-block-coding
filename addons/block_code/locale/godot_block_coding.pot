@@ -83,14 +83,6 @@
 # res://addons/block_code/drag_manager/drag.gd
 # res://addons/block_code/drag_manager/drag_manager.gd
 # res://addons/block_code/drag_manager/drag_manager.tscn
-# res://addons/block_code/examples/pong_game/ball.tscn
-# res://addons/block_code/examples/pong_game/goal_area.tscn
-# res://addons/block_code/examples/pong_game/player_score.tscn
-# res://addons/block_code/examples/pong_game/pong_game.tscn
-# res://addons/block_code/examples/pong_game/space.tscn
-# res://addons/block_code/examples/spawner/ball.tscn
-# res://addons/block_code/examples/spawner/spawner.tscn
-# res://addons/block_code/examples/spawner/volatile_ball.tscn
 # res://addons/block_code/inspector_plugin/block_script_inspector.gd
 # res://addons/block_code/serialization/block_script_serialization.gd
 # res://addons/block_code/serialization/block_serialization.gd
@@ -733,24 +725,107 @@ msgstr ""
 msgid "vector2 x: {x: FLOAT} y: {y: FLOAT}"
 msgstr ""
 
-#: addons/block_code/examples/spawner/spawner.tscn
-msgid ""
-"[b]Up arrow:[/b] Start/stop spawning.\n"
-"[b]Down arrow:[/b] Spawn once.\n"
-"[b]Left arrow:[/b] Reduce spawn frequency.\n"
-"[b]Right arrow:[/b] Increase spawn frequency.\n"
-"\n"
-"From the Inspector: Try changing spawn limit and spawn limit behavior.\n"
-"\n"
-"Color balls remove themselves after 3 seconds. While uncolored balls are only removed by the SimpleSpawner node according to the limit setings."
+#: addons/block_code/code_generation/block_definition.gd
+msgid "Set the %s property"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "set %%s to {value: %s}"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "Change the %s property"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "change %%s by {value: %s}"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "The %s property"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "Set the %s variable"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "set %s to {value: %s}"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "The %s variable"
 msgstr ""
 
 #: addons/block_code/inspector_plugin/block_script_inspector.gd
 msgid "Open Block Script"
 msgstr ""
 
+#: addons/block_code/simple_nodes/simple_character/simple_character.gd
+msgid "move with {player: NIL} buttons as {kind: NIL}"
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_character/simple_character.gd
+msgid ""
+"Move the character using the “Player 1” or “Player 2” controls as configured in Godot.\n"
+"\n"
+"“Top-down” enables the character to move in both x (horizontal) and y (vertical) dimensions, as if the camera is above the character, looking down. No gravity is added.\n"
+"\n"
+"“Platformer” enables the character to move as if the camera is looking from the side, like a side-scroller. Gravity is applied on the y (vertical) axis, making the character fall down until they collide with something.\n"
+"\n"
+"“Spaceship” uses the left/right controls to rotate the character and up/down controls to go forward or backward in the direction they are pointing."
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
+msgid "game over {result: STRING}"
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
+msgid "Show the game over label with the win or lose message."
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
+msgid "reset game over"
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
+msgid "Reset the game over label."
+msgstr ""
+
 #: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
 msgid "0"
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
+msgid "set score to {score: INT}"
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
+msgid "change score by {score: INT}"
+msgstr ""
+
+#: addons/block_code/simple_spawner/simple_spawner.gd
+msgid "spawn once"
+msgstr ""
+
+#: addons/block_code/simple_spawner/simple_spawner.gd
+msgid "start spawning"
+msgstr ""
+
+#: addons/block_code/simple_spawner/simple_spawner.gd
+msgid "stop spawning"
+msgstr ""
+
+#: addons/block_code/simple_spawner/simple_spawner.gd
+msgid "is spawning"
+msgstr ""
+
+#: addons/block_code/simple_spawner/simple_spawner.gd
+msgid "set spawn period to {new_period: FLOAT}"
+msgstr ""
+
+#: addons/block_code/simple_spawner/simple_spawner.gd
+msgid "spawn period"
 msgstr ""
 
 #: addons/block_code/ui/main_panel.tscn

@@ -94,7 +94,11 @@ func get_block_definition(block_name: String, arguments: Dictionary) -> BlockDef
 	if block_definition != null:
 		return block_definition
 
-	block_definition = _get_obj_property_block_definition(block_name)
+	block_definition = _get_obj_property_setter_block_definition(block_name)
+	if block_definition != null:
+		return block_definition
+
+	block_definition = _get_obj_property_getter_block_definition(block_name)
 	if block_definition != null:
 		return block_definition
 
@@ -103,13 +107,8 @@ func get_block_definition(block_name: String, arguments: Dictionary) -> BlockDef
 	if block_definition != null:
 		return block_definition
 
-	# FIXME: This is a workaround for old-style output block references.
-	#        These were generated ahead of time using a block name that has
-	#        a "_" before the parameter name. Now, these parameter blocks
-	#        are generated on demand for any block name containing a ":".
-	#        Please remove this fallback when it is no longer necessary.
-	split = block_name.rsplit("_", true, 1)
-	return _get_parameter_block_definition(split[0], split[1])
+	push_error("Couldn't get block definition with name %s and arguments %s" % [block_name, arguments])
+	return null
 
 
 func _get_base_block_definition(block_name: String) -> BlockDefinition:
@@ -146,34 +145,37 @@ func _get_parameter_block_definition(block_name: String, parameter_name: String)
 	return block_definition
 
 
-func _get_obj_property_block_definition(block_name: String) -> BlockDefinition:
-	var block_definition: BlockDefinition
-	var variable: VariableDefinition
-	var property_name: String
-	var is_getter = true
-
-	if block_name.begins_with("get_var_"):
-		property_name = block_name.get_slice("get_var_", 1)
-	elif block_name.begins_with("set_var_"):
-		property_name = block_name.get_slice("set_var_", 1)
-		is_getter = false
-	else:
+func _get_obj_property_setter_block_definition(block_name: String) -> BlockDefinition:
+	var setter_match: RegExMatch = BlockDefinition.property_setter_regex.search(block_name)
+	if setter_match == null:
 		return null
 
-	# Getter block needs the property's variant type information by visiting the
-	# block_code_node's parent node because the type is not saved as a key of
-	# the resource in the scene file
+	var _class_name := setter_match.get_string("class_name")
+	var property_name := setter_match.get_string("property_name")
+
+	# TODO: Persist the property type to avoid getting it at runtime:
 	var property_info := _get_parent_node_property_info(property_name)
-	if not property_info.has("type"):
+	if property_info.is_empty():
 		return null
 
-	if is_getter:
-		variable = VariableDefinition.new(property_name, property_info["type"])
-		block_definition = BlocksCatalog.get_property_getter_block_definition(variable)
-	else:
-		variable = VariableDefinition.new(property_name, property_info["type"])
-		block_definition = BlocksCatalog.get_property_setter_block_definition(variable)
+	var block_definition := BlocksCatalog.get_property_setter_block_definition(_class_name, property_info)
+	return block_definition
 
+
+func _get_obj_property_getter_block_definition(block_name: String) -> BlockDefinition:
+	var getter_match: RegExMatch = BlockDefinition.property_getter_regex.search(block_name)
+	if getter_match == null:
+		return null
+
+	var _class_name := getter_match.get_string("class_name")
+	var property_name := getter_match.get_string("property_name")
+
+	# TODO: Persist the property type to avoid getting it at runtime:
+	var property_info := _get_parent_node_property_info(property_name)
+	if property_info.is_empty():
+		return null
+
+	var block_definition := BlocksCatalog.get_property_getter_block_definition(_class_name, property_info)
 	return block_definition
 
 

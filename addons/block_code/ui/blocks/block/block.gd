@@ -129,6 +129,13 @@ func _get_format_string() -> String:
 	if not definition:
 		return ""
 
+	if definition.property_name:
+		var domain: TranslationDomain = TranslationServer.get_or_add_domain("godot.properties")
+		var translated_property: String = domain.translate(definition.property_name.capitalize())
+		# TODO: Ideally we should be also passing the context. See:
+		# https://github.com/godotengine/godot/blob/978b38797ba8e8757592f21101e32e364d60662d/editor/editor_property_name_processor.cpp#L90
+		return tr(definition.display_template) % translated_property.to_lower()
+
 	return tr(definition.display_template)
 
 

@@ -120,7 +120,7 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "spawn once"
+	block_definition.display_template = Engine.tr("spawn once")
 	block_definition.code_template = "spawn_once()"
 	block_list.append(block_definition)
 
@@ -129,7 +129,7 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "start spawning"
+	block_definition.display_template = Engine.tr("start spawning")
 	block_definition.code_template = "spawn_start()"
 	block_list.append(block_definition)
 
@@ -138,7 +138,7 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "stop spawning"
+	block_definition.display_template = Engine.tr("stop spawning")
 	block_definition.code_template = "spawn_stop()"
 	block_list.append(block_definition)
 
@@ -148,7 +148,7 @@ static func setup_custom_blocks():
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.VALUE
 	block_definition.variant_type = TYPE_BOOL
-	block_definition.display_template = "is spawning"
+	block_definition.display_template = Engine.tr("is spawning")
 	block_definition.code_template = "is_spawning()"
 	block_list.append(block_definition)
 
@@ -157,7 +157,7 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "set spawn period to {new_period: FLOAT}"
+	block_definition.display_template = Engine.tr("set spawn period to {new_period: FLOAT}")
 	block_definition.code_template = "spawn_period = {new_period}"
 	block_list.append(block_definition)
 
@@ -167,7 +167,7 @@ static func setup_custom_blocks():
 	block_definition.category = "Lifecycle | Spawn"
 	block_definition.type = Types.BlockType.VALUE
 	block_definition.variant_type = TYPE_FLOAT
-	block_definition.display_template = "spawn period"
+	block_definition.display_template = Engine.tr("spawn period")
 	block_definition.code_template = "spawn_period"
 	block_list.append(block_definition)
 

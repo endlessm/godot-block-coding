@@ -69,12 +69,12 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Lifecycle | Game"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "game over {result: STRING}"
+	block_definition.display_template = Engine.tr("game over {result: STRING}")
 	block_definition.code_template = "game_over({result})"
 	block_definition.defaults = {
 		"result": OptionData.new(["WIN", "LOSE"]),
 	}
-	block_definition.description = "Show the game over label with the win or lose message."
+	block_definition.description = Engine.tr("Show the game over label with the win or lose message.")
 	block_list.append(block_definition)
 
 	block_definition = BlockDefinition.new()
@@ -82,9 +82,9 @@ static func setup_custom_blocks():
 	block_definition.target_node_class = _class_name
 	block_definition.category = "Lifecycle | Game"
 	block_definition.type = Types.BlockType.STATEMENT
-	block_definition.display_template = "reset game over"
+	block_definition.display_template = Engine.tr("reset game over")
 	block_definition.code_template = "reset()"
-	block_definition.description = "Reset the game over label."
+	block_definition.description = Engine.tr("Reset the game over label.")
 	block_list.append(block_definition)
 
 	BlocksCatalog.add_custom_blocks(_class_name, block_list)

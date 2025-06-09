@@ -2,8 +2,17 @@
 extends Resource
 
 const Types = preload("res://addons/block_code/types/types.gd")
+const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
 
 const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{const (?<const_parameter>[^}]+)\\}|\\{(?!const )(?<in_parameter>[^}]+)\\}|(?<label>[^\\{\\[]+)"
+const PROPERTY_SETTER_NAME_PATTERN = "(?<class_name>[^\\s]*)_set_(?<property_name>[^\\s]+)"
+const PROPERTY_SETTER_NAME_FORMAT = &"%s_set_%s"
+const PROPERTY_CHANGER_NAME_PATTERN = "(?<class_name>[^\\s]*)_change_(?<property_name>[^\\s]+)"
+const PROPERTY_CHANGER_NAME_FORMAT = &"%s_change_%s"
+const PROPERTY_GETTER_NAME_PATTERN = "(?<class_name>[^\\s]*)_get_(?<property_name>[^\\s]+)"
+const PROPERTY_GETTER_NAME_FORMAT = &"%s_get_%s"
+const VARIABLE_SETTER_NAME_FORMAT = &"set_var_%s"
+const VARIABLE_GETTER_NAME_FORMAT = &"get_var_%s"
 
 @export var name: StringName
 
@@ -32,6 +41,9 @@ const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{const (?<const
 ## [codeblock]
 ## say {salute: STRING} | {fancy: BOOL}
 ## [/codeblock]
+## If [member property_name] is set, this template is assumed to be a format
+## string with a `%s` placeholder; in this case, any literal `%` signs must
+## be escaped as `%%`.
 @export var display_template: String
 
 ## Template for the generated GDScript code. This must be valid GDScript. The
@@ -67,7 +79,15 @@ const FORMAT_STRING_PATTERN = "\\[(?<out_parameter>[^\\]]+)\\]|\\{const (?<const
 ## Empty except for blocks that have a defined scope.
 var scope: String
 
+## Optional property name, for localizing it. Only relevant for property setters, changers and
+## getters.
+var property_name: String
+
 static var _display_template_regex := RegEx.create_from_string(FORMAT_STRING_PATTERN)
+
+static var property_setter_regex := RegEx.create_from_string(PROPERTY_SETTER_NAME_PATTERN)
+static var property_changer_regex := RegEx.create_from_string(PROPERTY_CHANGER_NAME_PATTERN)
+static var property_getter_regex := RegEx.create_from_string(PROPERTY_GETTER_NAME_PATTERN)
 
 
 func _init(
@@ -194,3 +214,81 @@ static func _parse_parameter_format(parameter_format: String) -> Dictionary:
 
 static func has_category(block_definition, category: String) -> bool:
 	return block_definition.category == category
+
+
+static func new_property_setter(_class_name: String, property: Dictionary, category: String, default_value: Variant) -> Resource:
+	var type_string: String = Types.VARIANT_TYPE_TO_STRING[property.type]
+	var block_definition: Resource = new(
+		PROPERTY_SETTER_NAME_FORMAT % [_class_name, property.name],
+		_class_name,
+		Engine.tr("Set the %s property") % property.name,
+		category,
+		Types.BlockType.STATEMENT,
+		TYPE_NIL,
+		Engine.tr("set %%s to {value: %s}") % type_string,
+		"%s = {value}" % property.name,
+		{"value": default_value},
+	)
+	block_definition.property_name = property.name
+	return block_definition
+
+
+static func new_property_changer(_class_name: String, property: Dictionary, category: String, default_value: Variant) -> Resource:
+	var type_string: String = Types.VARIANT_TYPE_TO_STRING[property.type]
+	var block_definition: Resource = new(
+		PROPERTY_CHANGER_NAME_FORMAT % [_class_name, property.name],
+		_class_name,
+		Engine.tr("Change the %s property") % property.name,
+		category,
+		Types.BlockType.STATEMENT,
+		TYPE_NIL,
+		Engine.tr("change %%s by {value: %s}") % type_string,
+		"%s += {value}" % property.name,
+		{"value": default_value},
+	)
+	block_definition.property_name = property.name
+	return block_definition
+
+
+static func new_property_getter(_class_name: String, property: Dictionary, category: String) -> Resource:
+	var block_definition: Resource = new(
+		PROPERTY_GETTER_NAME_FORMAT % [_class_name, property.name],
+		_class_name,
+		Engine.tr("The %s property") % property.name,
+		category,
+		Types.BlockType.VALUE,
+		property.type,
+		"%s",
+		"%s" % property.name,
+	)
+	block_definition.property_name = property.name
+	return block_definition
+
+
+static func new_variable_setter(variable: VariableDefinition) -> Resource:
+	var _type_string: String = Types.VARIANT_TYPE_TO_STRING[variable.var_type]
+	var block_definition: Resource = new(
+		VARIABLE_SETTER_NAME_FORMAT % variable.var_name,
+		"",
+		Engine.tr("Set the %s variable") % variable.var_name,
+		"Variables",
+		Types.BlockType.STATEMENT,
+		TYPE_NIL,
+		Engine.tr("set %s to {value: %s}") % [variable.var_name, _type_string],
+		"%s = {value}" % variable.var_name,
+	)
+	return block_definition
+
+
+static func new_variable_getter(variable: VariableDefinition) -> Resource:
+	var block_definition: Resource = new(
+		VARIABLE_GETTER_NAME_FORMAT % variable.var_name,
+		"",
+		Engine.tr("The %s variable") % variable.var_name,
+		"Variables",
+		Types.BlockType.VALUE,
+		variable.var_type,
+		"%s" % variable.var_name,
+		"%s",
+	)
+	return block_definition
