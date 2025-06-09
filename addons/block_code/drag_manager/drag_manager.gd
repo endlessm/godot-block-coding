@@ -24,7 +24,8 @@ var drag: Drag = null
 
 
 func _ready():
-	_picker = get_node(picker_path)
+	if picker_path:
+		_picker = get_node(picker_path)
 	_block_canvas = get_node(block_canvas_path)
 
 
@@ -55,7 +56,8 @@ func drag_block(block: Block, copied_from: Block = null, offset: Vector2 = Vecto
 
 	drag = Drag.new(block, block_scope, offset, _block_canvas)
 	drag.set_snap_points(get_tree().get_nodes_in_group("snap_point"))
-	drag.add_delete_area(_picker.get_global_rect())
+	if _picker:
+		drag.add_delete_area(_picker.get_global_rect())
 	if block is ParameterBlock and block.spawned_by:
 		drag.add_delete_area(block.spawned_by.get_global_rect())
 	add_child(drag)
