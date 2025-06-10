@@ -13,6 +13,9 @@ const Types = preload("res://addons/block_code/types/types.gd")
 const Util = preload("res://addons/block_code/ui/util.gd")
 const VariableDefinition = preload("res://addons/block_code/code_generation/variable_definition.gd")
 
+const ZOOM_IN_ICON_TEXTURE = preload("res://addons/block_code/ui/block_canvas/zoom_in_icon_texture.tres")
+const ZOOM_OUT_ICON_TEXTURE = preload("res://addons/block_code/ui/block_canvas/zoom_out_icon_texture.tres")
+
 const EXTEND_MARGIN: float = 800
 const BLOCK_AUTO_PLACE_MARGIN: Vector2 = Vector2(25, 8)
 const DEFAULT_WINDOW_MARGIN: Vector2 = Vector2(25, 25)
@@ -37,8 +40,8 @@ const ZOOM_FACTOR: float = 1.1
 @onready var _replace_block_code_button: Button = %ReplaceBlockCodeButton
 
 @onready var _open_scene_icon = _open_scene_button.get_theme_icon("Load", "EditorIcons")
-@onready var _icon_zoom_out := EditorInterface.get_editor_theme().get_icon("ZoomLess", "EditorIcons")
-@onready var _icon_zoom_in := EditorInterface.get_editor_theme().get_icon("ZoomMore", "EditorIcons")
+@onready var _icon_zoom_out := EditorInterface.get_editor_theme().get_icon("ZoomLess", "EditorIcons") if EditorInterface.has_method("get_editor_theme") else ZOOM_OUT_ICON_TEXTURE
+@onready var _icon_zoom_in := EditorInterface.get_editor_theme().get_icon("ZoomMore", "EditorIcons") if EditorInterface.has_method("get_editor_theme") else ZOOM_IN_ICON_TEXTURE
 
 @onready var _mouse_override: Control = %MouseOverride
 @onready var _zoom_buttons: HBoxContainer = %ZoomButtons
@@ -211,7 +214,9 @@ func set_child(n: Node):
 func _on_context_changed():
 	clear_canvas()
 
-	var edited_node = EditorInterface.get_inspector().get_edited_object() as Node
+	var edited_node
+	if EditorInterface.has_method("get_inspector"):
+		edited_node = EditorInterface.get_inspector().get_edited_object() as Node
 
 	if _context.block_script != _current_block_script:
 		_window.position = Vector2(0, 0)

@@ -1,0 +1,111 @@
+[gd_scene load_steps=19 format=3 uid="uid://cytyr4s3vkoqm"]
+
+[ext_resource type="Script" uid="uid://cnoxd00s0tn51" path="res://addons/block_code/examples/demo_ingame/demo_ingame.gd" id="1_6vqkq"]
+[ext_resource type="PackedScene" uid="uid://c6vumewgnfquy" path="res://addons/block_code/ui/block_canvas/block_canvas.tscn" id="2_7wcyd"]
+[ext_resource type="Texture2D" uid="uid://dk8joxmlxu82l" path="res://icon.png" id="2_saega"]
+[ext_resource type="Script" uid="uid://cumxsbxj56dmk" path="res://addons/block_code/block_code_node/block_code.gd" id="3_com2k"]
+[ext_resource type="Script" uid="uid://brx1cabdmgu38" path="res://addons/block_code/serialization/block_serialization_tree.gd" id="4_dmtl1"]
+[ext_resource type="Script" uid="uid://u035wsjd5tpj" path="res://addons/block_code/serialization/block_serialization.gd" id="5_fjkgv"]
+[ext_resource type="Script" uid="uid://tlsvrkc3fubl" path="res://addons/block_code/serialization/block_script_serialization.gd" id="6_nae1f"]
+[ext_resource type="Script" uid="uid://duvgxorhfitb7" path="res://addons/block_code/serialization/value_block_serialization.gd" id="7_25a4o"]
+[ext_resource type="Script" uid="uid://bwkinr8omutpw" path="res://addons/block_code/code_generation/variable_definition.gd" id="7_qrh5q"]
+[ext_resource type="PackedScene" uid="uid://cph1k5cfximbf" path="res://addons/block_code/drag_manager/drag_manager.tscn" id="10_kgp86"]
+
+[sub_resource type="Resource" id="Resource_7j0jm"]
+script = ExtResource("5_fjkgv")
+name = &"Node2D_change_rotation_degrees"
+children = Array[ExtResource("5_fjkgv")]([])
+arguments = {
+"value": -1.0
+}
+
+[sub_resource type="Resource" id="Resource_p7e31"]
+script = ExtResource("5_fjkgv")
+name = &"Node2D_change_rotation_degrees"
+children = Array[ExtResource("5_fjkgv")]([])
+arguments = {
+"value": 5.0
+}
+
+[sub_resource type="Resource" id="Resource_8vvuc"]
+script = ExtResource("5_fjkgv")
+name = &"process"
+children = Array[ExtResource("5_fjkgv")]([SubResource("Resource_7j0jm"), SubResource("Resource_p7e31")])
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_43nhb"]
+script = ExtResource("4_dmtl1")
+root = SubResource("Resource_8vvuc")
+canvas_position = Vector2(75, 150)
+
+[sub_resource type="Resource" id="Resource_xn35n"]
+script = ExtResource("7_25a4o")
+name = &"mouse_position"
+arguments = {}
+
+[sub_resource type="Resource" id="Resource_y3fve"]
+script = ExtResource("5_fjkgv")
+name = &"Node2D_set_position"
+children = Array[ExtResource("5_fjkgv")]([])
+arguments = {
+"value": SubResource("Resource_xn35n")
+}
+
+[sub_resource type="Resource" id="Resource_k8cej"]
+script = ExtResource("4_dmtl1")
+root = SubResource("Resource_y3fve")
+canvas_position = Vector2(125, 397)
+
+[sub_resource type="Resource" id="Resource_ydoon"]
+script = ExtResource("6_nae1f")
+script_inherits = "Sprite2D"
+block_serialization_trees = Array[ExtResource("4_dmtl1")]([SubResource("Resource_43nhb"), SubResource("Resource_k8cej")])
+variables = Array[ExtResource("7_qrh5q")]([])
+generated_script = "extends Sprite2D
+
+
+func _process(delta):
+	rotation_degrees += -1
+	rotation_degrees += 5
+
+"
+version = 0
+
+[node name="DemoInGame" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_6vqkq")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BlockCanvas" parent="HSplitContainer" instance=ExtResource("2_7wcyd")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Icon" type="Sprite2D" parent="HSplitContainer/BoxContainer"]
+position = Vector2(290, 317)
+texture = ExtResource("2_saega")
+
+[node name="BlockCode" type="Node" parent="HSplitContainer/BoxContainer/Icon"]
+unique_name_in_owner = true
+script = ExtResource("3_com2k")
+block_script = SubResource("Resource_ydoon")
+
+[node name="DragManager" parent="." instance=ExtResource("10_kgp86")]
+unique_name_in_owner = true
+block_canvas_path = NodePath("../HSplitContainer/BlockCanvas")
