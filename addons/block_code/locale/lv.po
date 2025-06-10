@@ -155,19 +155,21 @@
 # res://addons/block_code/ui/title_bar/title_bar.tscn
 # res://addons/block_code/ui/tooltip/tooltip.gd
 # res://addons/block_code/ui/tooltip/tooltip.tscn
-# 
+#
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Block Coding Plugin\n"
-"Language-Team: Latvian (https://app.transifex.com/endless-os/teams/9016/lv/)\n"
+"Language-Team: Latvian (https://app.transifex.com/endless-os/teams/9016/"
+"lv/)\n"
+"Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
-"Language: lv\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
 
 #: addons/block_code/block_code_plugin.gd
 msgid "Regenerate %s POT file"
@@ -209,6 +211,7 @@ msgstr ""
 #: addons/block_code/blocks/communication/define_method.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_entered.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_exited.tres
+#: addons/block_code/blocks/communication/switch_scene.tres
 msgid "Communication | Methods"
 msgstr ""
 
@@ -318,7 +321,7 @@ msgid "Play the animation."
 msgstr ""
 
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
-msgid "play {animation: STRING} {direction: NIL} {wait_mode: NIL}"
+msgid "play {animation: STRING} | {direction: NIL} {wait_mode: NIL}"
 msgstr ""
 
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
@@ -375,20 +378,21 @@ msgstr ""
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 #: addons/block_code/blocks/input/is_input_actioned.tres
+#: addons/block_code/blocks/input/mouse_position.tres
 msgid "Input"
 msgstr ""
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
 "Move the character up, down, left, and right with the keyboard using the "
-"given keys. The speed of movement can be adjusted separately for x (left and"
-" right) and y (up and down)."
+"given keys. The speed of movement can be adjusted separately for x (left and "
+"right) and y (up and down)."
 msgstr ""
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
-"move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at"
-" speed {speed: VECTOR2}"
+"move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at "
+"speed {speed: VECTOR2}"
 msgstr ""
 
 #: addons/block_code/blocks/input/is_input_actioned.tres
@@ -403,6 +407,7 @@ msgstr ""
 #: addons/block_code/blocks/lifecycle/queue_free.tres
 #: addons/block_code/blocks/lifecycle/queue_free_node.tres
 #: addons/block_code/blocks/lifecycle/ready.tres
+#: addons/block_code/blocks/lifecycle/physics_process.tres
 msgid "Lifecycle"
 msgstr ""
 
@@ -558,11 +563,13 @@ msgstr ""
 #: addons/block_code/blocks/math/sin.tres
 #: addons/block_code/blocks/math/subtract.tres
 #: addons/block_code/blocks/math/tan.tres
-#: addons/block_code/blocks/math/vector2_x.tres
-#: addons/block_code/blocks/math/vector2_y.tres
 #: addons/block_code/blocks/math/vector_from_angle.tres
 #: addons/block_code/blocks/math/vector_multiply.tres
 #: addons/block_code/blocks/variables/vector2.tres
+#: addons/block_code/blocks/math/vector2_xy.tres
+#: addons/block_code/blocks/math/vector3_xyz.tres
+#: addons/block_code/blocks/math/vector3_multiply.tres
+#: addons/block_code/blocks/variables/vector3.tres
 msgid "Math"
 msgstr ""
 
@@ -631,22 +638,6 @@ msgstr ""
 msgid "tan {angle: FLOAT}"
 msgstr ""
 
-#: addons/block_code/blocks/math/vector2_x.tres
-msgid "Gives the x of a [i]Vector2[/i]"
-msgstr ""
-
-#: addons/block_code/blocks/math/vector2_x.tres
-msgid "x of {vector2: VECTOR2}"
-msgstr ""
-
-#: addons/block_code/blocks/math/vector2_y.tres
-msgid "Gives the y of a [i]Vector2[/i]"
-msgstr ""
-
-#: addons/block_code/blocks/math/vector2_y.tres
-msgid "y of {vector2: VECTOR2}"
-msgstr ""
-
 #: addons/block_code/blocks/math/vector_from_angle.tres
 msgid "Creates a unit Vector2 rotated to the given angle in radians."
 msgstr ""
@@ -713,7 +704,7 @@ msgstr ""
 
 #: addons/block_code/blocks/sounds/play_sound.tres
 msgid ""
-"play the sound {name: STRING} with volume {db: FLOAT} dB and pitch scale "
+"play the sound {name: STRING} | with volume {db: FLOAT} dB and pitch scale "
 "{pitch: FLOAT}"
 msgstr ""
 
@@ -757,24 +748,117 @@ msgstr ""
 msgid "vector2 x: {x: FLOAT} y: {y: FLOAT}"
 msgstr ""
 
-#: addons/block_code/examples/spawner/spawner.tscn
-msgid ""
-"[b]Up arrow:[/b] Start/stop spawning.\n"
-"[b]Down arrow:[/b] Spawn once.\n"
-"[b]Left arrow:[/b] Reduce spawn frequency.\n"
-"[b]Right arrow:[/b] Increase spawn frequency.\n"
-"\n"
-"From the Inspector: Try changing spawn limit and spawn limit behavior.\n"
-"\n"
-"Color balls remove themselves after 3 seconds. While uncolored balls are only removed by the SimpleSpawner node according to the limit setings."
+#: addons/block_code/code_generation/block_definition.gd
+msgid "Set the %s property"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "set %%s to {value: %s}"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "Change the %s property"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "change %%s by {value: %s}"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "The %s property"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "Set the %s variable"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "set %s to {value: %s}"
+msgstr ""
+
+#: addons/block_code/code_generation/block_definition.gd
+msgid "The %s variable"
 msgstr ""
 
 #: addons/block_code/inspector_plugin/block_script_inspector.gd
 msgid "Open Block Script"
 msgstr ""
 
+#: addons/block_code/simple_nodes/simple_character/simple_character.gd
+msgid "move with {player: NIL} buttons as {kind: NIL}"
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_character/simple_character.gd
+msgid ""
+"Move the character using the “Player 1” or “Player 2” controls as configured "
+"in Godot.\n"
+"\n"
+"“Top-down” enables the character to move in both x (horizontal) and y "
+"(vertical) dimensions, as if the camera is above the character, looking "
+"down. No gravity is added.\n"
+"\n"
+"“Platformer” enables the character to move as if the camera is looking from "
+"the side, like a side-scroller. Gravity is applied on the y (vertical) axis, "
+"making the character fall down until they collide with something.\n"
+"\n"
+"“Spaceship” uses the left/right controls to rotate the character and up/down "
+"controls to go forward or backward in the direction they are pointing."
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
+msgid "game over {result: STRING}"
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
+msgid "Show the game over label with the win or lose message."
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
+msgid "reset game over"
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
+msgid "Reset the game over label."
+msgstr ""
+
 #: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
 msgid "0"
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
+msgid "set score to {score: INT}"
+msgstr ""
+
+#: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
+msgid "change score by {score: INT}"
+msgstr ""
+
+#: addons/block_code/simple_spawner/simple_spawner.gd
+msgid "spawn once"
+msgstr ""
+
+#: addons/block_code/simple_spawner/simple_spawner.gd
+msgid "start spawning"
+msgstr ""
+
+#: addons/block_code/simple_spawner/simple_spawner.gd
+msgid "stop spawning"
+msgstr ""
+
+#: addons/block_code/simple_spawner/simple_spawner.gd
+msgid "is spawning"
+msgstr ""
+
+#: addons/block_code/simple_spawner/simple_spawner.gd
+msgid "set spawn period to {new_period: FLOAT}"
+msgstr ""
+
+#: addons/block_code/simple_spawner/simple_spawner.gd
+msgid "spawn period"
+msgstr ""
+
+#: addons/block_code/ui/main_panel.tscn
+msgid "Advanced"
 msgstr ""
 
 #: addons/block_code/ui/main_panel.tscn
@@ -799,8 +883,7 @@ msgstr ""
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid ""
-"Use block coding to create custom behavior and game mechanics for "
-"\"{node}\"."
+"Use block coding to create custom behavior and game mechanics for \"{node}\"."
 msgstr ""
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
@@ -821,6 +904,14 @@ msgstr ""
 
 #: addons/block_code/ui/blocks/block/block.gd
 msgid "Type:"
+msgstr ""
+
+#: addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.gd
+msgid "Duplicate"
+msgstr ""
+
+#: addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.gd
+msgid "Delete"
 msgstr ""
 
 #: addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn
@@ -854,4 +945,60 @@ msgstr ""
 
 #: addons/block_code/ui/script_window/script_window.tscn
 msgid "Copy"
+msgstr ""
+
+#: addons/block_code/blocks/input/mouse_position.tres
+msgid "The coordinates of the mouse position."
+msgstr ""
+
+#: addons/block_code/blocks/input/mouse_position.tres
+msgid "mouse position"
+msgstr ""
+
+#: addons/block_code/blocks/math/vector2_xy.tres
+msgid "Gives the x or y of a [b]Vector2[/b]"
+msgstr ""
+
+#: addons/block_code/blocks/math/vector2_xy.tres
+msgid "{xy: NIL} of {vector2: VECTOR2}"
+msgstr ""
+
+#: addons/block_code/blocks/math/vector3_xyz.tres
+msgid "Gives the x, y, or z of a [b]Vector3[/b]"
+msgstr ""
+
+#: addons/block_code/blocks/math/vector3_xyz.tres
+msgid "{xyz: NIL} of {vector3: VECTOR3}"
+msgstr ""
+
+#: addons/block_code/blocks/math/vector3_multiply.tres
+msgid ""
+"Multiplies a Vector3 with a number. Use this, for example, to get a point "
+"some distance away along an angle."
+msgstr ""
+
+#: addons/block_code/blocks/math/vector3_multiply.tres
+msgid "multiply {vector: VECTOR3} by {number: FLOAT}"
+msgstr ""
+
+#: addons/block_code/blocks/communication/switch_scene.tres
+msgid ""
+"Stop playing the current scene, and switch to a different one. You might use "
+"this to switch to a new level."
+msgstr ""
+
+#: addons/block_code/blocks/communication/switch_scene.tres
+msgid "switch the scene to {file_path: STRING}"
+msgstr ""
+
+#: addons/block_code/blocks/variables/vector3.tres
+msgid "vector3 x: {x: FLOAT} y: {y: FLOAT}: z: {z: FLOAT}"
+msgstr ""
+
+#: addons/block_code/blocks/lifecycle/physics_process.tres
+msgid "Attached blocks will be executed before each physics step"
+msgstr ""
+
+#: addons/block_code/blocks/lifecycle/physics_process.tres
+msgid "every physics step"
 msgstr ""
