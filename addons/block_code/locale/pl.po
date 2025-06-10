@@ -58,8 +58,6 @@
 # res://addons/block_code/blocks/math/sin.tres
 # res://addons/block_code/blocks/math/subtract.tres
 # res://addons/block_code/blocks/math/tan.tres
-# res://addons/block_code/blocks/math/vector2_x.tres
-# res://addons/block_code/blocks/math/vector2_y.tres
 # res://addons/block_code/blocks/math/vector_from_angle.tres
 # res://addons/block_code/blocks/math/vector_multiply.tres
 # res://addons/block_code/blocks/physics/characterbody2d_move_and_slide.tres
@@ -85,14 +83,6 @@
 # res://addons/block_code/drag_manager/drag.gd
 # res://addons/block_code/drag_manager/drag_manager.gd
 # res://addons/block_code/drag_manager/drag_manager.tscn
-# res://addons/block_code/examples/pong_game/ball.tscn
-# res://addons/block_code/examples/pong_game/goal_area.tscn
-# res://addons/block_code/examples/pong_game/player_score.tscn
-# res://addons/block_code/examples/pong_game/pong_game.tscn
-# res://addons/block_code/examples/pong_game/space.tscn
-# res://addons/block_code/examples/spawner/ball.tscn
-# res://addons/block_code/examples/spawner/spawner.tscn
-# res://addons/block_code/examples/spawner/volatile_ball.tscn
 # res://addons/block_code/inspector_plugin/block_script_inspector.gd
 # res://addons/block_code/serialization/block_script_serialization.gd
 # res://addons/block_code/serialization/block_serialization.gd
@@ -155,25 +145,31 @@
 # res://addons/block_code/ui/title_bar/title_bar.tscn
 # res://addons/block_code/ui/tooltip/tooltip.gd
 # res://addons/block_code/ui/tooltip/tooltip.tscn
-#
+# res://addons/block_code/blocks/input/mouse_position.tres
+# res://addons/block_code/blocks/math/vector2_xy.tres
+# res://addons/block_code/blocks/math/vector3_xyz.tres
+# res://addons/block_code/blocks/math/vector3_multiply.tres
+# res://addons/block_code/blocks/communication/switch_scene.tres
+# res://addons/block_code/blocks/variables/vector3.tres
+# res://addons/block_code/blocks/lifecycle/physics_process.tres
+# 
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 # Translators:
 # Tomasz Chabora, 2024
-#
+# Manuel Quiñones, 2025
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Block Coding Plugin\n"
-"Last-Translator: Tomasz Chabora, 2024\n"
+"Last-Translator: Manuel Quiñones, 2025\n"
 "Language-Team: Polish (https://app.transifex.com/endless-os/teams/9016/pl/)\n"
-"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
-"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
-"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
 #: addons/block_code/block_code_plugin.gd
 msgid "Regenerate %s POT file"
@@ -325,9 +321,8 @@ msgid "Play the animation."
 msgstr "Odtwórz animację."
 
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
-#, fuzzy
 msgid "play {animation: STRING} | {direction: NIL} {wait_mode: NIL}"
-msgstr "odtwórz {animation: STRING} {direction: NIL} {wait_mode: NIL}"
+msgstr "odtwórz {animation: STRING} | {direction: NIL} {wait_mode: NIL}"
 
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
 msgid "Stop the currently playing animation."
@@ -390,8 +385,8 @@ msgstr "Sterowanie"
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
 "Move the character up, down, left, and right with the keyboard using the "
-"given keys. The speed of movement can be adjusted separately for x (left and "
-"right) and y (up and down)."
+"given keys. The speed of movement can be adjusted separately for x (left and"
+" right) and y (up and down)."
 msgstr ""
 "Porusz postacią w górę, dół, lewo i prawo za pomocą klawiatury, używając "
 "danych klawiszy. Szybkość poruszania może być dopasowana oddzielnie dla x "
@@ -399,8 +394,8 @@ msgstr ""
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
-"move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at "
-"speed {speed: VECTOR2}"
+"move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at"
+" speed {speed: VECTOR2}"
 msgstr ""
 "poruszaj się klawiszami {up: STRING} {down: STRING} {left: STRING} {right: "
 "STRING} z szybkością {speed: VECTOR2}"
@@ -724,13 +719,12 @@ msgid "Play the audio stream with volume and pitch"
 msgstr "Odtwórz strumień audio z głośnością i wysokością"
 
 #: addons/block_code/blocks/sounds/play_sound.tres
-#, fuzzy
 msgid ""
 "play the sound {name: STRING} | with volume {db: FLOAT} dB and pitch scale "
 "{pitch: FLOAT}"
 msgstr ""
-"odtwórz dźwięk {name: STRING} z głośnością {db: FLOAT} dB i skalą wysokości "
-"{pitch: FLOAT}"
+"odtwórz dźwięk {name: STRING} | z głośnością {db: FLOAT} dB i skalą "
+"wysokości {pitch: FLOAT}"
 
 #: addons/block_code/blocks/sounds/stop_sound.tres
 msgid "stop the sound {name: STRING}"
@@ -793,9 +787,8 @@ msgid "The %s property"
 msgstr ""
 
 #: addons/block_code/code_generation/block_definition.gd
-#, fuzzy
 msgid "Set the %s variable"
-msgstr "Utwórz nową zmienną"
+msgstr ""
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "set %s to {value: %s}"
@@ -815,25 +808,18 @@ msgstr ""
 
 #: addons/block_code/simple_nodes/simple_character/simple_character.gd
 msgid ""
-"Move the character using the “Player 1” or “Player 2” controls as configured "
-"in Godot.\n"
+"Move the character using the “Player 1” or “Player 2” controls as configured in Godot.\n"
 "\n"
-"“Top-down” enables the character to move in both x (horizontal) and y "
-"(vertical) dimensions, as if the camera is above the character, looking "
-"down. No gravity is added.\n"
+"“Top-down” enables the character to move in both x (horizontal) and y (vertical) dimensions, as if the camera is above the character, looking down. No gravity is added.\n"
 "\n"
-"“Platformer” enables the character to move as if the camera is looking from "
-"the side, like a side-scroller. Gravity is applied on the y (vertical) axis, "
-"making the character fall down until they collide with something.\n"
+"“Platformer” enables the character to move as if the camera is looking from the side, like a side-scroller. Gravity is applied on the y (vertical) axis, making the character fall down until they collide with something.\n"
 "\n"
-"“Spaceship” uses the left/right controls to rotate the character and up/down "
-"controls to go forward or backward in the direction they are pointing."
+"“Spaceship” uses the left/right controls to rotate the character and up/down controls to go forward or backward in the direction they are pointing."
 msgstr ""
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
-#, fuzzy
 msgid "game over {result: STRING}"
-msgstr "wypisz tekst {text: STRING}"
+msgstr ""
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
 msgid "Show the game over label with the win or lose message."
@@ -844,18 +830,16 @@ msgid "reset game over"
 msgstr ""
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
-#, fuzzy
 msgid "Reset the game over label."
-msgstr "Ustaw tekst dla etykiety."
+msgstr ""
 
 #: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
 msgid "0"
 msgstr "0"
 
 #: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
-#, fuzzy
 msgid "set score to {score: INT}"
-msgstr "ustaw text na {text: STRING}"
+msgstr ""
 
 #: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
 msgid "change score by {score: INT}"
@@ -911,7 +895,8 @@ msgstr "Wybierz węzeł, by utworzyć i edytować kod blokowy."
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid ""
-"Use block coding to create custom behavior and game mechanics for \"{node}\"."
+"Use block coding to create custom behavior and game mechanics for "
+"\"{node}\"."
 msgstr ""
 "Użyj kodowania blokowego, by utworzyć własne zachowanie i mechaniki dla "
 "\"{node}\"."
@@ -986,89 +971,49 @@ msgid "mouse position"
 msgstr ""
 
 #: addons/block_code/blocks/math/vector2_xy.tres
-#, fuzzy
 msgid "Gives the x or y of a [b]Vector2[/b]"
-msgstr "Zwraca x z [i]Vector2[/i]"
+msgstr ""
 
 #: addons/block_code/blocks/math/vector2_xy.tres
-#, fuzzy
 msgid "{xy: NIL} of {vector2: VECTOR2}"
-msgstr "x z {vector2: VECTOR2}"
+msgstr "{xy: NIL} z {vector2: VECTOR2}"
 
 #: addons/block_code/blocks/math/vector3_xyz.tres
-#, fuzzy
 msgid "Gives the x, y, or z of a [b]Vector3[/b]"
-msgstr "Zwraca x z [i]Vector2[/i]"
+msgstr ""
 
 #: addons/block_code/blocks/math/vector3_xyz.tres
-#, fuzzy
 msgid "{xyz: NIL} of {vector3: VECTOR3}"
-msgstr "x z {vector2: VECTOR2}"
+msgstr "{xyz: NIL} z {vector3: VECTOR3}"
 
 #: addons/block_code/blocks/math/vector3_multiply.tres
-#, fuzzy
 msgid ""
 "Multiplies a Vector3 with a number. Use this, for example, to get a point "
 "some distance away along an angle."
 msgstr ""
-"Mnoży wektor z liczbą. Użyj tego, na przykład, by dostać jakiś dystans "
-"wzdłuż kąta."
 
 #: addons/block_code/blocks/math/vector3_multiply.tres
-#, fuzzy
 msgid "multiply {vector: VECTOR3} by {number: FLOAT}"
-msgstr "pomnóż {vector: VECTOR2} przez {number: FLOAT}"
+msgstr "pomnóż {vector: VECTOR3} przez {number: FLOAT}"
 
 #: addons/block_code/blocks/communication/switch_scene.tres
 msgid ""
-"Stop playing the current scene, and switch to a different one. You might use "
-"this to switch to a new level."
+"Stop playing the current scene, and switch to a different one. You might use"
+" this to switch to a new level."
 msgstr ""
 
 #: addons/block_code/blocks/communication/switch_scene.tres
-#, fuzzy
 msgid "switch the scene to {file_path: STRING}"
-msgstr "ustaw text na {text: STRING}"
+msgstr ""
 
 #: addons/block_code/blocks/variables/vector3.tres
-#, fuzzy
 msgid "vector3 x: {x: FLOAT} y: {y: FLOAT}: z: {z: FLOAT}"
-msgstr "vector2 x: {x: FLOAT} y: {y: FLOAT}"
+msgstr ""
 
 #: addons/block_code/blocks/lifecycle/physics_process.tres
-#, fuzzy
 msgid "Attached blocks will be executed before each physics step"
-msgstr "Dołączone bloki będą wykonane raz, kiedy węzeł jest \"gotowy\""
+msgstr ""
 
 #: addons/block_code/blocks/lifecycle/physics_process.tres
 msgid "every physics step"
 msgstr ""
-
-#~ msgid "Gives the y of a [i]Vector2[/i]"
-#~ msgstr "Zwraca y z [i]Vector2[/i]"
-
-#~ msgid "y of {vector2: VECTOR2}"
-#~ msgstr "y z {vector2: VECTOR2}"
-
-#~ msgid ""
-#~ "[b]Up arrow:[/b] Start/stop spawning.\n"
-#~ "[b]Down arrow:[/b] Spawn once.\n"
-#~ "[b]Left arrow:[/b] Reduce spawn frequency.\n"
-#~ "[b]Right arrow:[/b] Increase spawn frequency.\n"
-#~ "\n"
-#~ "From the Inspector: Try changing spawn limit and spawn limit behavior.\n"
-#~ "\n"
-#~ "Color balls remove themselves after 3 seconds. While uncolored balls are "
-#~ "only removed by the SimpleSpawner node according to the limit setings."
-#~ msgstr ""
-#~ "[b]Strzałka w górę:[/b] Zacznij/przestań przyzywać.\n"
-#~ "[b]Strzałka w dół:[/b] Przyzwij raz.\n"
-#~ "[b]Strzałka w lewo:[/b] Zmniejsz częstotliwość przyzywania.\n"
-#~ "[b]Strzałka w prawo:[/b] Zwiększ częstotliwość przyzywania.\n"
-#~ "\n"
-#~ "Z inspektora: Spróbuj zmienić limit przyzywania i zachowanie limitu "
-#~ "przyzywania.\n"
-#~ "\n"
-#~ "Kolorowe piłki usuwają się same po 3 sekundach, podczas gdy niekolorowe "
-#~ "piłki są usuwane tylko przez węzeł SimpleSpawner zgodnie z ustawieniami "
-#~ "limitów."
