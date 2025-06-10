@@ -58,8 +58,6 @@
 # res://addons/block_code/blocks/math/sin.tres
 # res://addons/block_code/blocks/math/subtract.tres
 # res://addons/block_code/blocks/math/tan.tres
-# res://addons/block_code/blocks/math/vector2_x.tres
-# res://addons/block_code/blocks/math/vector2_y.tres
 # res://addons/block_code/blocks/math/vector_from_angle.tres
 # res://addons/block_code/blocks/math/vector_multiply.tres
 # res://addons/block_code/blocks/physics/characterbody2d_move_and_slide.tres
@@ -85,14 +83,6 @@
 # res://addons/block_code/drag_manager/drag.gd
 # res://addons/block_code/drag_manager/drag_manager.gd
 # res://addons/block_code/drag_manager/drag_manager.tscn
-# res://addons/block_code/examples/pong_game/ball.tscn
-# res://addons/block_code/examples/pong_game/goal_area.tscn
-# res://addons/block_code/examples/pong_game/player_score.tscn
-# res://addons/block_code/examples/pong_game/pong_game.tscn
-# res://addons/block_code/examples/pong_game/space.tscn
-# res://addons/block_code/examples/spawner/ball.tscn
-# res://addons/block_code/examples/spawner/spawner.tscn
-# res://addons/block_code/examples/spawner/volatile_ball.tscn
 # res://addons/block_code/inspector_plugin/block_script_inspector.gd
 # res://addons/block_code/serialization/block_script_serialization.gd
 # res://addons/block_code/serialization/block_serialization.gd
@@ -155,23 +145,31 @@
 # res://addons/block_code/ui/title_bar/title_bar.tscn
 # res://addons/block_code/ui/tooltip/tooltip.gd
 # res://addons/block_code/ui/tooltip/tooltip.tscn
-#
+# res://addons/block_code/blocks/input/mouse_position.tres
+# res://addons/block_code/blocks/math/vector2_xy.tres
+# res://addons/block_code/blocks/math/vector3_xyz.tres
+# res://addons/block_code/blocks/math/vector3_multiply.tres
+# res://addons/block_code/blocks/communication/switch_scene.tres
+# res://addons/block_code/blocks/variables/vector3.tres
+# res://addons/block_code/blocks/lifecycle/physics_process.tres
+# 
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 # Translators:
 # Deep ChTi, 2024
-#
+# Jimmy Lu, 2025
+# Manuel Quiñones, 2025
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Block Coding Plugin\n"
-"Last-Translator: Deep ChTi, 2024\n"
-"Language-Team: Chinese (China) (https://app.transifex.com/endless-os/"
-"teams/9016/zh_CN/)\n"
-"Language: zh_CN\n"
+"Last-Translator: Manuel Quiñones, 2025\n"
+"Language-Team: Chinese (China) (https://app.transifex.com/endless-os/teams/9016/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
+"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: addons/block_code/block_code_plugin.gd
@@ -250,7 +248,7 @@ msgstr "使用以下语句定义方法/函数"
 
 #: addons/block_code/blocks/communication/define_method.tres
 msgid "define method {method_name: STRING_NAME}"
-msgstr ""
+msgstr "定义方法{method_name: STRING_NAME}"
 
 #: addons/block_code/blocks/communication/get_node.tres
 msgid "Communication | Nodes"
@@ -262,7 +260,7 @@ msgstr ""
 
 #: addons/block_code/blocks/communication/get_node.tres
 msgid "{path: NIL}"
-msgstr ""
+msgstr "{path: NIL}"
 
 #: addons/block_code/blocks/communication/is_in_group.tres
 msgid "Is this node in the group"
@@ -324,9 +322,8 @@ msgid "Play the animation."
 msgstr "播放动画"
 
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
-#, fuzzy
 msgid "play {animation: STRING} | {direction: NIL} {wait_mode: NIL}"
-msgstr "播放动画{animation: STRING}{direction: NIL}{wait_mode: NIL}"
+msgstr "播放动画 {animation: STRING} | {direction: NIL} {wait_mode: NIL}"
 
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
 msgid "Stop the currently playing animation."
@@ -389,19 +386,17 @@ msgstr "输入"
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
 "Move the character up, down, left, and right with the keyboard using the "
-"given keys. The speed of movement can be adjusted separately for x (left and "
-"right) and y (up and down)."
-msgstr ""
-"使用给定的键通过键盘上下、向左和向右移动角色。可以分别为 x （左和右） 和 y "
-"（上和下） 调整移动速度。"
+"given keys. The speed of movement can be adjusted separately for x (left and"
+" right) and y (up and down)."
+msgstr "使用给定的键通过键盘上下、向左和向右移动角色。可以分别为 x （左和右） 和 y （上和下） 调整移动速度。"
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 msgid ""
-"move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at "
-"speed {speed: VECTOR2}"
+"move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at"
+" speed {speed: VECTOR2}"
 msgstr ""
-"使用键盘上的{up: STRING}{down: STRING}{left: STRING}{right: STRING}键，用速度"
-"{speed: VECTOR2}移动"
+"使用键盘上的{up: STRING}{down: STRING}{left: STRING}{right: STRING}键，用速度{speed: "
+"VECTOR2}移动"
 
 #: addons/block_code/blocks/input/is_input_actioned.tres
 msgid "True if the specified input action has been pressed or released."
@@ -651,7 +646,7 @@ msgstr ""
 
 #: addons/block_code/blocks/math/vector_from_angle.tres
 msgid "Creates a unit Vector2 rotated to the given angle in radians."
-msgstr ""
+msgstr "新增一個指定角度(弳度)的二維單位向量"
 
 #: addons/block_code/blocks/math/vector_from_angle.tres
 msgid "vector from {angle: FLOAT}"
@@ -665,7 +660,7 @@ msgstr ""
 
 #: addons/block_code/blocks/math/vector_multiply.tres
 msgid "multiply {vector: VECTOR2} by {number: FLOAT}"
-msgstr ""
+msgstr "二維向量{vector: VECTOR2}乘以常數{number: FLOAT}"
 
 #: addons/block_code/blocks/physics/characterbody2d_move_and_slide.tres
 msgid "move and slide"
@@ -717,7 +712,7 @@ msgstr ""
 msgid ""
 "play the sound {name: STRING} | with volume {db: FLOAT} dB and pitch scale "
 "{pitch: FLOAT}"
-msgstr ""
+msgstr "播放音效 {name: STRING} | 使用音量 {db: FLOAT} 分貝及音高比例 {pitch: FLOAT}"
 
 #: addons/block_code/blocks/sounds/stop_sound.tres
 msgid "stop the sound {name: STRING}"
@@ -741,7 +736,7 @@ msgstr ""
 
 #: addons/block_code/blocks/transform/rigidbody2d_physics_position.tres
 msgid "set physics position {position: VECTOR2}"
-msgstr ""
+msgstr "設定位置{position: VECTOR2}"
 
 #: addons/block_code/blocks/ui/label_set_text.tres
 msgid "UI"
@@ -757,7 +752,7 @@ msgstr ""
 
 #: addons/block_code/blocks/variables/vector2.tres
 msgid "vector2 x: {x: FLOAT} y: {y: FLOAT}"
-msgstr ""
+msgstr "二維向量 x: {x: FLOAT} y: {y: FLOAT}"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "Set the %s property"
@@ -780,9 +775,8 @@ msgid "The %s property"
 msgstr ""
 
 #: addons/block_code/code_generation/block_definition.gd
-#, fuzzy
 msgid "Set the %s variable"
-msgstr "创建新变量"
+msgstr ""
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "set %s to {value: %s}"
@@ -802,25 +796,18 @@ msgstr ""
 
 #: addons/block_code/simple_nodes/simple_character/simple_character.gd
 msgid ""
-"Move the character using the “Player 1” or “Player 2” controls as configured "
-"in Godot.\n"
+"Move the character using the “Player 1” or “Player 2” controls as configured in Godot.\n"
 "\n"
-"“Top-down” enables the character to move in both x (horizontal) and y "
-"(vertical) dimensions, as if the camera is above the character, looking "
-"down. No gravity is added.\n"
+"“Top-down” enables the character to move in both x (horizontal) and y (vertical) dimensions, as if the camera is above the character, looking down. No gravity is added.\n"
 "\n"
-"“Platformer” enables the character to move as if the camera is looking from "
-"the side, like a side-scroller. Gravity is applied on the y (vertical) axis, "
-"making the character fall down until they collide with something.\n"
+"“Platformer” enables the character to move as if the camera is looking from the side, like a side-scroller. Gravity is applied on the y (vertical) axis, making the character fall down until they collide with something.\n"
 "\n"
-"“Spaceship” uses the left/right controls to rotate the character and up/down "
-"controls to go forward or backward in the direction they are pointing."
+"“Spaceship” uses the left/right controls to rotate the character and up/down controls to go forward or backward in the direction they are pointing."
 msgstr ""
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
-#, fuzzy
 msgid "game over {result: STRING}"
-msgstr "添加到组{group: STRING}"
+msgstr ""
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
 msgid "Show the game over label with the win or lose message."
@@ -896,7 +883,8 @@ msgstr ""
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid ""
-"Use block coding to create custom behavior and game mechanics for \"{node}\"."
+"Use block coding to create custom behavior and game mechanics for "
+"\"{node}\"."
 msgstr ""
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
@@ -974,7 +962,7 @@ msgstr ""
 
 #: addons/block_code/blocks/math/vector2_xy.tres
 msgid "{xy: NIL} of {vector2: VECTOR2}"
-msgstr ""
+msgstr "二維向量 {vector2: VECTOR2} 的 {xy: NIL}"
 
 #: addons/block_code/blocks/math/vector3_xyz.tres
 msgid "Gives the x, y, or z of a [b]Vector3[/b]"
@@ -982,7 +970,7 @@ msgstr ""
 
 #: addons/block_code/blocks/math/vector3_xyz.tres
 msgid "{xyz: NIL} of {vector3: VECTOR3}"
-msgstr ""
+msgstr "二維向量 {vector3: VECTOR3} 的 {xyz: NIL}"
 
 #: addons/block_code/blocks/math/vector3_multiply.tres
 msgid ""
@@ -992,12 +980,12 @@ msgstr ""
 
 #: addons/block_code/blocks/math/vector3_multiply.tres
 msgid "multiply {vector: VECTOR3} by {number: FLOAT}"
-msgstr ""
+msgstr "二維向量 {vector: VECTOR3} 乘以常數 {number: FLOAT}"
 
 #: addons/block_code/blocks/communication/switch_scene.tres
 msgid ""
-"Stop playing the current scene, and switch to a different one. You might use "
-"this to switch to a new level."
+"Stop playing the current scene, and switch to a different one. You might use"
+" this to switch to a new level."
 msgstr ""
 
 #: addons/block_code/blocks/communication/switch_scene.tres
