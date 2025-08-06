@@ -289,6 +289,6 @@ static func new_variable_getter(variable: VariableDefinition) -> Resource:
 		Types.BlockType.VALUE,
 		variable.var_type,
 		"%s" % variable.var_name,
-		"%s",
+		"%s" % variable.var_name,
 	)
 	return block_definition
