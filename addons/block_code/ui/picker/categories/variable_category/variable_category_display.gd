@@ -7,6 +7,7 @@ const VariableDefinition = preload("res://addons/block_code/code_generation/vari
 @onready var h_separator := %HSeparator
 
 signal variable_created(variable: VariableDefinition)
+signal variables_deleted(variables: Array[String])
 
 
 func _ready():
@@ -22,3 +23,7 @@ func _update_blocks():
 
 func _on_create_variable(var_name, var_type):
 	variable_created.emit(VariableDefinition.new(var_name, Types.STRING_TO_VARIANT_TYPE[var_type]))
+
+
+func _on_delete_variables(variables):
+	variables_deleted.emit(variables)
