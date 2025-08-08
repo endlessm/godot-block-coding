@@ -6,6 +6,7 @@ signal drag_started(offset: Vector2)
 const Constants = preload("res://addons/block_code/ui/constants.gd")
 const OptionData = preload("res://addons/block_code/code_generation/option_data.gd")
 const Types = preload("res://addons/block_code/types/types.gd")
+const Option_Theme = preload("res://addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn::StyleBoxFlat_7m75r")
 
 signal modified
 
@@ -286,6 +287,24 @@ func _switch_input(node: Node):
 		c.visible = c == node
 	_background.visible = node not in [_option_input, null]
 	_background.is_pointy_value = node == _bool_input
+	if option_data:
+		_option_input.add_theme_stylebox_override("focus", Option_Theme)
+		_option_input.add_theme_stylebox_override("hover", Option_Theme)
+		_option_input.add_theme_stylebox_override("pressed", Option_Theme)
+		_option_input.add_theme_stylebox_override("normal", Option_Theme)
+		var raw_input = get_raw_input()
+		var data = str_to_var("" if raw_input == null or raw_input is Block else raw_input)
+		if typeof(data):
+			var empty_theme = StyleBoxEmpty.new()
+			_option_input.add_theme_stylebox_override("focus", empty_theme)
+			_option_input.add_theme_stylebox_override("hover", empty_theme)
+			_option_input.add_theme_stylebox_override("pressed", empty_theme)
+			_option_input.add_theme_stylebox_override("normal", empty_theme)
+			variant_type = typeof(data)
+			_background.visible = true
+			_background.is_pointy_value = variant_type == TYPE_BOOL
+			snap_point.visible = true
+			snap_point.variant_type = variant_type
 
 
 func _update_option_input(current_value: Variant = null):
@@ -350,6 +369,7 @@ func _update_background_color(new_color):
 func _on_option_input_item_selected(index):
 	if not editable:
 		return
+	_update_visible_input()
 	modified.emit()
 
 
