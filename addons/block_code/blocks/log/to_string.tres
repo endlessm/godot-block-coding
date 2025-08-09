@@ -1,0 +1,25 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://bfugvntm6mdjm"]
+
+[ext_resource type="Script" uid="uid://bkapmk0btnk7y" path="res://addons/block_code/code_generation/option_data.gd" id="1_i1nej"]
+[ext_resource type="Script" uid="uid://bau6qtv87fcdo" path="res://addons/block_code/code_generation/block_definition.gd" id="2_xs7a8"]
+
+[sub_resource type="Resource" id="Resource_ie4sg"]
+script = ExtResource("1_i1nej")
+selected = 0
+items = ["0", "true", "Vector2(0, 0)", "Vector3(0, 0, 0)", "Color(0, 0, 0, 1)", "Object(Object, \"script\": null)"]
+
+[resource]
+script = ExtResource("2_xs7a8")
+name = &"to_string"
+target_node_class = ""
+description = "Converts [i]parameter[/i] to a [b]String[/b]"
+category = "Log"
+type = 3
+variant_type = 4
+display_template = "{parameter: NIL} to string"
+code_template = "str({{parameter}})"
+defaults = {
+"parameter": SubResource("Resource_ie4sg")
+}
+signal_name = ""
+is_advanced = true
