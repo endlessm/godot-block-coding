@@ -50,6 +50,7 @@ func _ready():
 
 	_picker.block_picked.connect(_drag_manager.copy_picked_block_and_drag)
 	_picker.variable_created.connect(_create_variable)
+	_picker.variables_deleted.connect(_delete_variables)
 	_block_canvas.reconnect_block.connect(_drag_manager.connect_block_canvas_signals)
 	_drag_manager.block_dropped.connect(save_script)
 	_drag_manager.block_modified.connect(save_script)
@@ -279,6 +280,28 @@ func _create_variable(variable: VariableDefinition):
 
 	var new_variables = block_script.variables.duplicate()
 	new_variables.append(variable)
+
+	undo_redo.add_do_property(_context.block_script, "variables", new_variables)
+	undo_redo.commit_action()
+
+	_picker.reload_blocks()
+
+
+func _delete_variables(variables_to_delete: Array):
+	if _context.block_code_node == null:
+		print("No script loaded to delete variables from.")
+		return
+
+	var block_script: BlockScriptSerialization = _context.block_script
+
+	undo_redo.create_action("Delete variables %s in %s's block code script" % [variables_to_delete, _context.parent_node.name])
+	undo_redo.add_undo_property(_context.block_script, "variables", _context.block_script.variables)
+
+	var new_variables = block_script.variables.duplicate()
+	for index in range(new_variables.size() - 1, -1, -1):
+		var variable = new_variables[index]
+		if variable.var_name in variables_to_delete:
+			new_variables.erase(variable)
 
 	undo_redo.add_do_property(_context.block_script, "variables", new_variables)
 	undo_redo.commit_action()

@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxkdgyj0kpexu"]
+
+[ext_resource type="Script" uid="uid://duu6fvcrvhxrh" path="res://addons/block_code/ui/picker/categories/variable_category/delete_variables_dialog.gd" id="1_l45s3"]
+
+[node name="DeleteVariablesDialog" type="ConfirmationDialog"]
+title = "Delete Variables"
+initial_position = 1
+size = Vector2i(300, 183)
+visible = true
+ok_button_text = "Delete"
+dialog_hide_on_ok = false
+script = ExtResource("1_l45s3")
+
+[node name="VariablesContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 292.0
+offset_bottom = 134.0
+
+[connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
+[connection signal="confirmed" from="." to="." method="_on_confirmed"]

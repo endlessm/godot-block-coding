@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://byne4g2yvdf3"]
+[gd_scene load_steps=6 format=3 uid="uid://byne4g2yvdf3"]
 
 [ext_resource type="PackedScene" uid="uid://duhpwtfo3k0sk" path="res://addons/block_code/ui/picker/categories/block_category_display.tscn" id="1_vermd"]
-[ext_resource type="Script" path="res://addons/block_code/ui/picker/categories/variable_category/variable_category_display.gd" id="2_ggvi7"]
+[ext_resource type="Script" uid="uid://d1owr45rep8tx" path="res://addons/block_code/ui/picker/categories/variable_category/variable_category_display.gd" id="2_ggvi7"]
 [ext_resource type="PackedScene" uid="uid://t0eoc4ekvjr1" path="res://addons/block_code/ui/picker/categories/variable_category/create_variable_button.tscn" id="3_gjvnq"]
+[ext_resource type="PackedScene" uid="uid://ba2ckluuotftw" path="res://addons/block_code/ui/picker/categories/variable_category/delete_variables_button.tscn" id="4_ppkk1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0m6vh"]
 
@@ -22,4 +23,8 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_0m6vh")
 [node name="CreateVariableButton" parent="VBoxContainer" index="3" instance=ExtResource("3_gjvnq")]
 layout_mode = 2
 
+[node name="DeleteVariablesButton" parent="VBoxContainer" index="4" instance=ExtResource("4_ppkk1")]
+layout_mode = 2
+
 [connection signal="create_variable" from="VBoxContainer/CreateVariableButton" to="." method="_on_create_variable"]
+[connection signal="delete_variables" from="VBoxContainer/DeleteVariablesButton" to="." method="_on_delete_variables"]

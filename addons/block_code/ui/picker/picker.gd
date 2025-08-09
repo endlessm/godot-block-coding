@@ -26,6 +26,7 @@ const CATEGORY_ORDER_OVERRIDE = {
 
 signal block_picked(block: Block, offset: Vector2)
 signal variable_created(variable: VariableDefinition)
+signal variables_deleted(variables: Array[String])
 
 @onready var _context := BlockEditorContext.get_default()
 
@@ -120,6 +121,7 @@ func _get_or_create_block_category_display(category: BlockCategory) -> BlockCate
 		else:
 			block_category_display = VariableCategoryDisplayScene.instantiate()
 			block_category_display.variable_created.connect(func(variable): variable_created.emit(variable))
+			block_category_display.variables_deleted.connect(func(variables): variables_deleted.emit(variables))
 		block_category_display.title = category.name if category else ""
 		block_category_display.block_picked.connect(func(block: Block, offset: Vector2): block_picked.emit(block, offset))
 
