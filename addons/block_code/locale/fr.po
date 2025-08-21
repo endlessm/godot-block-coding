@@ -165,22 +165,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Block Coding Plugin\n"
-"Last-Translator: Will Thompson <wjt@endlessos.org>, 2024\n"
+"Last-Translator: Your Name <your.email@example.com>, 2024\n"
 "Language-Team: French (https://app.transifex.com/endless-os/teams/9016/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % "
-"1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: addons/block_code/block_code_plugin.gd
 msgid "Regenerate %s POT file"
-msgstr ""
+msgstr "Regénérer le fichier POT %s"
 
 #: addons/block_code/block_code_plugin.gd
 msgid "Update %s translated files"
-msgstr ""
+msgstr "Mettre à jour les fichiers traduits %s"
 
 #: addons/block_code/blocks/communication/add_node_to_group.tres
 #: addons/block_code/blocks/communication/add_to_group.tres
@@ -189,23 +188,23 @@ msgstr ""
 #: addons/block_code/blocks/communication/remove_from_group.tres
 #: addons/block_code/blocks/communication/remove_node_from_group.tres
 msgid "Communication | Groups"
-msgstr ""
+msgstr "Communication | Groupes"
 
 #: addons/block_code/blocks/communication/add_node_to_group.tres
 msgid "Add the node into the group"
-msgstr ""
+msgstr "Ajouter le nœud au groupe"
 
 #: addons/block_code/blocks/communication/add_node_to_group.tres
 msgid "add {node: OBJECT} to group {group: STRING}"
-msgstr ""
+msgstr "ajouter {node: OBJECT} au groupe {group: STRING}"
 
 #: addons/block_code/blocks/communication/add_to_group.tres
 msgid "Add this node into the group"
-msgstr ""
+msgstr "Ajouter ce nœud au groupe"
 
 #: addons/block_code/blocks/communication/add_to_group.tres
 msgid "add to group {group: STRING}"
-msgstr ""
+msgstr "ajouter au groupe {group: STRING}"
 
 #: addons/block_code/blocks/communication/area2d_on_entered.tres
 #: addons/block_code/blocks/communication/area2d_on_exited.tres
@@ -216,195 +215,197 @@ msgstr ""
 #: addons/block_code/blocks/communication/rigidbody2d_on_exited.tres
 #: addons/block_code/blocks/communication/switch_scene.tres
 msgid "Communication | Methods"
-msgstr ""
+msgstr "Communication | Méthodes"
 
 #: addons/block_code/blocks/communication/area2d_on_entered.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_entered.tres
 msgid "when this node collides with [something: OBJECT]"
-msgstr ""
+msgstr "quand ce nœud entre en collision avec [quelque chose: OBJECT]"
 
 #: addons/block_code/blocks/communication/area2d_on_exited.tres
 #: addons/block_code/blocks/communication/rigidbody2d_on_exited.tres
 msgid "when this node stops colliding with [something: OBJECT]"
-msgstr ""
+msgstr "quand ce nœud arrête d'être en collision avec [quelque chose: OBJECT]"
 
 #: addons/block_code/blocks/communication/call_method_group.tres
 msgid "Calls the method/function on each member of the given group"
-msgstr ""
+msgstr "Appelle la méthode/fonction sur chaque membre du groupe donné"
 
 #: addons/block_code/blocks/communication/call_method_group.tres
 msgid "call method {method_name: STRING} in group {group: STRING}"
-msgstr ""
+msgstr "appeler la méthode {method_name: STRING} dans le groupe {group: STRING}"
 
 #: addons/block_code/blocks/communication/call_method_node.tres
 msgid "Calls the method/function of the given node"
-msgstr ""
+msgstr "Appelle la méthode/fonction du nœud donné"
 
 #: addons/block_code/blocks/communication/call_method_node.tres
 msgid "call method {method_name: STRING} on node {node: OBJECT}"
-msgstr ""
+msgstr "appeler la méthode {method_name: STRING} sur le nœud {node: OBJECT}"
 
 #: addons/block_code/blocks/communication/define_method.tres
 msgid "Define a method/function with following statements"
-msgstr ""
+msgstr "Définir une méthode/fonction avec les instructions suivantes"
 
 #: addons/block_code/blocks/communication/define_method.tres
 msgid "define method {method_name: STRING_NAME}"
-msgstr ""
+msgstr "définir la méthode {method_name: STRING_NAME}"
 
 #: addons/block_code/blocks/communication/get_node.tres
 msgid "Communication | Nodes"
-msgstr ""
+msgstr "Communication | Nœuds"
 
 #: addons/block_code/blocks/communication/get_node.tres
 msgid "Get the node at the given path"
-msgstr ""
+msgstr "Obtenir le nœud au chemin donné"
 
 #: addons/block_code/blocks/communication/get_node.tres
 msgid "{path: NIL}"
-msgstr ""
+msgstr "{chemin: NIL}"
 
 #: addons/block_code/blocks/communication/is_in_group.tres
 msgid "Is this node in the group"
-msgstr ""
+msgstr "Est-ce que ce nœud est dans le groupe"
 
 #: addons/block_code/blocks/communication/is_in_group.tres
 msgid "is in group {group: STRING}"
-msgstr ""
+msgstr "est dans le groupe {group: STRING}"
 
 #: addons/block_code/blocks/communication/is_node_in_group.tres
 msgid "Is the node in the group"
-msgstr ""
+msgstr "Est-ce que le nœud est dans le groupe"
 
 #: addons/block_code/blocks/communication/is_node_in_group.tres
 msgid "{node: OBJECT} is in group {group: STRING}"
-msgstr ""
+msgstr "{node: OBJECT} est dans le groupe {group: STRING}"
 
 #: addons/block_code/blocks/communication/remove_from_group.tres
 msgid "Remove this node from the group"
-msgstr ""
+msgstr "Retirer ce nœud du groupe"
 
 #: addons/block_code/blocks/communication/remove_from_group.tres
 msgid "remove from group {group: STRING}"
-msgstr ""
+msgstr "retirer du groupe {group: STRING}"
 
 #: addons/block_code/blocks/communication/remove_node_from_group.tres
 msgid "Remove the node from the group"
-msgstr ""
+msgstr "Retirer le nœud du groupe"
 
 #: addons/block_code/blocks/communication/remove_node_from_group.tres
 msgid "remove {node: OBJECT} from group {group: NIL}"
-msgstr ""
+msgstr "retirer {node: OBJECT} du groupe {group: NIL}"
 
 #: addons/block_code/blocks/graphics/animationplayer_is_playing.tres
 #: addons/block_code/blocks/graphics/animationplayer_pause.tres
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
 msgid "Graphics | Animation"
-msgstr ""
+msgstr "Graphismes | Animation"
 
 #: addons/block_code/blocks/graphics/animationplayer_is_playing.tres
 msgid "Check if an animation is currently playing."
-msgstr ""
+msgstr "Vérifier si une animation est en cours de lecture."
 
 #: addons/block_code/blocks/graphics/animationplayer_is_playing.tres
 msgid "is playing"
-msgstr ""
+msgstr "est en lecture"
 
 #: addons/block_code/blocks/graphics/animationplayer_pause.tres
 msgid "Pause the currently playing animation."
-msgstr ""
+msgstr "Mettre en pause l'animation en cours."
 
 #: addons/block_code/blocks/graphics/animationplayer_pause.tres
 msgid "pause"
-msgstr ""
+msgstr "mettre en pause"
 
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
 msgid "Play the animation."
-msgstr ""
+msgstr "Lire l'animation."
 
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
 msgid "play {animation: STRING} | {direction: NIL} {wait_mode: NIL}"
-msgstr ""
+msgstr "lire {animation: STRING} | {direction: NIL} {wait_mode: NIL}"
 
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
 msgid "Stop the currently playing animation."
-msgstr ""
+msgstr "Arrêter l'animation en cours."
 
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
 #: addons/block_code/blocks/sounds/audiostreamplayer_stop.tres
 msgid "stop"
-msgstr ""
+msgstr "arrêter"
 
 #: addons/block_code/blocks/graphics/viewport_center.tres
 #: addons/block_code/blocks/graphics/viewport_height.tres
 #: addons/block_code/blocks/graphics/viewport_width.tres
 msgid "Graphics | Viewport"
-msgstr ""
+msgstr "Graphismes | Vue"
 
 #: addons/block_code/blocks/graphics/viewport_center.tres
 msgid "Coordinates of the middle of the viewable screen when playing."
-msgstr ""
+msgstr "Coordonnées du centre de l'écran visible pendant le jeu."
 
 #: addons/block_code/blocks/graphics/viewport_center.tres
 msgid "viewport center"
-msgstr ""
+msgstr "centre de la vue"
 
 #: addons/block_code/blocks/graphics/viewport_height.tres
 msgid "How tall the viewable screen is when playing."
-msgstr ""
+msgstr "Hauteur de l'écran visible pendant le jeu."
 
 #: addons/block_code/blocks/graphics/viewport_height.tres
 msgid "viewport height"
-msgstr ""
+msgstr "hauteur de la vue"
 
 #: addons/block_code/blocks/graphics/viewport_width.tres
 msgid "How wide the viewable screen is when playing."
-msgstr ""
+msgstr "Largeur de l'écran visible pendant le jeu."
 
 #: addons/block_code/blocks/graphics/viewport_width.tres
 msgid "viewport width"
-msgstr ""
+msgstr "largeur de la vue"
+
+#: addons/block_code/blocks/input/mouse_position.tres
+msgid "The coordinates of the mouse position."
+msgstr "Les coordonnées de la position de la souris."
+
+#: addons/block_code/blocks/input/mouse_position.tres
+msgid "mouse position"
+msgstr "position de la souris"
 
 #: addons/block_code/blocks/input/characterbody2d_is_on_floor.tres
 #: addons/block_code/blocks/physics/characterbody2d_move_and_slide.tres
 msgid "Physics | Velocity"
-msgstr ""
+msgstr "Physique | Vitesse"
 
 #: addons/block_code/blocks/input/characterbody2d_is_on_floor.tres
 msgid "True if the character is on the floor."
-msgstr ""
+msgstr "Vrai si le personnage est sur le sol."
 
 #: addons/block_code/blocks/input/characterbody2d_is_on_floor.tres
 msgid "is on floor"
-msgstr ""
+msgstr "est sur le sol"
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
 #: addons/block_code/blocks/input/is_input_actioned.tres
-#: addons/block_code/blocks/input/mouse_position.tres
 msgid "Input"
-msgstr ""
+msgstr "Entrée"
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
-msgid ""
-"Move the character up, down, left, and right with the keyboard using the "
-"given keys. The speed of movement can be adjusted separately for x (left and "
-"right) and y (up and down)."
-msgstr ""
+msgid "Move the character up, down, left, and right with the keyboard using the given keys. The speed of movement can be adjusted separately for x (left and right) and y (up and down)."
+msgstr "Déplacer le personnage vers le haut, le bas, la gauche et la droite avec le clavier en utilisant les touches données. La vitesse de déplacement peut être ajustée séparément pour x (gauche et droite) et y (haut et bas)."
 
 #: addons/block_code/blocks/input/characterbody2d_move.tres
-msgid ""
-"move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at "
-"speed {speed: VECTOR2}"
-msgstr ""
+msgid "move with keys {up: STRING} {down: STRING} {left: STRING} {right: STRING} at speed {speed: VECTOR2}"
+msgstr "déplacer avec les touches {up: STRING} {down: STRING} {left: STRING} {right: STRING} à la vitesse {speed: VECTOR2}"
 
 #: addons/block_code/blocks/input/is_input_actioned.tres
 msgid "True if the specified input action has been pressed or released."
-msgstr ""
+msgstr "Vrai si l'action d'entrée spécifiée a été pressée ou relâchée."
 
 #: addons/block_code/blocks/input/is_input_actioned.tres
 msgid "action {action_name: STRING_NAME} is {action: NIL}"
-msgstr ""
+msgstr "l'action {action_name: STRING_NAME} est {action: NIL}"
 
 #: addons/block_code/blocks/lifecycle/process.tres
 #: addons/block_code/blocks/lifecycle/queue_free.tres
@@ -412,110 +413,109 @@ msgstr ""
 #: addons/block_code/blocks/lifecycle/ready.tres
 #: addons/block_code/blocks/lifecycle/physics_process.tres
 msgid "Lifecycle"
-msgstr ""
+msgstr "Cycle de vie"
 
 #: addons/block_code/blocks/lifecycle/process.tres
-msgid ""
-"Attached blocks will be executed during the processing step of the main loop"
-msgstr ""
+msgid "Attached blocks will be executed during the processing step of the main loop"
+msgstr "Les blocs attachés seront exécutés pendant l'étape de traitement de la boucle principale"
 
 #: addons/block_code/blocks/lifecycle/process.tres
 msgid "every frame"
-msgstr ""
+msgstr "à chaque image"
 
 #: addons/block_code/blocks/lifecycle/queue_free.tres
 msgid "Queues this node to be deleted at the end of the current frame"
-msgstr ""
+msgstr "Met ce nœud en file d'attente pour être supprimé à la fin de l'image actuelle"
 
 #: addons/block_code/blocks/lifecycle/queue_free.tres
 msgid "remove"
-msgstr ""
+msgstr "supprimer"
 
 #: addons/block_code/blocks/lifecycle/queue_free_node.tres
 msgid "Queues the given node to be deleted at the end of the current frame"
-msgstr ""
+msgstr "Met le nœud donné en file d'attente pour être supprimé à la fin de l'image actuelle"
 
 #: addons/block_code/blocks/lifecycle/queue_free_node.tres
 msgid "remove {node: OBJECT}"
-msgstr ""
+msgstr "supprimer {node: OBJECT}"
 
 #: addons/block_code/blocks/lifecycle/ready.tres
 msgid "Attached blocks will be executed once when the node is \"ready\""
-msgstr ""
+msgstr "Les blocs attachés seront exécutés une fois que le nœud est « prêt »"
 
 #: addons/block_code/blocks/lifecycle/ready.tres
 msgid "when starting"
-msgstr ""
+msgstr "au démarrage"
 
 #: addons/block_code/blocks/log/breakpoint.tres
 #: addons/block_code/blocks/log/concat.tres
 #: addons/block_code/blocks/log/print.tres
 msgid "Log"
-msgstr ""
+msgstr "Journal"
 
 #: addons/block_code/blocks/log/breakpoint.tres
 msgid "Pause execution and show the current line of code in the debugger."
-msgstr ""
+msgstr "Mettre en pause l'exécution et afficher la ligne de code actuelle dans le débogueur."
 
 #: addons/block_code/blocks/log/breakpoint.tres
 msgid "breakpoint"
-msgstr ""
+msgstr "point d'arrêt"
 
 #: addons/block_code/blocks/log/concat.tres
 msgid "{string1: STRING} + {string2: STRING}"
-msgstr ""
+msgstr "{chaîne1: STRING} + {chaîne2: STRING}"
 
 #: addons/block_code/blocks/log/print.tres
 msgid "Print the text to output"
-msgstr ""
+msgstr "Afficher le texte dans la sortie"
 
 #: addons/block_code/blocks/log/print.tres
 msgid "log text {text: STRING}"
-msgstr ""
+msgstr "afficher le texte {text: STRING}"
 
 #: addons/block_code/blocks/logic/and.tres
 #: addons/block_code/blocks/logic/not.tres
 #: addons/block_code/blocks/logic/or.tres
 msgid "Logic | Boolean"
-msgstr ""
+msgstr "Logique | Booléen"
 
 #: addons/block_code/blocks/logic/and.tres
 msgid "{bool1: BOOL} and {bool2: BOOL}"
-msgstr ""
+msgstr "{bool1: BOOL} et {bool2: BOOL}"
 
 #: addons/block_code/blocks/logic/compare.tres
 msgid "Logic | Comparison"
-msgstr ""
+msgstr "Logique | Comparaison"
 
 #: addons/block_code/blocks/logic/compare.tres
 msgid "{float1: FLOAT} {op: NIL} {float2: FLOAT}"
-msgstr ""
+msgstr "{flottant1: FLOAT} {op: NIL} {flottant2: FLOAT}"
 
 #: addons/block_code/blocks/logic/else.tres
 #: addons/block_code/blocks/logic/else_if.tres
 #: addons/block_code/blocks/logic/if.tres
 msgid "Logic | Conditionals"
-msgstr ""
+msgstr "Logique | Conditionnels"
 
 #: addons/block_code/blocks/logic/else.tres
 msgid "else"
-msgstr ""
+msgstr "sinon"
 
 #: addons/block_code/blocks/logic/else_if.tres
 msgid "else if {condition: BOOL}"
-msgstr ""
+msgstr "sinon si {condition: BOOL}"
 
 #: addons/block_code/blocks/logic/if.tres
 msgid "if {condition: BOOL}"
-msgstr ""
+msgstr "si {condition: BOOL}"
 
 #: addons/block_code/blocks/logic/not.tres
 msgid "not {bool: BOOL}"
-msgstr ""
+msgstr "non {bool: BOOL}"
 
 #: addons/block_code/blocks/logic/or.tres
 msgid "{bool1: BOOL} or {bool2: BOOL}"
-msgstr ""
+msgstr "{bool1: BOOL} ou {bool2: BOOL}"
 
 #: addons/block_code/blocks/loops/await_scene_ready.tres
 #: addons/block_code/blocks/loops/break.tres
@@ -523,38 +523,35 @@ msgstr ""
 #: addons/block_code/blocks/loops/for.tres
 #: addons/block_code/blocks/loops/while.tres
 msgid "Loops"
-msgstr ""
+msgstr "Boucles"
 
 #: addons/block_code/blocks/loops/await_scene_ready.tres
 msgid "wait for the scene to be ready"
-msgstr ""
+msgstr "attendre que la scène soit prête"
 
 #: addons/block_code/blocks/loops/break.tres
 msgid "break"
-msgstr ""
+msgstr "arrêter la boucle"
 
 #: addons/block_code/blocks/loops/continue.tres
 msgid "continue"
-msgstr ""
+msgstr "continuer"
 
 #: addons/block_code/blocks/loops/for.tres
 msgid "Run the connected blocks [i]number[/i] times"
-msgstr ""
+msgstr "Exécuter les blocs connectés [i]nombre[/i] de fois"
 
 #: addons/block_code/blocks/loops/for.tres
 msgid "repeat {number: INT}"
-msgstr ""
+msgstr "répéter {number: INT}"
 
 #: addons/block_code/blocks/loops/while.tres
-msgid ""
-"Run the connected blocks as long as [i]condition[/i] is true.\n"
-"\n"
-"Hint: snap a [b]Comparison[/b] block into the condition."
-msgstr ""
+msgid "Run the connected blocks as long as [i]condition[/i] is true.\n\nHint: snap a [b]Comparison[/b] block into the condition."
+msgstr "Exécuter les blocs connectés tant que la [i]condition[/i] est vraie.\n\nConseil : attachez un bloc de [b]Comparaison[/b] à la condition."
 
 #: addons/block_code/blocks/loops/while.tres
 msgid "while {condition: BOOL}"
-msgstr ""
+msgstr "tant que {condition: BOOL}"
 
 #: addons/block_code/blocks/math/add.tres
 #: addons/block_code/blocks/math/cos.tres
@@ -574,255 +571,251 @@ msgstr ""
 #: addons/block_code/blocks/math/vector3_multiply.tres
 #: addons/block_code/blocks/variables/vector3.tres
 msgid "Math"
-msgstr ""
+msgstr "Mathématiques"
 
 #: addons/block_code/blocks/math/add.tres
 msgid "{a: FLOAT} + {b: FLOAT}"
-msgstr ""
+msgstr "{a: FLOAT} + {b: FLOAT}"
 
 #: addons/block_code/blocks/math/cos.tres
 msgid "Calculate the cosine of [i]angle[/i]"
-msgstr ""
+msgstr "Calculer le cosinus de [i]l'angle[/i]"
 
 #: addons/block_code/blocks/math/cos.tres
 msgid "cos {angle: FLOAT}"
-msgstr ""
+msgstr "cos {angle: FLOAT}"
 
 #: addons/block_code/blocks/math/divide.tres
 msgid "{a: FLOAT} / {b: FLOAT}"
-msgstr ""
+msgstr "{a: FLOAT} / {b: FLOAT}"
 
 #: addons/block_code/blocks/math/multiply.tres
 msgid "{a: FLOAT} * {b: FLOAT}"
-msgstr ""
+msgstr "{a: FLOAT} * {b: FLOAT}"
 
 #: addons/block_code/blocks/math/pow.tres
 msgid "{base: FLOAT} ^ {exp: FLOAT}"
-msgstr ""
+msgstr "{base: FLOAT} ^ {exp: FLOAT}"
 
 #: addons/block_code/blocks/math/randf_range.tres
-msgid ""
-"Generate a random floating point number between [i]from[/i] and [i]to[/i] "
-"inclusively"
-msgstr ""
+msgid "Generate a random floating point number between [i]from[/i] and [i]to[/i] inclusively"
+msgstr "Générer un nombre à virgule flottante aléatoire entre [i]de[/i] et [i]à[/i] inclusivement"
 
 #: addons/block_code/blocks/math/randf_range.tres
 msgid "random floating point number between {from: FLOAT} and {to: FLOAT}"
-msgstr ""
+msgstr "nombre à virgule flottante aléatoire entre {from: FLOAT} et {to: FLOAT}"
 
 #: addons/block_code/blocks/math/randi_range.tres
-msgid ""
-"Generate a random signed 32-bits integer number between [i]from[/i] and "
-"[i]to[/i] inclusively. [i]from[/i] and [i]to[/i] can be a negative or "
-"positive number"
-msgstr ""
+msgid "Generate a random signed 32-bits integer number between [i]from[/i] and [i]to[/i] inclusively. [i]from[/i] and [i]to[/i] can be a negative or positive number"
+msgstr "Générer un nombre entier signé de 32 bits aléatoire entre [i]de[/i] et [i]à[/i] inclusivement. [i]de[/i] et [i]à[/i] peuvent être des nombres négatifs ou positifs"
 
 #: addons/block_code/blocks/math/randi_range.tres
 msgid "random integer number between {from: INT} and {to: INT}"
-msgstr ""
+msgstr "nombre entier aléatoire entre {from: INT} et {to: INT}"
 
 #: addons/block_code/blocks/math/sin.tres
 msgid "Calculate the sine of [i]angle[/i]"
-msgstr ""
+msgstr "Calculer le sinus de [i]l'angle[/i]"
 
 #: addons/block_code/blocks/math/sin.tres
 msgid "sin {angle: FLOAT}"
-msgstr ""
+msgstr "sin {angle: FLOAT}"
 
 #: addons/block_code/blocks/math/subtract.tres
 msgid "{a: FLOAT} - {b: FLOAT}"
-msgstr ""
+msgstr "{a: FLOAT} - {b: FLOAT}"
 
 #: addons/block_code/blocks/math/tan.tres
 msgid "Calculate the tangent of [i]angle[/i]"
-msgstr ""
+msgstr "Calculer la tangente de [i]l'angle[/i]"
 
 #: addons/block_code/blocks/math/tan.tres
 msgid "tan {angle: FLOAT}"
-msgstr ""
+msgstr "tan {angle: FLOAT}"
 
 #: addons/block_code/blocks/math/vector_from_angle.tres
 msgid "Creates a unit Vector2 rotated to the given angle in radians."
-msgstr ""
+msgstr "Crée un Vector2 unitaire tourné à l'angle donné en radians."
 
 #: addons/block_code/blocks/math/vector_from_angle.tres
 msgid "vector from {angle: FLOAT}"
-msgstr ""
+msgstr "vecteur depuis {angle: FLOAT}"
 
 #: addons/block_code/blocks/math/vector_multiply.tres
-msgid ""
-"Multiplies a vector with a number. Use this, for example, to get a point "
-"some distance away along an angle."
-msgstr ""
+msgid "Multiplies a vector with a number. Use this, for example, to get a point some distance away along an angle."
+msgstr "Multiplie un vecteur par un nombre. Utilisez cela, par exemple, pour obtenir un point à une certaine distance le long d'un angle."
 
 #: addons/block_code/blocks/math/vector_multiply.tres
 msgid "multiply {vector: VECTOR2} by {number: FLOAT}"
-msgstr ""
+msgstr "multiplier {vector: VECTOR2} par {number: FLOAT}"
+
+#: addons/block_code/blocks/math/vector2_xy.tres
+msgid "Gives the x or y of a [b]Vector2[/b]"
+msgstr "Donne le x ou le y d'un [b]Vector2[/b]"
+
+#: addons/block_code/blocks/math/vector2_xy.tres
+msgid "{xy: NIL} of {vector2: VECTOR2}"
+msgstr "{xy: NIL} de {vector2: VECTOR2}"
+
+#: addons/block_code/blocks/math/vector3_xyz.tres
+msgid "Gives the x, y, or z of a [b]Vector3[/b]"
+msgstr "Donne le x, le y ou le z d'un [b]Vector3[/b]"
+
+#: addons/block_code/blocks/math/vector3_xyz.tres
+msgid "{xyz: NIL} of {vector3: VECTOR3}"
+msgstr "{xyz: NIL} de {vector3: VECTOR3}"
+
+#: addons/block_code/blocks/math/vector3_multiply.tres
+msgid "Multiplies a Vector3 with a number. Use this, for example, to get a point some distance away along an angle."
+msgstr "Multiplie un Vector3 par un nombre. Utilisez cela, par exemple, pour obtenir un point à une certaine distance le long d'un angle."
+
+#: addons/block_code/blocks/math/vector3_multiply.tres
+msgid "multiply {vector: VECTOR3} by {number: FLOAT}"
+msgstr "multiplier {vector: VECTOR3} par {number: FLOAT}"
 
 #: addons/block_code/blocks/physics/characterbody2d_move_and_slide.tres
 msgid "move and slide"
-msgstr ""
-
-#: addons/block_code/blocks/sounds/audiostreamplayer_play.tres
-#: addons/block_code/blocks/sounds/audiostreamplayer_stop.tres
-#: addons/block_code/blocks/sounds/load_sound.tres
-#: addons/block_code/blocks/sounds/pause_continue_sound.tres
-#: addons/block_code/blocks/sounds/play_sound.tres
-#: addons/block_code/blocks/sounds/stop_sound.tres
-msgid "Sounds"
-msgstr "Sons"
+msgstr "déplacer et glisser"
 
 #: addons/block_code/blocks/sounds/audiostreamplayer_play.tres
 msgid "Play the audio stream"
-msgstr ""
+msgstr "Lire le flux audio"
 
 #: addons/block_code/blocks/sounds/audiostreamplayer_play.tres
 msgid "play"
-msgstr ""
+msgstr "lire"
 
 #: addons/block_code/blocks/sounds/audiostreamplayer_stop.tres
-#: addons/block_code/blocks/sounds/stop_sound.tres
 msgid "Stop the audio stream"
-msgstr ""
+msgstr "Arrêter le flux audio"
 
 #: addons/block_code/blocks/sounds/load_sound.tres
 msgid "Load a resource file as the audio stream"
-msgstr ""
+msgstr "Charger un fichier de ressource en tant que flux audio"
 
 #: addons/block_code/blocks/sounds/load_sound.tres
 msgid "load file {file_path: STRING} as sound {name: STRING}"
-msgstr ""
+msgstr "charger le fichier {file_path: STRING} comme son {name: STRING}"
 
 #: addons/block_code/blocks/sounds/pause_continue_sound.tres
 msgid "Pause/Continue the audio stream"
-msgstr ""
+msgstr "Mettre en pause/Continuer le flux audio"
 
 #: addons/block_code/blocks/sounds/pause_continue_sound.tres
 msgid "{pause: NIL} the sound {name: STRING}"
-msgstr ""
+msgstr "{pause: NIL} le son {name: STRING}"
 
 #: addons/block_code/blocks/sounds/play_sound.tres
 msgid "Play the audio stream with volume and pitch"
-msgstr ""
+msgstr "Lire le flux audio avec le volume et la hauteur"
 
 #: addons/block_code/blocks/sounds/play_sound.tres
-msgid ""
-"play the sound {name: STRING} | with volume {db: FLOAT} dB and pitch scale "
-"{pitch: FLOAT}"
-msgstr ""
+msgid "play the sound {name: STRING} | with volume {db: FLOAT} dB and pitch scale {pitch: FLOAT}"
+msgstr "lire le son {name: STRING} | avec un volume de {db: FLOAT} dB et une hauteur de {pitch: FLOAT}"
 
 #: addons/block_code/blocks/sounds/stop_sound.tres
 msgid "stop the sound {name: STRING}"
-msgstr ""
+msgstr "arrêter le son {name: STRING}"
 
 #: addons/block_code/blocks/spawn/cpuparticles2d_finished.tres
 msgid "Lifecycle | Spawn"
-msgstr ""
+msgstr "Cycle de vie | Génération"
 
 #: addons/block_code/blocks/spawn/cpuparticles2d_finished.tres
 msgid "Emitted when all active particles have finished processing."
-msgstr ""
+msgstr "Émis lorsque toutes les particules actives ont terminé leur traitement."
 
 #: addons/block_code/blocks/spawn/cpuparticles2d_finished.tres
 msgid "when particles are finished"
-msgstr ""
+msgstr "quand les particules sont terminées"
 
 #: addons/block_code/blocks/transform/rigidbody2d_physics_position.tres
 msgid "Transform | Position"
-msgstr ""
+msgstr "Transformation | Position"
 
 #: addons/block_code/blocks/transform/rigidbody2d_physics_position.tres
 msgid "set physics position {position: VECTOR2}"
-msgstr ""
+msgstr "définir la position physique {position: VECTOR2}"
 
 #: addons/block_code/blocks/ui/label_set_text.tres
 msgid "UI"
-msgstr ""
+msgstr "Interface utilisateur"
 
 #: addons/block_code/blocks/ui/label_set_text.tres
 msgid "Set the text for the label."
-msgstr ""
+msgstr "Définir le texte de l'étiquette."
 
 #: addons/block_code/blocks/ui/label_set_text.tres
 msgid "set text to {text: STRING}"
-msgstr ""
+msgstr "définir le texte sur {text: STRING}"
 
 #: addons/block_code/blocks/variables/vector2.tres
 msgid "vector2 x: {x: FLOAT} y: {y: FLOAT}"
-msgstr ""
+msgstr "vecteur2 x : {x: FLOAT} y : {y: FLOAT}"
+
+#: addons/block_code/blocks/variables/vector3.tres
+msgid "vector3 x: {x: FLOAT} y: {y: FLOAT}: z: {z: FLOAT}"
+msgstr "vecteur3 x : {x: FLOAT} y : {y: FLOAT} z : {z: FLOAT}"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "Set the %s property"
-msgstr ""
+msgstr "Définir la propriété %s"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "set %%s to {value: %s}"
-msgstr ""
+msgstr "définir %%s sur {value: %s}"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "Change the %s property"
-msgstr ""
+msgstr "Changer la propriété %s"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "change %%s by {value: %s}"
-msgstr ""
+msgstr "changer %%s de {value: %s}"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "The %s property"
-msgstr ""
+msgstr "La propriété %s"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "Set the %s variable"
-msgstr ""
+msgstr "Définir la variable %s"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "set %s to {value: %s}"
-msgstr ""
+msgstr "définir %s sur {value: %s}"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "The %s variable"
-msgstr ""
+msgstr "La variable %s"
 
 #: addons/block_code/inspector_plugin/block_script_inspector.gd
 msgid "Open Block Script"
-msgstr ""
+msgstr "Ouvrir le script par blocs"
 
 #: addons/block_code/simple_nodes/simple_character/simple_character.gd
 msgid "move with {player: NIL} buttons as {kind: NIL}"
-msgstr ""
+msgstr "se déplacer avec les boutons {player: NIL} comme {kind: NIL}"
 
 #: addons/block_code/simple_nodes/simple_character/simple_character.gd
-msgid ""
-"Move the character using the “Player 1” or “Player 2” controls as configured "
-"in Godot.\n"
-"\n"
-"“Top-down” enables the character to move in both x (horizontal) and y "
-"(vertical) dimensions, as if the camera is above the character, looking "
-"down. No gravity is added.\n"
-"\n"
-"“Platformer” enables the character to move as if the camera is looking from "
-"the side, like a side-scroller. Gravity is applied on the y (vertical) axis, "
-"making the character fall down until they collide with something.\n"
-"\n"
-"“Spaceship” uses the left/right controls to rotate the character and up/down "
-"controls to go forward or backward in the direction they are pointing."
-msgstr ""
+msgid "Move the character using the “Player 1” or “Player 2” controls as configured in Godot.\n\n“Top-down” enables the character to move in both x (horizontal) and y (vertical) dimensions, as if the camera is above the character, looking down. No gravity is added.\n\n“Platformer” enables the character to move as if the camera is looking from the side, like a side-scroller. Gravity is applied on the y (vertical) axis, making the character fall down until they collide with something.\n\n“Spaceship” uses the left/right controls to rotate the character and up/down controls to go forward or backward in the direction they are pointing."
+msgstr "Déplacer le personnage en utilisant les commandes « Joueur 1 » ou « Joueur 2 » telles que configurées dans Godot.\n\n« Vue de dessus » permet au personnage de se déplacer à la fois dans les dimensions x (horizontale) et y (verticale), comme si la caméra était au-dessus du personnage, regardant vers le bas. Aucune gravité n'est ajoutée.\n\n« Plateformes » permet au personnage de se déplacer comme si la caméra regardait de côté, comme un jeu de défilement horizontal. La gravité est appliquée sur l'axe y (vertical), faisant tomber le personnage jusqu'à ce qu'il entre en collision avec quelque chose.\n\n« Vaisseau spatial » utilise les commandes gauche/droite pour faire pivoter le personnage et les commandes haut/bas pour avancer ou reculer dans la direction qu'il pointe."
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
 msgid "game over {result: STRING}"
-msgstr ""
+msgstr "fin de partie {result: STRING}"
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
 msgid "Show the game over label with the win or lose message."
-msgstr ""
+msgstr "Afficher l'étiquette de fin de partie avec le message de victoire ou de défaite."
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
 msgid "reset game over"
-msgstr ""
+msgstr "réinitialiser la fin de partie"
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
 msgid "Reset the game over label."
-msgstr ""
+msgstr "Réinitialiser l'étiquette de fin de partie."
 
 #: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
 msgid "0"
@@ -830,51 +823,51 @@ msgstr "0"
 
 #: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
 msgid "set score to {score: INT}"
-msgstr ""
+msgstr "définir le score sur {score: INT}"
 
 #: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
 msgid "change score by {score: INT}"
-msgstr ""
+msgstr "changer le score de {score: INT}"
 
 #: addons/block_code/simple_spawner/simple_spawner.gd
 msgid "spawn once"
-msgstr ""
+msgstr "générer une fois"
 
 #: addons/block_code/simple_spawner/simple_spawner.gd
 msgid "start spawning"
-msgstr ""
+msgstr "commencer à générer"
 
 #: addons/block_code/simple_spawner/simple_spawner.gd
 msgid "stop spawning"
-msgstr ""
+msgstr "arrêter de générer"
 
 #: addons/block_code/simple_spawner/simple_spawner.gd
 msgid "is spawning"
-msgstr ""
+msgstr "est en cours de génération"
 
 #: addons/block_code/simple_spawner/simple_spawner.gd
 msgid "set spawn period to {new_period: FLOAT}"
-msgstr ""
+msgstr "définir la période de génération sur {new_period: FLOAT}"
 
 #: addons/block_code/simple_spawner/simple_spawner.gd
 msgid "spawn period"
-msgstr ""
+msgstr "période de génération"
 
 #: addons/block_code/ui/main_panel.tscn
 msgid "Advanced"
-msgstr ""
+msgstr "Avancé"
 
 #: addons/block_code/ui/main_panel.tscn
 msgid "Show Generated Script"
-msgstr ""
+msgstr "Afficher le script généré"
 
 #: addons/block_code/ui/main_panel.tscn
 msgid "Delete Block Code"
-msgstr ""
+msgstr "Supprimer le code par blocs"
 
 #: addons/block_code/ui/main_panel.tscn
 msgid "Toggle Block Picker (Ctrl+BackSlash)"
-msgstr ""
+msgstr "Afficher/Masquer le sélecteur de blocs (Ctrl+Backslash)"
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "1.0x"
@@ -882,57 +875,56 @@ msgstr "1.0×"
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "Select a node to create and edit block code."
-msgstr ""
+msgstr "Sélectionnez un nœud pour créer et modifier du code par blocs."
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
-msgid ""
-"Use block coding to create custom behavior and game mechanics for \"{node}\"."
-msgstr ""
+msgid "Use block coding to create custom behavior and game mechanics for \"{node}\"."
+msgstr "Utilisez le codage par blocs pour créer un comportement et des mécanismes de jeu personnalisés pour « {node} »."
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "Add Block Code"
-msgstr ""
+msgstr "Ajouter du code par blocs"
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "\"{node}\" uses block coding."
-msgstr ""
+msgstr "« {node} » utilise le codage par blocs."
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "Open in Editor"
-msgstr ""
+msgstr "Ouvrir dans l'éditeur"
 
 #: addons/block_code/ui/block_canvas/block_canvas.tscn
 msgid "Override Block Code"
-msgstr ""
+msgstr "Remplacer le code par blocs"
 
 #: addons/block_code/ui/blocks/block/block.gd
 msgid "Type:"
-msgstr ""
+msgstr "Type :"
 
 #: addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.gd
 msgid "Duplicate"
-msgstr ""
+msgstr "Dupliquer"
 
 #: addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.gd
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn
 msgid "Parameter"
-msgstr ""
+msgstr "Paramètre"
 
 #: addons/block_code/ui/picker/categories/block_category_button.tscn
 msgid "Example"
-msgstr ""
+msgstr "Exemple"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_button.tscn
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Create New Variable"
-msgstr ""
+msgstr "Créer une nouvelle variable"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Create"
-msgstr "Crée"
+msgstr "Créer"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Name "
@@ -940,68 +932,28 @@ msgstr "Nom"
 
 #: addons/block_code/ui/picker/categories/variable_category/create_variable_dialog.tscn
 msgid "Type "
-msgstr ""
+msgstr "Type"
 
 #: addons/block_code/ui/script_window/script_window.tscn
 msgid "Block Code Generated GDScript"
-msgstr ""
+msgstr "GDScript généré par le code par blocs"
 
 #: addons/block_code/ui/script_window/script_window.tscn
 msgid "Copy"
-msgstr ""
-
-#: addons/block_code/blocks/input/mouse_position.tres
-msgid "The coordinates of the mouse position."
-msgstr ""
-
-#: addons/block_code/blocks/input/mouse_position.tres
-msgid "mouse position"
-msgstr ""
-
-#: addons/block_code/blocks/math/vector2_xy.tres
-msgid "Gives the x or y of a [b]Vector2[/b]"
-msgstr ""
-
-#: addons/block_code/blocks/math/vector2_xy.tres
-msgid "{xy: NIL} of {vector2: VECTOR2}"
-msgstr ""
-
-#: addons/block_code/blocks/math/vector3_xyz.tres
-msgid "Gives the x, y, or z of a [b]Vector3[/b]"
-msgstr ""
-
-#: addons/block_code/blocks/math/vector3_xyz.tres
-msgid "{xyz: NIL} of {vector3: VECTOR3}"
-msgstr ""
-
-#: addons/block_code/blocks/math/vector3_multiply.tres
-msgid ""
-"Multiplies a Vector3 with a number. Use this, for example, to get a point "
-"some distance away along an angle."
-msgstr ""
-
-#: addons/block_code/blocks/math/vector3_multiply.tres
-msgid "multiply {vector: VECTOR3} by {number: FLOAT}"
-msgstr ""
+msgstr "Copier"
 
 #: addons/block_code/blocks/communication/switch_scene.tres
-msgid ""
-"Stop playing the current scene, and switch to a different one. You might use "
-"this to switch to a new level."
-msgstr ""
+msgid "Stop playing the current scene, and switch to a different one. You might use this to switch to a new level."
+msgstr "Arrêter la scène actuelle et passer à une autre. Vous pouvez l'utiliser pour passer à un nouveau niveau."
 
 #: addons/block_code/blocks/communication/switch_scene.tres
 msgid "switch the scene to {file_path: STRING}"
-msgstr ""
-
-#: addons/block_code/blocks/variables/vector3.tres
-msgid "vector3 x: {x: FLOAT} y: {y: FLOAT}: z: {z: FLOAT}"
-msgstr ""
+msgstr "passer la scène à {file_path: STRING}"
 
 #: addons/block_code/blocks/lifecycle/physics_process.tres
 msgid "Attached blocks will be executed before each physics step"
-msgstr ""
+msgstr "Les blocs attachés seront exécutés avant chaque étape de la physique"
 
 #: addons/block_code/blocks/lifecycle/physics_process.tres
 msgid "every physics step"
-msgstr ""
+msgstr "à chaque étape de la physique"
