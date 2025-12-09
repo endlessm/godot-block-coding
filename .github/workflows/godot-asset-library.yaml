@@ -11,7 +11,7 @@ jobs:
     name: Push new release
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Push to Godot Asset Library
         uses: deep-entertainment/godot-asset-lib-action@v0.6.0
         with:
