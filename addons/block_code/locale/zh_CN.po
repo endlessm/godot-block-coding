@@ -791,7 +791,7 @@ msgstr "打开块脚本"
 
 #: addons/block_code/simple_nodes/simple_character/simple_character.gd
 msgid "move with {player: NIL} buttons as {kind: NIL}"
-msgstr ""
+msgstr "使用 {player: NIL} 按钮以 {kind: NIL} 方式移动"
 
 #: addons/block_code/simple_nodes/simple_character/simple_character.gd
 msgid ""
@@ -802,7 +802,13 @@ msgid ""
 "“Platformer” enables the character to move as if the camera is looking from the side, like a side-scroller. Gravity is applied on the y (vertical) axis, making the character fall down until they collide with something.\n"
 "\n"
 "“Spaceship” uses the left/right controls to rotate the character and up/down controls to go forward or backward in the direction they are pointing."
-msgstr ""
+msgstr "使用 Godot 中设置的「玩家 1」或「玩家 2」控制来移动角色。\n"
+"\n"
+"「俯视」启用角色在 x（水平）和 y（垂直）两个维度上移动，就像相机在角色上方俯视一样。不会增加重力。\n"
+"\n"
+"「平台」启用角色像侧视游戏一样移动，就像相机从侧面观看一样。重力会作用在 y（垂直）轴上，使角色向下掉落，直到与某物碰撞。\n"
+"\n"
+"「太空船」使用左/右控制来旋转角色，使用上/下控制来朝着角色指向的方向前进或后退。"
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
 msgid "game over {result: STRING}"
