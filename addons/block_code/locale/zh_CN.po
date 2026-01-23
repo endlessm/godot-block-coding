@@ -507,7 +507,7 @@ msgstr ""
 
 #: addons/block_code/blocks/logic/if.tres
 msgid "if {condition: BOOL}"
-msgstr ""
+msgstr "如果 {condition: BOOL}"
 
 #: addons/block_code/blocks/logic/not.tres
 msgid "not {bool: BOOL}"
@@ -515,7 +515,7 @@ msgstr ""
 
 #: addons/block_code/blocks/logic/or.tres
 msgid "{bool1: BOOL} or {bool2: BOOL}"
-msgstr ""
+msgstr "{bool1: BOOL} 或 {bool2: BOOL}"
 
 #: addons/block_code/blocks/loops/await_scene_ready.tres
 #: addons/block_code/blocks/loops/break.tres
@@ -527,11 +527,11 @@ msgstr ""
 
 #: addons/block_code/blocks/loops/await_scene_ready.tres
 msgid "wait for the scene to be ready"
-msgstr ""
+msgstr "请等待几秒"
 
 #: addons/block_code/blocks/loops/break.tres
 msgid "break"
-msgstr ""
+msgstr "中断"
 
 #: addons/block_code/blocks/loops/continue.tres
 msgid "continue"
