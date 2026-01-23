@@ -323,7 +323,7 @@ msgstr "播放動畫"
 
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
 msgid "play {animation: STRING} | {direction: NIL} {wait_mode: NIL}"
-msgstr ""
+msgstr "播放動畫 {animation: STRING} | {direction: NIL} {wait_mode: NIL}"
 
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
 msgid "Stop the currently playing animation."
@@ -714,7 +714,7 @@ msgstr "播放聲音串流並控制音量和音調"
 msgid ""
 "play the sound {name: STRING} | with volume {db: FLOAT} dB and pitch scale "
 "{pitch: FLOAT}"
-msgstr ""
+msgstr "播放音效 {name: STRING} | 使用音量 {db: FLOAT} 分貝及音高比例 {pitch: FLOAT}"
 
 #: addons/block_code/blocks/sounds/stop_sound.tres
 msgid "stop the sound {name: STRING}"
@@ -758,35 +758,35 @@ msgstr "二維向量 x: {x: FLOAT} y: {y: FLOAT}"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "Set the %s property"
-msgstr ""
+msgstr "設定 %s 屬性"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "set %%s to {value: %s}"
-msgstr ""
+msgstr "將 %%s 設定為 {value: %s}"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "Change the %s property"
-msgstr ""
+msgstr "更改 %s 屬性"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "change %%s by {value: %s}"
-msgstr ""
+msgstr "將 %%s 更改 {value: %s}"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "The %s property"
-msgstr ""
+msgstr "%s 屬性"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "Set the %s variable"
-msgstr ""
+msgstr "設定 %s 變數"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "set %s to {value: %s}"
-msgstr ""
+msgstr "將 %s 設定為 {value: %s}"
 
 #: addons/block_code/code_generation/block_definition.gd
 msgid "The %s variable"
-msgstr ""
+msgstr "%s 變數"
 
 #: addons/block_code/inspector_plugin/block_script_inspector.gd
 msgid "Open Block Script"
@@ -794,7 +794,7 @@ msgstr "打開區塊腳本"
 
 #: addons/block_code/simple_nodes/simple_character/simple_character.gd
 msgid "move with {player: NIL} buttons as {kind: NIL}"
-msgstr ""
+msgstr "使用 {player: NIL} 按鈕以 {kind: NIL} 方式移動"
 
 #: addons/block_code/simple_nodes/simple_character/simple_character.gd
 msgid ""
@@ -805,23 +805,29 @@ msgid ""
 "“Platformer” enables the character to move as if the camera is looking from the side, like a side-scroller. Gravity is applied on the y (vertical) axis, making the character fall down until they collide with something.\n"
 "\n"
 "“Spaceship” uses the left/right controls to rotate the character and up/down controls to go forward or backward in the direction they are pointing."
-msgstr ""
+msgstr "使用 Godot 中設定的「玩家 1」或「玩家 2」控制來移動角色。\n"
+"\n"
+"「俯視」啟用角色在 x（水平）和 y（垂直）兩個維度上移動，就像相機在角色上方俯視一樣。不會增加重力。\n"
+"\n"
+"「平台」啟用角色像側視遊戲一樣移動，就像相機從側面觀看一樣。重力會作用在 y（垂直）軸上，使角色向下掉落，直到與某物碰撞。\n"
+"\n"
+"「太空船」使用左/右控制來旋轉角色，使用上/下控制來朝著角色指向的方向前進或後退。"
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
 msgid "game over {result: STRING}"
-msgstr ""
+msgstr "遊戲結束 {result: STRING}"
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
 msgid "Show the game over label with the win or lose message."
-msgstr ""
+msgstr "顯示帶有勝利或失敗訊息的遊戲結束標籤"
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
 msgid "reset game over"
-msgstr ""
+msgstr "重置遊戲結束"
 
 #: addons/block_code/simple_nodes/simple_ending/simple_ending.gd
 msgid "Reset the game over label."
-msgstr ""
+msgstr "重置遊戲結束標籤"
 
 #: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
 msgid "0"
@@ -829,39 +835,39 @@ msgstr "0"
 
 #: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
 msgid "set score to {score: INT}"
-msgstr ""
+msgstr "將分數設定為 {score: INT}"
 
 #: addons/block_code/simple_nodes/simple_scoring/simple_scoring.gd
 msgid "change score by {score: INT}"
-msgstr ""
+msgstr "將分數更改 {score: INT}"
 
 #: addons/block_code/simple_spawner/simple_spawner.gd
 msgid "spawn once"
-msgstr ""
+msgstr "生成一次"
 
 #: addons/block_code/simple_spawner/simple_spawner.gd
 msgid "start spawning"
-msgstr ""
+msgstr "開始生成"
 
 #: addons/block_code/simple_spawner/simple_spawner.gd
 msgid "stop spawning"
-msgstr ""
+msgstr "停止生成"
 
 #: addons/block_code/simple_spawner/simple_spawner.gd
 msgid "is spawning"
-msgstr ""
+msgstr "正在生成"
 
 #: addons/block_code/simple_spawner/simple_spawner.gd
 msgid "set spawn period to {new_period: FLOAT}"
-msgstr ""
+msgstr "將生成週期設定為 {new_period: FLOAT}"
 
 #: addons/block_code/simple_spawner/simple_spawner.gd
 msgid "spawn period"
-msgstr ""
+msgstr "生成週期"
 
 #: addons/block_code/ui/main_panel.tscn
 msgid "Advanced"
-msgstr ""
+msgstr "進階"
 
 #: addons/block_code/ui/main_panel.tscn
 msgid "Show Generated Script"
@@ -911,11 +917,11 @@ msgstr "型態："
 
 #: addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.gd
 msgid "Duplicate"
-msgstr ""
+msgstr "複製"
 
 #: addons/block_code/ui/blocks/utilities/drag_drop_area/drag_drop_area.gd
 msgid "Delete"
-msgstr ""
+msgstr "刪除"
 
 #: addons/block_code/ui/blocks/utilities/parameter_input/parameter_input.tscn
 msgid "Parameter"
@@ -952,56 +958,56 @@ msgstr "複製"
 
 #: addons/block_code/blocks/input/mouse_position.tres
 msgid "The coordinates of the mouse position."
-msgstr ""
+msgstr "滑鼠位置的座標"
 
 #: addons/block_code/blocks/input/mouse_position.tres
 msgid "mouse position"
-msgstr ""
+msgstr "滑鼠位置"
 
 #: addons/block_code/blocks/math/vector2_xy.tres
 msgid "Gives the x or y of a [b]Vector2[/b]"
-msgstr ""
+msgstr "給出[b]Vector2[/b]的x或y"
 
 #: addons/block_code/blocks/math/vector2_xy.tres
 msgid "{xy: NIL} of {vector2: VECTOR2}"
-msgstr ""
+msgstr "二維向量 {vector2: VECTOR2} 的 {xy: NIL}"
 
 #: addons/block_code/blocks/math/vector3_xyz.tres
 msgid "Gives the x, y, or z of a [b]Vector3[/b]"
-msgstr ""
+msgstr "給出[b]Vector3[/b]的x、y或z"
 
 #: addons/block_code/blocks/math/vector3_xyz.tres
 msgid "{xyz: NIL} of {vector3: VECTOR3}"
-msgstr ""
+msgstr "二維向量 {vector3: VECTOR3} 的 {xyz: NIL}"
 
 #: addons/block_code/blocks/math/vector3_multiply.tres
 msgid ""
 "Multiplies a Vector3 with a number. Use this, for example, to get a point "
 "some distance away along an angle."
-msgstr ""
+msgstr "將Vector3與數字相乘。例如，使用此功能可以獲取沿某個方向一定距離的點"
 
 #: addons/block_code/blocks/math/vector3_multiply.tres
 msgid "multiply {vector: VECTOR3} by {number: FLOAT}"
-msgstr ""
+msgstr "二維向量 {vector: VECTOR3} 乘以常數 {number: FLOAT}"
 
 #: addons/block_code/blocks/communication/switch_scene.tres
 msgid ""
 "Stop playing the current scene, and switch to a different one. You might use"
 " this to switch to a new level."
-msgstr ""
+msgstr "停止播放當前場景，並切換到另一個場景。您可以使用此功能切換到新關卡"
 
 #: addons/block_code/blocks/communication/switch_scene.tres
 msgid "switch the scene to {file_path: STRING}"
-msgstr ""
+msgstr "將場景切換到{file_path: STRING}"
 
 #: addons/block_code/blocks/variables/vector3.tres
 msgid "vector3 x: {x: FLOAT} y: {y: FLOAT}: z: {z: FLOAT}"
-msgstr ""
+msgstr "三維向量 x: {x: FLOAT} y: {y: FLOAT}: z: {z: FLOAT}"
 
 #: addons/block_code/blocks/lifecycle/physics_process.tres
 msgid "Attached blocks will be executed before each physics step"
-msgstr ""
+msgstr "附加的區塊將在每個物理步驟之前執行"
 
 #: addons/block_code/blocks/lifecycle/physics_process.tres
 msgid "every physics step"
-msgstr ""
+msgstr "每個物理步驟"
