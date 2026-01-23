@@ -969,7 +969,7 @@ msgstr "给出[b]Vector3[/b]的x、y或z"
 
 #: addons/block_code/blocks/math/vector3_xyz.tres
 msgid "{xyz: NIL} of {vector3: VECTOR3}"
-msgstr "二维向量 {vector3: VECTOR3} 的 {xyz: NIL}"
+msgstr "三维向量 {vector3: VECTOR3} 的 {xyz: NIL}"
 
 #: addons/block_code/blocks/math/vector3_multiply.tres
 msgid ""
@@ -979,7 +979,7 @@ msgstr "将Vector3与数字相乘。例如，使用此功能可以获取沿某�
 
 #: addons/block_code/blocks/math/vector3_multiply.tres
 msgid "multiply {vector: VECTOR3} by {number: FLOAT}"
-msgstr "二维向量 {vector: VECTOR3} 乘以常数 {number: FLOAT}"
+msgstr "三维向量 {vector: VECTOR3} 乘以常数 {number: FLOAT}"
 
 #: addons/block_code/blocks/communication/switch_scene.tres
 msgid ""
