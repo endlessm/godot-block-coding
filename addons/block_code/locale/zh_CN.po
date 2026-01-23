@@ -252,11 +252,11 @@ msgstr "定义方法{method_name: STRING_NAME}"
 
 #: addons/block_code/blocks/communication/get_node.tres
 msgid "Communication | Nodes"
-msgstr ""
+msgstr "通信|节点"
 
 #: addons/block_code/blocks/communication/get_node.tres
 msgid "Get the node at the given path"
-msgstr ""
+msgstr "获取给定路径的节点"
 
 #: addons/block_code/blocks/communication/get_node.tres
 msgid "{path: NIL}"
@@ -264,58 +264,58 @@ msgstr "{path: NIL}"
 
 #: addons/block_code/blocks/communication/is_in_group.tres
 msgid "Is this node in the group"
-msgstr ""
+msgstr "此节点是否在组中"
 
 #: addons/block_code/blocks/communication/is_in_group.tres
 msgid "is in group {group: STRING}"
-msgstr ""
+msgstr "在组{group: STRING}中"
 
 #: addons/block_code/blocks/communication/is_node_in_group.tres
 msgid "Is the node in the group"
-msgstr ""
+msgstr "节点是否在组中"
 
 #: addons/block_code/blocks/communication/is_node_in_group.tres
 msgid "{node: OBJECT} is in group {group: STRING}"
-msgstr ""
+msgstr "{node: OBJECT}在组{group: STRING}中"
 
 #: addons/block_code/blocks/communication/remove_from_group.tres
 msgid "Remove this node from the group"
-msgstr ""
+msgstr "将此节点从组中移除"
 
 #: addons/block_code/blocks/communication/remove_from_group.tres
 msgid "remove from group {group: STRING}"
-msgstr ""
+msgstr "从组{group: STRING}中移除"
 
 #: addons/block_code/blocks/communication/remove_node_from_group.tres
 msgid "Remove the node from the group"
-msgstr ""
+msgstr "将节点从组中移除"
 
 #: addons/block_code/blocks/communication/remove_node_from_group.tres
 msgid "remove {node: OBJECT} from group {group: NIL}"
-msgstr ""
+msgstr "从组{group: NIL}中移除{node: OBJECT}"
 
 #: addons/block_code/blocks/graphics/animationplayer_is_playing.tres
 #: addons/block_code/blocks/graphics/animationplayer_pause.tres
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
 #: addons/block_code/blocks/graphics/animationplayer_stop.tres
 msgid "Graphics | Animation"
-msgstr ""
+msgstr "图形|动画"
 
 #: addons/block_code/blocks/graphics/animationplayer_is_playing.tres
 msgid "Check if an animation is currently playing."
-msgstr ""
+msgstr "检查动画是否正在播放"
 
 #: addons/block_code/blocks/graphics/animationplayer_is_playing.tres
 msgid "is playing"
-msgstr ""
+msgstr "正在播放"
 
 #: addons/block_code/blocks/graphics/animationplayer_pause.tres
 msgid "Pause the currently playing animation."
-msgstr ""
+msgstr "暂停当前播放的动画"
 
 #: addons/block_code/blocks/graphics/animationplayer_pause.tres
 msgid "pause"
-msgstr ""
+msgstr "暂停"
 
 #: addons/block_code/blocks/graphics/animationplayer_play.tres
 msgid "Play the animation."
@@ -404,7 +404,7 @@ msgstr "如果已按下或释放指定的输入操作，则为 True。"
 
 #: addons/block_code/blocks/input/is_input_actioned.tres
 msgid "action {action_name: STRING_NAME} is {action: NIL}"
-msgstr ""
+msgstr "动作{action_name: STRING_NAME}是{action: NIL}"
 
 #: addons/block_code/blocks/lifecycle/process.tres
 #: addons/block_code/blocks/lifecycle/queue_free.tres
@@ -412,16 +412,16 @@ msgstr ""
 #: addons/block_code/blocks/lifecycle/ready.tres
 #: addons/block_code/blocks/lifecycle/physics_process.tres
 msgid "Lifecycle"
-msgstr ""
+msgstr "生命周期"
 
 #: addons/block_code/blocks/lifecycle/process.tres
 msgid ""
 "Attached blocks will be executed during the processing step of the main loop"
-msgstr ""
+msgstr "附加的块将在主循环的处理步骤中执行"
 
 #: addons/block_code/blocks/lifecycle/process.tres
 msgid "every frame"
-msgstr ""
+msgstr "每一帧"
 
 #: addons/block_code/blocks/lifecycle/queue_free.tres
 msgid "Queues this node to be deleted at the end of the current frame"
